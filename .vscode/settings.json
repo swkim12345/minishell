@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "libft.h": "c",
+        "history.h": "c",
+        "readline.h": "c",
+        "keymaps.h": "c"
+    }
+}
