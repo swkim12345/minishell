@@ -6,7 +6,7 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/02/05 16:30:55 by minsepar         ###   ########.fr        #
+#    Updated: 2024/02/05 20:18:14 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,18 @@ SRCS = main.c
 
 OBJS = $(SRCS:.c=.o)
 
+LIBFT = ./libft/libftprintf.a
+
 all: $(NAME)
 
 %.o: %.c
 	$(CC) -c $(FLAGS) $< -o $@
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline
+$(LIBFT):
+	make -C ./libft all bonus
+
+$(NAME): $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
 
 clean:
 	rm -rf $(OBJS)
