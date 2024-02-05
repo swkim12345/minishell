@@ -6,18 +6,13 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:54 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/05 18:05:03 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/05 20:23:15 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
 t_linked_list	*init_parse(char *input)
-{
-	
-}
-
-t_linked_list	*parser(char *input)
 {
 	t_linked_list	*list;
 	t_list_node		*node;
@@ -29,4 +24,17 @@ t_linked_list	*parser(char *input)
 	list->back = node;
 	node->next = node;
 	node->str = input;
+	return (list);
+}
+
+t_linked_list	*parser(char *input)
+{
+	t_linked_list	*list;
+	t_list_node		*node;
+	
+	list = init_parse(input);
+	//split with space
+	
+	//splitting
+	//merge
 }
