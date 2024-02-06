@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 16:52:54 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/06 13:28:06 by sunghwki         ###   ########.fr       */
+/*   Created: 2024/02/06 13:28:22 by sunghwki          #+#    #+#             */
+/*   Updated: 2024/02/06 13:46:47 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "../main.h"
 
-
-
-t_ast_node	*parser(char *input)
+static t_ast_node	*init_lexar(char *input)
 {
-	t_ast_node	*list;
+	t_ast_node	*input;
 	
-	list = init_parse(input);
-	//split with space
 	
-	//splitting
-	//merge
+}
+
+t_ast_node	*lexar(char *input)
+{
+	
 }
