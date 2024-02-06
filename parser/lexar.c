@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:28:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/06 22:16:44 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/07 00:07:12 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,54 +32,69 @@ t_ast_node	*init_ast_node(int child_node)
 		ret->right_node = init_ast_node(CMD_NODE);
 	return (ret);
 }
-
-long	find_or_and_bracket(char *input)
-{
-	long	index;
-
-	index = 0;
-	while (input[index])
-	{
-		if (!ft_strncmp(input[index], DOUBLEQUOT, 1) 
-		|| !strncmp(input[index], SINGLEQUOT, 1))
-		{
-			while (TRUE)
-			{
-				if (!ft_strncmp(input[index], DOUBLEQUOT, 1) 
-				|| !ft_strncmp(input[index], SINGLEQUOT, 1))
-					break;
-				index++;
-			}
-		}
-		if (!strncmp(input[index], OR, 2))
-			return (index);
-		if (!strncmp(input[index], AND, 2))
-			return (index);
-		if (!strncmp(input[index], BRACKET[0], 1)
-		|| !strncmp(input[index], BRACKET[1], 1))
-			return (index);
-		index++;
-	}
-	return (index);
-}
  
 t_ast_node	*recur_lexar(t_ast_node *head)
 {
 	t_ast_node	*ret;
+	char		*ptr;
 	char		*str;
 	long		index;
+	long		tmp;
+	long		bracket_count;
 	
-	//|| && check -> no -> return head
-	if (!find_or_and_bracket(head->cmd_node->str))
-		return (head);
+	ptr = head->cmd_node->str;
 	index = 0;
-	while (head->cmd_node->str[index])
+	//|| && check -> no -> return head
+	if (!find_or_and_bracket(ptr))
+		return (head);
+	while (ptr[index])
 	{
-		//|| && -> left child
-		index = find_or_and_bracket(head->cmd_node->str);
-		if (ft_strncmp)
-		ret = init_ast_node(CMD_NODE);
+		index = find_or_and_bracket(ptr);
 		//() -> left child, right child 
+		if (!ft_strncmp(ptr, &BRACKET[0], 1))
+		{
+			bracket_count = 1;
+			tmp = index;
+			ft_strlcpy(&ptr[index], &ptr[index + 1], ft_strlen(&ptr[index + 1]));
+			while (ptr[tmp])
+			{
+				tmp = find_bracket(&ptr[index]);
+				if (ptr[tmp] == BRACKET[0])
+					bracket_count++;
+				else
+					bracket_count--;
+				if (!bracket_count)
+					break;
+				tmp++;
+			}
+			ft_strlcpy(&ptr[tmp], &ptr[tmp + 1], ft_strlen(&ptr[tmp + 1]));
+		}
+		//|| && -> left child, 나머지 - right child
+		//각각 recurve
+		if (!ft_strncmp(&ptr[index], OR, 2) || !ft_strncmp(&ptr[index], AND, 2))
+		{
+			ret = init_ast_node(LEFT_NODE);
+			ret->left_node = head;
+			if (!ft_strncmp(&ptr[index], OR, 2))
+			{
+				str = ft_strdup(OR);
+				ret->left_node->cmd_node->str = str;
+			}
+			else
+			{
+				str = ft_strdup(AND);
+				ret->left_node->cmd_node->str = str;
+			}
+			ptr[index] = '\0';
+			str = ft_strdup(&head->cmd_node->str[index + 2]);
+			ret->left_node->cmd_node->str = str;
+			str = ft_strdup(head->cmd_node->str);
+			head->cmd_node->str = str;
+			ret->left_node = head;
+			head = recur_lexar(head);
+			return (recur_lexar(ret));
+		}
+		index++;
 	}
 	return (ret);
 }

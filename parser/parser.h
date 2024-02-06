@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:51 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/06 20:29:46 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/06 23:44:39 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,14 @@ typedef struct s_list_node
 }	t_list_node;
 
 t_ast_node	*init_ast_node(int child_node);
+/*
+util.c
+*/
+/*
+find_or_and_bracket / find_bracket : exclusive quot
+*/
+long		find_or_and_bracket(char *input);
+long		find_bracket(char *input);
+long		find_quot(char *input, int is_double);
 
 #endif
