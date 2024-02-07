@@ -6,11 +6,44 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:28:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/07 14:47:59 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/07 21:12:39 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
+
+void	init_shell(t_minishell *shell)
+{
+	shell->cwd = getcwd(0, 0);
+	shell->input_str = 0;
+}
+
+void	exit_handle(t_minishell *shell)
+{
+	free(shell->input_str);
+	printf("exit\n");
+	exit(EXIT_SUCCESS);
+}
+
+int	str_equal(char *s1, char *s2)
+{
+	size_t	s1_len;
+	size_t	s2_len;
+
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	if (s1_len != s2_len)
+		return (0);
+	while (*s1 && *s2 && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	if (!*s1 && !*s2)
+		return (1);
+	return (0);
+}
+
 
 t_ast_node	*init_ast_node(int child_node)
 {
@@ -31,66 +64,116 @@ t_ast_node	*init_ast_node(int child_node)
 		ret->right_node = init_ast_node(CMD_NODE);
 	return (ret);
 }
+
+static	t_ast_node	*pipe_lexar(t_ast_node *head)
+{
+	//| pipe -> make next ast node,
+	//recurve head, next two node
+	long		index;
+	char		*ptr;
+	t_ast_node	*ret;
+	char		*str;
+	
+	ptr = head->cmd_node->str[0];
+	index = find_pipe(ptr);
+	if (ptr[index])
+	{
+		//split ast tree
+		ret = init_ast_node(CMD_NODE);
+		ret->next_ast_node = head;
+		ptr[index] = '\0';
+		str = ft_strdup(ptr);
+		ret->cmd_node->str = init_doub_char(&str, 1);
+		str = ft_strdup(&str[index + 1]);
+		free_doub_char(head->cmd_node->str);
+		head->cmd_node->str = init_doub_char(&str, 1);
+		recur_lexar(head);
+		return (recur_lexar(ret));
+	}
+	return (head);
+}
+
+static	long	bracket_lexar(t_ast_node *head)
+{
+	long		index;
+	char		*ptr;
+	long		bracket_count;
+	long		tmp;
+
+	ptr = head->cmd_node->str[0];
+	index = find_or_and_bracket(ptr);
+	if (!ft_strncmp(ptr, &BRACKET[0], 1))
+	{
+		bracket_count = 1;
+		tmp = index;
+		ft_strlcpy(&ptr[index], &ptr[index + 1], ft_strlen(&ptr[index + 1]));
+		while (TRUE)
+		{
+			tmp = find_bracket(&ptr[index]);
+			if (ptr[tmp] == BRACKET[0])
+				bracket_count++;
+			else
+				bracket_count--;
+			if (!bracket_count || !ptr[tmp])
+				break;
+			tmp++;
+		}
+		ft_strlcpy(&ptr[tmp], &ptr[tmp + 1], ft_strlen(&ptr[tmp + 1]));
+	}
+	return (index);
+}
+
+static	t_ast_node	*or_and_lexar(t_ast_node *head)
+{
+	char		*ptr;
+	long		index;
+	char		*str;
+	t_ast_node	*ret;
+
+	//|| && -> left(left_childe cmd_node), right(right_child, cmd_node), head->cmd_node(|| or &&)
+	//각각 recurve
+	ptr = head->cmd_node->str[0];
+	index = find_or_and_bracket(ptr);
+	if (!ft_strncmp(&ptr[index], OR, 2) || !ft_strncmp(&ptr[index], AND, 2))
+	{
+		ret = init_ast_node(RIGHT_NODE);
+		ret->next_ast_node = head->next_ast_node;
+		if (!ft_strncmp(&ptr[index], OR, 2))
+			str = ft_strdup(OR);
+		else
+			str = ft_strdup(AND);
+		ret->str = str;
+		ptr[index] = '\0';
+		str = ft_strdup(&ptr[index + 2]);
+		ret->right_node->cmd_node->str = init_doub_char(&str, 1);
+		str = ft_strdup(ptr);
+		free_doub_char(head->cmd_node->str);
+		head->cmd_node->str = init_doub_char(&str, 1);
+		ret->left_node = head;
+		recur_lexar(ret->left_node);
+		recur_lexar(ret->right_node);
+		return (ret);
+	}
+	return (head);
+}
  
 t_ast_node	*recur_lexar(t_ast_node *head)
 {
 	t_ast_node	*ret;
 	char		*ptr;
-	char		*str;
 	long		index;
-	long		tmp;
-	long		bracket_count;
 	
 	ptr = head->cmd_node->str[0];
-	index = 0;
-	//|| && check -> no -> return head
-	if (!find_or_and_bracket(ptr))
+	ret = pipe_lexar(head);
+	if (ret != head)
+		return (ret);
+	index = find_or_and_bracket(ptr);
+	if (!ptr[index])
 		return (head);
-	while (ptr[index])
-	{
-		index = find_or_and_bracket(ptr);
-		//first meet : () => delete!
-		if (!ft_strncmp(ptr, &BRACKET[0], 1))
-		{
-			bracket_count = 1;
-			tmp = index;
-			ft_strlcpy(&ptr[index], &ptr[index + 1], ft_strlen(&ptr[index + 1]));
-			while (ptr[tmp])
-			{
-				tmp = find_bracket(&ptr[index]);
-				if (ptr[tmp] == BRACKET[0])
-					bracket_count++;
-				else
-					bracket_count--;
-				if (!bracket_count)
-					break;
-				tmp++;
-			}
-			ft_strlcpy(&ptr[tmp], &ptr[tmp + 1], ft_strlen(&ptr[tmp + 1]));
-		}
-		//|| && -> left(left_childe cmd_node), right(right_child, cmd_node), head->cmd_node(|| or &&)
-		//각각 recurve
-		if (!ft_strncmp(&ptr[index], OR, 2) || !ft_strncmp(&ptr[index], AND, 2))
-		{
-			ret = init_ast_node(RIGHT_NODE);
-			if (!ft_strncmp(&ptr[index], OR, 2))
-				str = ft_strdup(OR);
-			else
-				str = ft_strdup(AND);
-			ret->str = str;
-			ptr[index] = '\0';
-			str = ft_strdup(&ptr[index + 2]);
-			ret->right_node->cmd_node->str = init_doub_char(&str, 1);
-			str = ft_strdup(ptr);
-			free_doub_char(head->cmd_node->str);
-			head->cmd_node->str = init_doub_char(&str, 1);
-			ret->left_node = head;
-			recur_lexar(ret->left_node);
-			recur_lexar(ret->right_node);
-			return (ret);
-		}
-		index++;
-	}
+	bracket_lexar(head);
+	ret = or_and_lexar(head);
+	if (ret != head)
+		return (ret);
 	return (ret);
 }
 
@@ -100,8 +183,34 @@ t_ast_node	*lexar(char *input)
 	char		*i;
 
 	head = init_ast_node(CMD_NODE);
-	i = (char *)malloc(sizeof(char) * ft_strlen(input));
-	head->cmd_node->str = init_doub_char(&input, 1);
+	i = ft_strdup(input);
+	head->cmd_node->str = init_doub_char(&i, 1);
 	head = recur_lexar(head);	
 	return (head);
+}
+
+
+
+int	main()
+{
+	t_minishell	shell;
+	t_ast_node	*head;
+
+	system("leaks a.out");
+
+	init_shell(&shell);
+	while (1)
+	{
+		shell.input_str = readline("minishell-1.0$ ");
+		if (!shell.input_str)
+			exit_handle(&shell);
+		else if (str_equal(shell.input_str, "exit"))
+			exit_handle(&shell);
+		head = lexar(shell.input_str);
+		// else
+		// 	process_input(&shell);
+		add_history(shell.input_str);
+		free(shell.input_str);
+	}
+	return (0);
 }
