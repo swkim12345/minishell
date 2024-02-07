@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:03:03 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 15:40:16 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/07 21:03:16 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,23 @@ t_str_node	*dequeue(t_str_list *str_list)
 	return (head);
 }
 
-void	add_string_node(t_str_list *str_list, t_parse_str *parse_str)
+t_str_node	*create_node(char *str)
 {
 	t_str_node	*str_node;
 
 	str_node = malloc(sizeof(t_str_node));
-	str_node->str = ft_substr(parse_str->str, 0, parse_str->cursor);
+	str_node->str = str;
+	str_node->next = 0;
+	return (str_node);
+}
+
+void	add_string_node(t_str_list *str_list, t_parse_str *parse_str)
+{
+	char	*str;
+
+	str = ft_substr(parse_str->str, 0, parse_str->cursor);
 	free_parse_str(parse_str);
-	enqueue(str_list, str_node);
+	enqueue(str_list, create_node(str));
 }
 
 char	**list_to_char_arr(t_str_list *str_list)

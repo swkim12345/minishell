@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:38:39 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 16:12:02 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/07 21:47:33 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_parse_str
 	char	*str;
 	size_t	malloc_size;
 	size_t	cursor;
+	int		asterisk_flag;
 }	t_parse_str;
 
 typedef struct s_str_node
@@ -46,6 +47,7 @@ void	enqueue(t_str_list *str_list, t_str_node *str_node);
 t_str_node	*dequeue(t_str_list *str_list);
 void	add_string_node(t_str_list *str_list, t_parse_str *parse_str);
 char	**list_to_char_arr(t_str_list *str_list);
+t_str_node	*create_node(char *str);
 
 /* argument_parser_utils.c */
 void	free_parse_str(t_parse_str *parse_str);
