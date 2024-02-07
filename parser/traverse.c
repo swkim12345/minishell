@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   traverse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 16:52:54 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 20:28:51 by sunghwki         ###   ########.fr       */
+/*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
+/*   Updated: 2024/02/07 16:26:59 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
-/*
-||, && 처리는 lexar에서 처리가 완료된 것으로 가정함.
-*/
 
-// t_ast_node	*parser(char *input)
-// {
-// 	t_ast_node	*head;
-	
-// 	head = lexar(input);
-// 	//split with space
-	
-// 	//splitting
-// 	//merge
-// }
+t_ast_node	*traverse(t_ast_node *head)
+{
+
+}
