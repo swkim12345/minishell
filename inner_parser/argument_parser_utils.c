@@ -6,11 +6,11 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:03:58 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/06 22:05:40 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/07 20:04:37 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "../main.h"
 
 void	free_parse_str(t_parse_str *parse_str)
 {
@@ -24,6 +24,7 @@ void	init_parse_str(t_parse_str *parse_str)
 	parse_str->str[10] = 0;
 	parse_str->cursor = 0;
 	parse_str->malloc_size = 10;
+	parse_str->asterisk_flag = 0;
 }
 
 void	init_str_node(t_str_node *str_node)

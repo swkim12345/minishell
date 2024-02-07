@@ -1,24 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   argument_parser_utils2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 15:42:16 by minsepar         ###   ########.fr       */
+/*   Created: 2024/02/07 17:22:24 by minsepar          #+#    #+#             */
+/*   Updated: 2024/02/07 19:48:47 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#include "../main.h"
 
-/* ft_echo.c */
-void	print_echo(char **str, int nflag);
-int     ft_echo(t_cmd_node *cmd_node);
-int		ft_isspace(int c);
-
-/* bulitin.c */
-int     process_builtin(t_cmd_node *cmd_node);
-
-#endif

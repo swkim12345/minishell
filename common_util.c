@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 13:45:47 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/07 21:54:02 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,15 @@ int	str_equal(char *s1, char *s2)
 		s2++;
 	}
 	if (!*s1 && !*s2)
+		return (1);
+	return (0);
+}
+
+int		ft_isspace(int c)
+{
+	if (c >= 9 && c <= 12)
+		return (1);
+	if (c == 32)
 		return (1);
 	return (0);
 }

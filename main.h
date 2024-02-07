@@ -3,23 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 13:51:14 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/07 21:42:12 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAIN_H
 # define MAIN_H
 # define EXIT_SUCCESS 0
+# define TRUE		1
+# define FALSE		0
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <unistd.h>
+# include <stdlib.h>
 # include "libft/libft.h"
 # include "parser/parser.h"
 # include "builtin/builtin.h"
+# include "inner_parser/inner_parser.h"
 
 typedef struct s_minishell
 {
