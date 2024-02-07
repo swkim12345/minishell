@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:28:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/07 13:34:41 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:37:13 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ t_ast_node	*recur_lexar(t_ast_node *head)
 t_ast_node	*lexar(char *input)
 {
 	t_ast_node	*head;
+	char		*i;
 
 	head = init_ast_node(CMD_NODE);
 	head->cmd_node->str = input;

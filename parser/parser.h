@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:51 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 13:34:47 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:36:14 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_ast_node
 typedef struct s_cmd_node
 {
 	t_cmd_node *next_cmd;
-	char *str; 
+	char **str; 
 }	t_cmd_node;
 
 t_ast_node	*init_ast_node(int child_node);
