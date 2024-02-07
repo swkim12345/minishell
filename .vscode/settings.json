@@ -6,6 +6,12 @@
         "keymaps.h": "c",
         "sstream": "c",
         "stdio.h": "c",
-        "builtin.h": "c"
+        "builtin.h": "c",
+        "_types.h": "c",
+        "_pthread_types.h": "c",
+        "main.h": "c",
+        "parser.h": "c",
+        "fcntl.h": "c",
+        "unistd.h": "c"
     }
 }

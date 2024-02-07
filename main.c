@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 13:45:40 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/07 20:11:57 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	main()
 			exit_handle(&shell);
 		else if (str_equal(shell.input_str, "exit"))
 			exit_handle(&shell);
-		else
-			process_input(&shell);
+		// else
+		// 	process_input(&shell);
 		add_history(shell.input_str);
 		free(shell.input_str);
 	}

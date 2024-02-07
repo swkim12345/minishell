@@ -6,7 +6,7 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/02/06 20:11:33 by minsepar         ###   ########.fr        #
+#    Updated: 2024/02/07 20:13:12 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Werror -Wextra
 
 NAME = minishell
 
-SRCS = main.c
+SRCS = main.c common_util.c
 
 OBJS = $(SRCS:.c=.o)
 

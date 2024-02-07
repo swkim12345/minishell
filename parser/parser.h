@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:51 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 16:35:32 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/07 21:41:58 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# define TRUE		1
-# define FALSE		0
+
 # define NOTDEFINED	-1
 # define OR			"||"
 # define AND		"&&"
