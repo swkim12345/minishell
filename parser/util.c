@@ -6,93 +6,48 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 23:16:31 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/07 13:54:53 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:33:11 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-char	**init_doublechar(char *input)
+char	**init_doub_char(char **input, int size)
 {
 	char	**ret;
+	int		i;
 
-	ret = (char **)malloc(sizeof(char *) * 2);
-	ret[0] = input;
-	ret[1] = NULL;
+	i = -1;
+	ret = (char **)malloc(sizeof(char *) * (size + 1));
+	while (++i < size)
+		ret[i] = input[i];
+	ret[i] = NULL;
 	return (ret);
 }
 
-long	find_bracket(char *input)
+void	free_doub_char(char **input)
 {
-	long	index;
+	int	i;
 
-	index = 0;
-	while (input[index])
-	{
-		if (!ft_strncmp(input[index], DOUBLEQUOT, 1) 
-		|| !ft_strncmp(input[index], SINGLEQUOT, 1))
-		{
-			while (TRUE)
-			{
-				if (!ft_strncmp(input[index], DOUBLEQUOT, 1) 
-				|| !ft_strncmp(input[index], SINGLEQUOT, 1))
-					break;
-				index++;
-			}
-		}
-		if (!ft_strncmp(input[index], BRACKET[0], 1)
-		|| !ft_strncmp(input[index], BRACKET[1], 1))
-			break ;
-		index++;
-	}
-	return (index);
+	i = -1;
+	while (input[++i])
+		free(input[i]);
+	free(input[i]);
+	free(input);
 }
 
-long	find_or_and_bracket(char *input)
+void	free_cmd_node(t_cmd_node *node)
 {
-	long	index;
+	t_cmd_node	*next_node;
+	int	i;
 
-	index = 0;
-	while (input[index])
-	{
-		if (!ft_strncmp(input[index], DOUBLEQUOT, 1) 
-		|| !ft_strncmp(input[index], SINGLEQUOT, 1))
-		{
-			while (TRUE)
-			{
-				if (!ft_strncmp(input[index], DOUBLEQUOT, 1) 
-				|| !ft_strncmp(input[index], SINGLEQUOT, 1))
-					break;
-				index++;
-			}
-		}
-		if (!ft_strncmp(input[index], OR, 2))
-			return (index);
-		if (!ft_strncmp(input[index], AND, 2))
-			return (index);
-		if (!ft_strncmp(input[index], BRACKET[0], 1)
-		|| !ft_strncmp(input[index], BRACKET[1], 1))
-			return (index);
-		index++;
-	}
-	return (index);
+	i = -1;
+	if (node == NULL)
+		return ;
+	next_node = node->next_cmd;
+	free_doub_char(node->str);
+	free(node->cmd_name);
+	free(node);
+	free_cmd_node(next_node);
 }
 
-long	find_quot(char *input, int is_double)
-{
-	long index;
-	char tmp;
-
-	index = 0;
-	if (is_double == FALSE)
-		tmp = SINGLEQUOT[0];
-	else
-		tmp = DOUBLEQUOT[0];
-	while (input[index])
-	{
-		if (!ft_strncmp(input[index], &tmp, 1))
-			break;
-		index++;
-	}
-	return (index);
-}
