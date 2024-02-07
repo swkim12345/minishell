@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:28:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/07 13:54:34 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:47:59 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,23 +74,17 @@ t_ast_node	*recur_lexar(t_ast_node *head)
 		{
 			ret = init_ast_node(RIGHT_NODE);
 			if (!ft_strncmp(&ptr[index], OR, 2))
-			{
 				str = ft_strdup(OR);
-				ret->str = str;
-			}
 			else
-			{
 				str = ft_strdup(AND);
-				ret->str = str;
-			}
+			ret->str = str;
 			ptr[index] = '\0';
 			str = ft_strdup(&ptr[index + 2]);
-			ret->right_node->cmd_node->str = init_doublechar(str);
+			ret->right_node->cmd_node->str = init_doub_char(&str, 1);
 			str = ft_strdup(ptr);
-			head->cmd_node->str = str = init_doublechar(str);
+			free_doub_char(head->cmd_node->str);
+			head->cmd_node->str = init_doub_char(&str, 1);
 			ret->left_node = head;
-			free(ret->cmd_node->str);
-			free(ret->cmd_node);
 			recur_lexar(ret->left_node);
 			recur_lexar(ret->right_node);
 			return (ret);
@@ -107,7 +101,7 @@ t_ast_node	*lexar(char *input)
 
 	head = init_ast_node(CMD_NODE);
 	i = (char *)malloc(sizeof(char) * ft_strlen(input));
-	head->cmd_node->str = init_doublechar(input);
+	head->cmd_node->str = init_doub_char(&input, 1);
 	head = recur_lexar(head);	
 	return (head);
 }
