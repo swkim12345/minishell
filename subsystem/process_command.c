@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   process_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/06 19:31:26 by minsepar         ###   ########.fr       */
+/*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
+/*   Updated: 2024/02/06 19:33:36 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
-# define EXIT_SUCCESS 0
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <unistd.h>
-# include "libft/libft.h"
-
-typedef struct s_minishell
+#include "../parser/parser.h"
+/*
+	cmd struct list
+*/
+int	process_command()
 {
-    char    *cwd;
-    char    *input_str;
-    
-}   t_minishell;
-
-typedef struct s_cmd_info
-{
-	char	*cmd;
-	char	*arguments;
-}	t_cmd_info;
-#endif
+	int 
+}

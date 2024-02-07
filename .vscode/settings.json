@@ -3,6 +3,9 @@
         "libft.h": "c",
         "history.h": "c",
         "readline.h": "c",
-        "keymaps.h": "c"
+        "keymaps.h": "c",
+        "sstream": "c",
+        "stdio.h": "c",
+        "builtin.h": "c"
     }
 }
