@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:28:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/07 12:55:51 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:34:41 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 t_ast_node	*init_ast_node(int child_node)
 {
 	t_ast_node	*ret;
-	t_list_node	*node;
+	t_cmd_node	*node;
 	
 	ret = (t_ast_node *)malloc(sizeof(t_ast_node));
 	ft_memset((void *)ret, 0, sizeof(ret));
 	if (CMD_NODE & child_node)
 	{
-		node = (t_list_node *)malloc(sizeof(t_list_node));
+		node = (t_cmd_node *)malloc(sizeof(t_cmd_node));
 		ft_memset((void *)node, 0, sizeof(node));
 		ret->cmd_node = node;
 	}
@@ -90,6 +90,8 @@ t_ast_node	*recur_lexar(t_ast_node *head)
 			str = ft_strdup(head->cmd_node->str);
 			head->cmd_node->str = str;
 			ret->left_node = head;
+			free(ret->cmd_node->str);
+			free(ret->cmd_node);
 			recur_lexar(ret->left_node);
 			recur_lexar(ret->right_node);
 			return (ret);
