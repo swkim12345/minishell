@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:51 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/06 23:44:39 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:34:47 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define OR			"||"
 # define AND		"&&"
 # define BRACKET	"()"
-# define DOUBLEQUOT	'\"'
+# define DOUBLEQUOT	"\""
 # define SINGLEQUOT	"\'"
 # define NO_NODE	0
 # define LEFT_NODE	1
@@ -30,16 +30,17 @@ typedef struct s_ast_node
 {
 	t_ast_node			*left_node;
 	t_ast_node			*right_node;
-	t_list_node			*cmd_node;
+	t_cmd_node			*cmd_node;
 	char				*str;
+	int					left_bool;
+	int					right_bool;
 }	t_ast_node;
 
-typedef struct s_list_node
+typedef struct s_cmd_node
 {
-	t_list_node *child;
-	t_list_node *prev_cmd;
+	t_cmd_node *next_cmd;
 	char *str; 
-}	t_list_node;
+}	t_cmd_node;
 
 t_ast_node	*init_ast_node(int child_node);
 /*
