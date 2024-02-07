@@ -6,11 +6,10 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:28:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/07 13:37:13 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:54:34 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
 #include "../main.h"
 
 t_ast_node	*init_ast_node(int child_node)
@@ -42,7 +41,7 @@ t_ast_node	*recur_lexar(t_ast_node *head)
 	long		tmp;
 	long		bracket_count;
 	
-	ptr = head->cmd_node->str;
+	ptr = head->cmd_node->str[0];
 	index = 0;
 	//|| && check -> no -> return head
 	if (!find_or_and_bracket(ptr))
@@ -85,10 +84,10 @@ t_ast_node	*recur_lexar(t_ast_node *head)
 				ret->str = str;
 			}
 			ptr[index] = '\0';
-			str = ft_strdup(&head->cmd_node->str[index + 2]);
-			ret->right_node->cmd_node->str = str;
-			str = ft_strdup(head->cmd_node->str);
-			head->cmd_node->str = str;
+			str = ft_strdup(&ptr[index + 2]);
+			ret->right_node->cmd_node->str = init_doublechar(str);
+			str = ft_strdup(ptr);
+			head->cmd_node->str = str = init_doublechar(str);
 			ret->left_node = head;
 			free(ret->cmd_node->str);
 			free(ret->cmd_node);
@@ -107,7 +106,8 @@ t_ast_node	*lexar(char *input)
 	char		*i;
 
 	head = init_ast_node(CMD_NODE);
-	head->cmd_node->str = input;
+	i = (char *)malloc(sizeof(char) * ft_strlen(input));
+	head->cmd_node->str = init_doublechar(input);
 	head = recur_lexar(head);	
 	return (head);
 }

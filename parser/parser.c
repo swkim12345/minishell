@@ -6,11 +6,10 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:54 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/06 13:28:06 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:54:44 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
 #include "../main.h"
 
 
