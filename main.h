@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 13:53:33 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:51:14 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,14 @@ typedef struct s_minishell
     char    *input_str;
     
 }   t_minishell;
+
+typedef struct s_cmd_info
+{
+	char	*cmd;
+	char	*arguments;
+}	t_cmd_info;
+
+/* common_util.c */
+int	str_equal(char *s1, char *s2);
 
 #endif
