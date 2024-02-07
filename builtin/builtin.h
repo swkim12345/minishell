@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/06 22:15:39 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/06 23:06:53 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	init_str_list(t_str_list *str_list);
 void	append_char(t_parse_str *parse_str, char c);
 
 /* ft_echo.c */
-void	print_echo(char **str);
-int ft_echo(char *str);
+void	print_echo(char **str, int nflag);
+int 	ft_echo(char *str, int nflag);
 int		ft_isspace(int c);
 
 #endif

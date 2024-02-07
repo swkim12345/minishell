@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.c                                          :+:      :+:    :+:   */
+/*   subsystem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 17:17:16 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 13:50:20 by minsepar         ###   ########.fr       */
+/*   Created: 2024/02/07 13:39:54 by minsepar          #+#    #+#             */
+/*   Updated: 2024/02/07 13:43:32 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#ifndef SUBSYSTEM_H
+# define SUBSYSTEM_H
 
-int	process_builtin(t_cmd_node *cmd_node)
-{
-	
-}
+
+#endif

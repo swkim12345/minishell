@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.c                                          :+:      :+:    :+:   */
+/*   common_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 17:17:16 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 13:50:20 by minsepar         ###   ########.fr       */
+/*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
+/*   Updated: 2024/02/07 13:45:47 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "main.h"
 
-int	process_builtin(t_cmd_node *cmd_node)
+int	str_equal(char *s1, char *s2)
 {
-	
+	size_t	s1_len;
+	size_t	s2_len;
+
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	if (s1_len != s2_len)
+		return (0);
+	while (*s1 && *s2 && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	if (!*s1 && !*s2)
+		return (1);
+	return (0);
 }
