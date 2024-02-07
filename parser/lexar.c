@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:28:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/07 00:07:12 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/07 12:55:51 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_ast_node	*init_ast_node(int child_node)
 	ft_memset((void *)ret, 0, sizeof(ret));
 	if (CMD_NODE & child_node)
 	{
-		node = (t_ast_node *)malloc(sizeof(t_ast_node));
+		node = (t_list_node *)malloc(sizeof(t_list_node));
 		ft_memset((void *)node, 0, sizeof(node));
 		ret->cmd_node = node;
 	}
@@ -50,7 +50,7 @@ t_ast_node	*recur_lexar(t_ast_node *head)
 	while (ptr[index])
 	{
 		index = find_or_and_bracket(ptr);
-		//() -> left child, right child 
+		//first meet : () => delete!
 		if (!ft_strncmp(ptr, &BRACKET[0], 1))
 		{
 			bracket_count = 1;
@@ -69,30 +69,30 @@ t_ast_node	*recur_lexar(t_ast_node *head)
 			}
 			ft_strlcpy(&ptr[tmp], &ptr[tmp + 1], ft_strlen(&ptr[tmp + 1]));
 		}
-		//|| && -> left child, 나머지 - right child
+		//|| && -> left(left_childe cmd_node), right(right_child, cmd_node), head->cmd_node(|| or &&)
 		//각각 recurve
 		if (!ft_strncmp(&ptr[index], OR, 2) || !ft_strncmp(&ptr[index], AND, 2))
 		{
-			ret = init_ast_node(LEFT_NODE);
-			ret->left_node = head;
+			ret = init_ast_node(RIGHT_NODE);
 			if (!ft_strncmp(&ptr[index], OR, 2))
 			{
 				str = ft_strdup(OR);
-				ret->left_node->cmd_node->str = str;
+				ret->str = str;
 			}
 			else
 			{
 				str = ft_strdup(AND);
-				ret->left_node->cmd_node->str = str;
+				ret->str = str;
 			}
 			ptr[index] = '\0';
 			str = ft_strdup(&head->cmd_node->str[index + 2]);
-			ret->left_node->cmd_node->str = str;
+			ret->right_node->cmd_node->str = str;
 			str = ft_strdup(head->cmd_node->str);
 			head->cmd_node->str = str;
 			ret->left_node = head;
-			head = recur_lexar(head);
-			return (recur_lexar(ret));
+			recur_lexar(ret->left_node);
+			recur_lexar(ret->right_node);
+			return (ret);
 		}
 		index++;
 	}
