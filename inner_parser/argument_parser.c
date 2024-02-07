@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 22:17:16 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/07 22:28:50 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,16 @@ int	recursive_match(char *file_name, char *pattern)
 		{
 			file_name++;
 			pattern++;
+			if (recursive_match(file_name, pattern))
+				return (TRUE);
 		}
 		else
 			return (FALSE);
 	}
 	else
 	{
-		recursive_match(file_name, pattern + 1);
+		if (recursive_match(file_name + 1, pattern + 1))
+			return (TRUE);
 		while (*file_name)
 		{
 			file_name++;
