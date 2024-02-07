@@ -6,13 +6,21 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 23:16:31 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/07 12:58:36 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:54:53 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "../main.h"
 
+char	**init_doublechar(char *input)
+{
+	char	**ret;
 
+	ret = (char **)malloc(sizeof(char *) * 2);
+	ret[0] = input;
+	ret[1] = NULL;
+	return (ret);
+}
 
 long	find_bracket(char *input)
 {

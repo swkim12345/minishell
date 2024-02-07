@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
 /*   Updated: 2024/02/07 13:51:14 by minsepar         ###   ########.fr       */
@@ -18,6 +18,8 @@
 # include <readline/history.h>
 # include <unistd.h>
 # include "libft/libft.h"
+# include "parser/parser.h"
+# include "builtin/builtin.h"
 
 typedef struct s_minishell
 {

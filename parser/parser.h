@@ -44,14 +44,10 @@ typedef struct s_cmd_node
 }	t_cmd_node;
 
 t_ast_node	*init_ast_node(int child_node);
-/*
-util.c
-*/
-/*
-find_or_and_bracket / find_bracket : exclusive quot
-*/
+/*util.c*/
+/*find_or_and_bracket / find_bracket : exclusive quot*/
 long		find_or_and_bracket(char *input);
 long		find_bracket(char *input);
 long		find_quot(char *input, int is_double);
-
+char		**init_doublechar(char *input);
 #endif
