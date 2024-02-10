@@ -15,10 +15,6 @@ BONUS_SRCS = ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c \
 
 GNL_SRCS = get_next_line_bonus.c get_next_line_utils_bonus.c
 
-PRINTF_SRCS = 
-
-PRINTF_SRCS = 
-
 OBJECTS = $(SRCS:.c=.o)
 
 BONUS_OBJECTS = $(BONUS_SRCS:.c=.o)
@@ -29,8 +25,8 @@ NAME = libftprintf.a
 
 all : $(NAME)
 
-$(NAME): $(OBJECTS)
-	ar rucs $(NAME) $(OBJECTS)
+$(NAME): $(OBJECTS) $(GNL_OBJECTS)
+	ar rucs $(NAME) $(OBJECTS) $(GNL_OBJECTS)
 
 clean:
 	rm -f $(OBJECTS) $(BONUS_OBJECTS) $(GNL_OBJECTS)

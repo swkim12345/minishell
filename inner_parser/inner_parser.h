@@ -14,6 +14,7 @@
 # define INNER_PARSER_H
 
 # include <dirent.h>
+# include <sys/wait.h>
 
 typedef struct s_parse_str
 {
@@ -25,7 +26,7 @@ typedef struct s_parse_str
 
 typedef struct s_str_node
 {
-	char				*str;
+	char			*str;
 	struct s_str_node	*next;
 }	t_str_node;
 
@@ -35,6 +36,14 @@ typedef struct s_str_list
 	t_str_node	*head;
 	t_str_node	*tail;
 }	t_str_list;
+
+typedef struct s_inner_parser
+{
+	int	i;
+	int	j;
+	int	start_index;
+	int	match;
+}	t_inner_parser;
 
 /* argument_parser.c */
 void	parse_single_char(t_parse_str *parse_str, char **str);

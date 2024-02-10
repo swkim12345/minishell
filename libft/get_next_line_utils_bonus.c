@@ -12,16 +12,6 @@
 
 #include "get_next_line_bonus.h"
 
-unsigned int	ft_strlen(const char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
 void	*ft_free(void **zmem1, void *mem2, void *mem3)
 {
 	if (zmem1)
