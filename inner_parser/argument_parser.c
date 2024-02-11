@@ -43,7 +43,7 @@ void	parse_single_quote(t_parse_str *parse_str, char **str)
 	}
 	(*str)++;
 }
-/*
+
 static int	decode_ansi_c_str_helper(t_parse_str *parse_str, char **str)
 {
 	if (**str = '0')
@@ -90,49 +90,20 @@ void	parse_ansi_c_quote(t_parse_str *parse_str, char **str)
 		(*str)++;
 	}
 }
-*/
 
-/*
- *trying dup instead due to validation testing
-*/
-void	ft_dup2(int fd)
+void	parse_env_var(t_parse_str *parse_str, char **str)
 {
-	dup2(fd, 1);
-}
+	char	*env_name;
+	char	*substitude_name;
 
-char	*ft_sprintf(char *format_str)
-{
-	char	*tmp_file = "tmp_file";
-	int	tmp_file_fd;
-
-	int pid = fork();
-	if (pid == 0)
-	{
-		tmp_file_fd = open(tmp_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		dup2(tmp_file_fd, 1);
-		close(tmp_file_fd);
-		printf("%s", format_str);
-	}
-	else
-	{
-		wait(0);
-		tmp_file_fd = open(tmp_file, O_RDONLY);
-		char *str = get_next_line(tmp_file_fd);
-		printf("str: %s", str);
-	}
-	return (0);
-}
-
-void	parse_ansi_c_quote(t_parse_str *parse_str, char **str)
-{
-	int	length;
-	char	*format_str;
-
-	length = 0;
-	while ((*str)[length] && (*str)[length] != '\'')
-		length++;
-	format_str = ft_substr(*str, 0, length);
-	ft_sprintf(format_str);
+	while (**str && !isspace(**str))
+		parse_single_char(parse_str, str);
+	env_name = ft_substr(parse_str->str, 0, parse_str->cursor);
+	substitude_name = getenv(env_name);
+	free(env_name);
+	free(parse_str->str);
+	parse_str->str = ft_strdup(substitude_name);
+	parse_str->cursor = ft_strlen(substitude_name);
 }
 
 void	parse_dollar_sign(t_parse_str *parse_str, char **str)
@@ -142,8 +113,8 @@ void	parse_dollar_sign(t_parse_str *parse_str, char **str)
 		parse_double_quote(parse_str, str);
 	else if (**str == '\'')
 		parse_ansi_c_quote(parse_str, str);
-//	else
-//		parse_env_var(parse_str, str);
+	else
+		parse_env_var(parse_str, str);
 }
 
 void	get_cwd_files(t_str_list *str_list)
@@ -295,17 +266,14 @@ int main(int argc, char **argv)
 	t_str_node	*cur_node;
 	t_parse_str	parse_str;
 
-	/*
 	init_str_list(&str_list);
 	init_parse_str(&parse_str);
-	parse_str.str = argv[1];
-	parse_asterisk(&str_list, &parse_str);
+	parse_single_word(&argv[1], &str_list);
 	while (str_list.size > 0)
 	{
 		cur_node = dequeue(&str_list);
-		printf("%s\n", cur_node->str);
+		printf("here: %s\n", cur_node->str);
 	}
-	*/
-	char *str = "\x29\x29\x29\x29\n";
-	parse_ansi_c_quote(&parse_str, &str);
+//	char *str = "\x29\x29\x29\x29\n";
+	
 }
