@@ -5,22 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/12 23:44:33 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/12 23:50:19 by sunghwki         ###   ########.fr       */
+/*   Created: 2024/02/06 23:16:31 by sunghwki          #+#    #+#             */
+/*   Updated: 2024/02/12 20:50:21 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-int	str_cmp(char *str_org, char *str_cmp)
+char	**init_doub_char(char **input, int size)
 {
-	while (!*str_org && !*str_cmp && *str_org == *str_cmp)
-	{
-		str_org++;
-		str_cmp++;
-	}
-	if (*str_org && *str_cmp)
-		return (TRUE);
-	else
-		return (FALSE);
+	char	**ret;
+	int		i;
+
+	i = -1;
+	ret = (char **)malloc(sizeof(char *) * (size + 1));
+	while (++i < size)
+		ret[i] = input[i];
+	ret[i] = NULL;
+	return (ret);
+}
+
+void	free_doub_char(char **input)
+{
+	int	i;
+
+	i = -1;
+	while (input[++i])
+		free(input[i]);
+	free(input[i]);
+	free(input);
+}
+
+void	free_cmd_node(t_cmd_node *node)
+{
+	t_cmd_node	*next_node;
+	int			i;
+
+	i = -1;
+	if (node == NULL)
+		return ;
+	free_doub_char(node->str);
+	free(node->cmd_name);
+	free(node);
+	free_cmd_node(next_node);
 }

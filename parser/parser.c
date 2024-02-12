@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:54 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/12 21:01:27 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/12 23:38:50 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,28 @@ char		**parse_str(char *input)
 	'', ""는 처리하지 않음.
 	*/
 	long	index;
+	char	*ptr;
 	char	**ret;
 
 	index = 0;
 	while (input[index])
 	{
+		ptr = &input[index];
 		//check "", ''
-		if (input[index] == SINGLEQUOT[0]
-		|| input[index] == DOUBLEQUOT[0])
+		if (*ptr == SINGLEQUOT[0]
+		|| *ptr == DOUBLEQUOT[0])
 			{
-				index += find_end_quote(&input[index]);
-				if (!input[index])
+				ptr += find_end_quote(ptr);
+				if (!ptr)
 					return (NULL);
 			}
 		//space
 		//tab
 		//newline
-		if ()
+		if (*ptr == ' ' || *ptr == '	' || *ptr == '\n')
+		{
+			//split str
+		}
 	}
 	return (index);
 }
