@@ -1,27 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   argument_parser_utils2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 16:52:54 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 20:28:51 by sunghwki         ###   ########.fr       */
+/*   Created: 2024/02/07 17:22:24 by minsepar          #+#    #+#             */
+/*   Updated: 2024/02/07 19:48:47 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
-/*
-||, && 처리는 lexar에서 처리가 완료된 것으로 가정함.
-*/
 
-// t_ast_node	*parser(char *input)
-// {
-// 	t_ast_node	*head;
-	
-// 	head = lexar(input);
-// 	//split with space
-	
-// 	//splitting
-// 	//merge
-// }
