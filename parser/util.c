@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 23:16:31 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/07 17:17:25 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/12 20:50:21 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_doub_char(char **input)
 void	free_cmd_node(t_cmd_node *node)
 {
 	t_cmd_node	*next_node;
-	int	i;
+	int			i;
 
 	i = -1;
 	if (node == NULL)
@@ -49,4 +49,3 @@ void	free_cmd_node(t_cmd_node *node)
 	free(node);
 	free_cmd_node(next_node);
 }
-
