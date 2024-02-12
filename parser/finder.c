@@ -6,19 +6,19 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:01:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/07 21:09:42 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/12 20:41:30 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-long	find_bracket(char *input)
+long	find_end_quote(char *input)
 {
 	long	index;
 	char	c;
 
 	index = 0;
-	while (TRUE)
+	while (input[index])
 	{
 		if (!ft_strncmp(&input[index], DOUBLEQUOT, 1)
 			|| !ft_strncmp(&input[index], SINGLEQUOT, 1))
@@ -30,6 +30,21 @@ long	find_bracket(char *input)
 					break ;
 			}
 		}
+	}
+	return (index);
+}
+
+long	find_bracket(char *input)
+{
+	long	index;
+	char	c;
+
+	index = 0;
+	while (input[index])
+	{
+		index = find_end_quote(input);
+		if (!input[index])
+			return (index);
 		if (!ft_strncmp(&input[index], &BRACKET[0], 1)
 			|| !ft_strncmp(&input[index], &BRACKET[1], 1))
 			break ;
@@ -65,18 +80,11 @@ long	find_pipe(char *input)
 	char	c;
 
 	index = 0;
-	while (TRUE)
+	while (input[index])
 	{
-		if (!ft_strncmp(&input[index], DOUBLEQUOT, 1)
-			|| !ft_strncmp(&input[index], SINGLEQUOT, 1))
-		{
-			c = input[index];
-			while (input[++index])
-			{
-				if (!ft_strncmp(&input[index], &c, 1))
-					break ;
-			}
-		}
+		index = find_end_quote(input);
+		if (!input[index])
+			return (index);
 		if (!ft_strncmp(&input[index], PIPE, 1)
 			&& ft_strncmp(&input[index], OR, 2))
 			break ;
@@ -90,21 +98,39 @@ long	find_pipe(char *input)
 long	find_or_and_bracket(char *input)
 {
 	long	index;
+	char	c;
 
 	index = 0;
-	while (TRUE)
+	while (input[index])
 	{
-		if (!ft_strncmp(&input[index], DOUBLEQUOT, 1)
-			|| !ft_strncmp(&input[index], SINGLEQUOT, 1))
-		{
-			while (TRUE)
-			{
-				if (!ft_strncmp(&input[index], DOUBLEQUOT, 1)
-					|| !ft_strncmp(&input[index], SINGLEQUOT, 1))
-					break ;
-				index++;
-			}
-		}
+		index = find_end_quote(input);
+		if (!input[index])
+			return (index);
+		if (!ft_strncmp(&input[index], OR, 2))
+			return (index);
+		if (!ft_strncmp(&input[index], AND, 2))
+			return (index);
+		if (!ft_strncmp(&input[index], &BRACKET[0], 1)
+			|| !ft_strncmp(&input[index], &BRACKET[1], 1))
+			return (index);
+		if (!input[index])
+			break ;
+		index++;
+	}
+	return (index);
+}
+
+long	find_redirect(char *input)
+{
+	long	index;
+	char	c;
+
+	index = 0;
+	while (input[index])
+	{
+		index = find_end_quote(input);
+		if (!input[index])
+			return (index);
 		if (!ft_strncmp(&input[index], OR, 2))
 			return (index);
 		if (!ft_strncmp(&input[index], AND, 2))
