@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 23:16:31 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/07 14:33:11 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/07 17:17:25 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	free_cmd_node(t_cmd_node *node)
 	i = -1;
 	if (node == NULL)
 		return ;
-	next_node = node->next_cmd;
 	free_doub_char(node->str);
 	free(node->cmd_name);
 	free(node);

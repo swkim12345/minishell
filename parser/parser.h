@@ -20,6 +20,7 @@
 # define BRACKET	"()"
 # define DOUBLEQUOT	"\""
 # define SINGLEQUOT	"\'"
+# define PIPE		"|"
 # define NO_NODE	0
 # define LEFT_NODE	1
 # define RIGHT_NODE	2
@@ -32,13 +33,13 @@ typedef struct s_ast_node
 {
 	t_ast_node			*left_node;
 	t_ast_node			*right_node;
+	t_ast_node			*next_ast_node;
 	t_cmd_node			*cmd_node;
 	char				*str;
 }	t_ast_node;
 
 typedef struct s_cmd_node
 {
-	t_cmd_node	*next_cmd;
 	char		*cmd_name;
 	char		**str;
 }	t_cmd_node;
@@ -49,6 +50,7 @@ t_ast_node	*init_ast_node(int child_node);
 long		find_or_and_bracket(char *input);
 long		find_bracket(char *input);
 long		find_quot(char *input, int is_double);
+long		find_pipe(char *input);
 
 /* util.c */
 char		**init_doub_char(char **input, int size);
@@ -57,4 +59,9 @@ void		free_doub_char(char **input);
 
 /* lexar.c */
 t_ast_node	*lexar(char *input);
+t_ast_node	*recur_lexar(t_ast_node *head);
+
+/* str_stack.c */
+// t_str_node	*pop(t_str_list *list);
+// t_str_list	*push(t_str_list *list, t_str_node *node);
 #endif
