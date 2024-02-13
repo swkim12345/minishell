@@ -1,5 +1,6 @@
-SRCS= ft_echo.c argument_parser_str_list.c argument_parser_utils.c \
-	  argument_parser.c
+SRCS= ft_echo.c ../inner_parser/argument_parser.c ../inner_parser/argument_parser_str_list.c \
+../inner_parser/argument_parser_utils.c \
+../common_util.c
 
-test:
-	cc -g $(SRCS) ../libft/libftprintf.a
+all:
+	cc -g $(SRCS) ../libft/libftprintf.a -lreadline
