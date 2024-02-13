@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:51 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/13 17:00:37 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:27:16 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ char		**parser(char *input);
 // int			traverse(t_ast_node *head);
 
 /* str_stack.c */
-// t_str_node	*pop(t_str_list *list);
-// t_str_list	*push(t_str_list *list, t_str_node *node);
+t_str_node	*pop(t_str_list *list);
+t_str_list	*push(t_str_list *list, t_str_node *node);
 #endif
