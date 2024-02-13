@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/13 15:17:54 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:56:53 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ void	parse_single_char(t_parse_str *parse_str, char **str, int in_quote)
 	{
 		if (**str == '\\' && (*str)[1] == '\\')
 			(*str) += 1;
+		else if (**str == '\\')
+			(*str)++;
 		else if (in_quote == FALSE && **str == '*')
 			parse_str->asterisk_flag = 1;
 		else if (**str == '$')
 		{
 			parse_dollar_sign(parse_str, str, in_quote);
-			// (*str)++;
 			return ;
 		}
 		append_char(parse_str, **str);
@@ -76,7 +77,7 @@ char	*easy_cat(char *s1, char *s2)
 	return (return_str);
 }
 
-void	parse_env_var_helper(t_parse_str *parse_str, int in_quote,
+void	parse_env_var_found(t_parse_str *parse_str, int in_quote,
 	char *substitude_name, int start_index)
 {
 	int	i;
@@ -109,17 +110,17 @@ void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote)
 	free(env_name);
 	if (!substitude_name)
 	{
+		parse_str->cursor = start_index;
+		parse_str->str[start_index] = 0;
 		printf("subname_null: %s\n", env_name);
-		if (in_quote == TRUE)
+		if (in_quote == TRUE && **str == '$')
 		{
 			append_char(parse_str, '$');
 			return ;
 		}
-		parse_str->str = malloc(0);
-		parse_str->cursor = 0;
 		return ;
 	}
-	parse_env_var_helper(parse_str, in_quote, substitude_name, start_index);
+	parse_env_var_found(parse_str, in_quote, substitude_name, start_index);
 }
 
 void	parse_dollar_sign(t_parse_str *parse_str, char **str, int in_quote)
@@ -187,7 +188,7 @@ int	is_match(char *file_name, char *pattern)
 
 	is_match_init(&inner_parser);
 	if (pattern[0] != '.' && (file_name[0] == '.'
-		|| (file_name[0] == '.' && file_name[1] == '.')))
+			|| (file_name[0] == '.' && file_name[1] == '.')))
 		return (FALSE);
 	while (file_name[inner_parser.i])
 	{
@@ -210,7 +211,7 @@ void	pattern_not_found(t_str_list *str_list, char *pattern)
 
 void	parse_asterisk(t_str_list *str_list, t_parse_str *parse_str)
 {
-	int		found_flag;
+	int			found_flag;
 	t_str_list	dir_file_list;
 	char		*pattern;
 	t_str_node	*cur_node;
@@ -247,7 +248,7 @@ void	parse_single_word(char **str, t_str_list *str_list)
 		else if (**str == '\'')
 			parse_single_quote(&parse_str, str);
 		else if (**str == '$')
-		 	parse_dollar_sign(&parse_str, str, 0);
+			parse_dollar_sign(&parse_str, str, 0);
 		else
 			parse_single_char(&parse_str, str, 0);
 	}
@@ -284,7 +285,7 @@ int main(int argc, char **argv)
 	printf("input_str: %s\n", input_str);
 	while (str[i])
 	{
-		printf("parsed_str: %s\n", str[i]);
+		printf("parsed_str: [%s]\n", str[i]);
 		i++;
 	}
 }
