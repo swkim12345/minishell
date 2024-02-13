@@ -1,3 +1,6 @@
+*/*.o
 *.o
 minishell
 test.c
+*/*.out
+*.out

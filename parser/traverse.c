@@ -6,13 +6,13 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/13 21:15:30 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 22:24:53 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-int	traverse(t_ast_node *head)
+int	recur_traverse(t_ast_node *head) //fork로 실행, wait를 통해 wait, 이후 pipe관련 처리
 {
 	int	ret;
 
@@ -31,4 +31,16 @@ int	traverse(t_ast_node *head)
 	(str_cmp(head->str, OR) && !ret))
 		ret = traverse(head->right_node);
 	return (ret);
+}
+
+int	traverse(t_ast_node *head)
+{
+	int	ret;
+
+	while (head->next_ast_node)
+	{
+		if (head->next_ast_node)
+			ret = recur_traverse(head);
+	}
+
 }
