@@ -6,54 +6,50 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:54 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/12 23:38:50 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:31:38 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
-/*
-||, && 처리는 lexar에서 처리가 완료된 것으로 가정함.
-*/
 
 char		**parse_str(char *input)
 {
-	/*
-	space, tab, newline
-	redirection(>, >>, <, <<)
-	$ (dollar sign) - 이거 구현해야 함?
-	'', ""는 처리하지 않음.
-	*/
 	long	index;
+	t_str_list	*str_list;
+	t_str_node	*node;
 	char	*ptr;
 	char	**ret;
 
 	index = 0;
+	str_list = (t_str_list *)malloc(sizeof(t_str_list));
+	init_str_list(str_list);
 	while (input[index])
 	{
-		ptr = &input[index];
-		//check "", ''
-		if (*ptr == SINGLEQUOT[0]
-		|| *ptr == DOUBLEQUOT[0])
+		if (str_cmp(input[index], SINGLEQUOT) || str_cmp(input[index], DOUBLEQUOT))
 			{
-				ptr += find_end_quote(ptr);
-				if (!ptr)
+				index += find_end_quote(input[index]);
+				if (!input[index])
 					return (NULL);
 			}
-		//space
-		//tab
-		//newline
-		if (*ptr == ' ' || *ptr == '	' || *ptr == '\n')
+		if (str_cmp(input[index], " "))
 		{
-			//split str
+			ptr = ft_strtok(input[index], " ");
+			node = (t_str_node *)malloc(sizeof(t_str_node));
+			init_str_node(node);
+			node->str = ft_strdup(input[index]);
+			index = ptr - &input[index];
+			enqueue(str_list, node);
 		}
+		index++;
 	}
-	return (index);
+	ret = list_to_char_arr(str_list);
+	return (ret);
 }
-
 t_ast_node	*parser(char *input)
 {
 	t_ast_node	*head;
 	
 	head = init_ast_node(CMDNODE);
-	
+	head->cmd_node->str = parse_str(input);
+	return (head);
 }

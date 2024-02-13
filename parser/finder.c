@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:01:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/13 10:42:33 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:36:54 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,15 +131,7 @@ long	find_redirect(char *input)
 		index = find_end_quote(input);
 		if (!input[index])
 			return (index);
-		if (!str_cmp(&input[index], OR))
-			return (index);
-		if (!str_cmp(&input[index], AND))
-			return (index);
-		if (!str_cmp(&input[index], &BRACKET[0])
-			|| !str_cmp(&input[index], &BRACKET[1]))
-			return (index);
-		if (!input[index])
-			break ;
+		 
 		index++;
 	}
 	return (index);
