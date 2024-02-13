@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   set_mem.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 23:16:31 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/12 20:50:21 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 10:39:48 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**init_doub_char(char **input, int size)
 	i = -1;
 	ret = (char **)malloc(sizeof(char *) * (size + 1));
 	while (++i < size)
-		ret[i] = input[i];
+		ret[i] = ft_strdup(input[i]);
 	ret[i] = NULL;
 	return (ret);
 }
