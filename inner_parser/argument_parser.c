@@ -6,21 +6,27 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 22:28:50 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/13 15:17:54 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
-#include <asm-generic/fcntl.h>
+#include <fcntl.h>
 
-void	parse_single_char(t_parse_str *parse_str, char **str)
+void	parse_single_char(t_parse_str *parse_str, char **str, int in_quote)
 {
 	if (**str)
 	{
-		if (**str == '\\')
-			(*str)++;
-		else if (**str == '*')
+		if (**str == '\\' && (*str)[1] == '\\')
+			(*str) += 1;
+		else if (in_quote == FALSE && **str == '*')
 			parse_str->asterisk_flag = 1;
+		else if (**str == '$')
+		{
+			parse_dollar_sign(parse_str, str, in_quote);
+			// (*str)++;
+			return ;
+		}
 		append_char(parse_str, **str);
 		*str = *str + 1;
 	}
@@ -30,7 +36,7 @@ void	parse_double_quote(t_parse_str *parse_str, char **str)
 {
 	(*str)++;
 	while (**str && **str != '\"')
-		parse_single_char(parse_str, str);
+		parse_single_char(parse_str, str, 1);
 	(*str)++;
 }
 
@@ -39,82 +45,90 @@ void	parse_single_quote(t_parse_str *parse_str, char **str)
 	(*str)++;
 	while (**str && **str != '\'')
 	{
-		parse_single_char(parse_str, str);
-	}
-	(*str)++;
-}
-
-static int	decode_ansi_c_str_helper(t_parse_str *parse_str, char **str)
-{
-	if (**str = '0')
-}
-
-int	decode_ansi_c_str(t_parse_str *parse_str, char **str)
-{
-	int return_status;
-
-	return_status = 0;
-	(*str)++;
-	if (**str == 'a')
-		append_char(parse_str, '\a');
-	else if (**str == 'b')
-		append_char(parse_str, '\b');
-	else if (**str == 'e' || **str == 'E')
-		append_char(parse_str, '\e');
-	else if (**str == 'f')
-		append_char(parse_str, '\f');
-	else if (**str == 'n')
-		append_char(parse_str, '\n');
-	else if (**str == 'r')
-		append_char(parse_str, '\r');
-	else if (**str == 't')
-		append_char(parse_str, '\t');
-	else if (**str == 'v')
-		append_char(parse_str, '\v');
-	else
-		return_status = decode_ansi_c_str_helper(parse_str, str);
-}
-
-void	parse_ansi_c_quote(t_parse_str *parse_str, char **str)
-{
-	int invalid_flag;
-
-	invalid_flag = 0;
-	(*str)++;
-	while (**str && **str != '\'')
-	{
-		if (invalid_flag == FALSE && **str == '\\')
-			decode_ansi_c_str(parse_str, str);
-		if (invalid_flag == FALSE)
-			append_char(parse_str, **str);
+		append_char(parse_str, **str);
 		(*str)++;
 	}
+	(*str)++;
 }
 
-void	parse_env_var(t_parse_str *parse_str, char **str)
+char	*easy_cat(char *s1, char *s2)
+{
+	char	*return_str;
+	size_t	s1_len;
+	size_t	s2_len;
+	size_t	s1_copy;
+
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	s1_copy = s1_len;
+	return_str = ft_calloc(s1_len + s2_len + 1, sizeof(char));
+	return_str[s1_len + s2_len] = 0;
+	while (s1_len > 0)
+	{
+		s1_len--;
+		return_str[s1_len] = s1[s1_len];
+	}
+	while (s2_len > 0)
+	{
+		s2_len--;
+		return_str[s1_copy + s2_len] = s2[s2_len];
+	}
+	return (return_str);
+}
+
+void	parse_env_var_helper(t_parse_str *parse_str, int in_quote,
+	char *substitude_name, int start_index)
+{
+	int	i;
+
+	i = 0;
+	parse_str->cursor = start_index;
+	while (*substitude_name)
+	{
+		append_char(parse_str, *substitude_name);
+		substitude_name++;
+	}
+	printf("parse_str: %s\n", parse_str->str);
+}
+
+void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote)
 {
 	char	*env_name;
 	char	*substitude_name;
+	int		start_index;
 
-	while (**str && !isspace(**str))
-		parse_single_char(parse_str, str);
-	env_name = ft_substr(parse_str->str, 0, parse_str->cursor);
+	printf("dollar cur_char: [%c]\n", **str);
+	start_index = parse_str->cursor;
+	while (**str && !isspace(**str) && (!in_quote || **str != '\"')
+		&& **str != '$')
+		parse_single_char(parse_str, str, 0);
+	env_name = ft_substr(parse_str->str, start_index, parse_str->cursor);
 	substitude_name = getenv(env_name);
+	printf("find name: %s\n", env_name);
+	printf("found name: %s\n", substitude_name);
 	free(env_name);
-	free(parse_str->str);
-	parse_str->str = ft_strdup(substitude_name);
-	parse_str->cursor = ft_strlen(substitude_name);
+	if (!substitude_name)
+	{
+		printf("subname_null: %s\n", env_name);
+		if (in_quote == TRUE)
+		{
+			append_char(parse_str, '$');
+			return ;
+		}
+		parse_str->str = malloc(0);
+		parse_str->cursor = 0;
+		return ;
+	}
+	parse_env_var_helper(parse_str, in_quote, substitude_name, start_index);
 }
 
-void	parse_dollar_sign(t_parse_str *parse_str, char **str)
+void	parse_dollar_sign(t_parse_str *parse_str, char **str, int in_quote)
 {
 	(*str)++;
-	if (**str == '\"')
+	if (**str == '\"' && in_quote == FALSE)
 		parse_double_quote(parse_str, str);
-	else if (**str == '\'')
-		parse_ansi_c_quote(parse_str, str);
 	else
-		parse_env_var(parse_str, str);
+		parse_env_var(parse_str, str, in_quote);
 }
 
 void	get_cwd_files(t_str_list *str_list)
@@ -233,9 +247,9 @@ void	parse_single_word(char **str, t_str_list *str_list)
 		else if (**str == '\'')
 			parse_single_quote(&parse_str, str);
 		else if (**str == '$')
-		 	parse_dollar_sign(&parse_str, str);
+		 	parse_dollar_sign(&parse_str, str, 0);
 		else
-			parse_single_char(&parse_str, str);
+			parse_single_char(&parse_str, str, 0);
 	}
 	if (parse_str.cursor > 0)
 	{
@@ -262,18 +276,15 @@ char	**string_parser(char *str)
 
 int main(int argc, char **argv)
 {
-	t_str_list	str_list;
-	t_str_node	*cur_node;
-	t_parse_str	parse_str;
+	char **str;
 
-	init_str_list(&str_list);
-	init_parse_str(&parse_str);
-	parse_single_word(&argv[1], &str_list);
-	while (str_list.size > 0)
+	char *input_str = readline(0);
+	str = string_parser(input_str);
+	int i = 0;
+	printf("input_str: %s\n", input_str);
+	while (str[i])
 	{
-		cur_node = dequeue(&str_list);
-		printf("here: %s\n", cur_node->str);
+		printf("parsed_str: %s\n", str[i]);
+		i++;
 	}
-//	char *str = "\x29\x29\x29\x29\n";
-	
 }
