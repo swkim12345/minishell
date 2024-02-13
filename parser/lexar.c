@@ -6,43 +6,11 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:28:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/12 20:49:52 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:08:21 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
-
-void	init_shell(t_minishell *shell)
-{
-	shell->cwd = getcwd(0, 0);
-	shell->input_str = 0;
-}
-
-void	exit_handle(t_minishell *shell)
-{
-	free(shell->input_str);
-	printf("exit\n");
-	exit(EXIT_SUCCESS);
-}
-
-int	str_equal(char *s1, char *s2)
-{
-	size_t	s1_len;
-	size_t	s2_len;
-
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	if (s1_len != s2_len)
-		return (0);
-	while (*s1 && *s2 && *s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	if (!*s1 && !*s2)
-		return (1);
-	return (0);
-}
 
 t_ast_node	*init_ast_node(int child_node)
 {
@@ -155,7 +123,8 @@ static	t_ast_node	*or_and_lexar(t_ast_node *head)
 	}
 	return (head);
 }
- 
+
+//problem
 t_ast_node	*recur_lexar(t_ast_node *head)
 {
 	t_ast_node	*ret;
@@ -169,10 +138,12 @@ t_ast_node	*recur_lexar(t_ast_node *head)
 	index = find_or_and_bracket(ptr);
 	if (!ptr[index])
 		return (head);
-	// bracket_lexar(head);
+	//bracket_lexar(head);
 	ret = or_and_lexar(head);
 	if (ret != head)
 		return (ret);
+	//ret->cmd_node->str = parser(ptr);
+	free(ptr);
 	return (ret);
 }
 
@@ -186,28 +157,4 @@ t_ast_node	*lexar(char *input)
 	head->cmd_node->str = init_doub_char(&i, 1);
 	head = recur_lexar(head);	
 	return (head);
-}
-
-int	main()
-{
-	t_minishell	shell;
-	t_ast_node	*head;
-
-	system("leaks a.out");
-
-	init_shell(&shell);
-	while (1)
-	{
-		shell.input_str = readline("minishell-1.0$ ");
-		if (!shell.input_str)
-			exit_handle(&shell);
-		else if (str_equal(shell.input_str, "exit"))
-			exit_handle(&shell);
-		head = lexar(shell.input_str);
-		// else
-		// 	process_input(&shell);
-		add_history(shell.input_str);
-		free(shell.input_str);
-	}
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:01:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/13 11:36:54 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 17:08:00 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,22 @@ long	find_end_quote(char *input)
 	index = 0;
 	while (input[index])
 	{
-		if (!str_cmp(&input[index], DOUBLEQUOT)
-			|| !str_cmp(&input[index], SINGLEQUOT))
+		if (str_cmp(&input[index], DOUBLEQUOT)
+			|| str_cmp(&input[index], SINGLEQUOT))
 		{
 			c = input[index];
 			while (input[++index])
 			{
-				if (!str_cmp(&input[index], &c))
+				if (str_cmp(&input[index], &c))
 					break ;
 			}
 		}
+		index++;
 	}
-	return (index);
+	if (input[index])
+		return (index);
+	else
+		return (0);
 }
 
 long	find_bracket(char *input)
@@ -61,11 +65,11 @@ long	find_bracket(char *input)
 	index = 0;
 	while (input[index])
 	{
-		index = find_end_quote(input);
-		if (!input[index])
-			return (index);
-		if (!str_cmp(&input[index], &BRACKET[0])
-			|| !str_cmp(&input[index], &BRACKET[1]))
+		if (str_cmp(&input[index], SINGLEQUOT) ||
+		str_cmp(&input[index], SINGLEQUOT))
+			index = find_end_quote(&input[index]);
+		if (str_cmp(&input[index], &BRACKET[0])
+			|| str_cmp(&input[index], &BRACKET[1]))
 			break ;
 		if (!input[index])
 			break ;
@@ -82,9 +86,9 @@ long	find_pipe(char *input)
 	index = 0;
 	while (input[index])
 	{
-		index = find_end_quote(input);
-		if (!input[index])
-			return (index);
+		if (!str_cmp(&input[index], SINGLEQUOT) ||
+		!str_cmp(&input[index], SINGLEQUOT))
+			index = find_end_quote(&input[index]);
 		if (!str_cmp(&input[index], PIPE)
 			&& str_cmp(&input[index], OR))
 			break ;
@@ -103,9 +107,9 @@ long	find_or_and_bracket(char *input)
 	index = 0;
 	while (input[index])
 	{
-		index = find_end_quote(input);
-		if (!input[index])
-			return (index);
+		if (!str_cmp(&input[index], SINGLEQUOT) ||
+		!str_cmp(&input[index], SINGLEQUOT))
+			index = find_end_quote(&input[index]);
 		if (!str_cmp(&input[index], OR))
 			return (index);
 		if (!str_cmp(&input[index], AND))
@@ -113,7 +117,7 @@ long	find_or_and_bracket(char *input)
 		if (!str_cmp(&input[index], &BRACKET[0])
 			|| !str_cmp(&input[index], &BRACKET[1]))
 			return (index);
-		if (!input[index])
+		if (input[index])
 			break ;
 		index++;
 	}
@@ -128,10 +132,9 @@ long	find_redirect(char *input)
 	index = 0;
 	while (input[index])
 	{
-		index = find_end_quote(input);
-		if (!input[index])
-			return (index);
-		 
+		if (!str_cmp(&input[index], SINGLEQUOT) ||
+		!str_cmp(&input[index], SINGLEQUOT))
+			index = find_end_quote(&input[index]);
 		index++;
 	}
 	return (index);

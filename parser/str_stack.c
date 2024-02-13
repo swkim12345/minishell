@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:28:30 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/07 16:50:19 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:32:01 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,5 @@ t_str_list	*push(t_str_list *list, t_str_node *node)
 		list->head = node;
 	}
 	list->size++;
+	return (list);
 }

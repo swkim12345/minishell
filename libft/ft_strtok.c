@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:15:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/13 12:39:11 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:23:26 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ size_t	ft_strspn(const char *str, const char *accept)
 	size_t	count;
 
 	count = 0;
-	p = str;
-	a = accept;
+	p = (char *)str;
+	a = (char *)accept;
 	while (*p)
 	{
 		while (*a)
@@ -45,8 +45,8 @@ size_t	ft_strcspn(const char *str, const char *reject)
 	size_t	count;
 
 	count = 0;
-	p = str;
-	r = reject;
+	p = (char *)str;
+	r = (char *)reject;
 	while (*p)
 	{
 		while (*r)
