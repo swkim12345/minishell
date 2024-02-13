@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:38:39 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 21:47:33 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/13 14:03:07 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_inner_parser
 }	t_inner_parser;
 
 /* argument_parser.c */
-void	parse_single_char(t_parse_str *parse_str, char **str);
+void	parse_single_char(t_parse_str *parse_str, char **str, int in_quote);
 void	parse_double_quote(t_parse_str *parse_str, char **str);
 void	parse_single_quote(t_parse_str *parse_str, char **str);
 void	parse_single_word(char **str, t_str_list *str_list);
@@ -64,5 +64,6 @@ void	init_parse_str(t_parse_str *parse_str);
 void	init_str_node(t_str_node *str_node);
 void	init_str_list(t_str_list *str_list);
 void	append_char(t_parse_str *parse_str, char c);
+void	parse_dollar_sign(t_parse_str *parse_str, char **str, int in_quote);
 
 #endif
