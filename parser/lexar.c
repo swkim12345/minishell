@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:28:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/13 20:21:57 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 21:16:55 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ t_ast_node	*init_ast_node(int child_node)
 
 static	t_ast_node	*pipe_lexar(t_ast_node *head)
 {
-	//| pipe -> make next ast node,
-	//recurve head, next two node
 	long		index;
 	char		*ptr;
 	t_ast_node	*ret;
@@ -45,7 +43,6 @@ static	t_ast_node	*pipe_lexar(t_ast_node *head)
 	index = find_pipe(ptr);
 	if (ptr[index])
 	{
-		//split ast tree
 		ret = init_ast_node(CMDNODE);
 		ret->next_ast_node = head;
 		ptr[index] = '\0';
@@ -60,36 +57,6 @@ static	t_ast_node	*pipe_lexar(t_ast_node *head)
 	return (head);
 }
 
-// static	long	bracket_lexar(t_ast_node *head)
-// {
-// 	long		index;
-// 	char		*ptr;
-// 	long		bracket_count;
-// 	long		tmp;
-
-// 	ptr = head->cmd_node->str[0];
-// 	index = find_or_and_bracket(ptr);
-// 	if (!ft_strncmp(ptr, &BRACKET[0], 1))
-// 	{
-// 		bracket_count = 1;
-// 		tmp = index;
-// 		ft_strlcpy(&ptr[index], &ptr[index + 1], ft_strlen(&ptr[index + 1]));
-// 		while (TRUE)
-// 		{
-// 			tmp = find_bracket(&ptr[index]);
-// 			if (ptr[tmp] == BRACKET[0])
-// 				bracket_count++;
-// 			else
-// 				bracket_count--;
-// 			if (!bracket_count || !ptr[tmp])
-// 				break;
-// 			tmp++;
-// 		}
-// 		ft_strlcpy(&ptr[tmp], &ptr[tmp + 1], ft_strlen(&ptr[tmp + 1]));
-// 	}
-// 	return (index);
-// }
-
 static	t_ast_node	*or_and_lexar(t_ast_node *head)
 {
 	char		*ptr;
@@ -97,8 +64,6 @@ static	t_ast_node	*or_and_lexar(t_ast_node *head)
 	char		*str;
 	t_ast_node	*ret;
 
-	//|| && -> left(left_childe cmd_node), right(right_child, cmd_node), head->cmd_node(|| or &&)
-	//각각 recurve
 	ptr = head->cmd_node->str[0];
 	index = find_or_and_bracket(ptr);
 	if (!str_cmp(&ptr[index], OR) || !str_cmp(&ptr[index], AND))
@@ -124,7 +89,6 @@ static	t_ast_node	*or_and_lexar(t_ast_node *head)
 	return (head);
 }
 
-//problem
 t_ast_node	*recur_lexar(t_ast_node *head)
 {
 	t_ast_node	*ret;
@@ -135,15 +99,9 @@ t_ast_node	*recur_lexar(t_ast_node *head)
 	ret = pipe_lexar(head);
 	if (ret != head)
 		return (ret);
-	// index = find_or_and_bracket(ptr);
-	// if (!ptr[index])
-	// 	return (head);
-	//bracket_lexar(head);
 	ret = or_and_lexar(head);
 	if (ret != head)
 		return (ret);
-	//ret->cmd_node->str = parser(ptr);
-	free(ptr);
 	return (ret);
 }
 

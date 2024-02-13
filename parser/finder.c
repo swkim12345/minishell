@@ -6,30 +6,11 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:01:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/13 20:21:09 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 21:14:42 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
-
-long	find_quot(char *input, int is_double)
-{
-	long	index;
-	char	c;
-
-	index = 0;
-	if (is_double == FALSE)
-		c = SINGLEQUOT[0];
-	else
-		c = DOUBLEQUOT[0];
-	while (input[index])
-	{
-		if (!str_cmp(&input[index], &c))
-			break ;
-		index++;
-	}
-	return (index);
-}
 
 long	find_end_quote(char *input)
 {
@@ -39,16 +20,18 @@ long	find_end_quote(char *input)
 	index = 0;
 	while (input[index])
 	{
-		if (str_cmp(&input[index], DOUBLEQUOT)
-			|| str_cmp(&input[index], SINGLEQUOT))
+		if (!str_cmp(&input[index], DOUBLEQUOT)
+			|| !str_cmp(&input[index], SINGLEQUOT))
 		{
 			c = input[index];
 			while (input[++index])
 			{
-				if (str_cmp(&input[index], &c))
-					break ;
+				if (!str_cmp(&input[index], &c))
+					return (index);
 			}
 		}
+		if (!input[index])
+			return (index);
 		index++;
 	}
 	if (input[index])
