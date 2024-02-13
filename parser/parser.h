@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:51 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/13 19:27:16 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 22:45:40 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ typedef struct s_cmd_node
 {
 	char		*cmd_name;
 	char		**str;
+	char		*redir;
 }	t_cmd_node;
 
 t_ast_node	*init_ast_node(int child_node);
 /* finder.c */
 /* find_or_and_bracket / find_bracket : exclusive quot */
 long		find_end_quote(char *input);
-long		find_or_and_bracket(char *input);
+long		find_or_and(char *input);
 long		find_bracket(char *input);
-long		find_quot(char *input, int is_double);
 long		find_pipe(char *input);
 
 /* set_mem.c */
@@ -68,13 +68,7 @@ t_ast_node	*recur_lexar(t_ast_node *head);
 /* util.c */
 int	str_cmp(char *str_org, char *str_cmp);
 
-/* parser.c */
-char		**parser(char *input);
-
 /* traverse.c */
-// int			traverse(t_ast_node *head);
+int			traverse(t_ast_node *head);
 
-/* str_stack.c */
-t_str_node	*pop(t_str_list *list);
-t_str_list	*push(t_str_list *list, t_str_node *node);
 #endif

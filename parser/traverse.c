@@ -6,43 +6,41 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/13 19:24:41 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 22:24:53 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-//traverse left node first, return next execution or null(error)
-//left first, 
-// t_ast_list	*find_end(t_ast_list *node)
-// {
-// 	t_ast_list	*ret;
-	
-// 	ret = node;
-// 	while (ret->next)
-// 		ret = node->next;
-// 	return (ret);
-// }
+int	recur_traverse(t_ast_node *head) //fork로 실행, wait를 통해 wait, 이후 pipe관련 처리
+{
+	int	ret;
+
+	if (!head)
+		return (TRUE);
+	ret = traverse(head->left_node);
+	if (head->cmd_node)
+		// return (process_command(head->cmd_node));
+	{
+		printf("cmd_node : %s\n", head->cmd_node->str[0]);
+		return (FALSE);
+	}
+	if (head->str)
+		printf("str : %s\n", head->str);
+	if ((str_cmp(head->str, AND) && ret) ||
+	(str_cmp(head->str, OR) && !ret))
+		ret = traverse(head->right_node);
+	return (ret);
+}
 
 int	traverse(t_ast_node *head)
 {
-	ret = (t_ast_list *)malloc(sizeof(t_ast_list));
-	ret->next = NULL;
-	tmp = ret;
-	//leaf node
-	if (head->cmd_node)
+	int	ret;
+
+	while (head->next_ast_node)
 	{
-		//execution
-		ret->node = head;
-		return (ret);
+		if (head->next_ast_node)
+			ret = recur_traverse(head);
 	}
-	//left tree inorder traverse
-	if (head->left_node)
-	{
-		ret->next = traverse(head->left_node);
-		tmp = find_end(ret);
-	}
-	//right tree inorder traverse
-	ret->next = traverse(head->right_node);
-	return (TRUE);
+
 }
