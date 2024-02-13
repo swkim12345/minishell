@@ -49,8 +49,8 @@ int	main()
 		else if (str_equal(shell.input_str, "exit"))
 			exit_handle(&shell);
 		head = lexar(shell.input_str);
-		printf("%s\n", head->cmd_node->str[0]);
-		//list = traverse(head);
+		// printf("%s\n", head->cmd_node->str[0]);
+		traverse(head);
 		//printf("%s\n", list->node->cmd_node->str);
 		// else
 		// 	process_input(&shell);

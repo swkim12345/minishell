@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/13 19:24:41 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:20:39 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,24 @@
 // 		ret = node->next;
 // 	return (ret);
 // }
-
+//check or / and
 int	traverse(t_ast_node *head)
 {
-	ret = (t_ast_list *)malloc(sizeof(t_ast_list));
-	ret->next = NULL;
-	tmp = ret;
-	//leaf node
+	int	ret;
+
+	if (!head)
+		return (TRUE);
+	ret = traverse(head->left_node);
 	if (head->cmd_node)
+		// return (process_command(head->cmd_node));
 	{
-		//execution
-		ret->node = head;
-		return (ret);
+		printf("cmd_node : %s\n", head->cmd_node->str[0]);
+		return (TRUE);
 	}
-	//left tree inorder traverse
-	if (head->left_node)
-	{
-		ret->next = traverse(head->left_node);
-		tmp = find_end(ret);
-	}
-	//right tree inorder traverse
-	ret->next = traverse(head->right_node);
-	return (TRUE);
+	if (head->str)
+		printf("str : %s\n", head->str);
+	if ((str_cmp(head->str, AND) && ret) ||
+	(str_cmp(head->str, OR) && !ret))
+		ret = traverse(head->right_node);
+	return (ret);
 }

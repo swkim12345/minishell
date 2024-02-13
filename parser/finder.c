@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:01:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/13 17:08:00 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:21:09 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,14 @@ long	find_pipe(char *input)
 	while (input[index])
 	{
 		if (!str_cmp(&input[index], SINGLEQUOT) ||
-		!str_cmp(&input[index], SINGLEQUOT))
+		!str_cmp(&input[index], DOUBLEQUOT))
 			index = find_end_quote(&input[index]);
-		if (!str_cmp(&input[index], PIPE)
-			&& str_cmp(&input[index], OR))
+		if (!str_cmp(&input[index], OR))
+		{
+			index += 2;
+			continue ;
+		}
+		if (!str_cmp(&input[index], PIPE))
 			break ;
 		if (!input[index])
 			break ;
@@ -108,7 +112,7 @@ long	find_or_and_bracket(char *input)
 	while (input[index])
 	{
 		if (!str_cmp(&input[index], SINGLEQUOT) ||
-		!str_cmp(&input[index], SINGLEQUOT))
+		!str_cmp(&input[index], DOUBLEQUOT))
 			index = find_end_quote(&input[index]);
 		if (!str_cmp(&input[index], OR))
 			return (index);
@@ -117,7 +121,7 @@ long	find_or_and_bracket(char *input)
 		if (!str_cmp(&input[index], &BRACKET[0])
 			|| !str_cmp(&input[index], &BRACKET[1]))
 			return (index);
-		if (input[index])
+		if (!input[index])
 			break ;
 		index++;
 	}

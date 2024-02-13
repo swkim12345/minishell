@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:28:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/13 19:08:21 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:21:57 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,11 @@ static	t_ast_node	*or_and_lexar(t_ast_node *head)
 	//각각 recurve
 	ptr = head->cmd_node->str[0];
 	index = find_or_and_bracket(ptr);
-	if (!ft_strncmp(&ptr[index], OR, 2) || !ft_strncmp(&ptr[index], AND, 2))
+	if (!str_cmp(&ptr[index], OR) || !str_cmp(&ptr[index], AND))
 	{
 		ret = init_ast_node(RIGHTNODE);
 		ret->next_ast_node = head->next_ast_node;
-		if (!ft_strncmp(&ptr[index], OR, 2))
+		if (!str_cmp(&ptr[index], OR))
 			str = ft_strdup(OR);
 		else
 			str = ft_strdup(AND);
@@ -135,9 +135,9 @@ t_ast_node	*recur_lexar(t_ast_node *head)
 	ret = pipe_lexar(head);
 	if (ret != head)
 		return (ret);
-	index = find_or_and_bracket(ptr);
-	if (!ptr[index])
-		return (head);
+	// index = find_or_and_bracket(ptr);
+	// if (!ptr[index])
+	// 	return (head);
 	//bracket_lexar(head);
 	ret = or_and_lexar(head);
 	if (ret != head)
