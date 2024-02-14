@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:28:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/13 21:58:01 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:16:31 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ t_ast_node	*init_ast_node(int child_node)
 	t_cmd_node	*node;
 
 	ret = (t_ast_node *)malloc(sizeof(t_ast_node));
-	ft_memset((void *)ret, 0, sizeof(ret));
+	ft_memset((void *)ret, 0, sizeof(t_ast_node));
 	if (CMDNODE & child_node)
 	{
 		node = (t_cmd_node *)malloc(sizeof(t_cmd_node));
-		ft_memset((void *)node, 0, sizeof(node));
+		ft_memset((void *)node, 0, sizeof(t_cmd_node));
 		ret->cmd_node = node;
 	}
 	if (LEFTNODE & child_node)
@@ -68,7 +68,7 @@ static	t_ast_node	*or_and_lexar(t_ast_node *head)
 	index = find_or_and(ptr);
 	if (!str_cmp(&ptr[index], OR) || !str_cmp(&ptr[index], AND))
 	{
-		ret = init_ast_node(RIGHTNODE);
+		ret = init_ast_node(RIGHTNODE | LEFTNODE);
 		ret->next_ast_node = head->next_ast_node;
 		if (!str_cmp(&ptr[index], OR))
 			str = ft_strdup(OR);
@@ -79,11 +79,11 @@ static	t_ast_node	*or_and_lexar(t_ast_node *head)
 		str = ft_strdup(&ptr[index + 2]);
 		ret->right_node->cmd_node->str = init_doub_char(&str, 1);
 		str = ft_strdup(ptr);
-		free_doub_char(head->cmd_node->str);
-		head->cmd_node->str = init_doub_char(&str, 1);
-		ret->left_node = head;
-		recur_lexar(ret->left_node);
-		recur_lexar(ret->right_node);
+		ret->left_node->cmd_node->str = init_doub_char(&str, 1);
+		free_cmd_node(head->cmd_node);
+		free(head);
+		ret->left_node = recur_lexar(ret->left_node);
+		ret->right_node = recur_lexar(ret->right_node);
 		return (ret);
 	}
 	return (head);
@@ -96,12 +96,14 @@ t_ast_node	*recur_lexar(t_ast_node *head)
 	long		index;
 
 	ptr = head->cmd_node->str[0];
-	ret = pipe_lexar(head);
-	if (ret != head)
-		return (ret);
 	ret = or_and_lexar(head);
 	if (ret != head)
 		return (ret);
+	ret = pipe_lexar(head);
+	if (ret != head)
+		return (ret);
+	if (ret->cmd_node)
+		ret->cmd_node = parser(ret->cmd_node);
 	return (ret);
 }
 
