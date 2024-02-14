@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:28:30 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/14 21:29:51 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:51:13 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,19 @@
 
 t_str_node	*pop(t_str_list *list)
 {
-	t_str_node	*next;
+	t_str_node	*return_node;
 
 	if (list == NULL || list->head == NULL)
 		return (NULL);
-	next = list->head;
+	return_node = list->tail;
 	list->size -= 1;
 	if (list->size == 0)
 	{
 		list->head = NULL;
 		list->tail = NULL;
-		return (next);
+		return (return_node);
 	}
-	list->head = next->next;
-	return (next);
+	list->tail = return_node->prev;
+	return (return_node);
 }
 
-void	push(t_str_list *list, t_str_node *node)
-{
-	if (list->head == NULL)
-	{	
-		list->head = node;
-		list->tail = node;
-	}
-	else
-	{
-		node->next = list->head;
-		list->head = node;
-	}
-	list->size++;
-}

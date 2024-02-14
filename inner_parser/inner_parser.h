@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:38:39 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/14 20:58:09 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:50:10 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_str_node
 {
 	char				*str;
 	struct s_str_node	*next;
+	struct s_str_node	*prev;
 }	t_str_node;
 
 typedef struct s_str_list

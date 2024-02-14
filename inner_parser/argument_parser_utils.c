@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:03:58 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/13 20:29:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:53:17 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	init_str_node(t_str_node *str_node)
 {
 	str_node->next = 0;
 	str_node->str = 0;
+	str_node->prev = 0;
 }
 
 void	init_str_list(t_str_list *str_list)
