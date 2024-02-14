@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/13 19:36:44 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:04:38 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/history.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <sys/stat.h>
 # include "libft/libft.h"
 # include "parser/parser.h"
 # include "builtin/builtin.h"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/13 16:56:53 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:04:57 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,17 +275,17 @@ char	**string_parser(char *str)
 	return (list_to_char_arr(&str_list));
 }
 
-int main(int argc, char **argv)
-{
-	char **str;
+// int main(int argc, char **argv)
+// {
+// 	char **str;
 
-	char *input_str = readline(0);
-	str = string_parser(input_str);
-	int i = 0;
-	printf("input_str: %s\n", input_str);
-	while (str[i])
-	{
-		printf("parsed_str: [%s]\n", str[i]);
-		i++;
-	}
-}
+// 	char *input_str = readline(0);
+// 	str = string_parser(input_str);
+// 	int i = 0;
+// 	printf("input_str: %s\n", input_str);
+// 	while (str[i])
+// 	{
+// 		printf("parsed_str: [%s]\n", str[i]);
+// 		i++;
+// 	}
+// }

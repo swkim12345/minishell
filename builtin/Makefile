@@ -10,5 +10,11 @@ cd:
 echo:
 	cc -g ft_echo.c $(SRCS) ../libft/libftprintf.a -lreadline
 
+pwd:
+	cc -g ft_pwd.c $(SRCS) ../libft/libftprintf.a -lreadline
+
+exit:
+	cc -g ft_exit.c $(SRCS) ../libft/libftprintf.a -lreadline
+
 test:
 	cc -g test.c $(SRCS) ../libft/libftprintf.a -lreadline
