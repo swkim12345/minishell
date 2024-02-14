@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:38:39 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/13 14:03:07 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:58:09 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <dirent.h>
 # include <sys/wait.h>
+
+typedef struct s_minishell	t_minishell;
 
 typedef struct s_parse_str
 {
@@ -26,7 +28,7 @@ typedef struct s_parse_str
 
 typedef struct s_str_node
 {
-	char			*str;
+	char				*str;
 	struct s_str_node	*next;
 }	t_str_node;
 
@@ -46,10 +48,12 @@ typedef struct s_inner_parser
 }	t_inner_parser;
 
 /* argument_parser.c */
-void	parse_single_char(t_parse_str *parse_str, char **str, int in_quote);
-void	parse_double_quote(t_parse_str *parse_str, char **str);
+void	parse_single_char(t_parse_str *parse_str, char **str,
+		int in_quote, t_minishell *minishell);
+void	parse_double_quote(t_parse_str *parse_str, char **str, t_minishell *minishell);
 void	parse_single_quote(t_parse_str *parse_str, char **str);
-void	parse_single_word(char **str, t_str_list *str_list);
+void	parse_single_word(char **str, t_str_list *str_list,
+		t_minishell *minishell);
 
 /* argument_parser_str_list.c */
 void	enqueue(t_str_list *str_list, t_str_node *str_node);
@@ -64,6 +68,11 @@ void	init_parse_str(t_parse_str *parse_str);
 void	init_str_node(t_str_node *str_node);
 void	init_str_list(t_str_list *str_list);
 void	append_char(t_parse_str *parse_str, char c);
-void	parse_dollar_sign(t_parse_str *parse_str, char **str, int in_quote);
+void	parse_dollar_sign(t_parse_str *parse_str, char **str,
+		int in_quote, t_minishell *minishell);
+char	**string_parser(char *str, t_minishell *minishell);
+void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote,
+	t_minishell *minishell);
+char	*easy_cat(char *s1, char *s2);
 
 #endif

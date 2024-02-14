@@ -6,14 +6,15 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/13 16:56:53 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/13 21:57:51 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 #include <fcntl.h>
 
-void	parse_single_char(t_parse_str *parse_str, char **str, int in_quote)
+void	parse_single_char(t_parse_str *parse_str, char **str, int in_quote,
+		t_minishell *minishell)
 {
 	if (**str)
 	{
@@ -21,11 +22,12 @@ void	parse_single_char(t_parse_str *parse_str, char **str, int in_quote)
 			(*str) += 1;
 		else if (**str == '\\')
 			(*str)++;
-		else if (in_quote == FALSE && **str == '*')
+		else if (in_quote == FALSE && **str == '*'
+			&& parse_str->asterisk_flag == -1)
 			parse_str->asterisk_flag = 1;
 		else if (**str == '$')
 		{
-			parse_dollar_sign(parse_str, str, in_quote);
+			parse_dollar_sign(parse_str, str, in_quote, minishell);
 			return ;
 		}
 		append_char(parse_str, **str);
@@ -33,11 +35,15 @@ void	parse_single_char(t_parse_str *parse_str, char **str, int in_quote)
 	}
 }
 
-void	parse_double_quote(t_parse_str *parse_str, char **str)
+void	parse_double_quote(t_parse_str *parse_str, char **str,
+	t_minishell *minishell)
 {
 	(*str)++;
 	while (**str && **str != '\"')
-		parse_single_char(parse_str, str, 1);
+	{
+		parse_str->asterisk_flag = 0;
+		parse_single_char(parse_str, str, 1, minishell);
+	}
 	(*str)++;
 }
 
@@ -46,6 +52,7 @@ void	parse_single_quote(t_parse_str *parse_str, char **str)
 	(*str)++;
 	while (**str && **str != '\'')
 	{
+		parse_str->asterisk_flag = 0;
 		append_char(parse_str, **str);
 		(*str)++;
 	}
@@ -77,7 +84,7 @@ char	*easy_cat(char *s1, char *s2)
 	return (return_str);
 }
 
-void	parse_env_var_found(t_parse_str *parse_str, int in_quote,
+void	parse_env_var_found(t_parse_str *parse_str,
 	char *substitude_name, int start_index)
 {
 	int	i;
@@ -92,7 +99,8 @@ void	parse_env_var_found(t_parse_str *parse_str, int in_quote,
 	printf("parse_str: %s\n", parse_str->str);
 }
 
-void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote)
+void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote,
+	t_minishell *minishell)
 {
 	char	*env_name;
 	char	*substitude_name;
@@ -102,7 +110,7 @@ void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote)
 	start_index = parse_str->cursor;
 	while (**str && !isspace(**str) && (!in_quote || **str != '\"')
 		&& **str != '$')
-		parse_single_char(parse_str, str, 0);
+		parse_single_char(parse_str, str, 0, minishell);
 	env_name = ft_substr(parse_str->str, start_index, parse_str->cursor);
 	substitude_name = getenv(env_name);
 	printf("find name: %s\n", env_name);
@@ -113,23 +121,40 @@ void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote)
 		parse_str->cursor = start_index;
 		parse_str->str[start_index] = 0;
 		printf("subname_null: %s\n", env_name);
-		if (in_quote == TRUE && **str == '$')
-		{
-			append_char(parse_str, '$');
-			return ;
-		}
+		append_char(parse_str, '$');
 		return ;
 	}
-	parse_env_var_found(parse_str, in_quote, substitude_name, start_index);
+	parse_env_var_found(parse_str, substitude_name, start_index);
 }
 
-void	parse_dollar_sign(t_parse_str *parse_str, char **str, int in_quote)
+void	parse_question_mark(t_parse_str *parse_str, char **str,
+	t_minishell *minishell)
+{
+	char	*exit_status;
+	int		i;
+
+	exit_status = ft_itoa(minishell->exit_code);
+	i = 0;
+	while (exit_status[i])
+	{
+		append_char(parse_str, exit_status[i]);
+		i++;
+	}
+	(*str)++;
+}
+
+void	parse_dollar_sign(t_parse_str *parse_str, char **str, int in_quote,
+	t_minishell *minishell)
 {
 	(*str)++;
 	if (**str == '\"' && in_quote == FALSE)
-		parse_double_quote(parse_str, str);
+		parse_double_quote(parse_str, str, minishell);
+	else if (**str == '\'')
+		parse_single_quote(parse_str, str);
+	else if (**str == '?')
+		parse_question_mark(parse_str, str, minishell);
 	else
-		parse_env_var(parse_str, str, in_quote);
+		parse_env_var(parse_str, str, in_quote, minishell);
 }
 
 void	get_cwd_files(t_str_list *str_list)
@@ -236,7 +261,8 @@ void	parse_asterisk(t_str_list *str_list, t_parse_str *parse_str)
 		pattern_not_found(str_list, pattern);
 }
 
-void	parse_single_word(char **str, t_str_list *str_list)
+void	parse_single_word(char **str, t_str_list *str_list,
+	t_minishell *minishell)
 {
 	t_parse_str	parse_str;
 
@@ -244,13 +270,13 @@ void	parse_single_word(char **str, t_str_list *str_list)
 	while (**str && !ft_isspace(**str))
 	{
 		if (**str == '\"')
-			parse_double_quote(&parse_str, str);
+			parse_double_quote(&parse_str, str, minishell);
 		else if (**str == '\'')
 			parse_single_quote(&parse_str, str);
 		else if (**str == '$')
-			parse_dollar_sign(&parse_str, str, 0);
+			parse_dollar_sign(&parse_str, str, 0, minishell);
 		else
-			parse_single_char(&parse_str, str, 0);
+			parse_single_char(&parse_str, str, 0, minishell);
 	}
 	if (parse_str.cursor > 0)
 	{
@@ -261,7 +287,7 @@ void	parse_single_word(char **str, t_str_list *str_list)
 	}
 }
 
-char	**string_parser(char *str)
+char	**string_parser(char *str, t_minishell *minishell)
 {
 	t_str_list	str_list;
 
@@ -270,22 +296,22 @@ char	**string_parser(char *str)
 	{
 		while (*str && ft_isspace(*str))
 			str++;
-		parse_single_word(&str, &str_list);
+		parse_single_word(&str, &str_list, minishell);
 	}
 	return (list_to_char_arr(&str_list));
 }
 
-int main(int argc, char **argv)
-{
-	char **str;
+// int main(int argc, char **argv)
+// {
+// 	char **str;
 
-	char *input_str = readline(0);
-	str = string_parser(input_str);
-	int i = 0;
-	printf("input_str: %s\n", input_str);
-	while (str[i])
-	{
-		printf("parsed_str: [%s]\n", str[i]);
-		i++;
-	}
-}
+// 	char *input_str = readline(0);
+// 	str = string_parser(input_str);
+// 	int i = 0;
+// 	printf("input_str: %s\n", input_str);
+// 	while (str[i])
+// 	{
+// 		printf("parsed_str: [%s]\n", str[i]);
+// 		i++;
+// 	}
+// }

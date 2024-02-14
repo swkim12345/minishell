@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/12 23:38:00 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:58:01 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,27 @@
 # define TRUE		1
 # define FALSE		0
 # define NOTDEFINED	-1
+
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <errno.h>
+# include <sys/stat.h>
 # include "libft/libft.h"
 # include "parser/parser.h"
 # include "builtin/builtin.h"
 # include "inner_parser/inner_parser.h"
 
+typedef struct s_minishell	t_minishell;
+typedef struct s_str_list	t_str_list;
+
 typedef struct s_minishell
 {
     char    *cwd;
     char    *input_str;
-    
+    int		exit_code;
 }   t_minishell;
 
 typedef struct s_cmd_info

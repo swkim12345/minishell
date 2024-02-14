@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_stack.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:28:30 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/07 16:50:19 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:29:51 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_str_node	*pop(t_str_list *list)
 	return (next);
 }
 
-t_str_list	*push(t_str_list *list, t_str_node *node)
+void	push(t_str_list *list, t_str_node *node)
 {
 	if (list->head == NULL)
 	{	
