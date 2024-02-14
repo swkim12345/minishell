@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 15:24:42 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/14 20:33:45 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/14 20:56:02 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ t_cmd_node	*parser(t_cmd_node *leaf)
 			break ; //에러 처리 필요
 		index++;
 	}
+	//배열로 만들 필요성이 있음.
 	return (leaf);
 }
