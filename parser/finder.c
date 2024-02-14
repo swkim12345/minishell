@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:01:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/13 21:34:03 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:34:41 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,26 @@ long	find_end_quote(char *input)
 long	find_bracket(char *input)
 {
 	long	index;
+	long	bracket_counter;
 	char	c;
 
 	index = 0;
-	while (input[index])
+	if (!str_cmp(&input[index], &BRACKET[0]))
+		return (index);
+	bracket_counter = 1;
+	while (input[++index])
 	{
 		if (!str_cmp(&input[index], SINGLEQUOT) ||
 		!str_cmp(&input[index], DOUBLEQUOT))
 			index += find_end_quote(&input[index]);
-		if (str_cmp(&input[index], &BRACKET[0])
-			|| str_cmp(&input[index], &BRACKET[1]))
-			break ;
+		if (str_cmp(&input[index], &BRACKET[0]))
+			bracket_counter++;
+		if (str_cmp(&input[index], &BRACKET[1]))
+			bracket_counter--;
+		if (bracket_counter == 0)
+			return (index);
 		if (!input[index])
 			break ;
-		index++;
 	}
 	return (index);
 }
@@ -53,12 +59,14 @@ long	find_pipe(char *input)
 	long	index;
 	char	c;
 
-	index = 0;
-	while (input[index])
+	index = -1;
+	while (input[++index])
 	{
 		if (!str_cmp(&input[index], SINGLEQUOT) ||
 		!str_cmp(&input[index], DOUBLEQUOT))
 			index += find_end_quote(&input[index]);
+		if (!str_cmp(&input[index], &BRACKET[0]))
+			index += find_bracket(&input[index]);
 		if (!str_cmp(&input[index], OR))
 		{
 			index += 2;
@@ -68,7 +76,6 @@ long	find_pipe(char *input)
 			break ;
 		if (!input[index])
 			break ;
-		index++;
 	}
 	return (index);
 }
@@ -84,6 +91,8 @@ long	find_or_and(char *input)
 		if (!str_cmp(&input[index], SINGLEQUOT) ||
 		!str_cmp(&input[index], DOUBLEQUOT))
 			index += find_end_quote(&input[index]);
+		if (!str_cmp(&input[index], &BRACKET[0]))
+			index += find_bracket(&input[index]);
 		if (!str_cmp(&input[index], OR))
 			break ;
 		if (!str_cmp(&input[index], AND))
@@ -94,18 +103,15 @@ long	find_or_and(char *input)
 	return (index);
 }
 
-long	find_redirect(char *input)
+long	skip_space(char *input)
 {
 	long	index;
-	char	c;
 
-	index = 0;
-	while (input[index])
+	index = -1;
+	while (input[++index])
 	{
-		if (!str_cmp(&input[index], SINGLEQUOT) ||
-		!str_cmp(&input[index], DOUBLEQUOT))
-			index += find_end_quote(&input[index]);
-		index++;
+		if (input[index] != ' ')
+			break ;
 	}
 	return (index);
 }

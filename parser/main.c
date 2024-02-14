@@ -50,6 +50,7 @@ int	main()
 			exit_handle(&shell);
 		head = lexar(shell.input_str);
 		traverse(head);
+		free_ast_node(head);
 		add_history(shell.input_str);
 		free(shell.input_str);
 	}
