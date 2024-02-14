@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/14 20:38:41 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:28:58 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,18 +136,56 @@ void	find_curpath(t_cd *info)
 		find_local_dir(info);
 }
 
+char	*stack_to_str(t_str_list *stack)
+{
+	int			i;
+	t_str_node	*cur_node;
+	t_parse_str	parse_str;
+	char		*return_str;
+
+	while (stack->size > 0)
+	{
+		i = -1;
+		cur_node = pop(stack);
+		while (cur_node->str[++i])
+			append_char(&parse_str, cur_node->str[i]);
+		free(cur_node->str);
+		free(cur_node);
+	}
+	return_str = ft_substr(parse_str.str, 0, parse_str.cursor);
+	free(parse_str.str);
+	return (return_str);
+}
+
 void	parse_dots(t_cd *info)
 {
-	int		i;
-	char	*cur_path;
-	
+	int			i;
+	int			start;
+	t_str_node	*cur;
+	char		*temp_str;
+	t_str_list	stack;
 
 	i = 0;
-	cur_path = info->cur_path;
-	while (cur_path[i])
+	start = 0;
+	while (info->cur_path[i])
 	{
-		
+		if (ft_strncmp(&info->cur_path[i], "./", 2) == 0)
+			i++;
+		else if (ft_strncmp(&info->cur_path[i], "../", 3) == 0)
+		{
+			i += 2;
+			cur = pop(&stack);
+			free(cur->str);
+			free(cur);
+		}
+		else if (info->cur_path[i] == '/')
+		{
+			temp_str = ft_substr(info->cur_path, start, i + 1);
+			push(&stack, create_node(temp_str));
+		}
+		i++;
 	}
+	printf("%s\n", stack_to_str(&stack));
 }
 
 void	set_curpath_pwd(t_cd *info)

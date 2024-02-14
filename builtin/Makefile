@@ -11,4 +11,4 @@ echo:
 	cc -g ft_echo.c $(SRCS) ../libft/libftprintf.a -lreadline
 
 test:
-	cc -g test.c $(SRCS) ../libft/libftprintf.a -lreadline
+	cc -g test.c ../parser/str_stack.c $(SRCS) ../libft/libftprintf.a -lreadline
