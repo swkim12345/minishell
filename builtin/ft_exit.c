@@ -6,41 +6,39 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:28:30 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/15 12:03:15 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:10:21 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-t_str_node	*pop(t_str_list *list)
+int	ft_exit(t_cmd_node *cmd_node)
 {
-	t_str_node	*next;
+	unsigned short	exit_status;
 
-	if (list == NULL || list->head == NULL)
-		return (NULL);
-	next = list->head;
-	list->size -= 1;
-	if (list->size == 0)
-	{
-		list->head = NULL;
-		list->tail = NULL;
-		return (next);
-	}
-	list->head = next->next;
-	return (next);
+	exit_status = (unsigned short)ft_atoi(cmd_node->str[1]);
+	exit(exit_status);
 }
 
-t_str_list	*push(t_str_list *list, t_str_node *node)
+int main()
 {
-	if (list->head == NULL)
-	{	
-		list->head = node;
-		list->tail = node;
-	}
+	int	pid;
+	pid_t	t;
+	char	*str[] = {"exit", "100"};
+	t_cmd_node	*cmd_node;
+
+
+	
+	pid = fork();
+	//parent
+	if (pid)
+		pid = wait(&pid);
 	else
 	{
-		node->next = list->head;
-		list->head = node;
+		cmd_node = (t_cmd_node *)malloc(sizeof(t_cmd_node));
+		cmd_node->str = str;
+		ft_exit(cmd_node);
 	}
-	list->size++;
+	printf("parent : %d", pid);
+	return (0);
 }
