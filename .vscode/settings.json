@@ -1,0 +1,9 @@
+{
+	"files.associations": {
+		"main.h": "c",
+		"cstdlib": "c",
+		"__functional_03": "c",
+		"functional": "c",
+		"inner_parser.h": "c"
+	}
+}

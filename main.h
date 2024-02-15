@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/14 20:58:01 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/15 19:28:20 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ typedef struct s_str_list	t_str_list;
 
 typedef struct s_minishell
 {
-    char    *cwd;
-    char    *input_str;
-    int		exit_code;
-}   t_minishell;
+	char	*cwd;
+	char	*input_str;
+	char	*execute_name;
+	int		exit_code;
+}	t_minishell;
 
 typedef struct s_cmd_info
 {
