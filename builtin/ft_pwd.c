@@ -6,18 +6,15 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 20:50:45 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/14 21:05:58 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:26:54 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-int	ft_pwd(t_cmd_node *cmd_node)
+int	ft_pwd(t_minishell *minishell)
 {
-	char	*cwd;
-
-	cwd = getcwd(NULL, 0);
-	printf("%s\n", cwd);
+	//printf("%s\n",minishell->cur_dir) //t_minishell업데이트 이후 설정 필요.
 	return (TRUE);
 }
 
