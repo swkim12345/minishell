@@ -2,5 +2,8 @@
 *.o
 minishell
 test.c
+a.out
+*.a
+*.dSYM
 */*.out
 *.out

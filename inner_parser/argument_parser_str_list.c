@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:03:03 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 21:03:16 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:56:47 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	enqueue(t_str_list *str_list, t_str_node *str_node)
 	else
 	{
 		str_list->tail->next = str_node;
+		str_node->prev = str_list->tail;
 		str_list->tail = str_node;
 	}
 	str_list->size++;
@@ -33,12 +34,17 @@ t_str_node	*dequeue(t_str_list *str_list)
 
 	if (!(str_list->head))
 		return (0);
+	else if (str_list->size == 1)
+	{
+		head = str_list->head;
+		str_list->head = 0;
+		str_list->tail = 0;
+	}
 	else
 	{
 		head = str_list->head;
 		str_list->head = head->next;
-		if (!(str_list->head))
-			str_list->tail = 0;
+		str_list->head->prev = 0;
 	}
 	str_list->size--;
 	return (head);

@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:51 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/14 16:39:34 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:05:10 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,12 @@
 # define RIGHTNODE		2
 # define CMDNODE		4
 
+# include "../main.h"
+
 typedef struct s_ast_node	t_ast_node;
 typedef struct s_cmd_node	t_cmd_node;
+typedef struct s_str_node	t_str_node;
+typedef struct s_str_list	t_str_list;
 
 typedef struct s_ast_node
 {
