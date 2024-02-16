@@ -6,23 +6,32 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 20:50:45 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/15 16:26:54 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:00:23 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-int	ft_pwd(t_minishell *minishell)
+int	ft_pwd(t_cmd_node *node, t_minishell *minishell)
 {
-	//printf("%s\n",minishell->cur_dir) //t_minishell업데이트 이후 설정 필요.
-	return (TRUE);
-}
+	int	i;
 
-int main()
-{
-	t_cmd_node	cmd_node;
-	char		*str[] = {"cd", "test_dir"};
-
-	cmd_node.str = str;
-	ft_pwd(&cmd_node);
+	i = 0;
+	if (node->str[1])
+	{
+		if (node->str[1][0] != '-')
+		{
+			printf("pwd: too many arguments\n");
+			return (FUNC_FAIL);
+		}
+		if (node->str[1][0] == '-' && node->str[1][1])
+		{
+			if (node->str[1][1] == '-')
+				i += 1;
+			printf("pwd: bad option: %s\n", &node->str[1][i]);
+			return (FUNC_FAIL);
+		}
+	}
+	printf("%s\n", minishell->cwd);
+	return (FUNC_SUC);
 }

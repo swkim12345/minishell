@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/15 16:26:37 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/16 12:46:44 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	ft_exit(t_cmd_node *cmd_node, t_minishell *minishell)
 	if (!cmd_node->str[2])
 	{
 		printf("bash exit: too many arguments\n"); //error 메세지 수정 필요. 간이로 설정함.
-		return (TRUE);
+		return (FUNC_FAIL);
 	}
 	while (cmd_node->str[1][++index] != '\0')
 	{

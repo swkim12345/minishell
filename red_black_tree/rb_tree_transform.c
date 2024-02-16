@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 19:51:25 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/15 20:09:15 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/16 12:32:47 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_tree_head	*char_to_rb_tree(char **str)
 	{
 		node = (t_tree_node *)malloc(sizeof(t_tree_node));
 		ft_memset((void *)node, 0, sizeof(t_tree_node));
+		node->color = RED;
 		parse_env(str[index], node->key, node->value);
 		rb_tree_insert(ret, node);
 	}
