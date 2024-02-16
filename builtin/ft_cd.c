@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/15 23:04:32 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:10:42 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	ft_cd_error(t_cd *info, t_minishell *minishell)
 {
 	int		exit_status;
 
+	minishell->exit_code = errno;
 	exit_status = errno;
 	write(2, minishell->execute_name, ft_strlen(minishell->execute_name));
 	write(2, ": cd: ", 6);
@@ -58,18 +59,20 @@ void	init_t_cd(t_cd *info, t_cmd_node *cmd_node)
 
 	i = 1;
 	info->home_dir = getenv("HOME");
-	info->option_flag = 0;
+	info->cd_flag = 0;
 	while (cmd_node->str[i])
 	{
 		option_result = check_option(cmd_node->str[i]);
 		if (option_result != NOTDEFINED)
-			info->option_flag = option_result;
+			info->cd_flag = option_result;
 		else
 			break ;
 		i++;
 	}
 	info->directory_index = i;
 	info->directory = cmd_node->str[info->directory_index];
+	if (info->directory[0] == '/')
+		info->cd_flag |= PATH_TYPE;
 	info->cur_path = 0;
 }
 
@@ -122,7 +125,7 @@ void	find_local_dir(t_cd *info, t_minishell *minishell)
 	free(temp_str);
 }
 
-void	check_cdpath(t_cd *info, t_minishell *minishell)
+int	check_cdpath(t_cd *info, t_minishell *minishell)
 {
 	int		i;
 	char	*temp_str;
@@ -140,15 +143,19 @@ void	check_cdpath(t_cd *info, t_minishell *minishell)
 		else
 			info->check_str = easy_cat(info->path_arr[i], info->directory);
 		if (stat(info->check_str, &info->file_stat) == -1)
-			ft_cd_error(info, minishell);
+		{
+			free(info->check_str);
+			return (ft_cd_error(info, minishell));
+		}
 		if (S_ISDIR(info->file_stat.st_mode))
 		{
 			info->cur_path = info->check_str;
-			return ;
+			return (0);
 		}
 		free(info->check_str);
 	}
 	free_2d_str(info->path_arr);
+	return (0);
 }
 
 void	find_curpath(t_cd *info, t_minishell *minishell)
@@ -156,8 +163,9 @@ void	find_curpath(t_cd *info, t_minishell *minishell)
 	info->cdpath = getenv("CDPATH");
 	if (info->cdpath)
 		check_cdpath(info, minishell);
-	else if (!info->cur_path)
+	else if (minishell->exit_code == 0 && !info->cur_path)
 		find_local_dir(info, minishell);
+	// printf("cwd_1: %s\n", info->cur_path);
 }
 
 char	*stack_to_str(t_str_list *stack)
@@ -226,7 +234,6 @@ void	parse_dots(t_cd *info, t_minishell *minishell)
 		temp_str = ft_substr(info->cur_path, start, i);
 		enqueue(&stack, create_node(temp_str));
 	}
-	free(info->cur_path);
 	printf("tail_str: %s\n", stack.tail->str);
 	while (stack.size > 1 && str_equal(stack.tail->str, "/") == 1)
 	{
@@ -247,6 +254,12 @@ void	set_curpath_pwd(t_cd *info, t_minishell *minishell)
 	free(temp_str);
 }
 
+void	cleanup(t_cd *info, char *temp_cwd)
+{
+	if (info->cd_flag & PATH_TYPE)
+		free(info->cur_path);
+	free(temp_cwd);
+}
 
 int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 {
@@ -254,7 +267,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	char	*temp_cwd;
 
 	init_t_cd(&info, cmd_node);
-	printf("option: %d\n", info.option_flag);
+	printf("option: %d\n", info.cd_flag);
 	temp_cwd = minishell->cwd;
 	if (!info.directory && !info.home_dir)
 		return (0);
@@ -263,14 +276,15 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 		if (chdir(info.home_dir) == -1)
 			return (ft_cd_error(&info, minishell));
 	}
+	if (info.directory[0] != '/' && info.directory[0] != '.'
+		&& !(info.directory[0] == '.' && info.directory[1] == '.'))
+		find_curpath(&info, minishell);
 	if (chdir(info.directory) == -1)
 		return (ft_cd_error(&info, minishell));
-	else if (info.directory[0] == '/' || info.directory[0] == '.'
-		|| (info.directory[0] == '.' && info.directory[1] == '.'))
+	else if (info.directory[0] == '/' && info.directory[0] == '.'
+		&& (info.directory[0] == '.' && info.directory[1] == '.'))
 		info.cur_path = info.directory;
-	else
-		find_curpath(&info, minishell);
-	if (info.option_flag == 0)
+	if (info.cd_flag == 0)
 	{
 		if (info.directory[0] == '.'
 			|| (info.directory[0] == '.' && info.directory[1] == '.'))
@@ -281,7 +295,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 		minishell->cwd = getcwd(0, 0);
 	printf("cwd: %s\n", minishell->cwd);
 	system("pwd");
-	free(temp_cwd);
+	cleanup(&info, temp_cwd);
 	return (0);
 }
 
@@ -293,6 +307,7 @@ void	check()
 int main()
 {
 	atexit(check);
+	system("echo $CDPATH");
 	t_cmd_node	cmd_node;
 	t_minishell minishell;
 	char *input_str = readline(0);
@@ -307,6 +322,7 @@ int main()
 	int i = 0;
 	while (cmd_node.str[i])
 	{
+		printf("%p\n", cmd_node.str[i]);
 		free(cmd_node.str[i]);
 		i++;
 	}
