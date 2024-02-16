@@ -6,16 +6,11 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/16 19:02:15 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/16 21:01:26 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
-
-// int	fd_cd_helper(t_cmd_node *cmd_node)
-// {
-	
-// }
 
 int	ft_cd_error(t_cd *info, t_minishell *minishell)
 {
@@ -64,6 +59,9 @@ void	init_t_cd(t_cd *info, t_cmd_node *cmd_node)
 
 	i = 1;
 	info->home_dir = getenv("HOME");
+	if (!info->home_dir)
+		return ;
+	printf("info->home %s\n", info->home_dir);
 	info->cd_flag = 0;
 	while (cmd_node->str[i])
 	{
@@ -76,11 +74,14 @@ void	init_t_cd(t_cd *info, t_cmd_node *cmd_node)
 	}
 	info->directory_index = i;
 	info->directory = cmd_node->str[info->directory_index];
-	if (info->directory[0] == '/')
-		info->cd_flag |= PATH_TYPE;
-	if (info->directory[0] != '/' && info->directory[0] != '.'
-		&& !(info->directory[0] == '.' && info->directory[1] == '.'))
-		info->cd_flag |= NO_DOT_RELATIVE;
+	if (info->directory)
+	{
+		if (info->directory[0] == '/')
+			info->cd_flag |= PATH_TYPE;
+		if (info->directory[0] != '/' && info->directory[0] != '.'
+			&& !(info->directory[0] == '.' && info->directory[1] == '.'))
+			info->cd_flag |= NO_DOT_RELATIVE;
+	}
 	info->cur_path = 0;
 }
 
@@ -223,12 +224,13 @@ void	parse_dots(t_cd *info, t_minishell *minishell)
 	init_str_list(&stack);
 	while (info->cur_path[i])
 	{
-		if (ft_strncmp(&info->cur_path[i], "./", 2) == 0)
+		if (ft_strncmp(&info->cur_path[i], "./", 2) == 0 && start - i == 1)
 		{
 			start += 2;
 			i++;
 		}
-		else if (ft_strncmp(&info->cur_path[i], "../", 3) == 0)
+		else if (ft_strncmp(&info->cur_path[i], "../", 3) == 0
+			&& start - i == 2)
 		{
 			i += 2;
 			start += 3;
@@ -286,14 +288,20 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	char	*temp_str;
 
 	init_t_cd(&info, cmd_node);
-	printf("option: %d\n", info.cd_flag);
 	temp_cwd = minishell->cwd;
+	printf("directory: [%p], home_dir: [%s]\n", info.directory, info.home_dir);
 	if (!info.directory && !info.home_dir)
 		return (0);
 	else if (!info.directory && info.home_dir)
 	{
 		if (chdir(info.home_dir) == -1)
 			return (ft_cd_error(&info, minishell));
+		temp_str = getcwd(0, 0);
+		if (!temp_str)
+			return (ft_cd_error(&info, minishell));
+		free(temp_cwd);
+		minishell->cwd = temp_str;
+		return (0);
 	}
 	if (info.directory[0] == '/' || info.directory[0] == '.'
 		|| (info.directory[0] == '.' && info.directory[1] == '.'))
@@ -318,8 +326,11 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	parse_dots(&info, minishell);
 	if (chdir(info.cur_path) == -1)
 	{
-		free(temp_cwd);
-		return (ft_cd_error(&info, minishell));
+		if (chdir(info.directory) == -1)
+		{
+			free(temp_cwd);
+			return (ft_cd_error(&info, minishell));
+		}
 	}
 	printf("minishell->cwd: [%s]\n", minishell->cwd);
 	system("pwd");
@@ -327,10 +338,10 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	return (0);
 }
 
-// void	check()
-// {
-// 	system("leaks a.out");
-// }
+void	check()
+{
+	system("leaks a.out");
+}
 
 int main()
 {
@@ -340,6 +351,7 @@ int main()
 	t_minishell minishell;
 	char *input_str = readline(0);
 	cmd_node.str = string_parser(input_str, &minishell);
+	// printf("here: %p\n", cmd_node.str[1]);
 	
 	minishell.cwd = getcwd(0,0);
 	minishell.execute_name = "minishell";
@@ -355,4 +367,5 @@ int main()
 		i++;
 	}
 	free(cmd_node.str);
+	system("pwd");
 }

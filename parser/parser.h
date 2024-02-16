@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:51 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/15 23:15:19 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:11:47 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_ast_node
 	t_ast_node			*right_node;
 	t_ast_node			*next_ast_node;
 	t_cmd_node			*cmd_node;
-	const char				*str;
+	char				*str;
 }	t_ast_node;
 
 typedef struct s_cmd_node

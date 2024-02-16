@@ -3,4 +3,7 @@ minishell
 test.c
 a.out
 *.a
+*/*.dSYM
 *.dSYM
+*/*.vscode
+.gitignore
