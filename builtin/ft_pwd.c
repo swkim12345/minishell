@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   subsystem.h                                        :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/07 13:39:54 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/13 19:36:18 by sunghwki         ###   ########.fr       */
+/*   Created: 2024/02/14 20:50:45 by sunghwki          #+#    #+#             */
+/*   Updated: 2024/02/14 21:05:58 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SUBSYSTEM_H
-# define SUBSYSTEM_H
+#include "../main.h"
 
-/* process_command.c*/
-int	process_command(t_cmd_node *cmd_node);
+int	ft_pwd(t_cmd_node *cmd_node)
+{
+	char	*cwd;
 
-#endif
+	cwd = getcwd(NULL, 0);
+	printf("%s\n", cwd);
+	return (TRUE);
+}
+
+int main()
+{
+	t_cmd_node	cmd_node;
+	char		*str[] = {"cd", "test_dir"};
+
+	cmd_node.str = str;
+	ft_pwd(&cmd_node);
+}

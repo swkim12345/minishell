@@ -1,3 +1,4 @@
+*/*.o
 *.o
 minishell
 test.c
@@ -7,3 +8,4 @@ a.out
 *.dSYM
 */*.vscode
 .gitignore
+
