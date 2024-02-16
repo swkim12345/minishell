@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/16 13:06:23 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/16 14:21:56 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define OPTION_FLAG 1
 # define PATH_TYPE 2
+# define NO_DOT_RELATIVE 4
 
 typedef struct	s_cd
 {
