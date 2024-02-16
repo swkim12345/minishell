@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/16 17:38:31 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:41:44 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,14 +321,14 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	return (0);
 }
 
-void	check()
-{
-	system("leaks a.out");
-}
+// void	check()
+// {
+// 	system("leaks a.out");
+// }
 
 int main()
 {
-	atexit(check);
+	// atexit(check);
 	system("echo $CDPATH");
 	t_cmd_node	cmd_node;
 	t_minishell minishell;
