@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/16 17:51:27 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:02:15 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,6 +310,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 		minishell->cwd = temp_str;
 		//export temp_cwd to oldpwd
 		free(temp_cwd);
+		system("pwd");
 		return (minishell->exit_code);
 	}
 	if (info.cur_path[0] != '/')
