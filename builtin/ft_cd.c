@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/16 17:17:33 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:38:31 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ int	ft_cd_error(t_cd *info, t_minishell *minishell)
 
 	minishell->exit_code = errno;
 	exit_status = errno;
+	if (info->cur_path)
+	{
+		free(info->cur_path);
+		info->cur_path = 0;
+	}
 	write(2, minishell->execute_name, ft_strlen(minishell->execute_name));
 	write(2, ": cd: ", 6);
 	perror(info->directory);
@@ -269,7 +274,7 @@ void	set_curpath_pwd(t_cd *info, t_minishell *minishell)
 
 void	cleanup(t_cd *info, char *temp_cwd)
 {
-	if ((info->cd_flag & PATH_TYPE) == FALSE)
+	if (info->cur_path)
 		free(info->cur_path);
 	free(temp_cwd);
 }
@@ -278,6 +283,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 {
 	t_cd	info;
 	char	*temp_cwd;
+	char	*temp_str;
 
 	init_t_cd(&info, cmd_node);
 	printf("option: %d\n", info.cd_flag);
@@ -294,11 +300,16 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 		info.cur_path = info.directory;
 	if (info.cd_flag & NO_DOT_RELATIVE)
 		find_curpath(&info, minishell);
-	if ((info.cd_flag & OPTION_FLAG)
-		&& (minishell->exit_code != 0 || chdir(info.cur_path) == -1))
-		return (ft_cd_error(&info, minishell));
-	else
-		minishell->cwd = getcwd(0, 0);
+	if (info.cd_flag & OPTION_FLAG)
+	{
+		if (chdir(info.cur_path) == -1)
+			return (ft_cd_error(&info, minishell));
+		temp_str = getcwd(0, 0);
+		if (!temp_str)
+			return (ft_cd_error(&info, minishell));
+		minishell->cwd = temp_str;
+		return (minishell->exit_code);
+	}
 	if (info.cur_path[0] != '/')
 		set_curpath_pwd(&info, minishell);
 	parse_dots(&info, minishell);
