@@ -4,6 +4,7 @@
 		"cstdlib": "c",
 		"__functional_03": "c",
 		"functional": "c",
-		"inner_parser.h": "c"
+		"inner_parser.h": "c",
+		"readline.h": "c"
 	}
 }

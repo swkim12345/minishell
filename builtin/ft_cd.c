@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/16 13:10:42 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:35:22 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ int	check_cdpath(t_cd *info, t_minishell *minishell)
 		}
 		if (S_ISDIR(info->file_stat.st_mode))
 		{
+			free_2d_str(info->path_arr);
 			info->cur_path = info->check_str;
 			return (0);
 		}
@@ -256,7 +257,7 @@ void	set_curpath_pwd(t_cd *info, t_minishell *minishell)
 
 void	cleanup(t_cd *info, char *temp_cwd)
 {
-	if (info->cd_flag & PATH_TYPE)
+	if (info->cd_flag & PATH_TYPE == FALSE)
 		free(info->cur_path);
 	free(temp_cwd);
 }
