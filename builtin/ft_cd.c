@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/16 13:36:37 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:40:02 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ void	set_curpath_pwd(t_cd *info, t_minishell *minishell)
 
 void	cleanup(t_cd *info, char *temp_cwd)
 {
-	if (info->cd_flag & PATH_TYPE == FALSE)
+	if ((info->cd_flag & PATH_TYPE) == FALSE)
 		free(info->cur_path);
 	free(temp_cwd);
 }
@@ -300,14 +300,14 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	return (0);
 }
 
-// void	check()
-// {
-// 	system("leaks a.out");
-// }
+void	check()
+{
+	system("leaks a.out");
+}
 
 int main()
 {
-	// atexit(check);
+	atexit(check);
 	system("echo $CDPATH");
 	t_cmd_node	cmd_node;
 	t_minishell minishell;
