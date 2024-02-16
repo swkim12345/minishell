@@ -33,13 +33,16 @@
 
 typedef struct s_minishell	t_minishell;
 typedef struct s_str_list	t_str_list;
+typedef struct s_tree_node	t_tree_node;
+typedef struct s_tree_head	t_tree_head;
 
 typedef struct s_minishell
 {
-	char	*cwd;
-	char	*input_str;
-	char	*execute_name;
-	int		exit_code;
+	char		*cwd;
+	char		*input_str;
+	int			exit_code;
+  char	*execute_name;
+	t_tree_head	*env;
 }	t_minishell;
 
 typedef struct s_cmd_info
