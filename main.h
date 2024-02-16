@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/16 22:08:31 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/15 19:28:20 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_minishell
 	char		*cwd;
 	char		*input_str;
 	int			exit_code;
+  char	*execute_name;
 	t_tree_head	*env;
 }	t_minishell;
 
