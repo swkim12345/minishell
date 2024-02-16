@@ -1,6 +1,6 @@
 SRCS= ../inner_parser/argument_parser.c ../inner_parser/argument_parser_str_list.c \
 ../inner_parser/argument_parser_utils.c \
-../common_util.c
+../common_util.c ../parser/str_stack.c
 
 LIBFT=../libft/libftprintf.a
 
@@ -18,3 +18,4 @@ exit:
 
 test:
 	cc -g test.c $(SRCS) ../libft/libftprintf.a -lreadline
+

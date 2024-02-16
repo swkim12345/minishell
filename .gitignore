@@ -4,6 +4,8 @@ minishell
 test.c
 a.out
 *.a
+*/*.dSYM
 *.dSYM
-*/*.out
-*.out
+*/*.vscode
+.gitignore
+
