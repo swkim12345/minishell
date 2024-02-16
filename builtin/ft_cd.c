@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/16 17:41:44 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:51:27 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,7 +274,7 @@ void	set_curpath_pwd(t_cd *info, t_minishell *minishell)
 
 void	cleanup(t_cd *info, char *temp_cwd)
 {
-	if (info->cur_path)
+	if (info->cd_flag ^ PATH_TYPE)
 		free(info->cur_path);
 	free(temp_cwd);
 }
@@ -308,13 +308,18 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 		if (!temp_str)
 			return (ft_cd_error(&info, minishell));
 		minishell->cwd = temp_str;
+		//export temp_cwd to oldpwd
+		free(temp_cwd);
 		return (minishell->exit_code);
 	}
 	if (info.cur_path[0] != '/')
 		set_curpath_pwd(&info, minishell);
 	parse_dots(&info, minishell);
 	if (chdir(info.cur_path) == -1)
+	{
+		free(temp_cwd);
 		return (ft_cd_error(&info, minishell));
+	}
 	printf("minishell->cwd: [%s]\n", minishell->cwd);
 	system("pwd");
 	cleanup(&info, temp_cwd);
