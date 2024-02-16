@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/16 13:41:33 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:46:36 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int	check_cdpath(t_cd *info, t_minishell *minishell)
 		}
 		else
 			info->check_str = easy_cat(info->path_arr[i], info->directory);
-		if (stat(info->check_str, &info->file_stat) == -1)
+		if (stat(info->check_str, &info->file_stat) == -1 && errno != ENOENT)
 		{
 			free(info->check_str);
 			return (ft_cd_error(info, minishell));
