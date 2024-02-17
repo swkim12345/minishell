@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 14:00:30 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/17 14:37:39 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,24 @@ int	is_builtin_fn(t_cmd_node *cmd_node)
 	return (0);
 }
 
-int	process_command(t_cmd_node *cmd_node)
+int	process_extern_cmd(t_cmd_node *cmd_node)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		execve(cmd_node->cmd_name, cmd_node->str, cmd_node->envp);
+		exit(0);
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+	}
+}
+
+int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 {
 	cmd_node->cmd_name = cmd_node->str[0];
 	if (is_builtin_fn(cmd_node))

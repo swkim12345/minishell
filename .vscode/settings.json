@@ -5,6 +5,7 @@
 		"__functional_03": "c",
 		"functional": "c",
 		"inner_parser.h": "c",
-		"readline.h": "c"
+		"readline.h": "c",
+		"history.h": "c"
 	}
 }
