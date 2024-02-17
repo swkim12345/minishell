@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_tree.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:11:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/16 22:08:33 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/17 17:31:33 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ struct s_tree_node {
 	t_tree_node	*right_node;
 	char		*key;
 	char		*value;
+	int			index;
 };
 
 struct s_tree_head {
