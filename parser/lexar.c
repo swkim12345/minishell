@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:28:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/14 20:16:31 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:29:19 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ static	t_ast_node	*or_and_lexar(t_ast_node *head)
 	t_ast_node	*ret;
 
 	ptr = head->cmd_node->str[0];
-	index = find_or_and(ptr);
+	index = find_or_and(ptr, head);
+	if (index == -1)
+		return (0);
 	if (!str_cmp(&ptr[index], OR) || !str_cmp(&ptr[index], AND))
 	{
 		ret = init_ast_node(RIGHTNODE | LEFTNODE);
@@ -97,6 +99,8 @@ t_ast_node	*recur_lexar(t_ast_node *head)
 
 	ptr = head->cmd_node->str[0];
 	ret = or_and_lexar(head);
+	if (!ret)
+		return (0);
 	if (ret != head)
 		return (ret);
 	ret = pipe_lexar(head);
@@ -115,6 +119,12 @@ t_ast_node	*lexar(char *input)
 	head = init_ast_node(CMDNODE);
 	i = ft_strdup(input);
 	head->cmd_node->str = init_doub_char(&i, 1);
-	head = recur_lexar(head);	
+	head = recur_lexar(head);
+	// if (!head)
+	// {
+	// 	ft_custom_error("syntax error\n", 258);
+	// 	free_ast_tree;
+	// 	head = 0;
+	// }
 	return (head);
 }

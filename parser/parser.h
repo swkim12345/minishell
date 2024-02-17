@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:51 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/16 20:11:47 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/17 21:02:18 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@
 
 # include "../main.h"
 
+# define BRACKET_FLAG 1
+
 typedef struct s_ast_node	t_ast_node;
 typedef struct s_cmd_node	t_cmd_node;
 typedef struct s_str_node	t_str_node;
 typedef struct s_str_list	t_str_list;
+typedef struct s_minishell	t_minishell;
 
 typedef struct s_ast_node
 {
@@ -42,6 +45,7 @@ typedef struct s_ast_node
 	t_ast_node			*right_node;
 	t_ast_node			*next_ast_node;
 	t_cmd_node			*cmd_node;
+	int					flag;
 	char				*str;
 }	t_ast_node;
 
@@ -56,7 +60,7 @@ t_ast_node	*init_ast_node(int child_node);
 /* finder.c */
 /* find_or_and_bracket / find_bracket : exclusive quot */
 long		find_end_quote(char *input);
-long		find_or_and(char *input);
+long		find_or_and(char *input, t_ast_node *head);
 long		find_bracket(char *input);
 long		find_pipe(char *input);
 long		skip_space(char *input);
@@ -75,7 +79,7 @@ t_ast_node	*recur_lexar(t_ast_node *head);
 int			str_cmp(char *str_org, char *str_cmp);
 
 /* traverse.c */
-int			traverse(t_ast_node *head);
+int			traverse(t_ast_node *head, t_minishell *minishell, int check_pipe);
 
 /* parser.c */
 t_cmd_node	*parser(t_cmd_node *leaf);
