@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/17 14:40:57 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/17 14:43:39 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,28 @@
 # include <readline/history.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <sys/stat.h>
 # include <errno.h>
 # include <sys/stat.h>
 # include "libft/libft.h"
 # include "parser/parser.h"
 # include "builtin/builtin.h"
+# include "subsystem/subsystem.h"
 # include "inner_parser/inner_parser.h"
 
 typedef struct s_minishell	t_minishell;
 typedef struct s_str_list	t_str_list;
+typedef struct s_tree_node	t_tree_node;
+typedef struct s_tree_head	t_tree_head;
 
 typedef struct s_minishell
 {
-	t_
-	char	*cwd;
-	char	*input_str;
-	char	*execute_name;
-	int		exit_code;
+	char		*cwd;
+	char		*input_str;
+	int			exit_code;
+  	char	*execute_name;
+	t_tree_head	*env;
+
 }	t_minishell;
 
 typedef struct s_cmd_info

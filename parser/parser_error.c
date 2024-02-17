@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   subsystem.h                                        :+:      :+:    :+:   */
+/*   parser_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/07 13:39:54 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/13 19:36:18 by sunghwki         ###   ########.fr       */
+/*   Created: 2024/02/14 15:05:04 by sunghwki          #+#    #+#             */
+/*   Updated: 2024/02/14 15:07:37 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SUBSYSTEM_H
-# define SUBSYSTEM_H
+#include "../main.h"
 
-/* process_command.c*/
-int	process_command(t_cmd_node *cmd_node);
-
-#endif
+int	error_syntax_error(char *str)
+{
+	printf("minishell: syntax error near unexpoected token %s\n", str);
+	
+	return (TRUE);
+}

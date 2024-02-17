@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/16 14:21:56 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/16 12:46:26 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # define OPTION_FLAG 1
 # define PATH_TYPE 2
 # define NO_DOT_RELATIVE 4
+
+# define FUNC_SUC	0
+# define FUNC_FAIL	1
 
 typedef struct	s_cd
 {

@@ -5,55 +5,75 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 16:52:54 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/12 23:38:50 by sunghwki         ###   ########.fr       */
+/*   Created: 2024/02/14 15:24:42 by sunghwki          #+#    #+#             */
+/*   Updated: 2024/02/14 20:56:02 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
-/*
-||, && 처리는 lexar에서 처리가 완료된 것으로 가정함.
-*/
 
-char		**parse_str(char *input)
+long	parser_redirect(t_cmd_node *leaf, long start)
 {
-	/*
-	space, tab, newline
-	redirection(>, >>, <, <<)
-	$ (dollar sign) - 이거 구현해야 함?
-	'', ""는 처리하지 않음.
-	*/
 	long	index;
 	char	*ptr;
-	char	**ret;
+	char	*new_str;
+	char	*new_node_str;
 
-	index = 0;
-	while (input[index])
+	ptr = leaf->str[0];
+	index = start + 1;
+	if (!ft_strncmp(&ptr[index], &ptr[start], 1))
+		index++;
+	index += skip_space(&ptr[index]);
+	while (ptr[index])
 	{
-		ptr = &input[index];
-		//check "", ''
-		if (*ptr == SINGLEQUOT[0]
-		|| *ptr == DOUBLEQUOT[0])
-			{
-				ptr += find_end_quote(ptr);
-				if (!ptr)
-					return (NULL);
-			}
-		//space
-		//tab
-		//newline
-		if (*ptr == ' ' || *ptr == '	' || *ptr == '\n')
-		{
-			//split str
-		}
+		if (ptr[index] == ' ' || ptr[index] == '>' || ptr[index] == '<')
+			break ;
+		index++;
 	}
-	return (index);
+	new_str = (char *)malloc(sizeof(char) * (index - start + 1));
+	new_str[index - start] = '\0';
+	ft_memmove((void *)new_str, (void *)&ptr[start], index - start);
+	if (leaf->redirect)
+	{
+		new_node_str = ft_strjoin(leaf->redirect, new_str);
+		free(leaf->redirect);
+		leaf->redirect = new_node_str;
+	}
+	else
+		leaf->redirect = new_str;
+	ptr[start] = '\0';
+	ptr[index - 1] = '\0';
+	new_node_str = ft_strjoin(&ptr[0], &ptr[index]);
+	free_doub_char(leaf->str);
+	leaf->str = init_doub_char(&new_node_str, 1);
+	return (0);
 }
 
-t_ast_node	*parser(char *input)
+t_cmd_node	*parser(t_cmd_node *leaf)
 {
-	t_ast_node	*head;
-	
-	head = init_ast_node(CMDNODE);
-	
+	char	*ptr;
+	char	*str;
+	long	index;
+
+	ptr = leaf->str[0];
+	index = 0;
+	while (ptr[index])
+	{
+		if (!str_cmp(&ptr[index], SINGLEQUOT) ||
+		!str_cmp(&ptr[index], DOUBLEQUOT))
+			index += find_end_quote(&ptr[index]);
+		if (!str_cmp(&ptr[index], &BRACKET[0]))
+			index += find_bracket(&ptr[index]);
+		if (!str_cmp(&ptr[index], REDIRINPUT) ||
+		!str_cmp(&ptr[index], REDIROUTPUT))
+		{
+			index = parser_redirect(leaf, index);
+			continue ;
+		}
+		if (!ptr[index])
+			break ; //에러 처리 필요
+		index++;
+	}
+	//배열로 만들 필요성이 있음.
+	return (leaf);
 }
