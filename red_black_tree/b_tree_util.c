@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   b_tree_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/16 19:08:30 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:50:53 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "b_tree.h"
 
-int			parse_env(char *env, char **key, char **value) //=기준으로 파싱
+int			parse_env(char *env, char **key, char **value)
 {
 	int	index;
 	
@@ -29,7 +29,7 @@ int			parse_env(char *env, char **key, char **value) //=기준으로 파싱
 		return (NOTDEFINED);
 	*key = ft_strdup(env);
 	*value = ft_strdup(&env[index + 1]);
-	return (0);
+	return (FUNC_SUC);
 }
 
 void		node_delete(t_tree_node *node)

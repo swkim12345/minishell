@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   set_mem.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 23:16:31 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/14 17:14:13 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:52:43 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
+#include "parser.h"
 
 char	**init_doub_char(char **input, int size)
 {
@@ -52,16 +52,16 @@ void	free_cmd_node(t_cmd_node *node)
 	free(node);
 }
 
-void	free_ast_node(t_ast_node *node)
+void	free_ast_tree(t_ast_node *node)
 {
 	if (!node)
 		return ;
 	if (node->next_ast_node)
-		free_ast_node(node->next_ast_node);
+		free_ast_tree(node->next_ast_node);
 	if (node->left_node)
-		free_ast_node(node->left_node);
+		free_ast_tree(node->left_node);
 	if (node->right_node)
-		free_ast_node(node->right_node);
+		free_ast_tree(node->right_node);
 	if (node->cmd_node)
 		free_cmd_node(node->cmd_node);
 	if (node->str)

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   traverse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/17 21:16:45 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:52:18 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
+#include "parser.h"
 
 int	recur_traverse(t_ast_node *head, t_minishell *minishell) //fork로 실행, wait를 통해 wait, 이후 pipe관련 처리
 {

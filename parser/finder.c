@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   finder.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:01:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/17 16:29:45 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:54:10 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
+#include "parser.h"
 
 long	find_end_quote(char *input)
 {

@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/16 12:46:26 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:55:31 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
+
+# include "../main.h"
 
 # define OPTION_FLAG 1
 # define PATH_TYPE 2

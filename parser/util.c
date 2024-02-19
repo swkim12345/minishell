@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 23:44:33 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/13 17:48:27 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:52:20 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
+#include "parser.h"
 
 int	str_cmp(char *str_org, char *str_cmp)
 {
