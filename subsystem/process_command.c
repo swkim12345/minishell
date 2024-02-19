@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   process_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/17 14:37:39 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:58:12 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
+#include "subsystem.h"
 
 /*
 	cmd struct list

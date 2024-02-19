@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/19 11:57:35 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:00:50 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # include "builtin/builtin.h"
 # include "subsystem/subsystem.h"
 # include "inner_parser/inner_parser.h"
+# include "environ/binary_tree.h"
 
 typedef struct s_minishell	t_minishell;
 typedef struct s_str_list	t_str_list;
