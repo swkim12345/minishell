@@ -6,11 +6,11 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/19 11:59:20 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:36:41 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "binary_tree.h"
+#include "environ.h"
 
 int			parse_env(char *env, char **key, char **value)
 {
@@ -29,6 +29,7 @@ int			parse_env(char *env, char **key, char **value)
 		return (NOTDEFINED);
 	*key = ft_strdup(env);
 	*value = ft_strdup(&env[index + 1]);
+	//"", '' 처리 필요
 	return (FUNC_SUC);
 }
 
