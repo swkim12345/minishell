@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 15:24:42 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/14 20:56:02 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:53:44 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
+#include "parser.h"
 
 long	parser_redirect(t_cmd_node *leaf, long start)
 {
@@ -26,7 +26,7 @@ long	parser_redirect(t_cmd_node *leaf, long start)
 	index += skip_space(&ptr[index]);
 	while (ptr[index])
 	{
-		if (ptr[index] == ' ' || ptr[index] == '>' || ptr[index] == '<')
+		if (ptr[index] == SPACE || ptr[index] == &REDIROUTPUT || ptr[index] == &REDIRINPUT)
 			break ;
 		index++;
 	}

@@ -52,7 +52,7 @@ int	main()
 		if (!head)
 			continue ;
 		traverse(head, &shell, 1);
-		free_ast_node(head);
+		free_ast_tree(head);
 		add_history(shell.input_str);
 		free(shell.input_str);
 	}

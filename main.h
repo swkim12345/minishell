@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/17 14:49:10 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:04:03 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,25 @@
 # define NOTDEFINED	-1
 
 # include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <sys/stat.h>
 # include <errno.h>
+# include <dirent.h>
+# include <fcntl.h>
+
 # include <sys/stat.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+
+# include <readline/readline.h>
+# include <readline/history.h>
+
 # include "libft/libft.h"
 # include "parser/parser.h"
 # include "builtin/builtin.h"
 # include "subsystem/subsystem.h"
 # include "inner_parser/inner_parser.h"
+# include "environ/environ.h"
 
 typedef struct s_minishell	t_minishell;
 typedef struct s_str_list	t_str_list;

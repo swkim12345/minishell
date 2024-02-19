@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:28:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/17 16:29:19 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:54:07 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
+#include "parser.h"
 
 t_ast_node	*init_ast_node(int child_node)
 {
@@ -123,7 +123,7 @@ t_ast_node	*lexar(char *input)
 	// if (!head)
 	// {
 	// 	ft_custom_error("syntax error\n", 258);
-	// 	free_ast_tree;
+	// 	free_ast_tree(head);
 	// 	head = 0;
 	// }
 	return (head);

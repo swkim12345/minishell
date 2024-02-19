@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 21:28:52 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/13 20:20:31 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:55:52 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
-#include <fcntl.h>
-#include <unistd.h>
+#include "builtin.h"
 
 void	print_echo(char **str, int nflag)
 {

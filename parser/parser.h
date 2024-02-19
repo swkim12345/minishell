@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:51 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/17 21:02:18 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:45:20 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define PIPE			"|"
 # define REDIRINPUT		">"
 # define REDIROUTPUT	"<"
+//# define SPACE			" "
 
 # define NONODE			0
 # define LEFTNODE		1
@@ -69,7 +70,7 @@ long		skip_space(char *input);
 char		**init_doub_char(char **input, int size);
 void		free_cmd_node(t_cmd_node *node);
 void		free_doub_char(char **input);
-void		free_ast_node(t_ast_node *node);
+void		free_ast_tree(t_ast_node *node);
 
 /* lexar.c */
 t_ast_node	*lexar(char *input);
