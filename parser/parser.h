@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:51 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/19 11:45:20 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:44:21 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,16 @@
 
 # define BRACKET_FLAG 1
 
-typedef struct s_ast_node	t_ast_node;
 typedef struct s_cmd_node	t_cmd_node;
-typedef struct s_str_node	t_str_node;
-typedef struct s_str_list	t_str_list;
+typedef struct s_ast_node	t_ast_node;
 typedef struct s_minishell	t_minishell;
+
+typedef struct s_cmd_node
+{
+	char		*cmd_name;
+	char		**str;
+	char		*redirect;
+}	t_cmd_node;
 
 typedef struct s_ast_node
 {
@@ -50,12 +55,7 @@ typedef struct s_ast_node
 	char				*str;
 }	t_ast_node;
 
-typedef struct s_cmd_node
-{
-	char		*cmd_name;
-	char		**str;
-	char		*redirect;
-}	t_cmd_node;
+
 
 t_ast_node	*init_ast_node(int child_node);
 /* finder.c */

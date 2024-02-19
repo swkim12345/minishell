@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/19 11:52:18 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:14:25 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ int	subshell_traverse(t_ast_node *head, t_minishell *minishell)
 	pid = fork();
 	if (pid == 0)
 	{
-		lexar(head->str);
+		printf("subshell\n");
+		head->flag = 0;
+		lexar(head->cmd_node->str[0]);
 		traverse(head, minishell, 1);
 	}
 	else
@@ -119,14 +121,14 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 {
 	int	ret;
 
-	if (!head)
-		return (TRUE);
+	if (!head && head->cmd_node->str[0] == NULL)
+		return (FUNC_FAIL);
 	else if (check_pipe && head->next_ast_node)
 	{
 		printf("find next pipe\n");
 		ret = pipe_traverse(head, minishell);
 	}
-	else if (head->flag | BRACKET_FLAG)
+	else if (head->flag & BRACKET_FLAG)
 		ret = subshell_traverse(head, minishell);
 	else
 		ret = recur_traverse(head, minishell);

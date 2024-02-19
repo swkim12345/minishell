@@ -50,7 +50,7 @@ int	main()
 			exit_handle(&shell);
 		head = lexar(shell.input_str);
 		if (!head)
-			continue ;
+			printf("not in head\n");
 		traverse(head, &shell, 1);
 		free_ast_tree(head);
 		add_history(shell.input_str);

@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/19 11:55:31 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:44:57 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 
 # define FUNC_SUC	0
 # define FUNC_FAIL	1
+
+typedef struct s_ast_node	t_ast_node;
+typedef struct s_cmd_node	t_cmd_node;
 
 typedef struct	s_cd
 {

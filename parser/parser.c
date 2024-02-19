@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 15:24:42 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/19 11:53:44 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:46:49 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ long	parser_redirect(t_cmd_node *leaf, long start)
 	index += skip_space(&ptr[index]);
 	while (ptr[index])
 	{
-		if (ptr[index] == SPACE || ptr[index] == &REDIROUTPUT || ptr[index] == &REDIRINPUT)
+		if (ptr[index] == SPACE || ptr[index] == REDIROUTPUT[0] || ptr[index] == REDIRINPUT[0])
 			break ;
 		index++;
 	}

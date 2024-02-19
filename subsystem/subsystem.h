@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:39:54 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/19 11:58:04 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:44:42 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 
 # include "../main.h"
 
+typedef struct s_cmd_node	t_cmd_node;
 /* process_command.c*/
+
+
 int	process_command(t_cmd_node *cmd_node);
 
 #endif
