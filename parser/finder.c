@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   finder.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:01:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/14 15:34:41 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:29:45 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ long	find_bracket(char *input)
 		if (!input[index])
 			break ;
 	}
+	if (bracket_counter != 0)
+		return (-1);
 	return (index);
 }
 
@@ -80,9 +82,10 @@ long	find_pipe(char *input)
 	return (index);
 }
 
-long	find_or_and(char *input)
+long	find_or_and(char *input, t_ast_node *head)
 {
 	long	index;
+	long	error_check;
 	char	c;
 
 	index = -1;
@@ -92,7 +95,13 @@ long	find_or_and(char *input)
 		!str_cmp(&input[index], DOUBLEQUOT))
 			index += find_end_quote(&input[index]);
 		if (!str_cmp(&input[index], &BRACKET[0]))
-			index += find_bracket(&input[index]);
+		{
+			error_check = find_bracket(&input[index]);
+			if (error_check == -1)
+				return (-1);
+			index += error_check;
+			head->flag |= BRACKET_FLAG;
+		}
 		if (!str_cmp(&input[index], OR))
 			break ;
 		if (!str_cmp(&input[index], AND))
