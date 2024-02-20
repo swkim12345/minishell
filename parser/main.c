@@ -32,6 +32,17 @@ int	str_equal(char *s1, char *s2)
 	return (0);
 }
 
+int	process_readline(t_minishell *shell)
+{
+	t_ast_node	*head;
+
+	head = lexar(shell->input_str);
+	if (!head)
+		printf("not in head\n");
+	shell->
+	traverse(head, shell, 1);
+	free_ast_tree(head);
+}
 
 int	main()
 {
@@ -48,11 +59,7 @@ int	main()
 			exit_handle(&shell);
 		else if (str_equal(shell.input_str, "exit"))
 			exit_handle(&shell);
-		head = lexar(shell.input_str);
-		if (!head)
-			printf("not in head\n");
-		traverse(head, &shell, 1);
-		free_ast_tree(head);
+		process_readline(&shell);
 		add_history(shell.input_str);
 		free(shell.input_str);
 	}
