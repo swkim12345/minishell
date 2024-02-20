@@ -6,11 +6,33 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/20 15:12:37 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:09:02 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "new_parser.h"
+t_ast_node	*init_ast_node(int child_node)
+{
+	t_ast_node	*ret;
+	t_cmd_node	*node;
+
+	ret = (t_ast_node *)malloc(sizeof(t_ast_node));
+	ft_memset((void *)ret, 0, sizeof(t_ast_node));
+	ret->red = (t_redirection *)malloc(sizeof(t_redirection));
+	ft_memset((void *)ret->red, 0, sizeof(t_redirection));
+	ret->red->flag = NOTDEFINED;
+	if (CMDNODE & child_node)
+	{
+		node = (t_cmd_node *)malloc(sizeof(t_cmd_node));
+		ft_memset((void *)node, 0, sizeof(t_cmd_node));
+		ret->cmd_node = node;
+	}
+	if (LEFTNODE & child_node)
+		ret->left_node = init_ast_node(CMDNODE);
+	if (RIGHTNODE & child_node)
+		ret->right_node = init_ast_node(CMDNODE);
+	return (ret);
+}
 
 //util, error
 
@@ -125,16 +147,16 @@ int		recurv_parser(t_ast_node *head, t_minishell *minishell)
 	str_flag = FALSE;
 	bracket_flag = FALSE;
 	while (ptr[++index])
-	{
+	{	
 		index += skip_space(&ptr[index]);
-		if (ptr[index] == '(')
-		{
-			bracket_parser(ptr, index, str_flag, minishell);
-		}
 		if (ptr[index] == '\"' || ptr[index] == '\'')
 		{
 			index = index + ft_strtok(&ptr[index], ptr[index]) - ptr;
 			continue ;
+		}
+		if (ptr[index] == '(')
+		{
+			bracket_parser(ptr, index, str_flag, minishell);
 		}
 		if (ptr[index] == '|' && ptr[index + 1] == '|')
 		{
@@ -161,6 +183,7 @@ int		recurv_parser(t_ast_node *head, t_minishell *minishell)
 			//recursive
 			break ;
 		}
+		//check for redirection
 		str_flag = TRUE;
 	}
 	return (FUNC_SUC);
