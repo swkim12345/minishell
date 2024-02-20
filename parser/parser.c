@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/20 20:12:38 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 20:18:50 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ int	finder(char *str, char *checker)
 {
 	
 }
-
-
 
 char	*dup_str(char *str, int start, int end)
 {

@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/20 19:44:07 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 20:29:04 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef struct s_minishell	t_minishell;
 
 typedef struct s_tmp_file
 {
-	char	*tmp;	//임시파일 이름
-	int		fd;		//임시파일 디스크립터
+	char		*tmp;	//임시파일 이름
+	int			fd;		//임시파일 디스크립터
 	t_tmp_file	*next;
 }	t_tmp_file;
 
