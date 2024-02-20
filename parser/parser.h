@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/20 20:12:31 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 20:49:15 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_redirection	t_redirection;
 typedef struct s_redirection {
 	int							flag;	// 0: <, 1: <<, 2: >, 4: >>
 	char						*str;	// file name or here doc delim
-	t_redirection				*next;
 }	t_redirection;
 
 typedef struct s_cmd_node
@@ -63,10 +62,12 @@ typedef struct s_ast_node
 	t_ast_node					*right_node;
 	t_ast_node					*next_ast_node;	//for pipe
 	t_cmd_node					*cmd_node;		
-	t_redirection				*red;
+	t_redirection				**red;	//redirection array
 	int							flag; 	//lexar flag
 	int							index;  //redirection index in t_minishell
 	char						*str;	//||, &&
 }	t_ast_node;
+
+t_ast_node	*new_parser(char *str, t_minishell *minishell);
 
 #endif

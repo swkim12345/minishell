@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/20 20:30:44 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 20:33:14 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_str_list	t_str_list;
 typedef struct s_minishell	t_minishell;
 typedef struct s_tmp_file	t_tmp_file;
 
-typedef struct s_tmp_file
+typedef struct s_tmp_file	t_tmp_file;
 typedef struct s_tmp_file
 {
 	char		*tmp;	//임시파일 이름
