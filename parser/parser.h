@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:52:51 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/19 12:44:21 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:03:04 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,25 @@
 # include "../main.h"
 
 # define BRACKET_FLAG 1
+# define LT_SIGN 0
+# define DB_LT_SIGN 1
+# define GT_SIGN 2
+# define DB_GT_SIGN 4
 
 typedef struct s_cmd_node	t_cmd_node;
 typedef struct s_ast_node	t_ast_node;
 typedef struct s_minishell	t_minishell;
 
+typedef struct s_redirection {
+	int		flag;
+	char	*str;
+}	t_redirection;
+
 typedef struct s_cmd_node
 {
-	char		*cmd_name;
-	char		**str;
-	char		*redirect;
+	char			*cmd_name;
+	char			**str;
+	t_redirection	*red;
 }	t_cmd_node;
 
 typedef struct s_ast_node
