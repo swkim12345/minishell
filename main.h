@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/20 19:40:39 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:44:07 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@ typedef struct s_str_node	t_str_node;
 typedef struct s_str_list	t_str_list;
 typedef struct s_minishell	t_minishell;
 
-typedef struct tmp_file
+typedef struct s_tmp_file
 {
 	char	*tmp;	//임시파일 이름
 	int		fd;		//임시파일 디스크립터
+	t_tmp_file	*next;
 }	t_tmp_file;
 
 typedef struct s_minishell
@@ -61,7 +62,7 @@ typedef struct s_minishell
 	int			exit_code;
   	char		*execute_name;
 	char		**envp;
-	char		*tmp_file;
+	t_tmp_file	*tmp_file;
 	t_tree_head	*env;
 }	t_minishell;
 
