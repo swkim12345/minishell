@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   new_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
 /*   Updated: 2024/02/20 18:53:12 by sunghwki         ###   ########.fr       */
@@ -11,28 +11,6 @@
 /* ************************************************************************** */
 
 #include "new_parser.h"
-t_ast_node	*init_ast_node(int child_node)
-{
-	t_ast_node	*ret;
-	t_cmd_node	*node;
-
-	ret = (t_ast_node *)malloc(sizeof(t_ast_node));
-	ft_memset((void *)ret, 0, sizeof(t_ast_node));
-	ret->red = (t_redirection *)malloc(sizeof(t_redirection));
-	ft_memset((void *)ret->red, 0, sizeof(t_redirection));
-	ret->red->flag = NOTDEFINED;
-	if (CMDNODE & child_node)
-	{
-		node = (t_cmd_node *)malloc(sizeof(t_cmd_node));
-		ft_memset((void *)node, 0, sizeof(t_cmd_node));
-		ret->cmd_node = node;
-	}
-	if (LEFTNODE & child_node)
-		ret->left_node = init_ast_node(CMDNODE);
-	if (RIGHTNODE & child_node)
-		ret->right_node = init_ast_node(CMDNODE);
-	return (ret);
-}
 
 //util, error
 

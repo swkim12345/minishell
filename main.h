@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/20 17:30:26 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:28:15 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,13 @@ typedef struct tmp_file
 
 typedef struct s_minishell
 {
-	char		**envp;		//환경변수
-	char		*cwd;		//현재 디렉토리
-	char		*execute_name;	//실행파일 이름
-	char		*input_str;	//입력받은 문자열
-	int			exit_code;		//종료코드
-	int			here_doc_counter;	//here_doc 카운터
-	t_tmp_file	*here_doc;	//here_doc 파일
-	t_tree_head	*env;	//환경변수 트리
+	char		*cwd;
+	char		*input_str;
+	int			exit_code;
+  	char		*execute_name;
+	char		**envp;
+	char		*tmp_file;
+	t_tree_head	*env;
 }	t_minishell;
 
 typedef struct s_cmd_info
