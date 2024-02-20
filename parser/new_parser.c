@@ -6,11 +6,24 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/20 13:06:48 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:12:37 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "new_parser.h"
+
+//util, error
+
+int		syntax_err_message(char *msg, int end, int ret, t_minishell *minishell)
+{
+	msg[end] = '\0';
+	ft_putstr_fd(minishell->execute_name, STDERR_FILENO);
+	ft_putstr_fd(": syntax error near unexpected token `", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putstr_fd("'\n", STDERR_FILENO);
+	return (ret);
+}
+
 
 //in libft 구현
 size_t	ft_strspn(const char *str, const char *accept)
@@ -57,11 +70,7 @@ int	finder(char *str, char *checker)
 	
 }
 
-//error 시 -1 리턴
-int		bracket_finder(char *str)
-{
-	
-}
+
 
 char	*dup_str(char *str, int start, int end)
 {
@@ -73,26 +82,54 @@ char	*dup_str(char *str, int start, int end)
 	return (ret);
 }
 
-int		recurv_parser(t_ast_node *head)
+//error 시 -1 리턴
+int		bracket_finder(char *str)
+{
+	int	count;
+
+	
+}
+
+int		bracket_parser(char *str, int index, int str_flag, t_minishell *minishell)
+{
+	char	*ptr;
+	
+	ptr = &str[index];
+	if (*ptr == '(')
+	{
+		if (str_flag == TRUE)
+		{
+			index += find_bracket(ptr);
+			return(syntax_err_message(ptr, index, -1, minishell));
+		}
+		else
+		{
+			index += find_bracket(ptr);
+		}
+	}
+	return (index);
+}
+
+int		recurv_parser(t_ast_node *head, t_minishell *minishell)
 {
 	t_ast_node	*ret;
 	int		index;
 	int		size;
-	int		flag;
+	int		str_flag;
+	int		bracket_flag;
 	char	*ptr;
 
 	index = -1;
 	ptr = head->cmd_node->str[0];
 	size = ft_strlen(ptr);
-	flag = FALSE;
+	str_flag = FALSE;
+	bracket_flag = FALSE;
 	while (ptr[++index])
 	{
+		index += skip_space(&ptr[index]);
 		if (ptr[index] == '(')
 		{
-			if (flag == FALSE)
-			{
-				
-			}
+			bracket_parser(ptr, index, str_flag, minishell);
 		}
 		if (ptr[index] == '\"' || ptr[index] == '\'')
 		{
@@ -124,19 +161,19 @@ int		recurv_parser(t_ast_node *head)
 			//recursive
 			break ;
 		}
-		flag = TRUE;
+		str_flag = TRUE;
 	}
 	return (FUNC_SUC);
 }
 
 
 
-t_ast_node	*new_parser(char *str)
+t_ast_node	*new_parser(char *str, t_minishell *minishell)
 {
 	t_ast_node	*ret;
 
 	ret = init_ast_node(CMDNODE);
 	ret->cmd_node->str = init_doub_char(&str, 1);
-	ret = recurv_parser(ret);
+	ret = recurv_parser(ret, minishell);
 	return (ret);
 }
