@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/20 15:02:03 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:51:22 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ typedef struct s_str_node	t_str_node;
 typedef struct s_str_list	t_str_list;
 typedef struct s_minishell	t_minishell;
 
+typedef struct tmp_file
+{
+	char	*tmp;	//임시파일 이름
+	int		fd;		//임시파일 디스크립터
+}	t_tmp_file;
 
 typedef struct s_minishell
 {
@@ -56,14 +61,13 @@ typedef struct s_minishell
 	int			exit_code;
   	char		*execute_name;
 	char		**envp;
-	char		*tmp_file;
 	t_tree_head	*env;
 }	t_minishell;
 
 typedef struct s_cmd_info
 {
-	char	*cmd;
-	char	*arguments;
+	char	*cmd;			//명령어
+	char	*arguments;		//인자
 }	t_cmd_info;
 
 /* common_util.c */
