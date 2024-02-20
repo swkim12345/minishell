@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/20 15:02:03 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:15:27 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,21 @@ typedef struct s_str_node	t_str_node;
 typedef struct s_str_list	t_str_list;
 typedef struct s_minishell	t_minishell;
 
+typedef struct tmp_file
+{
+	char	*tmp;
+	int		fd;
+}	t_tmp_file;
 
 typedef struct s_minishell
 {
+	char		**envp;
 	char		*cwd;
+	char		*execute_name;
 	char		*input_str;
 	int			exit_code;
-  	char		*execute_name;
-	char		**envp;
-	char		*tmp_file;
+	int			here_doc_counter;
+	t_tmp_file	*here_doc;
 	t_tree_head	*env;
 }	t_minishell;
 
