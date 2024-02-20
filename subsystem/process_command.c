@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/19 11:58:12 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 13:29:34 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	is_builtin_fn(t_cmd_node *cmd_node)
 	return (0);
 }
 
-int	process_extern_cmd(t_cmd_node *cmd_node)
+int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 {
 	pid_t	pid;
 	int		status;
@@ -37,7 +37,8 @@ int	process_extern_cmd(t_cmd_node *cmd_node)
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(cmd_node->cmd_name, cmd_node->str, cmd_node->envp);
+		
+		execve(cmd_node->cmd_name, cmd_node->str, minishell->envp);
 		exit(0);
 	}
 	else
@@ -52,5 +53,5 @@ int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 	if (is_builtin_fn(cmd_node))
 		process_builtin(cmd_node);
 	else
-		process_extern_cmd(cmd_node);
+		process_extern_cmd(cmd_node, minishell);
 }

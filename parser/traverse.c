@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   traverse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/19 14:14:25 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 12:49:36 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	subshell_traverse(t_ast_node *head, t_minishell *minishell)
 	{
 		printf("subshell\n");
 		head->flag = 0;
-		lexar(head->cmd_node->str[0]);
 		traverse(head, minishell, 1);
 	}
 	else
@@ -130,6 +129,8 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 	}
 	else if (head->flag & BRACKET_FLAG)
 		ret = subshell_traverse(head, minishell);
+	else if (head->cmd_node)
+		process_command(head->cmd_node);
 	else
 		ret = recur_traverse(head, minishell);
 	return (ret);
