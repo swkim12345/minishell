@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/20 19:22:56 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:25:18 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,19 @@ t_ast_node	*init_ast_node(int child_node)
 		ret->right_node = init_ast_node(CMDNODE);
 	return (ret);
 }
+
+//util, error
+
+int		syntax_err_message(char *msg, int end, int ret, t_minishell *minishell)
+{
+	msg[end] = '\0';
+	ft_putstr_fd(minishell->execute_name, STDERR_FILENO);
+	ft_putstr_fd(": syntax error near unexpected token `", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putstr_fd("'\n", STDERR_FILENO);
+	return (ret);
+}
+
 
 //util, error
 
@@ -144,15 +157,14 @@ int		recurv_parser(t_ast_node *head, t_minishell *minishell)
 	index = -1;
 	ptr = head->cmd_node->str[0];
 	size = ft_strlen(ptr);
-	flag = FALSE;
+	str_flag = FALSE;
+	bracket_flag = FALSE;
 	while (ptr[++index])
 	{
+		index += skip_space(&ptr[index]);
 		if (ptr[index] == '(')
 		{
-			if (flag == FALSE)
-			{
-				
-			}
+			bracket_parser(ptr, index, str_flag, minishell);
 		}
 		if (ptr[index] == '\"' || ptr[index] == '\'')
 		{
@@ -184,7 +196,7 @@ int		recurv_parser(t_ast_node *head, t_minishell *minishell)
 			//recursive
 			break ;
 		}
-		flag = TRUE;
+		str_flag = TRUE;
 	}
 	return (FUNC_SUC);
 }
