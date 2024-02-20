@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/20 19:27:02 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:53:12 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,29 @@ int		bracket_parser(char *str, int index, int str_flag, t_minishell *minishell)
 	return (index);
 }
 
+static int		split_recurv_parser(t_ast_node *head, int str_end, int dup_str_start, t_minishell *minishell)
+{
+	char	*ptr;
+	int		size;
+	int		tmp;
+
+	ptr = head->cmd_node->str[0];
+	size = ft_strlen(ptr);
+	head->left_node = init_ast_node(CMDNODE);
+	head->right_node = init_ast_node(CMDNODE);
+	head->left_node->cmd_node->str = 
+	init_doub_char(dup_str(ptr, 0, str_end), 1);
+	head->right_node->cmd_node->str = 
+	init_doub_char(dup_str(ptr, dup_str_start, size), 1);
+	tmp = recur_lexar(head->left_node);
+	if (tmp == FUNC_FAIL)
+		return (FUNC_FAIL);
+	tmp = recur_lexar(head->right_node);
+	if (tmp == FUNC_FAIL)
+		return (FUNC_FAIL);
+	return (FUNC_SUC);
+}
+
 int		recurv_parser(t_ast_node *head, t_minishell *minishell)
 {
 	t_ast_node	*ret;
@@ -117,6 +140,7 @@ int		recurv_parser(t_ast_node *head, t_minishell *minishell)
 	int		size;
 	int		str_flag;
 	int		bracket_flag;
+	int		tmp;
 	char	*ptr;
 
 	index = -1;
@@ -134,34 +158,59 @@ int		recurv_parser(t_ast_node *head, t_minishell *minishell)
 		}
 		if (ptr[index] == '(')
 		{
-			bracket_parser(ptr, index, str_flag, minishell);
+			tmp = bracket_parser(ptr, index, str_flag, minishell);
+			if (tmp == -1)
+				return (FUNC_FAIL);
+			index += tmp;
+			continue ;
 		}
 		if (ptr[index] == '|' && ptr[index + 1] == '|')
 		{
-			//recursive
-			head->left_node = init_ast_node(CMDNODE);
-			head->right_node = init_ast_node(CMDNODE);
-			head->left_node->cmd_node->str = 
-			init_doub_char(dup_str(ptr, 0, index - 1), 1);
-			head->right_node->cmd_node->str = 
-			init_doub_char(dup_str(ptr, index + 2, size), 1);
-			recur_lexar(head->left_node);
-			recur_lexar(head->right_node);
-			
-			break ;
+			tmp = split_recurv_parser(head, index - 1, index + 2, minishell);
+			return (tmp);
 		}
 		if (ptr[index] == '&' && ptr[index + 1] == '&')
 		{
-
-			//recursive
-			break ;
+			tmp = split_recurv_parser(head, index - 1, index + 2, minishell);
+			return (tmp);
 		}
 		if (ptr[index] == '|')
 		{
-			//recursive
-			break ;
+			tmp = split_recurv_parser(head, index - 1, index + 1, minishell);
+			return (tmp);
 		}
 		//check for redirection
+		//indexing required
+		if (ptr[index] == '<')
+		{
+			if (ptr[index + 1] == '<')
+			{
+				//here_doc
+				index += 2;
+				index += skip_space(&ptr[index]);
+				if ()
+				head->left_node = init_ast_node(CMDNODE);
+				recur_lexar(head->left_node);
+			}
+			else
+			{
+				//redirection
+				//indexing required
+			}
+		}
+		if (ptr[index] == '>')
+		{
+			if (ptr[index + 1] == '>')
+			{
+				//redirection
+				//indexing required
+			}
+			else
+			{
+				//redirection
+				//indexing required
+			}
+		}
 		str_flag = TRUE;
 	}
 	return (FUNC_SUC);
@@ -172,9 +221,15 @@ int		recurv_parser(t_ast_node *head, t_minishell *minishell)
 t_ast_node	*new_parser(char *str, t_minishell *minishell)
 {
 	t_ast_node	*ret;
+	int			err;
 
 	ret = init_ast_node(CMDNODE);
 	ret->cmd_node->str = init_doub_char(&str, 1);
-	ret = recurv_parser(ret, minishell);
+	err = recurv_parser(ret, minishell);
+	if (err == FUNC_FAIL)
+	{
+		free_ast_node(ret);
+		return (NULL);
+	}
 	return (ret);
 }
