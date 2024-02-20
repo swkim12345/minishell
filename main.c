@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/20 18:49:42 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/20 22:17:04 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,41 @@ void	exit_handle(t_minishell *shell)
 	exit(EXIT_SUCCESS);
 }
 
+void	sigint_handler()
+{
+	printf("\n");
+	rl_on_new_line();
+	rl_redisplay();
+}
+
+void	set_signal_handler()
+{
+	struct sigaction	sact;
+	sigset_t			sigset;
+
+	sigemptyset(&sact.sa_mask);
+	sact.sa_flags = 0;
+	sact.sa_handler = sigint_handler;
+	signal(SIGQUIT, SIG_IGN);
+	sigaction(SIGINT, &sact, NULL);
+}
+
+void	set_term(void)
+{
+	struct termios	term;
+
+	tcgetattr(0, &term);
+	term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(0, TCSANOW, &term);
+}
+ 
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	shell;
 
 	init_shell(&shell, envp);
+	set_signal_handler();
+	set_term();
 	while (1)
 	{
 		shell.input_str = readline("minishell-1.0$ ");

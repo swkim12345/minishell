@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/20 20:12:31 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 20:46:31 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,8 @@ typedef struct s_ast_node
 	int							index;  //redirection index in t_minishell
 	char						*str;	//||, &&
 }	t_ast_node;
+
+t_ast_node	*new_parser(char *str, t_minishell *minishell);
+int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe);
 
 #endif

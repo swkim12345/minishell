@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/20 20:12:38 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 20:51:35 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ char	*ft_strtok(char *str, const char *delim)
 }
 
 
-int	finder(char *str, char *checker)
-{
+// int	finder(char *str, char *checker)
+// {
 	
-}
+// }
 
 
 
@@ -80,13 +80,13 @@ char	*dup_str(char *str, int start, int end)
 	return (ret);
 }
 
-//error 시 -1 리턴
-int		bracket_finder(char *str)
-{
-	int	count;
+// //error 시 -1 리턴
+// int		bracket_finder(char *str)
+// {
+// 	int	count;
 
 	
-}
+// }
 
 int		bracket_parser(char *str, int index, int str_flag, t_minishell *minishell)
 {

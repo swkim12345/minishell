@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/20 20:17:22 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/20 22:15:49 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <errno.h>
 # include <dirent.h>
 # include <fcntl.h>
+# include <signal.h>
+# include <termios.h>
 
 # include <sys/stat.h>
 # include <sys/wait.h>
@@ -50,10 +52,10 @@ typedef struct s_minishell	t_minishell;
 typedef struct s_tmp_file	t_tmp_file;
 
 typedef struct s_tmp_file
-typedef struct s_tmp_file
 {
 	char		*tmp;	//임시파일 이름
 	int			fd;		//임시파일 디스크립터
+	t_tmp_file	*next;
 }	t_tmp_file;
 
 typedef struct s_minishell
@@ -77,5 +79,5 @@ typedef struct s_cmd_info
 
 /* common_util.c */
 int	str_equal(char *s1, char *s2);
-
+void	set_signal_handler();
 #endif
