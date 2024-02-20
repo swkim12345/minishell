@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:28:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/19 18:09:13 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:00:02 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_ast_node	*init_ast_node(int child_node)
 
 	ret = (t_ast_node *)malloc(sizeof(t_ast_node));
 	ft_memset((void *)ret, 0, sizeof(t_ast_node));
+	
 	if (CMDNODE & child_node)
 	{
 		node = (t_cmd_node *)malloc(sizeof(t_cmd_node));
