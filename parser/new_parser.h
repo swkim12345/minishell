@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/19 19:32:02 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 13:31:47 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # define REDIRINPUT		">"
 # define REDIROUTPUT	"<"
 //# define SPACE			" "
-
 
 
 # define NONODE			0
@@ -45,7 +44,7 @@ typedef struct s_cmd_node
 	int			flag;
 	char		*cmd_name;
 	char		**str;
-	char		*redirect;
+	char		**redirect;
 }	t_cmd_node;
 
 typedef struct s_ast_node

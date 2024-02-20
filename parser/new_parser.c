@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/20 12:37:56 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 13:06:48 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,20 @@ int		recurv_parser(t_ast_node *head)
 	index = -1;
 	ptr = head->cmd_node->str[0];
 	size = ft_strlen(ptr);
-	flag = 0;
+	flag = FALSE;
 	while (ptr[++index])
-	
+	{
 		if (ptr[index] == '(')
 		{
-
+			if (flag == FALSE)
+			{
+				
+			}
 		}
 		if (ptr[index] == '\"' || ptr[index] == '\'')
 		{
 			index = index + ft_strtok(&ptr[index], ptr[index]) - ptr;
-			continue;
+			continue ;
 		}
 		if (ptr[index] == '|' && ptr[index + 1] == '|')
 		{
@@ -112,18 +115,18 @@ int		recurv_parser(t_ast_node *head)
 		}
 		if (ptr[index] == '&' && ptr[index + 1] == '&')
 		{
-			tmp = ptr + index;
+
 			//recursive
 			break ;
 		}
 		if (ptr[index] == '|')
 		{
-			tmp = ptr + index;
 			//recursive
 			break ;
 		}
-		flag = 1;
+		flag = TRUE;
 	}
+	return (FUNC_SUC);
 }
 
 
