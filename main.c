@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/20 15:29:05 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:49:42 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	init_shell(t_minishell *shell, char **envp)
 	shell->cwd = getcwd(0, 0);
 	shell->input_str = 0;
 	shell->envp = envp;
-	shell->tmp_file = "/tmp/minishell_tmp";
 }
 
 void	exit_handle(t_minishell *shell)
