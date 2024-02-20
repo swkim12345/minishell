@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/20 17:09:02 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:22:56 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,19 +144,20 @@ int		recurv_parser(t_ast_node *head, t_minishell *minishell)
 	index = -1;
 	ptr = head->cmd_node->str[0];
 	size = ft_strlen(ptr);
-	str_flag = FALSE;
-	bracket_flag = FALSE;
+	flag = FALSE;
 	while (ptr[++index])
-	{	
-		index += skip_space(&ptr[index]);
+	{
+		if (ptr[index] == '(')
+		{
+			if (flag == FALSE)
+			{
+				
+			}
+		}
 		if (ptr[index] == '\"' || ptr[index] == '\'')
 		{
 			index = index + ft_strtok(&ptr[index], ptr[index]) - ptr;
 			continue ;
-		}
-		if (ptr[index] == '(')
-		{
-			bracket_parser(ptr, index, str_flag, minishell);
 		}
 		if (ptr[index] == '|' && ptr[index + 1] == '|')
 		{
@@ -183,8 +184,7 @@ int		recurv_parser(t_ast_node *head, t_minishell *minishell)
 			//recursive
 			break ;
 		}
-		//check for redirection
-		str_flag = TRUE;
+		flag = TRUE;
 	}
 	return (FUNC_SUC);
 }
