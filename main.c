@@ -6,16 +6,17 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/07 20:11:57 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/20 12:28:34 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void	init_shell(t_minishell *shell)
+void	init_shell(t_minishell *shell, char **envp)
 {
 	shell->cwd = getcwd(0, 0);
 	shell->input_str = 0;
+	shell->envp = envp;
 }
 
 void	exit_handle(t_minishell *shell)
@@ -25,11 +26,11 @@ void	exit_handle(t_minishell *shell)
 	exit(EXIT_SUCCESS);
 }
 
-int	main()
+int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	shell;
 
-	init_shell(&shell);
+	init_shell(&shell, envp);
 	while (1)
 	{
 		shell.input_str = readline("minishell-1.0$ ");

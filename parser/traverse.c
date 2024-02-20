@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/17 21:16:45 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/20 12:37:12 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ int	subshell_traverse(t_ast_node *head, t_minishell *minishell)
 
 	pid = fork();
 	if (pid == 0)
-	{
-		lexar(head->str);
 		traverse(head, minishell, 1);
-	}
 	else
 		waitpid(pid, &minishell->exit_code, 0);
 	return (WEXITSTATUS(minishell->exit_code));
@@ -126,7 +123,7 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 		printf("find next pipe\n");
 		ret = pipe_traverse(head, minishell);
 	}
-	else if (head->flag | BRACKET_FLAG)
+	else if (head->flag & BRACKET_FLAG)
 		ret = subshell_traverse(head, minishell);
 	else
 		ret = recur_traverse(head, minishell);
