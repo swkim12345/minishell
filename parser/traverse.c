@@ -6,11 +6,11 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/20 12:37:12 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/20 12:40:18 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
+#include "parser.h"
 
 int	recur_traverse(t_ast_node *head, t_minishell *minishell) //fork로 실행, wait를 통해 wait, 이후 pipe관련 처리
 {
@@ -39,6 +39,10 @@ int	subshell_traverse(t_ast_node *head, t_minishell *minishell)
 
 	pid = fork();
 	if (pid == 0)
+	{
+		printf("subshell\n");
+		head->flag = 0;
+		lexar(head->cmd_node->str[0]);
 		traverse(head, minishell, 1);
 	else
 		waitpid(pid, &minishell->exit_code, 0);
@@ -116,8 +120,8 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 {
 	int	ret;
 
-	if (!head)
-		return (TRUE);
+	if (!head && head->cmd_node->str[0] == NULL)
+		return (FUNC_FAIL);
 	else if (check_pipe && head->next_ast_node)
 	{
 		printf("find next pipe\n");

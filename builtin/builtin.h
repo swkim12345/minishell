@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/16 12:46:26 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:44:57 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
+
+# include "../main.h"
 
 # define OPTION_FLAG 1
 # define PATH_TYPE 2
@@ -19,6 +21,9 @@
 
 # define FUNC_SUC	0
 # define FUNC_FAIL	1
+
+typedef struct s_ast_node	t_ast_node;
+typedef struct s_cmd_node	t_cmd_node;
 
 typedef struct	s_cd
 {

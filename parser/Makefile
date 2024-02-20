@@ -7,7 +7,7 @@ NAME = minishell
 
 SRCS = finder.c lexar.c main.c set_mem.c traverse.c util.c \
 	parser.c parser_error.c \
-	argument_parser_str_list.c argument_parser_utils.c
+	../inner_parser/argument_parser_str_list.c ../inner_parser/argument_parser_utils.c
 
 
 OBJS = $(SRCS:.c=.o)

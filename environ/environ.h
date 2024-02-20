@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   b_tree.h                                           :+:      :+:    :+:   */
+/*   environ.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:11:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/16 22:08:33 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:32:39 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef B_TREE_H
-# define B_TREE_H
+#ifndef ENVIRON_H
+# define ENVIRON_H
 
 # include "../main.h"
 
-struct s_tree_node {
+typedef struct s_tree_node	t_tree_node;
+typedef struct s_tree_head	t_tree_head;
+
+typedef struct s_tree_node {
 	t_tree_node	*left_node;
 	t_tree_node	*right_node;
 	char		*key;
 	char		*value;
-};
+	int			index;
+}	t_tree_node;
 
-struct s_tree_head {
+typedef struct s_tree_head {
 	t_tree_node	*head;
 	long		size;
-};
+}	t_tree_head;
 
 /* b_tree_util.c */
 int			parse_env(char *env, char **key, char **value);
