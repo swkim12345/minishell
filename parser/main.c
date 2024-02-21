@@ -1,10 +1,12 @@
 #include "../main.h"
 
-void	init_shell(t_minishell *shell)
+void	init_shell(t_minishell *shell, char **envp)
 {
 	shell->cwd = getcwd(0, 0);
 	shell->input_str = 0;
-	shell->tmp_file_name = "/tmp/minishell_tmp_file_";
+	shell->envp = envp;
+	shell->tmp_file_name = "/tmp/minishell_tmp_";
+	shell->tmp_file_counter = 0;
 }
 
 void	exit_handle(t_minishell *shell)
@@ -33,31 +35,34 @@ int	str_equal(char *s1, char *s2)
 	return (0);
 }
 
-int	get_input_heredoc(t_minishell *shell, int i)
+int	get_input_heredoc(t_minishell *shell, t_tmp_file *file)
 {
 	char	*str;
 
-	shell->tmp_list[i].tmp = ft_strjoin(shell->tmp_file_name, ft_itoa(i));
-	shell->tmp_list[i].fd = open(shell->tmp_list[i].tmp, O_RDONLY | O_CREAT);
+	file->tmp = ft_strjoin(shell->tmp_file_name, ft_itoa(shell->tmp_file_counter));
+	file->fd = open(file->tmp, O_WRONLY | O_TRUNC | O_CREAT);
 	str = readline("> ");
 	while (1)
 	{
 		if (!str)
 		{
-			str = get_next_line(STDIN_FILENO);
+			str = readline("> ");
 			continue ;
 		}
-		if (is_str_limiter(pipex_args->argv[2], str) == 1)
+		//change pipex_args->argv[2] to eof
+		if (str_equal("eof", str) == 1)
 			break ;
-		if (write(fd, str, ft_strlen(str)) == -1)
-			shell_error(g_path);
+		if (write(file->fd, str, ft_strlen(str)) == -1)
+			exit(0);
+			// shell_error(file->tmp); // change to custom error
 		free(str);
-		write(STDOUT_FILENO, "pipe heredoc> ", 14);
-		str = get_next_line(STDIN_FILENO);
+		str = readline("> ");
 	}
 	if (str)
 		free(str);
+	return (0);
 }
+
 
 int	process_readline(t_minishell *shell)
 {
@@ -68,22 +73,16 @@ int	process_readline(t_minishell *shell)
 	head = lexar(shell->input_str);
 	if (!head)
 		printf("not in head\n");
-	while (++i < shell->tmp_file_counter)
-	{
-		get_input_heredoc(shell, i);
-	}
 	traverse(head, shell, 1);
 	free_ast_tree(head);
 }
 
-int	main()
+int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	shell;
 	t_ast_node	*head;
 
-	system("leaks minishell");
-
-	init_shell(&shell);
+	init_shell(&shell, envp);
 	while (1)
 	{
 		shell.input_str = readline("minishell-1.0$ ");
@@ -91,7 +90,12 @@ int	main()
 			exit_handle(&shell);
 		else if (str_equal(shell.input_str, "exit"))
 			exit_handle(&shell);
-		process_readline(&shell);
+		// process_readline(&shell);
+		head = new_parser(shell.input_str, &shell);
+		if (!head)
+			return (0);
+		traverse(head, &shell, 1);
+		// free_ast_tree(head);
 		add_history(shell.input_str);
 		free(shell.input_str);
 	}

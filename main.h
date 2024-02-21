@@ -23,6 +23,8 @@
 # include <errno.h>
 # include <dirent.h>
 # include <fcntl.h>
+# include <signal.h>
+# include <termios.h>
 
 # include <sys/stat.h>
 # include <sys/wait.h>
@@ -74,7 +76,11 @@ typedef struct s_cmd_info
 	char	*arguments;		//인자
 }	t_cmd_info;
 
+/* main.c */
+void	init_shell(t_minishell *shell, char **envp);
+void	exit_handle(t_minishell *shell);
+
 /* common_util.c */
 int	str_equal(char *s1, char *s2);
-
+void	set_signal_handler();
 #endif
