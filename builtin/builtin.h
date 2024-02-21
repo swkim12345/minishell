@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/19 12:44:57 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:18:43 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,8 @@ int		ft_isspace(int c);
 
 /* bulitin.c */
 int     process_builtin(t_cmd_node *cmd_node);
+
+/* util.c */
+int		err_msg(char *execute_name, char *builtin, char *arg, char *msg);
 
 #endif
