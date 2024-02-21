@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/21 13:03:34 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:18:43 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,10 @@ void	exit_handle(t_minishell *shell);
 /* common_util.c */
 int	str_equal(char *s1, char *s2);
 void	set_signal_handler();
+
+/* error.c */\
+void	shell_error(t_minishell *minishell, char *command, char *message);
+void	command_not_found_error(t_minishell *minishell, char *command);
+void	command_permission_error(t_minishell *minishell, char *message);
+
 #endif

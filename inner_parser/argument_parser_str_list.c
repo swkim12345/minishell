@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:03:03 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/14 21:56:47 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:05:02 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,24 @@ t_str_node	*dequeue(t_str_list *str_list)
 	}
 	str_list->size--;
 	return (head);
+}
+
+t_str_node	*pop(t_str_list *list)
+{
+	t_str_node	*next;
+
+	if (list == NULL || list->head == NULL)
+		return (NULL);
+	next = list->head;
+	list->size -= 1;
+	if (list->size == 0)
+	{
+		list->head = NULL;
+		list->tail = NULL;
+		return (next);
+	}
+	list->head = next->next;
+	return (next);
 }
 
 t_str_node	*create_node(char *str)
