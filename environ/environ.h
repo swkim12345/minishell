@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:11:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 13:19:02 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 13:19:47 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int			tree_recurv_traversal(t_tree_node *head, t_tree_node **ordered, int size);
 char		**tree_to_char(t_tree_head *head);
 
 /* environ.c */
-char		*ft_getenv(t_tree_head *head, char *key);
-char		*ft_getexport(t_tree_head *head, char *key);
+char		*ft_getenv(t_tree_head *head, char *key); // return value
+char		*ft_getexport(t_tree_head *head, char *key);	// return value, if not found, return null
 
 int			ft_setenv(t_tree_head *head, char *key, char *value);
 int			ft_setexport(t_tree_head *head, char *key, char *value);
