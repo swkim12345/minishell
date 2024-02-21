@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/20 20:49:15 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:05:01 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,19 @@ typedef struct s_ast_node
 	char						*str;	//||, &&
 }	t_ast_node;
 
+/* util.c */
+void		free_ast_tree(t_ast_node *head);
+int			syntax_err_message(char *msg, int end, int ret, t_minishell *minishell);
+char		*dup_str(char *str, int start, int end);
+int			finder(char *str, char checker);
+int			bracket_finder(char *str);
+
+/* lexar.c */
+int			count_redirect(t_ast_node *node, t_minishell *minishell);
+int			lexar(t_ast_node *node, char *ptr, t_minishell *minishell);
+
+/* parser.c */
 t_ast_node	*new_parser(char *str, t_minishell *minishell);
+int			recurv_parser(t_ast_node *head, t_minishell *minishell);
 
 #endif
