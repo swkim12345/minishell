@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 17:24:24 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 21:05:15 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_ast_tree(t_ast_node *head)
 {
 	t_redirection	*tmp;
 	int				i;
-	
+
 	free_ast_tree(head->left_node && head->right_node && head->next_ast_node);
 	if (head->cmd_node)
 	{
@@ -40,7 +40,7 @@ void	free_ast_tree(t_ast_node *head)
 	free(head);
 }
 
-int		syntax_err_message(char *msg, int end, int ret, t_minishell *minishell)
+int	syntax_err_message(char *msg, int end, int ret, t_minishell *minishell)
 {
 	msg[end] = '\0';
 	ft_putstr_fd(minishell->execute_name, STDERR_FILENO);
@@ -73,10 +73,9 @@ int	finder(char *str, char checker)
 			return (index);
 	}
 	return (NOTDEFINED);
-
 }
 
-int		bracket_finder(char *str)
+int	bracket_finder(char *str)
 {
 	int	count;
 	int	index;

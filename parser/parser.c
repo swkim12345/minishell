@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 12:56:43 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 21:06:41 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-//parser
-int		bracket_parser(char *str, int index, int str_flag, t_minishell *minishell)
+int	bracket_parser(char *str, int index, int str_flag, t_minishell *minishell)
 {
 	char	*ptr;
 	int		ret;
-	
+
 	ptr = &str[index];
 	if (*ptr == '(')
 	{
@@ -35,7 +34,8 @@ int		bracket_parser(char *str, int index, int str_flag, t_minishell *minishell)
 	return (index);
 }
 
-static int		split_recurv_parser(t_ast_node *head, int str_end, int dup_str_start, t_minishell *minishell)
+static int	split_recurv_parser(t_ast_node *head, int str_end,
+			int dup_str_start, t_minishell *minishell)
 {
 	char	*ptr;
 	int		size;
@@ -47,10 +47,10 @@ static int		split_recurv_parser(t_ast_node *head, int str_end, int dup_str_start
 	size = ft_strlen(ptr);
 	head->left_node = init_ast_node(CMDNODE);
 	head->right_node = init_ast_node(CMDNODE);
-	head->left_node->cmd_node->str = 
-	init_doub_char(dup_str(ptr, 0, str_end), 1);
-	head->right_node->cmd_node->str = 
-	init_doub_char(dup_str(ptr, dup_str_start, size), 1);
+	head->left_node->cmd_node->str = \
+		init_doub_char(dup_str(ptr, 0, str_end), 1);
+	head->right_node->cmd_node->str = \
+		init_doub_char(dup_str(ptr, dup_str_start, size), 1);
 	tmp = recur_lexar(head->left_node);
 	if (tmp == FUNC_FAIL)
 		return (FUNC_FAIL);
@@ -60,12 +60,12 @@ static int		split_recurv_parser(t_ast_node *head, int str_end, int dup_str_start
 	return (FUNC_SUC);
 }
 
-int		recurv_parser(t_ast_node *head, t_minishell *minishell)
+int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 {
 	t_ast_node	*ret;
-	int		index;
-	int		tmp;
-	char	*ptr;
+	int			index;
+	int			tmp;
+	char		*ptr;
 
 	index = -1;
 	ptr = head->cmd_node->str[0];
@@ -82,7 +82,7 @@ int		recurv_parser(t_ast_node *head, t_minishell *minishell)
 		}
 		if (ptr[index] == '(')
 		{
-			tmp =  bracket_finder(&ptr[index + 1]);
+			tmp = bracket_finder(&ptr[index + 1]);
 			if (tmp == NOTDEFINED)
 				return (tmp);
 			index += tmp;
