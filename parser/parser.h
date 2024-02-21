@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/20 20:46:31 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/21 21:04:35 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # define PIPE			"|"
 # define REDIRINPUT		">"
 # define REDIROUTPUT	"<"
-//# define SPACE			" "
 
 # define BRACKET_FLAG 1
 # define LT_SIGN 0
@@ -63,14 +62,15 @@ typedef struct s_ast_node
 	t_ast_node					*next_ast_node;	//for pipe
 	t_cmd_node					*cmd_node;		
 	t_redirection				**red;	//redirection array
-	int							flag; 	//lexar flag
-	int							index;  //redirection index in t_minishell
+	int							flag;	//lexar flag
+	int							index;	//redirection index in t_minishell
 	char						*str;	//||, &&
 }	t_ast_node;
 
 /* util.c */
 void		free_ast_tree(t_ast_node *head);
-int			syntax_err_message(char *msg, int end, int ret, t_minishell *minishell);
+int			syntax_err_message(char *msg, int end, int ret,
+				t_minishell *minishell);
 char		*dup_str(char *str, int start, int end);
 int			finder(char *str, char checker);
 int			bracket_finder(char *str);
@@ -82,6 +82,6 @@ int			lexar(t_ast_node *node, char *ptr, t_minishell *minishell);
 /* parser.c */
 t_ast_node	*new_parser(char *str, t_minishell *minishell);
 int			recurv_parser(t_ast_node *head, t_minishell *minishell);
-int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe);
+int			traverse(t_ast_node *head, t_minishell *minishell, int check_pipe);
 
 #endif

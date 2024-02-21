@@ -1,39 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bianry_tree_util.c                                 :+:      :+:    :+:   */
+/*   binary_tree_util.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/19 12:36:41 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 20:53:26 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environ.h"
 
-int			parse_env(char *env, char **key, char **value)
+int	parse_env(char *env, char **key, char **value)
 {
 	int	index;
-	
+
 	index = -1;
 	while (env[++index])
 	{
 		if (env[index] == '=')
 		{
+			if (index == 0)
+				return (FUNC_FAIL);
 			env[index] = '\0';
 			break ;
 		}
 	}
-	if (!key || !value)
-		return (NOTDEFINED);
 	*key = ft_strdup(env);
+	if (!env[index] && env[index - 1] != '=')
+		*value = ft_strdup("");
+	else if (!env[index])
+		*value = NULL;
+	else
+		*value = ft_strdup(&env[index + 1]);
 	*value = ft_strdup(&env[index + 1]);
-	//"", '' 처리 필요
 	return (FUNC_SUC);
 }
 
-void		node_delete(t_tree_node *node)
+void	node_delete(t_tree_node *node)
 {
 	if (!node)
 		return ;
@@ -53,7 +58,7 @@ void	recur_tree_delete(t_tree_node *node)
 	free(node);
 }
 
-void		exchange_node_key_value(t_tree_node *n, t_tree_node *t)
+void	exchange_node_key_value(t_tree_node *n, t_tree_node *t)
 {
 	char	*key;
 	char	*value;

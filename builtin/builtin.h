@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/21 16:37:10 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/21 20:48:07 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 typedef struct s_ast_node	t_ast_node;
 typedef struct s_cmd_node	t_cmd_node;
 
-typedef struct	s_cd
+typedef struct s_cd
 {
 	int			cd_flag; //0 is default L can be L or P
 	int			directory_index;
@@ -41,14 +41,15 @@ typedef struct	s_cd
 
 /* ft_echo.c */
 void	print_echo(char **str, int nflag);
-int     ft_echo(t_cmd_node *cmd_node);
+int		ft_echo(t_cmd_node *cmd_node);
 int		ft_isspace(int c);
 
 /* bulitin.c */
-int     process_builtin(t_cmd_node *cmd_node);
+int		process_builtin(t_cmd_node *cmd_node);
 
-/* ft_cd.c */
-void	init_t_cd(t_cd *info, t_cmd_node *cmd_node);
-
+/* util.c */
+int		err_no_quote(t_minishell *minishell, char *builtin,
+			char *arg, char *msg);
+int		err_quote(t_minishell *minishell, char *builtin, char *arg, char *msg);
 
 #endif

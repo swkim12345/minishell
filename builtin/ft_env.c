@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/12 23:44:33 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/19 11:52:20 by sunghwki         ###   ########.fr       */
+/*   Created: 2024/02/21 14:18:17 by sunghwki          #+#    #+#             */
+/*   Updated: 2024/02/21 17:27:12 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "builtin.h"
 
-int	str_cmp(char *str_org, char *str_cmp)
+int	ft_env(t_cmd_node *cmd_node, t_minishell *minishell)
 {
-	while (*str_org && *str_cmp && *str_org == *str_cmp)
+	char	**ret;
+	int		index;
+
+	ret = tree_to_char(minishell->env);
+	index = -1;
+	while (ret[++index])
 	{
-		str_org++;
-		str_cmp++;
+		printf("%s\n", ret[index]);
+		free(ret[index]);
 	}
-	if (!*str_cmp)
-		return (0);
-	return (*str_org - *str_cmp);
+	free(ret);
+	return (FUNC_SUC);
 }

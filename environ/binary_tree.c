@@ -6,17 +6,17 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:22:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/19 12:27:31 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 20:54:57 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environ.h"
 
-int			tree_insert(t_tree_head *head, t_tree_node *leaf)
+int	tree_insert(t_tree_head *head, t_tree_node *leaf)
 {
 	t_tree_node	*next;
 	int			tmp;
-	
+
 	next = head->head;
 	if (!next)
 	{
@@ -59,9 +59,13 @@ t_tree_node	*tree_search(t_tree_node *node, t_tree_node **parent, char *key)
 {
 	int			size;
 	int			tmp;
+	int			flag;
 
 	size = ft_strlen(key);
-	*parent = NULL;
+	if (!parent)
+		flag = FALSE;
+	else
+		flag = TRUE;
 	while (node)
 	{
 		tmp = ft_strncmp(node->key, key, size + 1);
@@ -69,7 +73,8 @@ t_tree_node	*tree_search(t_tree_node *node, t_tree_node **parent, char *key)
 			return (node);
 		else
 		{
-			*parent = node;
+			if (flag == TRUE)
+				*parent = node;
 			if (tmp < 0)
 				node = node->left_node;
 			if (tmp > 0)
@@ -105,7 +110,7 @@ t_tree_node	*tree_pop(t_tree_node *head, char *key)
 		target = node->right_node;
 		node->right_node = NULL;
 	}
-	else if(!target->right_node || !target->left_node)
+	else if (!target->right_node || !target->left_node)
 	{
 		if (target->right_node)
 			node = target->right_node;
@@ -131,12 +136,12 @@ t_tree_head	*char_to_tree(char **str)
 	int			index;
 	t_tree_node	*node;
 	t_tree_head	*ret;
-	
+
 	index = -1;
 	ret = (t_tree_head *)malloc(sizeof(t_tree_head));
 	ret->head = 0;
 	ret->size = 0;
-	while (str[++index]) //균형 잡게 넣어야 하는데... 이거...
+	while (str[++index])
 	{
 		node = (t_tree_node *)malloc(sizeof(t_tree_node));
 		ft_memset((void *)node, 0, sizeof(t_tree_node));
@@ -147,7 +152,7 @@ t_tree_head	*char_to_tree(char **str)
 	return (ret);
 }
 
-int			tree_recurv_traversal(t_tree_node *head, t_tree_node **ordered, int size)
+int	tree_recurv_traversal(t_tree_node *head, t_tree_node **ordered, int size)
 {
 	t_tree_node	**stack;
 	t_tree_node	*tmp;
@@ -170,7 +175,7 @@ int			tree_recurv_traversal(t_tree_node *head, t_tree_node **ordered, int size)
 		while (--index >= 0)
 		{
 			ordered[ordered_size] = stack[index];
-			printf("in recurv key : %s, value : %s\n", ordered[ordered_size]->key, ordered[ordered_size]->value);
+			//printf("in recurv key : %s, value : %s\n", ordered[ordered_size]->key, ordered[ordered_size]->value);
 			ordered_size += 1;
 			ordered_size += tree_recurv_traversal(stack[index]->left_node, &(ordered[ordered_size]), size);
 		}
@@ -179,24 +184,33 @@ int			tree_recurv_traversal(t_tree_node *head, t_tree_node **ordered, int size)
 	return (ordered_size);
 }
 
-char		**tree_to_char(t_tree_head *head)
+char	**tree_to_char(t_tree_head *head)
 {
 	int			index;
 	char		*tmp;
 	char		**ret;
 	t_tree_node	**ordered;
-	
+
 	index = 0;
 	ret = (char **)malloc(sizeof(char *) * (head->size + 1));
 	ordered = (t_tree_node **)malloc(sizeof(t_tree_node *) * (head->size + 1));
 	tree_recurv_traversal(head->head, ordered, head->size);
 	while (index < head->size)
 	{
-		tmp = ft_strjoin(ordered[index]->key, "=");
+		if (ordered[index]->value == NULL)
+			tmp = ft_strdup(ordered[index]->key);
+		else if (ordered[index]->value[0] == '\0')
+			tmp = ft_strjoin(ordered[index]->key, "=\"\"");
+		else
+		{
+			tmp = ft_strjoin(ordered[index]->key, "=\"");
+			tmp = ft_strjoin(tmp, ordered[index]->value);
+			tmp = ft_strjoin(tmp, "\"");
+		}
 		ret[index] = ft_strjoin(tmp, ordered[index]->value);
 		free(tmp);
-		printf("index : %d, size : %ld\n", index, head->size);
-		printf("key value: %s\n", ret[index]);
+		//printf("index : %d, size : %ld\n", index, head->size);
+		//printf("key value: %s\n", ret[index]);
 		index++;
 	}
 	free(ordered);

@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 21:28:52 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/19 11:55:52 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:26:56 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	free_2d_str(char **arr)
 	free(arr);
 }
 
-void	check()
+void	check(void)
 {
 	system("leaks a.out");
 }
@@ -89,7 +89,9 @@ void	print_argv(char **argv, int argc)
 	}
 }
 
-int main(int argc, char **argv, char **envp)
+
+//main
+int	main(int argc, char **argv, char **envp)
 {
 	// atexit(check);
 	t_minishell minishell;
