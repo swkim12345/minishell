@@ -6,7 +6,7 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/02/07 20:13:12 by minsepar         ###   ########.fr        #
+#    Updated: 2024/02/20 23:53:33 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,5 +43,8 @@ fclean:
 re:
 	make fclean
 	make all
+
+test:
+	cc main.c test.c ./signal/signal.c common_util.c -lreadline $(LIBFT)
 
 .PHONY: all clean fclean re

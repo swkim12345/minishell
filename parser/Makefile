@@ -5,8 +5,8 @@ CFLAGS = -Wall -Werror -Wextra
 
 NAME = minishell
 
-SRCS = finder.c lexar.c main.c set_mem.c traverse.c util.c \
-	parser.c parser_error.c \
+SRCS = main.c traverse.c \
+	parser.c \
 	../inner_parser/argument_parser_str_list.c ../inner_parser/argument_parser_utils.c
 
 
