@@ -6,33 +6,13 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 16:40:09 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 21:02:35 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environ.h"
 
-char		*ft_getenv(t_tree_head *head, char *key)
-{
-	t_tree_node	*tmp;
-
-	tmp = tree_search(head->head, NULL, key);
-	if (tmp)
-		return (tmp->value);
-	return (NULL);
-}
-
-char		*ft_getexport(t_tree_head *head, char *key)
-{
-	t_tree_node	*tmp;
-
-	tmp = tree_search(head->head, NULL, key);
-	if (tmp)
-		return (tmp->value);
-	return (NULL);
-}
-
-int			ft_setenv(t_tree_head *head, char *key, char *value)
+int	ft_setenv(t_tree_head *head, char *key, char *value)
 {
 	t_tree_node	*tmp;
 
@@ -55,28 +35,17 @@ int			ft_setenv(t_tree_head *head, char *key, char *value)
 	return (FUNC_SUC);
 }
 
-int			ft_setexport(t_tree_head *head, char *key, char *value)
+char	*ft_getenv(t_tree_head *head, char *key)
 {
 	t_tree_node	*tmp;
 
 	tmp = tree_search(head->head, NULL, key);
 	if (tmp)
-	{
-		free(tmp->value);
-		tmp->value = ft_strdup(value);
-		return (FUNC_SUC);
-	}
-	tmp = (t_tree_node *)malloc(sizeof(t_tree_node));
-	if (!tmp)
-		return (FUNC_FAIL);
-	tmp->key = ft_strdup(key);
-	tmp->value = ft_strdup(value);
-	tmp->index = head->size++;
-	tree_insert(head, tmp);
-	return (FUNC_SUC);
+		return (tmp->value);
+	return (NULL);
 }
 
-int			ft_unsetexport(t_tree_head *head, char *key)
+int	ft_unsetenv(t_tree_head *head, char *key)
 {
 	t_tree_node	*tmp;
 
@@ -88,21 +57,6 @@ int			ft_unsetexport(t_tree_head *head, char *key)
 		return (FUNC_SUC);
 	}
 	return (FUNC_FAIL);
-}
-
-int			ft_unsetenv(t_tree_head *head, char *key)
-{
-	t_tree_node	*tmp;
-
-	tmp = tree_pop(head->head, key);
-	if (tmp)
-	{
-		head->size--;
-		node_delete(tmp);
-		return (FUNC_SUC);
-	}
-	return (FUNC_FAIL);
-
 }
 
 t_tree_head	*ft_dup_tree(t_tree_head *head)
@@ -166,3 +120,49 @@ t_tree_head	*ft_initenv(t_tree_head *head, char **envp)
 	}
 	return (ret);
 }
+
+#include <stdio.h>
+//int			ft_setexport(t_tree_head *head, char *key, char *value)
+//{
+//	t_tree_node	*tmp;
+
+//	tmp = tree_search(head->head, NULL, key);
+//	if (tmp)
+//	{
+//		free(tmp->value);
+//		tmp->value = ft_strdup(value);
+//		return (FUNC_SUC);
+//	}
+//	tmp = (t_tree_node *)malloc(sizeof(t_tree_node));
+//	if (!tmp)
+//		return (FUNC_FAIL);
+//	tmp->key = ft_strdup(key);
+//	tmp->value = ft_strdup(value);
+//	tmp->index = head->size++;
+//	tree_insert(head, tmp);
+//	return (FUNC_SUC);
+//}
+
+//char		*ft_getexport(t_tree_head *head, char *key)
+//{
+//	t_tree_node	*tmp;
+
+//	tmp = tree_search(head->head, NULL, key);
+//	if (tmp)
+//		return (tmp->value);
+//	return (NULL);
+//}
+
+//int			ft_unsetexport(t_tree_head *head, char *key)
+//{
+//	t_tree_node	*tmp;
+
+//	tmp = tree_pop(head->head, key);
+//	if (tmp)
+//	{
+//		head->size--;
+//		node_delete(tmp);
+//		return (FUNC_SUC);
+//	}
+//	return (FUNC_FAIL);
+//}

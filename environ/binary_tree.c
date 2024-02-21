@@ -6,17 +6,17 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:22:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 15:05:49 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 20:54:57 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environ.h"
 
-int			tree_insert(t_tree_head *head, t_tree_node *leaf)
+int	tree_insert(t_tree_head *head, t_tree_node *leaf)
 {
 	t_tree_node	*next;
 	int			tmp;
-	
+
 	next = head->head;
 	if (!next)
 	{
@@ -110,7 +110,7 @@ t_tree_node	*tree_pop(t_tree_node *head, char *key)
 		target = node->right_node;
 		node->right_node = NULL;
 	}
-	else if(!target->right_node || !target->left_node)
+	else if (!target->right_node || !target->left_node)
 	{
 		if (target->right_node)
 			node = target->right_node;
@@ -136,7 +136,7 @@ t_tree_head	*char_to_tree(char **str)
 	int			index;
 	t_tree_node	*node;
 	t_tree_head	*ret;
-	
+
 	index = -1;
 	ret = (t_tree_head *)malloc(sizeof(t_tree_head));
 	ret->head = 0;
@@ -152,7 +152,7 @@ t_tree_head	*char_to_tree(char **str)
 	return (ret);
 }
 
-int			tree_recurv_traversal(t_tree_node *head, t_tree_node **ordered, int size)
+int	tree_recurv_traversal(t_tree_node *head, t_tree_node **ordered, int size)
 {
 	t_tree_node	**stack;
 	t_tree_node	*tmp;
@@ -184,13 +184,13 @@ int			tree_recurv_traversal(t_tree_node *head, t_tree_node **ordered, int size)
 	return (ordered_size);
 }
 
-char		**tree_to_char(t_tree_head *head)
+char	**tree_to_char(t_tree_head *head)
 {
 	int			index;
 	char		*tmp;
 	char		**ret;
 	t_tree_node	**ordered;
-	
+
 	index = 0;
 	ret = (char **)malloc(sizeof(char *) * (head->size + 1));
 	ordered = (t_tree_node **)malloc(sizeof(t_tree_node *) * (head->size + 1));
