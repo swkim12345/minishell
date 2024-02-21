@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/21 14:07:10 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:37:10 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct	s_cd
 {
 	int			cd_flag; //0 is default L can be L or P
 	int			directory_index;
+	char		execute_name;
 	char		*home_dir;
 	char		*cur_path;
 	char		*directory;

@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/20 23:32:46 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:23:02 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 	else if (head->flag & BRACKET_FLAG)
 		ret = subshell_traverse(head, minishell);
 	else if (head->cmd_node)
-		process_command(head->cmd_node);
+		process_command(head->cmd_node, minishell);
 	else
 		ret = recur_traverse(head, minishell);
 	return (ret);
