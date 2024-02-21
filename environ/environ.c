@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/19 12:33:48 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 13:14:36 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,3 +43,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
+
+ft_

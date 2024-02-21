@@ -6,103 +6,30 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/20 20:51:35 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:56:43 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-//util, error
-int		syntax_err_message(char *msg, int end, int ret, t_minishell *minishell)
-{
-	msg[end] = '\0';
-	ft_putstr_fd(minishell->execute_name, STDERR_FILENO);
-	ft_putstr_fd(": syntax error near unexpected token `", STDERR_FILENO);
-	ft_putstr_fd(msg, STDERR_FILENO);
-	ft_putstr_fd("'\n", STDERR_FILENO);
-	return (ret);
-}
-
-//in libft 구현
-size_t	ft_strspn(const char *str, const char *accept)
-{
-	char	*p;
-	char	*a;
-	size_t	count;
-
-	count = 0;
-	p = (char *)str;
-	a = (char *)accept;
-	while (*p)
-	{
-		while (*a)
-		{
-			if (*p == *a)
-				break ;
-			a++;
-		}
-		if (!*a)
-			return (count);
-		else
-			count++;
-		p++;
-	}
-	return (count);
-}
-
-char	*ft_strtok(char *str, const char *delim)
-{
-	char	*next_token;
-
-	if (!str)
-		next_token = str;
-	next_token += ft_strspn(next_token, delim);
-	if (!*next_token)
-		return (NULL);
-	return (next_token);
-}
-
-
-// int	finder(char *str, char *checker)
-// {
-	
-// }
-
-
-
-char	*dup_str(char *str, int start, int end)
-{
-	char	*ret;
-
-	ret = (char *)malloc(sizeof(char) * (end - start + 1));
-	ret[end - start] = '\0';
-	ft_memmove((void *)ret, (void *)&str[start], end - start);
-	return (ret);
-}
-
-// //error 시 -1 리턴
-// int		bracket_finder(char *str)
-// {
-// 	int	count;
-
-	
-// }
-
+//parser
 int		bracket_parser(char *str, int index, int str_flag, t_minishell *minishell)
 {
 	char	*ptr;
+	int		ret;
 	
 	ptr = &str[index];
 	if (*ptr == '(')
 	{
 		if (str_flag == TRUE)
-		{
-			index += find_bracket(ptr);
-			return(syntax_err_message(ptr, index, -1, minishell));
-		}
+			return (syntax_err_message(ptr, index, -1, minishell));
 		else
 		{
-			index += find_bracket(ptr);
+			ret = bracket_finder(ptr);
+			if (ret == NOTDEFINED)
+				return (syntax_err_message(ptr, index, -1, minishell));
+			else
+				return (ret);
 		}
 	}
 	return (index);
@@ -114,6 +41,8 @@ static int		split_recurv_parser(t_ast_node *head, int str_end, int dup_str_start
 	int		size;
 	int		tmp;
 
+	if (str_end <= 0)
+		return (syntax_err_message(ptr, dup_str_start, -1, minishell));
 	ptr = head->cmd_node->str[0];
 	size = ft_strlen(ptr);
 	head->left_node = init_ast_node(CMDNODE);
@@ -135,30 +64,27 @@ int		recurv_parser(t_ast_node *head, t_minishell *minishell)
 {
 	t_ast_node	*ret;
 	int		index;
-	int		size;
-	int		str_flag;
-	int		bracket_flag;
 	int		tmp;
 	char	*ptr;
 
 	index = -1;
 	ptr = head->cmd_node->str[0];
-	size = ft_strlen(ptr);
-	str_flag = FALSE;
-	bracket_flag = FALSE;
 	while (ptr[++index])
 	{	
 		index += skip_space(&ptr[index]);
 		if (ptr[index] == '\"' || ptr[index] == '\'')
 		{
-			index = index + ft_strtok(&ptr[index], ptr[index]) - ptr;
+			tmp = finder(&ptr[index + 1], ptr[index]);
+			if (tmp == NOTDEFINED)
+				return (syntax_err_message(ptr, index, -1, minishell));
+			index += tmp;
 			continue ;
 		}
 		if (ptr[index] == '(')
 		{
-			tmp = bracket_parser(ptr, index, str_flag, minishell);
-			if (tmp == -1)
-				return (FUNC_FAIL);
+			tmp =  bracket_finder(&ptr[index + 1]);
+			if (tmp == NOTDEFINED)
+				return (tmp);
 			index += tmp;
 			continue ;
 		}
@@ -168,47 +94,12 @@ int		recurv_parser(t_ast_node *head, t_minishell *minishell)
 			return (split_recurv_parser(head, index - 1, index + 2, minishell));
 		if (ptr[index] == '|')
 			return (split_recurv_parser(head, index - 1, index + 1, minishell));
-		//check for redirection
-		//indexing required
-		
-		//if (ptr[index] == '<')
-		//{
-		//	if (ptr[index + 1] == '<')
-		//	{
-		//		//here_doc
-		//		index += 2;
-		//		index += skip_space(&ptr[index]);
-		//		if (ptr[index] == '\0')
-		//			return (syntax_err_message(ptr, index, -1, minishell));
-		//		head->left_node = init_ast_node(CMDNODE);
-		//		recur_lexar(head->left_node);
-		//	}
-		//	else
-		//	{
-		//		//redirection
-		//		//indexing required
-				
-		//	}
-		//}
-		//if (ptr[index] == '>')
-		//{
-		//	if (ptr[index + 1] == '>')
-		//	{
-		//		//redirection
-		//		//indexing required
-		//	}
-		//	else
-		//	{
-		//		//redirection
-		//		//indexing required
-		//	}
-		//}
-		str_flag = TRUE;
 	}
+	tmp = lexar(head, ptr, minishell);
+	if (tmp == FUNC_FAIL)
+		return (FUNC_FAIL);
 	return (FUNC_SUC);
 }
-
-
 
 t_ast_node	*new_parser(char *str, t_minishell *minishell)
 {
@@ -220,7 +111,7 @@ t_ast_node	*new_parser(char *str, t_minishell *minishell)
 	err = recurv_parser(ret, minishell);
 	if (err == FUNC_FAIL)
 	{
-		free_ast_node(ret);
+		free_ast_tree(ret);
 		return (NULL);
 	}
 	return (ret);
