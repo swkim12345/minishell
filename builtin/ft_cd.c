@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/19 11:55:47 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:08:25 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,29 +343,29 @@ void	check()
 	system("leaks a.out");
 }
 
-int main()
-{
-	// atexit(check);
-	system("echo $CDPATH");
-	t_cmd_node	cmd_node;
-	t_minishell minishell;
-	char *input_str = readline(0);
-	cmd_node.str = string_parser(input_str, &minishell);
-	// printf("here: %p\n", cmd_node.str[1]);
+// int main()
+// {
+// 	// atexit(check);
+// 	system("echo $CDPATH");
+// 	t_cmd_node	cmd_node;
+// 	t_minishell minishell;
+// 	char *input_str = readline(0);
+// 	cmd_node.str = string_parser(input_str, &minishell);
+// 	// printf("here: %p\n", cmd_node.str[1]);
 	
-	minishell.cwd = getcwd(0,0);
-	minishell.execute_name = "minishell";
-	minishell.exit_code = ft_cd(&cmd_node, &minishell);
-	printf("exit_status: %d\n", minishell.exit_code);
-	free(input_str);
-	free(minishell.cwd);
-	int i = 0;
-	while (cmd_node.str[i])
-	{
-		printf("%p\n", cmd_node.str[i]);
-		free(cmd_node.str[i]);
-		i++;
-	}
-	free(cmd_node.str);
-	system("pwd");
-}
+// 	minishell.cwd = getcwd(0,0);
+// 	minishell.execute_name = "minishell";
+// 	minishell.exit_code = ft_cd(&cmd_node, &minishell);
+// 	printf("exit_status: %d\n", minishell.exit_code);
+// 	free(input_str);
+// 	free(minishell.cwd);
+// 	int i = 0;
+// 	while (cmd_node.str[i])
+// 	{
+// 		printf("%p\n", cmd_node.str[i]);
+// 		free(cmd_node.str[i]);
+// 		i++;
+// 	}
+// 	free(cmd_node.str);
+// 	system("pwd");
+// }

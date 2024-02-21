@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/19 12:44:57 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:07:10 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,9 @@ int		ft_isspace(int c);
 
 /* bulitin.c */
 int     process_builtin(t_cmd_node *cmd_node);
+
+/* ft_cd.c */
+void	init_t_cd(t_cd *info, t_cmd_node *cmd_node);
+
 
 #endif
