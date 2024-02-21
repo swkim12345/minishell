@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subsystem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:39:54 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/19 12:44:42 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:17:10 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 
 # include "../main.h"
 
+# define SLASH 1
+
 typedef struct s_cmd_node	t_cmd_node;
 /* process_command.c*/
 
-
-int	process_command(t_cmd_node *cmd_node);
+int	process_command(t_cmd_node *cmd_node, t_minishell *minishell);
 
 #endif

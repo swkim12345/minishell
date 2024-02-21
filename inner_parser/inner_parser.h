@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inner_parser.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:38:39 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/19 11:54:52 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:05:30 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ t_str_node	*dequeue(t_str_list *str_list);
 void	add_string_node(t_str_list *str_list, t_parse_str *parse_str);
 char	**list_to_char_arr(t_str_list *str_list);
 t_str_node	*create_node(char *str);
+t_str_node	*pop(t_str_list *list);
 
 /* argument_parser_utils.c */
 void	free_parse_str(t_parse_str *parse_str);

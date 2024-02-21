@@ -3,31 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/19 11:55:47 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:42:53 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-
-int	ft_cd_error(t_cd *info, t_minishell *minishell)
-{
-	int		exit_status;
-
-	minishell->exit_code = errno;
-	exit_status = errno;
-	if (info->cur_path)
-	{
-		free(info->cur_path);
-		info->cur_path = 0;
-	}
-	write(2, minishell->execute_name, ft_strlen(minishell->execute_name));
-	write(2, ": cd: ", 6);
-	perror(info->directory);
-	return (exit_status);
-}
+//Upper case 
 
 int	check_option(char *str)
 {
@@ -58,6 +42,7 @@ void	init_t_cd(t_cd *info, t_cmd_node *cmd_node)
 	int	option_result;
 
 	i = 1;
+	info->execute_name = cmd_node->cmd_name;
 	info->home_dir = getenv("HOME");
 	if (!info->home_dir)
 		return ;
@@ -110,15 +95,15 @@ void	free_2d_str(char **arr)
 	free(arr);
 }
 
-int	check_is_dir(t_cd *info, t_minishell *minishell)
-{
-	if (stat(info->cur_path, &info->file_stat) == -1)
-		return (ft_cd_error(info, minishell));
-	if (S_ISDIR(info->file_stat.st_mode))
-		return (TRUE);
-	else
-		return (FALSE);
-}
+// int	check_is_dir(t_cd *info, t_minishell *minishell)
+// {
+// 	if (stat(info->cur_path, &info->file_stat) == -1)
+// 		shell_error(minishell, info->);
+// 	if (S_ISDIR(info->file_stat.st_mode))
+// 		return (TRUE);
+// 	else
+// 		return (FALSE);
+// }
 
 void	find_local_dir(t_cd *info, t_minishell *minishell)
 {
@@ -167,7 +152,7 @@ int	check_cdpath(t_cd *info, t_minishell *minishell)
 		{
 			free(info->check_str);
 			free_2d_str(info->path_arr);
-			return (ft_cd_error(info, minishell));
+			shell_error(minishell, info->execute_name, info->directory);
 		}
 		free(info->check_str);
 		i++;
@@ -295,10 +280,10 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	else if (!info.directory && info.home_dir)
 	{
 		if (chdir(info.home_dir) == -1)
-			return (ft_cd_error(&info, minishell));
+			
 		temp_str = getcwd(0, 0);
 		if (!temp_str)
-			return (ft_cd_error(&info, minishell));
+			shell_error(minishell, info.execute_name, info.directory);
 		free(temp_cwd);
 		minishell->cwd = temp_str;
 		return (0);
@@ -311,10 +296,10 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	if (info.cd_flag & OPTION_FLAG)
 	{
 		if (chdir(info.cur_path) == -1)
-			return (ft_cd_error(&info, minishell));
+			shell_error(minishell, info.execute_name, info.directory);
 		temp_str = getcwd(0, 0);
 		if (!temp_str)
-			return (ft_cd_error(&info, minishell));
+			shell_error(minishell, info.execute_name, info.directory);
 		minishell->cwd = temp_str;
 		//export temp_cwd to oldpwd
 		free(temp_cwd);
@@ -329,7 +314,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 		if (chdir(info.directory) == -1)
 		{
 			free(temp_cwd);
-			return (ft_cd_error(&info, minishell));
+			shell_error(minishell, info.execute_name, info.directory);
 		}
 	}
 	printf("minishell->cwd: [%s]\n", minishell->cwd);
@@ -343,29 +328,29 @@ void	check()
 	system("leaks a.out");
 }
 
-int main()
-{
-	// atexit(check);
-	system("echo $CDPATH");
-	t_cmd_node	cmd_node;
-	t_minishell minishell;
-	char *input_str = readline(0);
-	cmd_node.str = string_parser(input_str, &minishell);
-	// printf("here: %p\n", cmd_node.str[1]);
+// int main()
+// {
+// 	// atexit(check);
+// 	system("echo $CDPATH");
+// 	t_cmd_node	cmd_node;
+// 	t_minishell minishell;
+// 	char *input_str = readline(0);
+// 	cmd_node.str = string_parser(input_str, &minishell);
+// 	// printf("here: %p\n", cmd_node.str[1]);
 	
-	minishell.cwd = getcwd(0,0);
-	minishell.execute_name = "minishell";
-	minishell.exit_code = ft_cd(&cmd_node, &minishell);
-	printf("exit_status: %d\n", minishell.exit_code);
-	free(input_str);
-	free(minishell.cwd);
-	int i = 0;
-	while (cmd_node.str[i])
-	{
-		printf("%p\n", cmd_node.str[i]);
-		free(cmd_node.str[i]);
-		i++;
-	}
-	free(cmd_node.str);
-	system("pwd");
-}
+// 	minishell.cwd = getcwd(0,0);
+// 	minishell.execute_name = "minishell";
+// 	minishell.exit_code = ft_cd(&cmd_node, &minishell);
+// 	printf("exit_status: %d\n", minishell.exit_code);
+// 	free(input_str);
+// 	free(minishell.cwd);
+// 	int i = 0;
+// 	while (cmd_node.str[i])
+// 	{
+// 		printf("%p\n", cmd_node.str[i]);
+// 		free(cmd_node.str[i]);
+// 		i++;
+// 	}
+// 	free(cmd_node.str);
+// 	system("pwd");
+// }
