@@ -6,13 +6,13 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 17:34:32 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 20:46:30 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	ft_atol(const char *str, long *ret)
+static int	ft_atol(const char *str, long *ret)
 {
 	int		sign;
 	long	num;
@@ -39,38 +39,42 @@ int	ft_atol(const char *str, long *ret)
 	return (0);
 }
 
-int	ft_exit(t_cmd_node *cmd_node, t_minishell *minishell)
+static int	exit_arg_check(t_cmd_node *cmd_node, t_minishell *minishell)
 {
-	long	exit_status;
-	long			size;
-	long			index;
+	int		index;
+	long	ret;
 
 	index = -1;
-	printf("exit\n");
-	if (!cmd_node->str[1])
-		exit(0);
-	if (!cmd_node->str[2])
-		return (err_msg(minishell->execute_name, cmd_node->str[0],
-			NULL, "too many arguments", FALSE));
-	while (cmd_node->str[1][++index] != '\0')
+	ret = 0;
+	while (cmd_node->str[1][++index])
 	{
 		if (!ft_isdigit(cmd_node->str[1][index]))
 		{
-			printf("bash exit: %s: numeric argument required\n",
-			cmd_node->str[1]);
-			err_msg(minishell->execute_name, cmd_node->str[0],
-			cmd_node->str[1], "numeric argument required", FALSE);
-			exit(255);
+			err_no_quote(minishell, minishell->execute_name,
+				cmd_node->str[0], "numeric argument required");
+			ret = 255;
+			break ;
 		}
 	}
-	if (ft_atol(cmd_node->str[1], &exit_status) == NOTDEFINED)
+	if (ft_atol(cmd_node->str[1], &ret) == NOTDEFINED)
 	{			
-		err_msg(minishell->execute_name, cmd_node->str[0],
-		cmd_node->str[1], "numeric argument required", FALSE);
-		exit(255);
+		err_no_quote(minishell, minishell->execute_name,
+			cmd_node->str[0], "numeric argument required");
+		ret = 255;
 	}
-	minishell->exit_code = exit_status;
-	exit(exit_status);
+	return (ret);
+}
+
+int	ft_exit(t_cmd_node *cmd_node, t_minishell *minishell)
+{
+	ft_putstr_fd("exit\n", STDERR_FILENO); //부모 프로세스에서 말할 필요가 있음.
+	if (!cmd_node->str[1])
+		exit(0);
+	if (cmd_node->str[2])
+		return (err_no_quote(minishell, minishell->execute_name,
+				cmd_node->str[0], "too many arguments"));
+	minishell->exit_code = exit_arg_check(cmd_node, minishell);
+	exit(minishell->exit_code);
 }
 
 int main()
@@ -81,8 +85,6 @@ int main()
 	t_cmd_node	*cmd_node;
 	t_minishell mini;
 
-
-	
 	pid = fork();
 	//parent
 	if (pid)

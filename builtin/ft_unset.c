@@ -6,13 +6,13 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:38:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 17:21:12 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 20:08:41 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int			ft_unset(t_cmd_node *cmd_node, t_minishell *minishell)
+int	ft_unset(t_cmd_node *cmd_node, t_minishell *minishell)
 {
 	int		index;
 	int		ret;
@@ -21,8 +21,8 @@ int			ft_unset(t_cmd_node *cmd_node, t_minishell *minishell)
 	while (cmd_node->str[++index])
 	{
 		if (!ft_isalpha(cmd_node->str[index][0]))
-			return (err_msg(minishell->execute_name, cmd_node->str[0],
-			 cmd_node->str[index], "not a valid identifier"));
+			err_not_valid_identifier(minishell,
+				cmd_node->cmd_name, cmd_node->str[index]);
 		ret = ft_unsetexport(&minishell->export, cmd_node->str[index]);
 		if (ret == FUNC_FAIL)
 			return (FUNC_FAIL);
