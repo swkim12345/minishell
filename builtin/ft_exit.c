@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/19 11:55:54 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:34:32 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,23 @@ int	ft_exit(t_cmd_node *cmd_node, t_minishell *minishell)
 	if (!cmd_node->str[1])
 		exit(0);
 	if (!cmd_node->str[2])
-	{
-		printf("bash exit: too many arguments\n"); //error 메세지 수정 필요. 간이로 설정함.
-		return (FUNC_FAIL);
-	}
+		return (err_msg(minishell->execute_name, cmd_node->str[0],
+			NULL, "too many arguments", FALSE));
 	while (cmd_node->str[1][++index] != '\0')
 	{
 		if (!ft_isdigit(cmd_node->str[1][index]))
 		{
 			printf("bash exit: %s: numeric argument required\n",
 			cmd_node->str[1]);
+			err_msg(minishell->execute_name, cmd_node->str[0],
+			cmd_node->str[1], "numeric argument required", FALSE);
 			exit(255);
 		}
 	}
 	if (ft_atol(cmd_node->str[1], &exit_status) == NOTDEFINED)
 	{			
-		printf("bash exit: %s: numeric argument required\n", cmd_node->str[1]);
+		err_msg(minishell->execute_name, cmd_node->str[0],
+		cmd_node->str[1], "numeric argument required", FALSE);
 		exit(255);
 	}
 	minishell->exit_code = exit_status;
