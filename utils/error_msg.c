@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:17:00 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/22 17:56:14 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:05:07 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,12 @@ int	print_error_msg(t_error *error, int error_num, int quote_flag)
 		ft_putstr_fd(error->msg, STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
 	return (FUNC_FAIL);
+}
+
+int	init_t_error(t_error *error)
+{
+	error->arg = 0;
+	error->builtin = 0;
+	error->execute_name = 0;
+	error->msg = 0;
 }
