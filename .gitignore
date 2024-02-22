@@ -7,6 +7,8 @@ a.out
 */*.dSYM
 *.dSYM
 */*.vscode
+*.sh
+*/*.sh
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

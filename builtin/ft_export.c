@@ -6,13 +6,13 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 20:38:00 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:38:12 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static	int	print_export(t_cmd_node *cmd_node, t_minishell *minishell)
+static	int	print_export(t_minishell *minishell)
 {
 	char	**env;
 	int		index;
@@ -37,8 +37,8 @@ int	ft_export(t_cmd_node *cmd_node, t_minishell *minishell)
 	char	*value;
 
 	index = 0;
-	if (cmd_node->cmd_name[1] == NULL)
-		retrun (print_export(cmd_node, minishell));
+	if (cmd_node->str[0] == NULL)
+		return (print_export(minishell));
 	while (cmd_node->str[++index])
 	{
 		if (!ft_isalpha(cmd_node->str[index][0]))
@@ -48,11 +48,11 @@ int	ft_export(t_cmd_node *cmd_node, t_minishell *minishell)
 		if (ret == FUNC_FAIL)
 			return (err_quote(minishell, cmd_node->str[0],
 					cmd_node->str[index], "not a valid identifier"));
-		ret = ft_setexport(&minishell->export, key, value);
+		ret = ft_setenv(minishell->export, key, value);
 		if (ret == FUNC_FAIL)
 			return (FUNC_FAIL);
-		if (value)
-			ret = ft_setenv(&minishell->env, key, value);
+		if (value && *value)
+			ret = ft_setenv(minishell->env, key, value);
 		index++;
 	}
 	return (FUNC_SUC);

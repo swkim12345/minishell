@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 21:02:35 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:27:02 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,45 +59,14 @@ int	ft_unsetenv(t_tree_head *head, char *key)
 	return (FUNC_FAIL);
 }
 
-t_tree_head	*ft_dup_tree(t_tree_head *head)
+t_tree_head	*ft_initenv(char **envp)
 {
 	t_tree_head	*ret;
 	t_tree_node	*tmp;
-	t_tree_node	*new;
-
-	ret = (t_tree_head *)malloc(sizeof(t_tree_head));
-	if (!ret)
-		return (NULL);
-	ret->head = NULL;
-	ret->size = head->size;
-	tmp = head->head;
-	while (tmp)
-	{
-		new = (t_tree_node *)malloc(sizeof(t_tree_node));
-		if (!new)
-		{
-			recur_tree_delete(ret->head);
-			free(ret);
-			return (NULL);
-		}
-		new->key = ft_strdup(tmp->key);
-		new->value = ft_strdup(tmp->value);
-		new->index = tmp->index;
-		tree_insert(ret, new);
-		tmp = tmp->right_node;
-	}
-	return (ret);
-}
-
-t_tree_head	*ft_initenv(t_tree_head *head, char **envp)
-{
-	t_tree_head	*ret;
-	t_tree_node	*tmp;
-	char		*key;
-	char		*value;
 	int			index;
 
 	ret = (t_tree_head *)malloc(sizeof(t_tree_head));
+	tmp = (t_tree_node *)malloc(sizeof(t_tree_node));
 	if (!ret)
 		return (NULL);
 	ret->head = NULL;
@@ -105,17 +74,20 @@ t_tree_head	*ft_initenv(t_tree_head *head, char **envp)
 	index = -1;
 	while (envp[++index])
 	{
-		parse_env(envp[index], &key, &value);
+		if (parse_env(envp[index], &tmp->key, &tmp->value) == FUNC_FAIL)
+		{
+			tree_delete(ret);
+			return (NULL);
+		}
 		tmp = (t_tree_node *)malloc(sizeof(t_tree_node));
 		if (!tmp)
 		{
-			recur_tree_delete(ret->head);
-			free(ret);
+			tree_delete(ret);
+			free(tmp);
 			return (NULL);
 		}
-		tmp->key = ft_strdup(key);
-		tmp->value = ft_strdup(value);
-		tmp->index = head->size++;
+		tmp->index = index;
+		ret->size += 1;
 		tree_insert(ret, tmp);
 	}
 	return (ret);

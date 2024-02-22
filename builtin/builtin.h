@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/21 20:48:07 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:11:14 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,31 @@ typedef struct s_cd
 	struct stat	file_stat;
 }	t_cd;
 
+/* bulitin.c */
+int		process_builtin(t_cmd_node *cmd_node);
+
 /* ft_echo.c */
 void	print_echo(char **str, int nflag);
 int		ft_echo(t_cmd_node *cmd_node);
 int		ft_isspace(int c);
 
-/* bulitin.c */
-int		process_builtin(t_cmd_node *cmd_node);
+/* ft_cd.c */
+int		ft_cd(t_cmd_node *cmd_node, t_minishell *minishell);
+
+/* ft_echo.c*/
+int		ft_echo(t_cmd_node *cmd_node);
+
+/* ft_env.c */
+int		ft_env(t_minishell *minishell);
+
+/* ft_export.c */
+int		ft_export(t_cmd_node *cmd_node, t_minishell *minishell);
+
+/* ft_pwd.c */
+int		ft_pwd(t_cmd_node *node, t_minishell *minishell);
+
+/* ft_unset.c */
+int		ft_unset(t_cmd_node *cmd_node, t_minishell *minishell);
 
 /* util.c */
 int		err_no_quote(t_minishell *minishell, char *builtin,
