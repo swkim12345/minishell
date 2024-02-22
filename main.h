@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/22 17:51:25 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:02:08 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_minishell
 	t_tree_head	*env;
 	t_tree_head	*export;
 	t_tmp_file	*tmp_list;
+	t_error		*error;
 }	t_minishell;
 
 typedef struct s_cmd_info
