@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:14:59 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/22 16:59:15 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:06:54 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	shell_error(t_minishell *minishell, char *command, char *message)
 	exit(status);
 }
 
-void	
+void	extern_cmd_error
 
 void	command_not_found_error(t_minishell *minishell, char *command)
 {

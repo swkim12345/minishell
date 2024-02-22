@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   common_util.c                                      :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/21 19:33:31 by minsepar         ###   ########.fr       */
+/*   Created: 2024/02/22 17:10:28 by minsepar          #+#    #+#             */
+/*   Updated: 2024/02/22 17:58:16 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#ifndef UTILS_H
+# define UTILS_H
 
-int	str_equal(char *s1, char *s2)
+# include "../main.h"
+
+typedef struct s_error
 {
-	size_t	s1_len;
-	size_t	s2_len;
+	char	*execute_name;
+	char	*builtin;
+	char	*arg;
+	char	*msg;
+}	t_error;
 
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	if (s1_len != s2_len)
-		return (0);
-	while (*s1 && *s2 && *s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	if (!*s1 && !*s2)
-		return (1);
-	return (0);
-}
+/* error_msg.c */
+int	print_error_msg(t_error *error, int error_num, int quote_flag);
 
-int		ft_isspace(int c)
-{
-	if (c >= 9 && c <= 12)
-		return (1);
-	if (c == 32)
-		return (1);
-	return (0);
-}
+/*  */
+
+#endif
