@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 21:05:15 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:21:48 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+int	syntax_err_message(char *msg, int end, int ret, t_minishell *minishell)
+{
+	msg[end] = '\0';
+	ft_putstr_fd(minishell->execute_name, STDERR_FILENO);
+	ft_putstr_fd(": syntax error near unexpected token `", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putstr_fd("'\n", STDERR_FILENO);
+	return (ret);
+}
 
 void	free_ast_tree(t_ast_node *head)
 {
@@ -38,16 +48,6 @@ void	free_ast_tree(t_ast_node *head)
 		free(tmp);
 	}
 	free(head);
-}
-
-int	syntax_err_message(char *msg, int end, int ret, t_minishell *minishell)
-{
-	msg[end] = '\0';
-	ft_putstr_fd(minishell->execute_name, STDERR_FILENO);
-	ft_putstr_fd(": syntax error near unexpected token `", STDERR_FILENO);
-	ft_putstr_fd(msg, STDERR_FILENO);
-	ft_putstr_fd("'\n", STDERR_FILENO);
-	return (ret);
 }
 
 char	*dup_str(char *str, int start, int end)

@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 12:27:23 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:46:40 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
 //lexar
-
 //환경변수 들어올 경우 변환 필요, 
-int		count_redirect(t_ast_node *node, t_minishell *minishell)
+static int	lexar_redirect(t_ast_node *node, t_minishell *minishell)
 {
+	
 		//	if (ptr[index] == '<' || ptr[index] == '>')
 		//{
 		//	if (ptr[index] == ptr[index + 1])
@@ -27,7 +27,7 @@ int		count_redirect(t_ast_node *node, t_minishell *minishell)
 }
 
 //check redirection, ()
-int		lexar(t_ast_node *node, char *ptr, t_minishell *minishell)
+int	lexar(t_ast_node *node, char *ptr, t_minishell *minishell)
 {
 	int			index;
 	int			str_flag;
@@ -65,6 +65,13 @@ int		lexar(t_ast_node *node, char *ptr, t_minishell *minishell)
 			tmp += skip_space(&ptr[index + tmp]);
 		}
 		//check for redirection
+		if (ptr[index] == '<' || ptr[index] == '>')
+		{
+			if (lexar_redirect(node, minishell))
+			{
+				return (syntax_err_message(ptr, index, -1, minishell));
+			}
+		}
 	}
 	//change
 }
