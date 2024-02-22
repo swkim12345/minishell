@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/21 15:53:09 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:58:26 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	is_builtin_fn(t_cmd_node *cmd_node)
 	char	*str;
 
 	str = malloc(cmd_node->cmd_name);
-	
+
 	if (str_equal(str, "echo") || str_equal(str, "pwd")
 		|| str_equal(str, "pwd") || str_equal(str, "export")
 		|| str_equal(str, "unset") || str_equal(str, "env")
@@ -85,10 +85,16 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 		if (!contains_slash(cmd_node->cmd_name))
 		{
 			execute_path = set_command_path(cmd_node, minishell);
-			execve(execute_path, cmd_node->str, envp);
+			if (!execute_path)
+				command_not_found_error(minishell, cmd_node->cmd_name);
+			if (execve(execute_path, cmd_node->str, envp));
+				shell_error(minishell, cmd_node->cmd_name, )
 		}
 		else
+		{
+			
 			execve(cmd_node->cmd_name, cmd_node->str, envp);
+		}
 	}
 	else
 	{

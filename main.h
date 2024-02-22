@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/21 17:18:43 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:51:25 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # include "subsystem/subsystem.h"
 # include "inner_parser/inner_parser.h"
 # include "environ/environ.h"
+# include "utils/utils.h"
 
 typedef struct s_minishell	t_minishell;
 typedef struct s_str_list	t_str_list;
