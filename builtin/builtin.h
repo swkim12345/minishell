@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/22 13:11:14 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:22:14 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_cd
 }	t_cd;
 
 /* bulitin.c */
-int		process_builtin(t_cmd_node *cmd_node);
+int		process_builtin(t_cmd_node *cmd_node, t_minishell *minishell);
 
 /* ft_echo.c */
 void	print_echo(char **str, int nflag);
