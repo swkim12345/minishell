@@ -75,3 +75,11 @@ int	print_error_msg(t_error *error, int error_num, int quote_flag)
 	free_error(error);
 	return (FUNC_FAIL);
 }
+
+int	init_t_error(t_error *error)
+{
+	error->arg = 0;
+	error->builtin = 0;
+	error->execute_name = 0;
+	error->msg = 0;
+}
