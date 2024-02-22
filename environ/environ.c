@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/22 13:27:02 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/22 20:30:47 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,36 +61,37 @@ int	ft_unsetenv(t_tree_head *head, char *key)
 
 t_tree_head	*ft_initenv(char **envp)
 {
-	t_tree_head	*ret;
+	t_tree_head	*head;
 	t_tree_node	*tmp;
 	int			index;
 
-	ret = (t_tree_head *)malloc(sizeof(t_tree_head));
-	tmp = (t_tree_node *)malloc(sizeof(t_tree_node));
-	if (!ret)
+	head = (t_tree_head *)malloc(sizeof(t_tree_head));
+	if (!head)
 		return (NULL);
-	ret->head = NULL;
-	ret->size = 0;
+	head->head = NULL;
+	head->size = 0;
 	index = -1;
 	while (envp[++index])
 	{
+		tmp = (t_tree_node *)malloc(sizeof(t_tree_node));
+		ft_memset((void *)tmp, 0, sizeof(t_tree_node));
 		if (parse_env(envp[index], &tmp->key, &tmp->value) == FUNC_FAIL)
 		{
-			tree_delete(ret);
+			tree_delete(head);
 			return (NULL);
 		}
-		tmp = (t_tree_node *)malloc(sizeof(t_tree_node));
 		if (!tmp)
 		{
-			tree_delete(ret);
+			tree_delete(head);
 			free(tmp);
 			return (NULL);
 		}
 		tmp->index = index;
-		ret->size += 1;
-		tree_insert(ret, tmp);
+		head->size += 1;
+		tree_insert(head, tmp);
+		tmp = NULL;
 	}
-	return (ret);
+	return (head);
 }
 
 #include <stdio.h>

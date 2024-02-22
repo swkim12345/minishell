@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/22 12:20:52 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:40:35 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,33 @@
 
 int	parse_env(char *env, char **key, char **value)
 {
-	int	index;
+	int		index;
+	char	*tmp;
 
 	index = -1;
-	while (env[++index])
+	tmp = ft_strdup(env);
+	while (tmp[++index])
 	{
-		if (env[index] == '=')
+		if (tmp[index] == '=')
 		{
 			if (index == 0)
+			{
+				free(tmp);
 				return (FUNC_FAIL);
-			env[index] = '\0';
+			}
+			tmp[index] = '\0';
 			break ;
 		}
 	}
-	*key = ft_strdup(env);
-	if (!env[index] && env[index - 1] != '=')
+	*key = ft_strdup(tmp);
+	if (!tmp[index] && tmp[index - 1] != '=')
 		*value = ft_strdup("");
-	else if (!env[index])
+	else if (!tmp[index])
 		*value = NULL;
 	else
-		*value = ft_strdup(&env[index + 1]);
-	*value = ft_strdup(&env[index + 1]);
+		*value = ft_strdup(&tmp[index + 1]);
+	*value = ft_strdup(&tmp[index + 1]);
+	free(tmp);
 	return (FUNC_SUC);
 }
 
