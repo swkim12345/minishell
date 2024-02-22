@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:14:59 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/22 18:01:05 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:08:02 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,18 @@ void	shell_error(t_minishell *minishell, char *command, char *message)
 	int	status;
 
 	status = errno;
-	print_error_msg()
+	ft_putstr_fd(minishell->execute_name, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(command, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
 	perror(message);
 	exit(status);
 }
 
-void	extern_cmd_error
+void	extern_cmd_error()
+{
+	
+}
 
 void	command_not_found_error(t_minishell *minishell, char *command)
 {
