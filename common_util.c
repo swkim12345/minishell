@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/21 19:21:27 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:33:31 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,4 @@ int		ft_isspace(int c)
 	if (c == 32)
 		return (1);
 	return (0);
-}
-
-void	fd_putstr(char *str, int fd)
-{
-	write(fd, str, ft_strlen(str));
 }
