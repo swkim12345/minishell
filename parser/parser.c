@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 21:06:41 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:59:04 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 			int dup_str_start, t_minishell *minishell)
 {
 	char	*ptr;
+	char	*tmp;
 	int		size;
 	int		tmp;
 
@@ -45,6 +46,7 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 		return (syntax_err_message(ptr, dup_str_start, -1, minishell));
 	ptr = head->cmd_node->str[0];
 	size = ft_strlen(ptr);
+	head->str = dup_str(ptr, 0, str_end);
 	head->left_node = init_ast_node(CMDNODE);
 	head->right_node = init_ast_node(CMDNODE);
 	head->left_node->cmd_node->str = \
