@@ -6,11 +6,11 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:17:16 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/22 18:26:05 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:58:09 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "../main.h"
 
 int	process_builtin(t_cmd_node *cmd_node, t_minishell *minishell)
 {

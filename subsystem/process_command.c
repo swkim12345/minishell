@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   process_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/22 16:58:26 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:54:57 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "subsystem.h"
+#include "../main.h"
 
 /*
 	cmd struct list
@@ -88,7 +88,7 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 			if (!execute_path)
 				command_not_found_error(minishell, cmd_node->cmd_name);
 			if (execve(execute_path, cmd_node->str, envp));
-				shell_error(minishell, cmd_node->cmd_name, )
+				shell_error(minishell, cmd_node->cmd_name, "hello");
 		}
 		else
 		{
@@ -131,7 +131,7 @@ int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 	cmd_node->cmd_name = cmd_node->str[0];
 	expand_argument(cmd_node);
 	if (is_builtin_fn(cmd_node))
-		minishell->exit_code = process_builtin(cmd_node);
+		minishell->exit_code = process_builtin(cmd_node, minishell);
 	else
 		minishell->exit_code = process_extern_cmd(cmd_node, minishell);
 	return (minishell->exit_code);

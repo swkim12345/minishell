@@ -1,9 +1,9 @@
-#include "builtin.h"
+#include "../main.h"
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	*minishell;
-	//char		**ret;
+	t_cmd_node	*cmd_node;
 	int			index;
 
 	index = -1;
@@ -19,13 +19,26 @@ int	main(int argc, char **argv, char **envp)
 	index = -1;
 	minishell = (t_minishell *)malloc(sizeof(t_minishell));
 	ft_memset((void *)minishell, 0, sizeof(t_minishell));
+	cmd_node = (t_cmd_node *)malloc(sizeof(t_cmd_node));
+	ft_memset((void *)cmd_node, 0, sizeof(t_cmd_node));
+	cmd_node->str = (char **)malloc(sizeof(char *) * 5);
+	cmd_node->str[0] = ft_strdup("export");
+	cmd_node->str[1] = ft_strdup("TEST=test");
+	cmd_node->str[2] = ft_strdup("TEST1=");
+	cmd_node->str[3] = ft_strdup("TEST2");
+	cmd_node->str[4] = NULL;
 	minishell->env = ft_initenv(envp);
 	minishell->export = ft_initenv(envp);
-	//ft_env(minishell); //leaks 
-	ft_export(NULL, minishell); //leaks
-
+	ft_env(minishell);
+	ft_export(NULL, minishell);
+	ft_export(cmd_node, minishell);
+	//ft_env(minishell);
+	//ft_export(NULL, minishell);
+	//ft_unset(cmd_node, minishell);
+	//ft_env(minishell);
 	free_tree_delete(minishell->env);
 	free_tree_delete(minishell->export);
+	free_doub_char(cmd_node->str);
 	free(minishell);
 	return (0);
 }

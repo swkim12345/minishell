@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/22 14:21:48 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:44:51 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,6 @@ void	free_ast_tree(t_ast_node *head)
 		free(tmp);
 	}
 	free(head);
-}
-
-char	*dup_str(char *str, int start, int end)
-{
-	char	*ret;
-
-	ret = (char *)malloc(sizeof(char) * (end - start + 1));
-	ret[end - start] = '\0';
-	ft_memmove((void *)ret, (void *)&str[start], end - start);
-	return (ret);
 }
 
 int	finder(char *str, char checker)
