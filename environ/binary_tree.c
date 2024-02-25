@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:22:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 14:02:49 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:21:44 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,20 +152,74 @@ t_tree_head	*char_to_tree(char **str)
 	}
 	return (ret);
 }
-// leak? 실제 릭은 아님 - stack에서 그냥 할당만 받아 사용함.
-int	tree_recurv_traversal(t_tree_node *head, t_tree_node **ordered, int size)
+
+//int	tree_recurv_traversal(t_tree_node *head, t_tree_node **ordered, int size)
+//{
+//	t_tree_node	**stack;
+//	t_tree_node	*tmp;
+//	int			index;
+//	int			ordered_size;
+
+//	index = 0;
+//	ordered_size = 0;
+//	tmp = head;
+//	if (!head)
+//		return (FUNC_SUC);
+//	stack = (t_tree_node **)malloc(sizeof(t_tree_node *) * size);
+//	if (tmp)
+//	{
+//		while (tmp)
+//		{
+//			stack[index++] = tmp;
+//			tmp = tmp->right_node;
+//		}
+//		while (--index >= 0)
+//		{
+//			ordered[ordered_size] = stack[index];
+//			ordered_size += 1;
+//			ordered_size += tree_recurv_traversal(stack[index]->left_node, &(ordered[ordered_size]), size - ordered_size);
+//		}
+//	}
+//	free(stack);
+//	stack = NULL;
+//	return (ordered_size);
+//}
+
+char	*key_value_to_str(t_tree_node *node)
+{
+	char	*ret;
+	char	*tmp;
+
+	if (node->value == NULL)
+		ret = ft_strdup(node->key);
+	else if (node->value[0] == '\0')
+		ret = ft_strjoin(node->key, "=\"\"");
+	else
+	{
+		tmp = ft_strjoin(node->key, "=\"");
+		ret = ft_strjoin(tmp, node->value);
+		free(tmp);
+		tmp = ft_strdup(ret);
+		free(ret);
+		ret = ft_strjoin(tmp, "\"");
+		free(tmp);
+	}
+	return (ret);
+}
+
+static int	tree_recurv_traversal(t_tree_node *head, char **ret_str, int size)
 {
 	t_tree_node	**stack;
 	t_tree_node	*tmp;
 	int			index;
-	int			ordered_size;
+	int			str_size;
 
 	index = 0;
-	ordered_size = 0;
-	stack = (t_tree_node **)malloc(sizeof(t_tree_node *) * size);
+	str_size = 0;
 	tmp = head;
 	if (!head)
 		return (FUNC_SUC);
+	stack = (t_tree_node **)malloc(sizeof(t_tree_node *) * size);
 	if (tmp)
 	{
 		while (tmp)
@@ -175,50 +229,22 @@ int	tree_recurv_traversal(t_tree_node *head, t_tree_node **ordered, int size)
 		}
 		while (--index >= 0)
 		{
-			ordered[ordered_size] = stack[index];
-			//printf("in recurv key : %s, value : %s\n", ordered[ordered_size]->key, ordered[ordered_size]->value);
-			ordered_size += 1;
-			ordered_size += tree_recurv_traversal(stack[index]->left_node, &(ordered[ordered_size]), size - ordered_size);
+			ret_str[str_size] = key_value_to_str(stack[index]);
+			str_size += 1;
+			str_size += tree_recurv_traversal(stack[index]->left_node, &(ret_str[str_size]), size - str_size);
 		}
 	}
 	free(stack);
 	stack = NULL;
-	return (ordered_size);
+	return (str_size);
 }
 
 char	**tree_to_char(t_tree_head *head)
 {
-	int			index;
-	char		*tmp;
 	char		**ret;
-	t_tree_node	**ordered;
 
-	index = 0;
 	ret = (char **)malloc(sizeof(char *) * (head->size + 1));
 	ft_memset((void *)ret, 0, sizeof(char *) * (head->size + 1));
-	ordered = (t_tree_node **)malloc(sizeof(t_tree_node *) * (head->size + 1));
-	ft_memset((void *)ordered, 0, sizeof(t_tree_node *) * (head->size + 1));
-	tree_recurv_traversal(head->head, ordered, head->size);
-	while (index < head->size)
-	{
-		if (ordered[index]->value == NULL)
-			ret[index] = ft_strdup(ordered[index]->key);
-		else if (ordered[index]->value[0] == '\0')
-			ret[index] = ft_strjoin(ordered[index]->key, "=\"\"");
-		else
-		{
-			tmp = ft_strjoin(ordered[index]->key, "=\"");
-			ret[index] = ft_strjoin(tmp, ordered[index]->value);
-			free(tmp);
-			tmp = ft_strdup(ret[index]);
-			free(ret[index]);
-			ret[index] = ft_strjoin(tmp, "\"");
-			free(tmp);
-		}
-		//printf("index : %d, size : %ld\n", index, head->size);
-		//printf("key value: %s\n", ret[index]);
-		index++;
-	}
-	free(ordered);
+	tree_recurv_traversal(head->head, ret, head->size);
 	return (ret);
 }

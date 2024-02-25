@@ -17,15 +17,15 @@ int	main(int argc, char **argv, char **envp)
 	//}
 
 	index = -1;
-	//minishell = (t_minishell *)malloc(sizeof(t_minishell));
-	//ft_memset((void *)minishell, 0, sizeof(t_minishell));
-	//minishell->env = ft_initenv(envp);
-	//minishell->export = ft_initenv(envp);
-	//ft_env(minishell); //leaks 
+	minishell = (t_minishell *)malloc(sizeof(t_minishell));
+	ft_memset((void *)minishell, 0, sizeof(t_minishell));
+	minishell->env = ft_initenv(envp);
+	minishell->export = ft_initenv(envp);
+	ft_env(minishell); //leaks 
 
-	//free_tree_delete(minishell->env);
-	//free_tree_delete(minishell->export);
-	//free(minishell);
+	free_tree_delete(minishell->env);
+	free_tree_delete(minishell->export);
+	free(minishell);
 	return (0);
 }
 
