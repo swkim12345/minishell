@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:22:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/22 20:28:48 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 13:09:53 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	tree_insert(t_tree_head *head, t_tree_node *leaf)
 	while (next)
 	{
 		tmp = ft_strlen(leaf->key);
-		printf("tmp : %d, leaf key: %s\n", tmp, leaf->key);
+		//printf("tmp : %d, leaf key: %s\n", tmp, leaf->key);
 		tmp = ft_strncmp(next->key, leaf->key, tmp + 1);
 		if (tmp == 0)
 		{
@@ -208,7 +208,7 @@ char	**tree_to_char(t_tree_head *head)
 			tmp = ft_strjoin(tmp, ordered[index]->value);
 			tmp = ft_strjoin(tmp, "\"");
 		}
-		ret[index] = ft_strjoin(tmp, ordered[index]->value);
+		ret[index] = ft_strdup(tmp);
 		free(tmp);
 		//printf("index : %d, size : %ld\n", index, head->size);
 		//printf("key value: %s\n", ret[index]);

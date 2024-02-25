@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/22 20:30:47 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 13:20:40 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ t_tree_head	*ft_initenv(char **envp)
 		ft_memset((void *)tmp, 0, sizeof(t_tree_node));
 		if (parse_env(envp[index], &tmp->key, &tmp->value) == FUNC_FAIL)
 		{
-			tree_delete(head);
+			free_tree_delete(head);
 			return (NULL);
 		}
 		if (!tmp)
 		{
-			tree_delete(head);
+			free_tree_delete(head);
 			free(tmp);
 			return (NULL);
 		}
