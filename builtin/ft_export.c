@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 19:34:22 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 20:00:33 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	ft_export(t_cmd_node *cmd_node, t_minishell *minishell)
 			return (FUNC_FAIL);
 		if (value && *value)
 			ret = ft_setenv(minishell->env, key, value);
+		free(key);
+		free(value);
 	}
 	return (FUNC_SUC);
 }
