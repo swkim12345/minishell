@@ -6,11 +6,11 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 21:28:52 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/21 17:26:56 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:58:15 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "../main.h"
 
 void	print_echo(char **str, int nflag)
 {

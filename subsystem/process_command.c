@@ -6,11 +6,11 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/25 17:31:48 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:03:38 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "subsystem.h"
+#include "../main.h"
 
 int	contains_slash(char *str)
 {
@@ -111,7 +111,7 @@ int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 	//argumnet already expanded ..?
 	//expand_argument(cmd_node);
 	if (is_builtin_fn(cmd_node))
-		minishell->exit_code = process_builtin(cmd_node);
+		minishell->exit_code = process_builtin(cmd_node, minishell);
 	else
 		minishell->exit_code = process_extern_cmd(cmd_node, minishell);
 	return (minishell->exit_code);

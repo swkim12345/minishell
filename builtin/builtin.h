@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/25 17:04:22 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:03:57 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define FUNC_SUC	0
 # define FUNC_FAIL	1
 
+typedef struct s_minishell	t_minishell;
 typedef struct s_ast_node	t_ast_node;
 typedef struct s_cmd_node	t_cmd_node;
 
@@ -40,7 +41,7 @@ typedef struct s_cd
 }	t_cd;
 
 /* bulitin.c */
-int		process_builtin(t_cmd_node *cmd_node);
+int		process_builtin(t_cmd_node *cmd_node, t_minishell *minishell);
 
 /* ft_echo.c */
 void	print_echo(char **str, int nflag);

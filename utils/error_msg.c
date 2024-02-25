@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:17:00 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/22 18:26:31 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:04:06 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	free_error(t_error *error)
 	if (error->msg)
 		free(error->msg);
 	free(error);
+	error = NULL;
 }
 
 t_error	*set_error_msg(char *execute_name, char *builtin, char *arg, char *msg)
@@ -46,10 +47,22 @@ t_error	*set_error_msg(char *execute_name, char *builtin, char *arg, char *msg)
 	t_error	*error;
 
 	error = (t_error *)malloc(sizeof(t_error));
-	error->execute_name = ft_strdup(execute_name);
-	error->builtin = ft_strdup(builtin);
-	error->arg = ft_strdup(arg);
-	error->msg = ft_strdup(msg);
+	if (!execute_name)
+		error->execute_name = NULL;
+	else
+		error->execute_name = ft_strdup(execute_name);
+	if (!builtin)
+		error->builtin = NULL;
+	else
+		error->builtin = ft_strdup(builtin);
+	if (!arg)
+		error->arg = NULL;
+	else
+		error->arg = ft_strdup(arg);
+	if (!msg)
+		error->msg = NULL;
+	else
+		error->msg = ft_strdup(msg);
 	return (error);
 }
 

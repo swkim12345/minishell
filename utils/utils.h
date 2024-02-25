@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:10:28 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/22 19:45:27 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:04:22 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ typedef struct s_error
 }	t_error;
 
 /* error_msg.c */
-int		print_error_msg(t_error *error, int error_num, int quote_flag);
 t_error	*set_error_msg(char *execute_name, char *builtin, char *arg, char *msg);
 void	free_error(t_error *error);
+int		print_error_msg(t_error *error, int error_num, int quote_flag);
 
 /* error_exit.c */
 void	shell_error(t_minishell *minishell, char *command, char *message);
