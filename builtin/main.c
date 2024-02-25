@@ -39,6 +39,7 @@ int	main(int argc, char **argv, char **envp)
 	free_tree_delete(minishell->env);
 	free_tree_delete(minishell->export);
 	free_doub_char(cmd_node->str);
+	free(cmd_node);
 	free(minishell);
 	return (0);
 }
