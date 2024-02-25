@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 21:04:35 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:45:02 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_redirection	t_redirection;
 typedef struct s_redirection {
 	int							flag;	// 0: <, 1: <<, 2: >, 4: >>
 	char						*str;	// file name or here doc delim
+	t_redirection				*next;
 }	t_redirection;
 
 typedef struct s_cmd_node
@@ -61,7 +62,7 @@ typedef struct s_ast_node
 	t_ast_node					*right_node;
 	t_ast_node					*next_ast_node;	//for pipe
 	t_cmd_node					*cmd_node;		
-	t_redirection				**red;	//redirection array
+	t_redirection				*red;	//redirection array
 	int							flag;	//lexar flag
 	int							index;	//redirection index in t_minishell
 	char						*str;	//||, &&
@@ -71,9 +72,15 @@ typedef struct s_ast_node
 void		free_ast_tree(t_ast_node *head);
 int			syntax_err_message(char *msg, int end, int ret,
 				t_minishell *minishell);
-char		*dup_str(char *str, int start, int end);
 int			finder(char *str, char checker);
 int			bracket_finder(char *str);
+
+/* set_mem.c */
+char		**init_doub_char(char **input, int size);
+char		*dup_str(char *str, int start, int end);
+void		free_doub_char(char **input);
+void		free_cmd_node(t_cmd_node *node);
+void		free_ast_tree(t_ast_node *node);
 
 /* lexar.c */
 int			count_redirect(t_ast_node *node, t_minishell *minishell);

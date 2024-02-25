@@ -6,11 +6,11 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 20:46:30 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:58:19 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "../main.h"
 
 static int	ft_atol(const char *str, long *ret)
 {
