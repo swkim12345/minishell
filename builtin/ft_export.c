@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/22 18:17:17 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:29:49 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_export(t_cmd_node *cmd_node, t_minishell *minishell)
 	char	*value;
 
 	index = 0;
-	if (cmd_node->str[0] == NULL)
+	if (!cmd_node || !cmd_node->str || !cmd_node->str[0])
 		return (print_export(minishell));
 	while (cmd_node->str[++index])
 	{

@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:22:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 15:21:44 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:27:23 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,38 +152,6 @@ t_tree_head	*char_to_tree(char **str)
 	}
 	return (ret);
 }
-
-//int	tree_recurv_traversal(t_tree_node *head, t_tree_node **ordered, int size)
-//{
-//	t_tree_node	**stack;
-//	t_tree_node	*tmp;
-//	int			index;
-//	int			ordered_size;
-
-//	index = 0;
-//	ordered_size = 0;
-//	tmp = head;
-//	if (!head)
-//		return (FUNC_SUC);
-//	stack = (t_tree_node **)malloc(sizeof(t_tree_node *) * size);
-//	if (tmp)
-//	{
-//		while (tmp)
-//		{
-//			stack[index++] = tmp;
-//			tmp = tmp->right_node;
-//		}
-//		while (--index >= 0)
-//		{
-//			ordered[ordered_size] = stack[index];
-//			ordered_size += 1;
-//			ordered_size += tree_recurv_traversal(stack[index]->left_node, &(ordered[ordered_size]), size - ordered_size);
-//		}
-//	}
-//	free(stack);
-//	stack = NULL;
-//	return (ordered_size);
-//}
 
 char	*key_value_to_str(t_tree_node *node)
 {

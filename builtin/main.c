@@ -21,7 +21,8 @@ int	main(int argc, char **argv, char **envp)
 	ft_memset((void *)minishell, 0, sizeof(t_minishell));
 	minishell->env = ft_initenv(envp);
 	minishell->export = ft_initenv(envp);
-	ft_env(minishell); //leaks 
+	//ft_env(minishell); //leaks 
+	ft_export(NULL, minishell); //leaks
 
 	free_tree_delete(minishell->env);
 	free_tree_delete(minishell->export);
