@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 19:22:24 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:50:01 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	parse_env(char *env, char **key, char **value)
 		{
 			if (index == 0)
 				return (FUNC_FAIL);
-			env[index] = '\0';
+			//env[index] = '\0';
 			break ;
 		}
 	}
