@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 13:20:40 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 13:34:36 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,49 +93,3 @@ t_tree_head	*ft_initenv(char **envp)
 	}
 	return (head);
 }
-
-#include <stdio.h>
-//int			ft_setexport(t_tree_head *head, char *key, char *value)
-//{
-//	t_tree_node	*tmp;
-
-//	tmp = tree_search(head->head, NULL, key);
-//	if (tmp)
-//	{
-//		free(tmp->value);
-//		tmp->value = ft_strdup(value);
-//		return (FUNC_SUC);
-//	}
-//	tmp = (t_tree_node *)malloc(sizeof(t_tree_node));
-//	if (!tmp)
-//		return (FUNC_FAIL);
-//	tmp->key = ft_strdup(key);
-//	tmp->value = ft_strdup(value);
-//	tmp->index = head->size++;
-//	tree_insert(head, tmp);
-//	return (FUNC_SUC);
-//}
-
-//char		*ft_getexport(t_tree_head *head, char *key)
-//{
-//	t_tree_node	*tmp;
-
-//	tmp = tree_search(head->head, NULL, key);
-//	if (tmp)
-//		return (tmp->value);
-//	return (NULL);
-//}
-
-//int			ft_unsetexport(t_tree_head *head, char *key)
-//{
-//	t_tree_node	*tmp;
-
-//	tmp = tree_pop(head->head, key);
-//	if (tmp)
-//	{
-//		head->size--;
-//		node_delete(tmp);
-//		return (FUNC_SUC);
-//	}
-//	return (FUNC_FAIL);
-//}

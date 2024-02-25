@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:18:17 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/22 12:38:39 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 13:56:43 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ int	ft_env(t_minishell *minishell)
 		free(ret[index]);
 	}
 	free(ret);
+	ret = NULL;
 	return (FUNC_SUC);
 }

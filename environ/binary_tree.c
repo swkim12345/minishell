@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:22:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 13:09:53 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 14:02:49 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ t_tree_head	*char_to_tree(char **str)
 	}
 	return (ret);
 }
-
+// leak? 실제 릭은 아님 - stack에서 그냥 할당만 받아 사용함.
 int	tree_recurv_traversal(t_tree_node *head, t_tree_node **ordered, int size)
 {
 	t_tree_node	**stack;
@@ -178,10 +178,11 @@ int	tree_recurv_traversal(t_tree_node *head, t_tree_node **ordered, int size)
 			ordered[ordered_size] = stack[index];
 			//printf("in recurv key : %s, value : %s\n", ordered[ordered_size]->key, ordered[ordered_size]->value);
 			ordered_size += 1;
-			ordered_size += tree_recurv_traversal(stack[index]->left_node, &(ordered[ordered_size]), size);
+			ordered_size += tree_recurv_traversal(stack[index]->left_node, &(ordered[ordered_size]), size - ordered_size);
 		}
 	}
 	free(stack);
+	stack = NULL;
 	return (ordered_size);
 }
 
@@ -194,22 +195,26 @@ char	**tree_to_char(t_tree_head *head)
 
 	index = 0;
 	ret = (char **)malloc(sizeof(char *) * (head->size + 1));
+	ft_memset((void *)ret, 0, sizeof(char *) * (head->size + 1));
 	ordered = (t_tree_node **)malloc(sizeof(t_tree_node *) * (head->size + 1));
+	ft_memset((void *)ordered, 0, sizeof(t_tree_node *) * (head->size + 1));
 	tree_recurv_traversal(head->head, ordered, head->size);
 	while (index < head->size)
 	{
 		if (ordered[index]->value == NULL)
-			tmp = ft_strdup(ordered[index]->key);
+			ret[index] = ft_strdup(ordered[index]->key);
 		else if (ordered[index]->value[0] == '\0')
-			tmp = ft_strjoin(ordered[index]->key, "=\"\"");
+			ret[index] = ft_strjoin(ordered[index]->key, "=\"\"");
 		else
 		{
 			tmp = ft_strjoin(ordered[index]->key, "=\"");
-			tmp = ft_strjoin(tmp, ordered[index]->value);
-			tmp = ft_strjoin(tmp, "\"");
+			ret[index] = ft_strjoin(tmp, ordered[index]->value);
+			free(tmp);
+			tmp = ft_strdup(ret[index]);
+			free(ret[index]);
+			ret[index] = ft_strjoin(tmp, "\"");
+			free(tmp);
 		}
-		ret[index] = ft_strdup(tmp);
-		free(tmp);
 		//printf("index : %d, size : %ld\n", index, head->size);
 		//printf("key value: %s\n", ret[index]);
 		index++;
