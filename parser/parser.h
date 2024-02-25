@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 21:04:35 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:35:55 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_redirection	t_redirection;
 typedef struct s_redirection {
 	int							flag;	// 0: <, 1: <<, 2: >, 4: >>
 	char						*str;	// file name or here doc delim
+	t_redirection				*next;
 }	t_redirection;
 
 typedef struct s_cmd_node
@@ -61,11 +62,27 @@ typedef struct s_ast_node
 	t_ast_node					*right_node;
 	t_ast_node					*next_ast_node;	//for pipe
 	t_cmd_node					*cmd_node;		
-	t_redirection				**red;	//redirection array
+	t_redirection				*red;	//redirection array
 	int							flag;	//lexar flag
 	int							index;	//redirection index in t_minishell
 	char						*str;	//||, &&
 }	t_ast_node;
+
+typedef struct s_pipe_io
+{
+	int	pipe_fd[2];
+}	t_pipe_io;
+
+typedef struct s_pipe_traverse
+{
+	int			ret;
+	int			num_pipe;
+	int			current_pipe;
+	pid_t		pid;
+	pid_t		first_pid;
+	t_pipe_io	*pipe_list;
+}	t_pipe_traverse;
+
 
 /* util.c */
 void		free_ast_tree(t_ast_node *head);
@@ -83,5 +100,20 @@ int			lexar(t_ast_node *node, char *ptr, t_minishell *minishell);
 t_ast_node	*new_parser(char *str, t_minishell *minishell);
 int			recurv_parser(t_ast_node *head, t_minishell *minishell);
 int			traverse(t_ast_node *head, t_minishell *minishell, int check_pipe);
+
+/* traverse.c */
+int	recur_traverse(t_ast_node *head, t_minishell *minishell); //fork로 실행, wait를 통해 wait, 이후 pipe관련 처리
+int	subshell_traverse(t_ast_node *head, t_minishell *minishell);
+int	get_num_pipe(t_ast_node *head);
+int	wait_processes(pid_t last_pid, pid_t first_pid);
+t_pipe_io	*init_pipe_list(int num_pipe);
+void	set_pipe_redirection(t_pipe_traverse *info, t_minishell *minishell);
+int	pipe_traverse(t_ast_node *head, t_minishell *minishell);
+int	set_read_fd(t_ast_node *ast_node, t_minishell *minishell);
+int set_write_fd(t_ast_node *ast_node, t_minishell *minishell);
+int	process_redirection(t_ast_node *ast_node, t_minishell *minishell);
+int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe);
+
+
 
 #endif

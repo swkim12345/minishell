@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:17:00 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/22 18:05:25 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:26:31 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	free_error(t_error *error)
 
 t_error	*set_error_msg(char *execute_name, char *builtin, char *arg, char *msg)
 {
-	t_error *error;
+	t_error	*error;
 
 	error = (t_error *)malloc(sizeof(t_error));
 	error->execute_name = ft_strdup(execute_name);
@@ -74,12 +74,4 @@ int	print_error_msg(t_error *error, int error_num, int quote_flag)
 	ft_putstr_fd("\n", STDERR_FILENO);
 	free_error(error);
 	return (FUNC_FAIL);
-}
-
-int	init_t_error(t_error *error)
-{
-	error->arg = 0;
-	error->builtin = 0;
-	error->execute_name = 0;
-	error->msg = 0;
 }

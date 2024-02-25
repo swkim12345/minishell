@@ -7,6 +7,8 @@
 		"inner_parser.h": "c",
 		"readline.h": "c",
 		"history.h": "c",
-		"stat.h": "c"
+		"stat.h": "c",
+		"sstream": "c",
+		"complex": "c"
 	}
 }

@@ -6,54 +6,63 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:14:59 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/22 18:08:02 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:37:38 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "../main.h"
 
-void	shell_error(t_minishell *minishell, char *command, char *message)
+void	shell_error(t_minishell *minishell, char *command, char *arg)
 {
 	int	status;
 
 	status = errno;
-	ft_putstr_fd(minishell->execute_name, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putstr_fd(command, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	perror(message);
+	minishell->error
+		= set_error_msg(minishell->execute_name, command, arg, 0);
+	print_error_msg(minishell->error, 0, 0);
 	exit(status);
 }
 
-void	extern_cmd_error()
+void	extern_cmd_error(t_minishell *minishell, char *command, char *arg)
 {
-	
+	int status;
+
+	status = errno;
+	minishell->error
+		= set_error_msg(minishell->execute_name, command, arg, 0);
+	print_error_msg(minishell->error, 0, 0);
+	exit(status);
 }
 
 void	command_not_found_error(t_minishell *minishell, char *command)
 {
-	ft_putstr_fd(minishell->execute_name, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putstr_fd(command, STDERR_FILENO);
-	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	minishell->error = set_error_msg(minishell->execute_name,
+			command, 0, "command not found");
+	print_error_msg(minishell->error, 127, 0);
 	exit(127);
 }
 
-void	command_permission_error(t_minishell *minishell, char *message)
+void	command_permission_error(t_minishell *minishell, char *command)
 {
-	ft_putstr_fd(minishell->execute_name, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	// write(2, message, ft_strlen(message));
-	// write(2, ": ", 2);
-	perror(message);
+	minishell->error = set_error_msg(minishell->execute_name,
+			command, 0, "Permission denied");
+	print_error_msg(minishell->error, 126, 0);
 	exit(126);
 }
 
-void	command_is_directory_error(t_minishell *minishell, char *message)
+void	command_is_directory_error(t_minishell *minishell, char *command)
 {
-	ft_putstr_fd(minishell->execute_name, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putstr_fd(message, STDERR_FILENO);
-	ft_putstr_fd(": is a direction\n", STDERR_FILENO);
+	minishell->error = set_error_msg(minishell->execute_name,
+			command, 0, "is a directory");
+	print_error_msg(minishell->error, 126, 0);
 	exit(126);
 }
+
+// int main(int argc, char **argv, char **envp)
+// {
+// 	t_minishell	shell;
+
+// 	init_shell(&shell, envp);
+// 	shell.execute_name = "bash";
+// 	shell_error(&shell, "cd", 0);
+// }

@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/22 17:09:22 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/22 19:44:23 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,20 @@ int		ft_isspace(int c)
 	if (c == 32)
 		return (1);
 	return (0);
+}
+
+char	*to_lowercase_str(const char *str)
+{
+	char	*return_str;
+	int		i;
+
+	i = 0;
+	return_str = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	while (str[i])
+	{
+		return_str[i] = str[i];
+		i++;
+	}
+	return_str[i] = 0;
+	return (return_str);
 }
