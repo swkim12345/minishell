@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/25 19:03:38 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/25 21:39:12 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*find_from_path(t_cmd_node *cmd_node, t_minishell *minishell)
 		ft_strlcat(temp_str, parsed_path[i], malloc_size);
 		ft_strlcat(temp_str, "/", malloc_size);
 		ft_strlcat(temp_str, cmd_node->cmd_name, malloc_size);
-		if (access(temp_str, X_OK | F_OK) == 0)
+		if (access(temp_str, F_OK) == 0)
 			return (temp_str);
 		free(temp_str);
 	}
@@ -69,14 +69,25 @@ int	is_builtin_fn(t_cmd_node *cmd_node)
 	return (0);
 }
 
+int	check_file_valid(char *execute_path, t_cmd_node *cmd_node, t_minishell *minishell)
+{
+	struct stat	file_info;
+
+	if (!execute_path)
+		command_not_found_error(minishell, cmd_node->cmd_name);
+	stat(execute_path, &file_info);
+	if (S_ISDIR(file_info.st_mode))
+		command_is_directory_error(minishell, cmd_node->cmd_name);
+	return (0);
+}
 
 int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 {
-	pid_t	pid;
-	int		status;
-	char	*execute_path;
-	char	**envp;
-	struct	stat file_info;
+	pid_t		pid;
+	int			status;
+	char		*execute_path;
+	char		**envp;
+	struct stat	file_info;
 
 	pid = fork();
 	if (pid == 0)
@@ -85,23 +96,20 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 		if (!contains_slash(cmd_node->cmd_name))
 		{
 			execute_path = find_from_path(cmd_node, minishell);
-			if (!execute_path)
-				command_not_found_error(minishell, cmd_node->cmd_name);
+			check_file_valid(execute_path, cmd_node, minishell);
 			//arg 가 그냥 fixed 할수 없음. 고쳐야 됨
-			
 			if (execve(execute_path, cmd_node->str, envp) == -1)
 				shell_error(minishell, cmd_node->cmd_name, cmd_node->str[1]);
 		}
 		else
 		{
+			check_file_valid(cmd_node->cmd_name, cmd_node, minishell);
 			if (execve(cmd_node->cmd_name, cmd_node->str, envp) == -1)
 				shell_error(minishell, cmd_node->cmd_name, 0);
 		}
 	}
 	else
-	{
 		waitpid(pid, &status, 0);
-	}
 	return (WIFEXITED(status));
 }
 

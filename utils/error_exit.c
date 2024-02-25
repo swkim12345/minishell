@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:14:59 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/25 17:37:38 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/25 21:09:56 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	shell_error(t_minishell *minishell, char *command, char *arg)
 
 void	extern_cmd_error(t_minishell *minishell, char *command, char *arg)
 {
-	int status;
+	int	status;
 
 	status = errno;
 	minishell->error
