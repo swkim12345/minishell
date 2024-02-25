@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 13:34:07 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:44:34 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	parse_env(char *env, char **key, char **value)
 	if (ft_strlen(env) != (size_t)size)
 	{
 		if (env[index + 1] == '\0')
-			*value = ft_strdup("");
+			*value = ft_strdup("\0");
 		else
 			*value = ft_strdup(&env[index + 1]);
 		env[index] = '=';

@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 16:27:57 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:47:53 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	ft_setenv(t_tree_head *head, char *key, char *value)
 	tmp = tree_search(head->head, NULL, key);
 	if (tmp)
 	{
-		//printf("key : %s, value : %s\n", tmp->key, tmp->value);
 		free(tmp->value);
 		tmp->value = ft_strdup(value);
 		return (FUNC_SUC);
@@ -27,11 +26,16 @@ int	ft_setenv(t_tree_head *head, char *key, char *value)
 	tmp = (t_tree_node *)malloc(sizeof(t_tree_node));
 	if (!tmp)
 		return (FUNC_FAIL);
-	printf("tmp : %p\n", tmp);
 	tmp->key = ft_strdup(key);
-	tmp->value = ft_strdup(value);
+	printf("key : %s\n", tmp->key);
+	if (!tmp->value)
+		tmp->value = NULL;
+	else if(tmp->value[0] == '\0')
+		tmp->value = ft_strdup("");
+	else
+		tmp->value = ft_strdup(value);
 	tmp->index = head->size++;
-	//printf("key : %s, value : %s\n", tmp->key, tmp->value);
+	printf("key : %s, value : %s\n", tmp->key, tmp->value);
 	tree_insert(head, tmp);
 	return (FUNC_SUC);
 }
