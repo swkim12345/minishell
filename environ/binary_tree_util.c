@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 16:44:34 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:15:24 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ int	parse_env(char *env, char **key, char **value)
 	else
 		*value = NULL;
 	return (FUNC_SUC);
+}
+
+t_tree_node	*init_tree_node(void)
+{
+	t_tree_node	*node;
+
+	node = (t_tree_node *)malloc(sizeof(t_tree_node));
+	if (!node)
+		return (NULL);
+	ft_memset((void *)node, 0, sizeof(t_tree_node));
+	return (node);
 }
 
 void	node_delete(t_tree_node *node)

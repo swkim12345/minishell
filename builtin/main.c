@@ -32,10 +32,10 @@ int	main(int argc, char **argv, char **envp)
 	ft_env(minishell);
 	ft_export(NULL, minishell);
 	ft_export(cmd_node, minishell);
-	//ft_env(minishell);
-	//ft_export(NULL, minishell);
-	//ft_unset(cmd_node, minishell);
-	//ft_env(minishell);
+	ft_env(minishell);
+	ft_export(NULL, minishell);
+	ft_unset(cmd_node, minishell);
+	ft_env(minishell);
 	free_tree_delete(minishell->env);
 	free_tree_delete(minishell->export);
 	free_doub_char(cmd_node->str);

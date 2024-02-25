@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:11:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 14:51:18 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:15:27 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_tree_head {
 
 /* binary_tree_util.c */
 int			parse_env(char *env, char **key, char **value);
+t_tree_node	*init_tree_node(void);
 void		node_delete(t_tree_node *node);
 void		free_tree_delete(t_tree_head *head);
 void		exchange_node_key_value(t_tree_node *n, t_tree_node *t);

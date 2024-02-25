@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 16:46:20 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:16:05 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,10 @@ int	ft_export(t_cmd_node *cmd_node, t_minishell *minishell)
 		if (!ft_isalpha(cmd_node->str[index][0]))
 			return (print_error_msg(minishell->error, 1, TRUE));
 		ret = parse_env(cmd_node->str[index], &key, &value);
-		//printf("key : %s, value : %s\n", key, value);
 		if (ret == FUNC_FAIL)
 			return (print_error_msg(minishell->error, 1, TRUE));
 		free_error(minishell->error);
-		printf("key : %s, value : -%s-\n", key, value);
-		printf("key : %s, value : %s\n", key, value);
 		ret = ft_setenv(minishell->export, key, value);
-		printf("key : %s, value : %s\n", key, value);
 		if (ret == FUNC_FAIL)
 			return (FUNC_FAIL);
 		if (value && *value)
