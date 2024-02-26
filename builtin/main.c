@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **envp)
 	cmd_node->str[4] = NULL;
 	minishell->env = ft_initenv(envp);
 	minishell->export = ft_initenv(envp);
-	ft_env(minishell);
+	ft_env(cmd_node, minishell);
 	ft_export(NULL, minishell);
 	ft_export(NULL, minishell);
 

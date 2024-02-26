@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:18:17 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 15:05:52 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:06:06 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_env(t_cmd_node *cmd_node, t_minishell *minishell)
 	int		index;
 	(void) cmd_node;
 
-	ret = ft_charenv(minishell->env);
+	ret = ft_charenv(minishell->env, FALSE);
 	index = -1;
 	while (ret[++index])
 	{
