@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 15:58:19 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 10:49:32 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,26 +75,4 @@ int	ft_exit(t_cmd_node *cmd_node, t_minishell *minishell)
 				cmd_node->str[0], "too many arguments"));
 	minishell->exit_code = exit_arg_check(cmd_node, minishell);
 	exit(minishell->exit_code);
-}
-
-int main()
-{
-	int	pid;
-	pid_t	t;
-	char	*str[] = {"exit", "100000000000000000000000000"};
-	t_cmd_node	*cmd_node;
-	t_minishell mini;
-
-	pid = fork();
-	//parent
-	if (pid)
-		pid = wait(&pid);
-	else
-	{
-		cmd_node = (t_cmd_node *)malloc(sizeof(t_cmd_node));
-		cmd_node->str = str;
-		ft_exit(cmd_node, &mini);
-	}
-	printf("parent : %d", pid);
-	return (0);
 }
