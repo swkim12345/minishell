@@ -16,7 +16,6 @@ int	ft_env(t_cmd_node *cmd_node, t_minishell *minishell)
 {
 	char	**ret;
 	int		index;
-
 	(void) cmd_node;
 
 	ret = ft_charenv(minishell->env);

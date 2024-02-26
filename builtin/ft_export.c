@@ -26,6 +26,7 @@ static	int	print_export(t_minishell *minishell)
 		index++;
 	}
 	free(env);
+	env = NULL;
 	return (FUNC_SUC);
 }
 

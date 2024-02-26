@@ -82,6 +82,8 @@ char	**ft_charenv(t_tree_head *head)
 	ret = (char **)malloc(sizeof(char *) * (head->size + 1));
 	if (!ret)
 		return (NULL);
+	ft_memset((void *)ret, 0, sizeof(char *) * (head->size + 1));
+	ret[head->size] = NULL;
 	tree_recurv_traversal(head->head, ret, head->size);
 	return (ret);
 }

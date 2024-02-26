@@ -4,6 +4,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	*minishell;
 	t_cmd_node	*cmd_node;
+	char		**ret;
 	int			index;
 
 	index = -1;
@@ -22,23 +23,34 @@ int	main(int argc, char **argv, char **envp)
 	cmd_node = (t_cmd_node *)malloc(sizeof(t_cmd_node));
 	ft_memset((void *)cmd_node, 0, sizeof(t_cmd_node));
 	cmd_node->str = (char **)malloc(sizeof(char *) * 5);
-	printf("hello\n");
 	cmd_node->str[0] = ft_strdup("export");
 	cmd_node->str[1] = ft_strdup("TEST=test");
 	cmd_node->str[2] = ft_strdup("TEST1=");
 	cmd_node->str[3] = ft_strdup("TEST2");
 	cmd_node->str[4] = NULL;
-	printf("hello\n");
 	minishell->env = ft_initenv(envp);
 	minishell->export = ft_initenv(envp);
 	ft_env(minishell);
 	ft_export(NULL, minishell);
-	ft_export(cmd_node, minishell);
-	ft_env(minishell);
 	ft_export(NULL, minishell);
-	ft_unset(cmd_node, minishell);
-	ft_env(minishell);
-	
+
+	//ft_export(cmd_node, minishell);
+	//ft_env(minishell);
+	//ft_export(NULL, minishell);
+	//ft_unset(cmd_node, minishell);
+	//ft_env(minishell);
+	//index = -1;
+	//ret = ft_charenv(minishell->env);
+	//while (ret[++index])
+	//{
+	//	printf("%d : %s\n", index, ret[index]);
+	//}
+	//ret = ft_charenv(minishell->export);
+	//index = -1;
+	//while (ret[++index])
+	//{
+	//	printf("%d : %s\n", index, ret[index]);
+	//}
 	free_tree_delete(minishell->env);
 	free_tree_delete(minishell->export);
 	free_doub_char(cmd_node->str);
