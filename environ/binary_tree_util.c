@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 19:31:46 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:56:17 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,11 @@ char	*key_value_to_str(t_tree_node *node)
 	if (node->value == NULL)
 		ret = ft_strdup(node->key);
 	else if (node->value[0] == '\0')
-		ret = ft_strjoin(node->key, "=\"\"");
+		ret = ft_strjoin(node->key, "=");
 	else
 	{
-		tmp = ft_strjoin(node->key, "=\"");
+		tmp = ft_strjoin(node->key, "=");
 		ret = ft_strjoin(tmp, node->value);
-		free(tmp);
-		tmp = ft_strdup(ret);
-		free(ret);
-		ret = ft_strjoin(tmp, "\"");
 		free(tmp);
 	}
 	return (ret);
