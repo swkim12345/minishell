@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 19:45:13 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:06:49 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,15 @@ int	ft_unsetenv(t_tree_head *head, char *key)
 t_tree_head	*ft_initenv(char **envp)
 {
 	t_tree_head	*head;
-	int			index;
 
 	head = (t_tree_head *)malloc(sizeof(t_tree_head));
 	if (!head)
 		return (NULL);
 	ft_memset((void *)head, 0, sizeof(t_tree_head));
-	index = -1;
 	return (ft_push_node_to_tree(head, envp));
 }
 
-char	**ft_charenv(t_tree_head *head)
+char	**ft_charenv(t_tree_head *head, int quote_flag)
 {
 	char		**ret;
 
@@ -84,6 +82,6 @@ char	**ft_charenv(t_tree_head *head)
 		return (NULL);
 	ft_memset((void *)ret, 0, sizeof(char *) * (head->size + 1));
 	ret[head->size] = NULL;
-	tree_recurv_traversal(head->head, ret, head->size);
+	tree_recurv_traversal(head->head, ret, head->size, quote_flag);
 	return (ret);
 }

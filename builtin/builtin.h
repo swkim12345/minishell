@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/26 13:50:31 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:40:42 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,5 @@ int		ft_unset(t_cmd_node *cmd_node, t_minishell *minishell);
 
 /* ft_exit.c */
 int	ft_exit(t_cmd_node *cmd_node, t_minishell *minishell);
-
-/* util.c */
-int		err_no_quote(t_minishell *minishell, char *builtin,
-			char *arg, char *msg);
-int		err_quote(t_minishell *minishell, char *builtin, char *arg, char *msg);
 
 #endif

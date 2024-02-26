@@ -73,7 +73,7 @@ clean:
 
 fclean:
 	make clean
-	rm -rf $(NAME)
+	rm -rf $(NAME) $(LIBFT)
 
 re:
 	make fclean

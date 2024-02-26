@@ -87,9 +87,6 @@ char	*easy_cat(char *s1, char *s2)
 void	parse_env_var_found(t_parse_str *parse_str,
 	char *substitude_name, int start_index)
 {
-	int	i;
-
-	i = 0;
 	parse_str->cursor = start_index;
 	while (*substitude_name)
 	{
@@ -120,7 +117,7 @@ void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote,
 	{
 		parse_str->cursor = start_index;
 		parse_str->str[start_index] = 0;
-		printf("subname_null: %s\n", env_name);
+		//printf("subname_null: %s\n", env_name);
 		append_char(parse_str, '$');
 		return ;
 	}
