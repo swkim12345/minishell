@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 11:25:04 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:00:29 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static	int	put_env(t_cmd_node *cmd_node, t_minishell *minishell, int index)
 		ft_setenv(minishell->env, key, value);
 	free(key);
 	free(value);
+	return (FUNC_SUC);
 }
 
 int	ft_export(t_cmd_node *cmd_node, t_minishell *minishell)
