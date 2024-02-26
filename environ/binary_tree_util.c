@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 19:31:46 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:10:14 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	exchange_node_key_value(t_tree_node *n, t_tree_node *t)
 	t->value = value;
 }
 
-char	*key_value_to_str(t_tree_node *node)
+char	*key_value_to_str(t_tree_node *node, int quote_flag)
 {
 	char	*ret;
 	char	*tmp;
@@ -72,15 +72,20 @@ char	*key_value_to_str(t_tree_node *node)
 	if (node->value == NULL)
 		ret = ft_strdup(node->key);
 	else if (node->value[0] == '\0')
-		ret = ft_strjoin(node->key, "=\"\"");
-	else
+		ret = ft_strjoin(node->key, "=");
+	else if (quote_flag)
 	{
 		tmp = ft_strjoin(node->key, "=\"");
 		ret = ft_strjoin(tmp, node->value);
 		free(tmp);
-		tmp = ft_strdup(ret);
+		tmp = ft_strjoin(ret, "\"");
 		free(ret);
-		ret = ft_strjoin(tmp, "\"");
+		ret = tmp;
+	}
+	else
+	{
+		tmp = ft_strjoin(node->key, "=");
+		ret = ft_strjoin(tmp, node->value);
 		free(tmp);
 	}
 	return (ret);

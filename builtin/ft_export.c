@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 19:33:45 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:06:19 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static	int	print_export(t_minishell *minishell)
 	int		index;
 
 	index = 0;
-	env = ft_charenv(minishell->export);
+	env = ft_charenv(minishell->export, TRUE);
 	while (env[index])
 	{
 		printf("declare -x %s\n", env[index]);
