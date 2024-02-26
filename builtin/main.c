@@ -32,23 +32,25 @@ int	main(int argc, char **argv, char **envp)
 	minishell->export = ft_initenv(envp);
 	ft_env(minishell);
 	ft_export(NULL, minishell);
-	ft_export(cmd_node, minishell);
-	ft_env(minishell);
 	ft_export(NULL, minishell);
-	ft_unset(cmd_node, minishell);
-	ft_env(minishell);
-	index = -1;
-	ret = ft_charenv(minishell->env);
-	while (ret[++index])
-	{
-		printf("%d : %s\n", index, ret[index]);
-	}
-	ret = ft_charenv(minishell->export);
-	index = -1;
-	while (ret[++index])
-	{
-		printf("%d : %s\n", index, ret[index]);
-	}
+
+	//ft_export(cmd_node, minishell);
+	//ft_env(minishell);
+	//ft_export(NULL, minishell);
+	//ft_unset(cmd_node, minishell);
+	//ft_env(minishell);
+	//index = -1;
+	//ret = ft_charenv(minishell->env);
+	//while (ret[++index])
+	//{
+	//	printf("%d : %s\n", index, ret[index]);
+	//}
+	//ret = ft_charenv(minishell->export);
+	//index = -1;
+	//while (ret[++index])
+	//{
+	//	printf("%d : %s\n", index, ret[index]);
+	//}
 	free_tree_delete(minishell->env);
 	free_tree_delete(minishell->export);
 	free_doub_char(cmd_node->str);
