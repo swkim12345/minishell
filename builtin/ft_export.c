@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 12:00:29 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:57:54 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static	int	print_export(t_minishell *minishell)
 	int		index;
 
 	index = 0;
-	env = tree_to_char(minishell->export);
+	env = ft_charenv(minishell->export);
 	while (env[index])
 	{
 		printf("declare -x %s\n", env[index]);
