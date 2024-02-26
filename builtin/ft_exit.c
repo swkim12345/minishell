@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 20:55:34 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:58:51 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	ft_exit(t_cmd_node *cmd_node, t_minishell *minishell)
 	if (cmd_node->str[2])
 	{
 		err = set_error_msg(minishell->execute_name, cmd_node->str[0],
-				1, "too many arguments");
+				NULL, "too many arguments");
 		return (print_error_msg(err, 1, 0));
 	}
 	minishell->exit_code = exit_arg_check(cmd_node, minishell);
