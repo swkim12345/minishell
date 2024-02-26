@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 21:28:52 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/26 13:53:45 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:25:19 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,6 @@ void	free_2d_str(char **arr)
 		free(arr[i]);
 	free(arr[i]);
 	free(arr);
-}
-
-void	check(void)
-{
-	system("leaks a.out");
 }
 
 int	is_nflag(char *str)
