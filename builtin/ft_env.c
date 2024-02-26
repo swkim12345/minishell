@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:18:17 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 13:58:14 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:05:52 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-int	ft_env(t_minishell *minishell)
+int	ft_env(t_cmd_node *cmd_node, t_minishell *minishell)
 {
 	char	**ret;
 	int		index;
+	(void) cmd_node;
 
 	ret = ft_charenv(minishell->env);
 	index = -1;

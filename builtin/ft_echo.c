@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 21:28:52 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/25 15:58:15 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:53:45 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	ft_echo(t_cmd_node *cmd_node)
 {
 	int		nflag;
 	int		index;
-	char	*first_str;
 
 	index = 1;
 	nflag = 0;
@@ -91,27 +90,27 @@ void	print_argv(char **argv, int argc)
 
 
 //main
-int	main(int argc, char **argv, char **envp)
-{
-	// atexit(check);
-	t_minishell minishell;
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	// atexit(check);
+// 	t_minishell minishell;
 
-	minishell.exit_code = 0;
+// 	minishell.exit_code = 0;
 
-	(void) argc;
-	char *input_str = readline(0);
-	char **cmd_str = string_parser(input_str, &minishell);
-	int i = 0;
-	int fd = open("test", O_RDONLY);
+// 	(void) argc;
+// 	char *input_str = readline(0);
+// 	char **cmd_str = string_parser(input_str, &minishell);
+// 	int i = 0;
+// 	int fd = open("test", O_RDONLY);
 
-	printf("input_str: %s\n", input_str);
-	while (cmd_str[i])
-	{
-		printf("parsed_str: [%s]\n", cmd_str[i]);
-		i++;
-	}
-	printf("echo result: ------------\n");
-	t_cmd_node	cmd_node;
-	cmd_node.str = cmd_str;
-	ft_echo(&cmd_node);
-}
+// 	printf("input_str: %s\n", input_str);
+// 	while (cmd_str[i])
+// 	{
+// 		printf("parsed_str: [%s]\n", cmd_str[i]);
+// 		i++;
+// 	}
+// 	printf("echo result: ------------\n");
+// 	t_cmd_node	cmd_node;
+// 	cmd_node.str = cmd_str;
+// 	ft_echo(&cmd_node);
+// }

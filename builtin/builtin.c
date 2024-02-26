@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:17:16 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/25 15:58:09 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:31:30 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,15 @@ int	process_builtin(t_cmd_node *cmd_node, t_minishell *minishell)
 	else if (str_equal(cmd_name, "pwd"))
 		ret = ft_pwd(cmd_node, minishell);
 	else if (str_equal(cmd_name, "export"))
+	{
+		printf("export received\n");
 		ret = ft_export(cmd_node, minishell);
+	}
 	else if (str_equal(cmd_name, "unset"))
 		ret = ft_unset(cmd_node, minishell);
 	else if (str_equal(cmd_name, "env"))
-		ret = ft_env(cmd_node);
-	else if (str_equal(cmd_name, "exit"))
-		ret = ft_exit(cmd_node);
+		ret = ft_env(cmd_node, minishell);
+	// else if (str_equal(cmd_name, "exit"))
+	// 	ret = ft_exit(cmd_node, minishell);
 	return (ret);
 }

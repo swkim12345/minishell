@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:17:00 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/22 18:32:10 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:04:06 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	free_error(t_error *error)
 
 t_error	*set_error_msg(char *execute_name, char *builtin, char *arg, char *msg)
 {
-	t_error *error;
+	t_error	*error;
 
 	error = (t_error *)malloc(sizeof(t_error));
 	if (!execute_name)

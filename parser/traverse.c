@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/21 15:23:02 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:57:07 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	recur_traverse(t_ast_node *head, t_minishell *minishell) //fork로 실행, w
 
 	if (!head)
 		return (TRUE); //fix 필요(true만 리턴하면 안됨.)
+	if (head->red)
+		process_redirection(head, minishell);
 	ret = traverse(head->left_node, minishell, 1);
 	if (head->cmd_node)
 	{
@@ -41,6 +43,7 @@ int	subshell_traverse(t_ast_node *head, t_minishell *minishell)
 	{
 		printf("subshell\n");
 		head->flag = 0;
+		process_redirection(head, minishell);
 		traverse(head, minishell, 1);
 	}
 	else
@@ -76,9 +79,7 @@ int	wait_processes(pid_t last_pid, pid_t first_pid)
 	// 		unlink(g_path);
 	// }
 	if (WIFEXITED(wstatus))
-	{
 		status_code = WEXITSTATUS(wstatus);
-	}
 	while (1)
 	{
 		if (wait(NULL) == -1 && errno == ECHILD)
@@ -87,32 +88,121 @@ int	wait_processes(pid_t last_pid, pid_t first_pid)
 	return (status_code);
 }
 
+t_pipe_io	*init_pipe_list(int num_pipe)
+{
+	t_pipe_io	*pipe_list;
+
+	pipe_list = malloc(sizeof(t_pipe_io) * (num_pipe + 1));
+	ft_memset((void *)pipe_list, 0, sizeof(t_pipe_io) * (num_pipe + 1));
+	return (pipe_list);
+}
+
+void	set_pipe_redirection(t_pipe_traverse *info, t_minishell *minishell)
+{
+	int	fd;
+
+	if (info->current_pipe != 0)
+	{
+		fd = info->pipe_list[info->current_pipe - 1].pipe_fd[0];
+		if (dup2(fd, 0) == -1)
+			shell_error(minishell, 0, 0);
+	}
+	if (info->current_pipe != info->num_pipe - 1)
+	{
+		fd = info->pipe_list[info->current_pipe].pipe_fd[1];
+		if (dup2(fd, 1) == -1)
+			shell_error(minishell, 0, 0);
+	}
+}
+
 int	pipe_traverse(t_ast_node *head, t_minishell *minishell)
 {
-	int		ret;
-	int		num_pipe;
-	int		current_pipe;
-	pid_t	pid;
-	pid_t	first_pid;
+	t_pipe_traverse	info;
 
-	current_pipe = -1;
-	num_pipe = get_num_pipe(head);
-	printf("num_pipe: %d\n", num_pipe);
-	while (++current_pipe < num_pipe)
+	info.current_pipe = -1;
+	info.num_pipe = get_num_pipe(head);
+	printf("num_pipe: %d\n", info.num_pipe);
+	info.pipe_list = init_pipe_list(info.num_pipe);
+	while (++info.current_pipe < info.num_pipe)
 	{
-		printf("current pipe: %d\n", current_pipe);
-		pid = fork();
-		if (pid == 0)
+		pipe(info.pipe_list[info.current_pipe].pipe_fd);
+		printf("current pipe: %d\n", info.current_pipe);
+		info.pid = fork();
+		if (info.pid == 0)
 		{
-			ret = traverse(head, minishell, 0);
-			exit(ret);
+			set_pipe_redirection(&info, minishell);
+			info.ret = traverse(head, minishell, 0);
+			exit(info.ret);
 		}
-		if (current_pipe == 0)
-			first_pid = pid;
+		if (info.current_pipe == 0)
+			info.first_pid = info.pid;
 		head = head->next_ast_node;
 	}
-	ret = wait_processes(pid, first_pid);
-	return (ret);
+	info.ret = wait_processes(info.pid, info.first_pid);
+	//free pipelist
+	return (info.ret);
+}
+
+int	set_read_fd(t_ast_node *ast_node, t_minishell *minishell)
+{
+	int				fd;
+	t_redirection	*redirect_node;
+
+	redirect_node = ast_node->red;
+	if (redirect_node->flag & LT_SIGN)
+		fd = open(redirect_node->str, O_RDONLY);
+	else if (redirect_node->flag & DB_LT_SIGN)
+		fd = get_heredoc_fd(minishell, ast_node->index);
+	if (fd < 0)
+	{
+		print_error_msg(minishell->error, errno, 0);
+		return (-1);
+	}
+	if (dup2(fd, 0) == -1)
+		print_error_msg(minishell->error, errno, 0);
+	close(fd);
+}
+
+int set_write_fd(t_ast_node *ast_node, t_minishell *minishell)
+{
+	int				fd;
+	t_redirection	*redirect_node;
+
+	redirect_node = ast_node->red;
+	if (redirect_node->flag & GT_SIGN)
+		fd = open(redirect_node->str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	else if (redirect_node->flag & DB_GT_SIGN)
+		fd = open(redirect_node->str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	if (fd < 0)
+	{
+		print_error_msg(minishell->error, errno, 0);
+		return (-1);
+	}
+	if (dup2(fd, 0) == -1)
+		print_error_msg(minishell->error, errno, 0);
+	close(fd);
+}
+
+int	process_redirection(t_ast_node *ast_node, t_minishell *minishell)
+{
+	t_redirection	*cur_node;
+	int				error_check;
+	int				i;
+
+	cur_node = ast_node->red;
+	error_check = 0;
+	i = 0;
+	while (cur_node)
+	{
+		if (cur_node->flag & LT_SIGN || cur_node->flag & DB_LT_SIGN)
+			error_check = set_read_fd(ast_node, minishell);
+		else if (cur_node->flag & GT_SIGN || cur_node->flag & DB_GT_SIGN)
+			error_check = set_write_fd(ast_node, minishell);
+		if (error_check != 0)
+			return (error_check);
+		cur_node = cur_node->next;
+	}
+	return (error_check);
 }
 
 int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/25 15:58:13 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:32:05 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,6 @@ int	check_end_slash(char *str)
 	if (str[i - 1] == '\\')
 		return (1);
 	return (0);
-}
-
-void	free_2d_str(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
 }
 
 // int	check_is_dir(t_cd *info, t_minishell *minishell)
@@ -185,7 +172,7 @@ char	*stack_to_str(t_str_list *stack)
 	{
 		i = -1;
 		cur_node = dequeue(stack);
-		printf("cur_node: %s\n", cur_node->str);
+		printf("cur_node: [%s]\n", cur_node->str);
 		while (cur_node->str[++i])
 			append_char(&parse_str, cur_node->str[i]);
 		free(cur_node->str);
@@ -207,21 +194,24 @@ void	parse_dots(t_cd *info, t_minishell *minishell)
 	i = 0;
 	start = 0;
 	init_str_list(&stack);
+	printf("info curpath: %s\n", info->cur_path);
 	while (info->cur_path[i])
 	{
-		if (ft_strncmp(&info->cur_path[i], "./", 2) == 0 && start - i == 1)
+		if (ft_strncmp(&info->cur_path[i], "./", 2) == 0 && i - start == 0)
 		{
 			start += 2;
 			i++;
 		}
 		else if (ft_strncmp(&info->cur_path[i], "../", 3) == 0
-			&& start - i == 2)
+			&& i - start == 0)
 		{
+			printf("here\n");
 			i += 2;
 			start += 3;
-			cur = pop(&stack);
-			if (cur)
+			if (stack.size > 1)
 			{
+				cur = pop(&stack);
+				printf("pop node: %s\n", cur->str);
 				free(cur->str);
 				free(cur);
 			}
@@ -229,7 +219,8 @@ void	parse_dots(t_cd *info, t_minishell *minishell)
 		else if (info->cur_path[i] == '/' && (i == 0 || i - start != 0))
 		{
 			temp_str = ft_substr(info->cur_path, start, i - start + 1);
-			printf("%s\n", temp_str);
+			printf("token: %s\n", temp_str);
+			printf("start: [%d], i: [%d]\n", start, i);
 			enqueue(&stack, create_node(temp_str));
 			start = i + 1;
 		}
@@ -237,7 +228,15 @@ void	parse_dots(t_cd *info, t_minishell *minishell)
 			start += 1;
 		i++;
 	}
-	if (info->cur_path[i - 1] != '/')
+	if (info->cur_path[i - 2] == '.' && info->cur_path[i - 1] == '.'
+		&& i - start == 2 && stack.size > 1)
+	{
+		cur = pop(&stack);
+		free(cur->str);
+		free(cur);
+	}
+	else if (info->cur_path[i - 1] != '/' && info->cur_path[i - 1] != '.'
+		&& i - start > 0)
 	{
 		temp_str = ft_substr(info->cur_path, start, i - start + 1);
 		enqueue(&stack, create_node(temp_str));
@@ -245,7 +244,10 @@ void	parse_dots(t_cd *info, t_minishell *minishell)
 	i = ft_strlen(stack.tail->str) - 1;
 	if (stack.size > 1
 		&& stack.tail->str[ft_strlen(stack.tail->str) - 1] == '/')
+	{
+		printf("end with /\n");
 		stack.tail->str[i] = 0;
+	}
 	printf("tail_str: %s\n", stack.tail->str);
 	minishell->cwd = stack_to_str(&stack);
 }
@@ -254,7 +256,10 @@ void	set_curpath_pwd(t_cd *info, t_minishell *minishell)
 {
 	char	*temp_str;
 
-	temp_str = easy_cat(minishell->cwd, "/");
+	if (minishell->cwd[ft_strlen(minishell->cwd) - 1] != '/')
+		temp_str = easy_cat(minishell->cwd, "/");
+	else
+		temp_str = ft_strdup(minishell->cwd);
 	info->cur_path = easy_cat(temp_str, info->cur_path);
 	free(temp_str);
 }
@@ -266,6 +271,7 @@ void	cleanup(t_cd *info, char *temp_cwd)
 	free(temp_cwd);
 }
 
+//change shell error to msg
 int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 {
 	t_cd	info;
@@ -280,7 +286,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	else if (!info.directory && info.home_dir)
 	{
 		if (chdir(info.home_dir) == -1)
-			
+			return (0);
 		temp_str = getcwd(0, 0);
 		if (!temp_str)
 			shell_error(minishell, info.execute_name, info.directory);
@@ -291,6 +297,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	if (info.directory[0] == '/' || info.directory[0] == '.'
 		|| (info.directory[0] == '.' && info.directory[1] == '.'))
 		info.cur_path = info.directory;
+	printf("1: %s\n", info.cur_path);
 	if (info.cd_flag & NO_DOT_RELATIVE)
 		find_curpath(&info, minishell);
 	if (info.cd_flag & OPTION_FLAG)
@@ -306,8 +313,10 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 		system("pwd");
 		return (minishell->exit_code);
 	}
+	printf("2: %s\n", info.cur_path);
 	if (info.cur_path[0] != '/')
 		set_curpath_pwd(&info, minishell);
+	printf("3: %s\n", info.cur_path);
 	parse_dots(&info, minishell);
 	if (chdir(info.cur_path) == -1)
 	{
@@ -321,11 +330,6 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	system("pwd");
 	cleanup(&info, temp_cwd);
 	return (0);
-}
-
-void	check()
-{
-	system("leaks a.out");
 }
 
 // int main()

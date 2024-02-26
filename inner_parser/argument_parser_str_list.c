@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:03:03 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/21 14:05:02 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:47:01 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,21 @@ t_str_node	*dequeue(t_str_list *str_list)
 
 t_str_node	*pop(t_str_list *list)
 {
-	t_str_node	*next;
+	t_str_node	*return_node;
 
-	if (list == NULL || list->head == NULL)
+	if (list == NULL || list->tail == NULL)
 		return (NULL);
-	next = list->head;
+	return_node = list->tail;
 	list->size -= 1;
 	if (list->size == 0)
 	{
 		list->head = NULL;
 		list->tail = NULL;
-		return (next);
+		return (return_node);
 	}
-	list->head = next->next;
-	return (next);
+	list->tail = list->tail->prev;
+	list->tail->next = 0;
+	return (return_node);
 }
 
 t_str_node	*create_node(char *str)
