@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/26 19:11:15 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:00:19 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ int	main(int argc, char **argv, char **envp)
 	(void) argc;
 	(void) argv;
 
+	// int i = 0;
+	// while (envp[i])
+	// {
+	// 	printf("%s\n", envp[i]);
+	// 	i++;
+	// }
 	while (1)
 	{
 		shell.input_str = readline("minishell-1.0$ ");

@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/26 19:28:11 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:54:39 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 			execute_path = find_from_path(cmd_node, minishell);
 			check_file_valid(execute_path, cmd_node, minishell);
 			//arg 가 그냥 fixed 할수 없음. 고쳐야 됨
-			if (execve(execute_path, cmd_node->str, envp) == -1)
+			if (execve(execute_path, cmd_node->str, minishell->envp) == -1)
 				shell_error(minishell, cmd_node->cmd_name, cmd_node->str[1]);
 		}
 		else
