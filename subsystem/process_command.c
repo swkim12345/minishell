@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/26 19:54:39 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:12:03 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 	cmd_node->cmd_name = cmd_node->str[0];
 	//argumnet already expanded ..?
 	//expand_argument(cmd_node);
+	ft_unsetenv(minishell->export, "_");
+	ft_setenv(minishell->env, "_", cmd_node->cmd_name);
 	if (is_builtin_fn(cmd_node))
 		minishell->exit_code = process_builtin(cmd_node, minishell);
 	else

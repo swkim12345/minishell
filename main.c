@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/26 20:00:19 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:39:08 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	init_shell(t_minishell *shell, char **envp)
 	shell->export = ft_initenv(envp);
 }
 
-void	exit_handle(t_minishell *shell)
+void	exit_handle(t_minishell *shell, int status)
 {
 	free(shell->input_str);
 	printf("exit\n");
-	exit(EXIT_SUCCESS);
+	exit(status);
 }
 
 void	set_term(void)
@@ -39,11 +39,17 @@ void	set_term(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &termios);
 }
 
+void	check()
+{
+	system("leaks minishell");
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	shell;
 	t_cmd_node	cmd_node;
 
+	// atexit(check);
 	init_shell(&shell, envp);
 	set_signal_handler();
 	set_term();
@@ -59,12 +65,14 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		shell.input_str = readline("minishell-1.0$ ");
+		if (!shell.input_str)
+			exit_handle(&shell, 134);
 		cmd_node.str = ft_split(shell.input_str, ' ');
 		cmd_node.cmd_name = cmd_node.str[0];
 		if (!shell.input_str)
-			exit_handle(&shell);
+			exit_handle(&shell, EXIT_SUCCESS);
 		else if (str_equal(shell.input_str, "exit"))
-			exit_handle(&shell);
+			exit_handle(&shell, EXIT_SUCCESS);
 		else if (ft_strlen(shell.input_str) > 0)
 			process_command(&cmd_node, &shell);
 		add_history(shell.input_str);
