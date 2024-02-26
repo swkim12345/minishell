@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 13:31:20 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:05:19 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	ft_unsetenv(t_tree_head *head, char *key)
 t_tree_head	*ft_initenv(char **envp)
 {
 	t_tree_head	*head;
-	t_tree_node	*tmp;
 	int			index;
 
 	head = (t_tree_head *)malloc(sizeof(t_tree_head));

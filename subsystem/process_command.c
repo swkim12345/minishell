@@ -6,24 +6,11 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/25 21:39:12 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:28:11 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
-
-int	contains_slash(char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '/')
-			return (1);
-	}
-	return (0);
-}
 
 char	*find_from_path(t_cmd_node *cmd_node, t_minishell *minishell)
 {
@@ -42,6 +29,7 @@ char	*find_from_path(t_cmd_node *cmd_node, t_minishell *minishell)
 	{
 		malloc_size = ft_strlen(parsed_path[i])
 			+ ft_strlen(cmd_node->cmd_name) + 2;
+		temp_str = ft_calloc(sizeof(char), malloc_size);
 		ft_strlcat(temp_str, parsed_path[i], malloc_size);
 		ft_strlcat(temp_str, "/", malloc_size);
 		ft_strlcat(temp_str, cmd_node->cmd_name, malloc_size);
@@ -56,9 +44,9 @@ int	is_builtin_fn(t_cmd_node *cmd_node)
 {
 	char	*lowercase_str;
 
-	lowercase_str = to_lowercase_str(lowercase_str);
+	lowercase_str = to_lowercase_str(cmd_node->cmd_name);
 	if (str_equal(lowercase_str, "echo") || str_equal(lowercase_str, "pwd")
-		|| str_equal(lowercase_str, "pwd") || str_equal(lowercase_str, "export")
+		|| str_equal(lowercase_str, "cd") || str_equal(lowercase_str, "export")
 		|| str_equal(lowercase_str, "unset") || str_equal(lowercase_str, "env")
 		|| str_equal(lowercase_str, "exit"))
 	{
@@ -87,14 +75,16 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 	int			status;
 	char		*execute_path;
 	char		**envp;
-	struct stat	file_info;
+	// struct stat	file_info;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		envp = tree_to_char(minishell->export);
-		if (!contains_slash(cmd_node->cmd_name))
+		envp = ft_charenv(minishell->export);
+		printf("here\n");
+		if (!ft_strchr(cmd_node->cmd_name, '/'))
 		{
+			printf("cmd_name: %s\n", cmd_node->cmd_name);
 			execute_path = find_from_path(cmd_node, minishell);
 			check_file_valid(execute_path, cmd_node, minishell);
 			//arg 가 그냥 fixed 할수 없음. 고쳐야 됨
@@ -103,6 +93,7 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 		}
 		else
 		{
+			printf("cmd_name: %s\n", cmd_node->cmd_name);
 			check_file_valid(cmd_node->cmd_name, cmd_node, minishell);
 			if (execve(cmd_node->cmd_name, cmd_node->str, envp) == -1)
 				shell_error(minishell, cmd_node->cmd_name, 0);
