@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 12:02:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 12:02:40 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:43:58 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	tree_recurv_traversal(t_tree_node *head, char **ret_str, int size)
 			ret_str[str_size] = key_value_to_str(stack[index]);
 			str_size += 1;
 			str_size += tree_recurv_traversal(stack[index]->left_node,
-						&(ret_str[str_size]), size - str_size);
+					&(ret_str[str_size]), size - str_size);
 		}
 	}
 	free(stack);

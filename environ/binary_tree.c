@@ -6,11 +6,41 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:22:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 12:04:00 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:56:45 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environ.h"
+
+static int	tree_insert_node(t_tree_node **next, t_tree_node *leaf, int size)
+{
+	if (size == 0)
+	{
+		free((*next)->value);
+		(*next)->value = leaf->value;
+		node_delete(leaf);
+		return (FUNC_SUC);
+	}
+	if (size < 0)
+	{
+		if (!(*next)->left_node)
+		{
+			(*next)->left_node = leaf;
+			return (FUNC_SUC);
+		}
+		(*next) = (*next)->left_node;
+	}
+	if (size > 0)
+	{
+		if (!(*next)->right_node)
+		{
+			(*next)->right_node = leaf;
+			return (FUNC_SUC);
+		}
+		(*next) = (*next)->right_node;
+	}
+	return (FUNC_FAIL);
+}
 
 int	tree_insert(t_tree_head *head, t_tree_node *leaf)
 {
@@ -27,30 +57,8 @@ int	tree_insert(t_tree_head *head, t_tree_node *leaf)
 	{
 		tmp = ft_strlen(leaf->key);
 		tmp = ft_strncmp(next->key, leaf->key, tmp + 1);
-		if (tmp == 0)
-		{
-			next->value = leaf->value;
-			node_delete(leaf);
+		if (tree_insert_node(&next, leaf, tmp) == FUNC_SUC)
 			return (FUNC_SUC);
-		}
-		if (tmp < 0)
-		{
-			if (!next->left_node)
-			{
-				next->left_node = leaf;
-				break ;
-			}
-			next = next->left_node;
-		}
-		if (tmp > 0)
-		{
-			if (!next->right_node)
-			{
-				next->right_node = leaf;
-				break ;
-			}
-			next = next->right_node;
-		}
 	}
 	return (FUNC_SUC);
 }
