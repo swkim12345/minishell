@@ -45,6 +45,30 @@ int	main(int argc, char **argv, char **envp)
 }
 
 
+//test for exit function
+//int main()
+//{
+//	int	pid;
+//	pid_t	t;
+//	char	*str[] = {"exit", "100000000000000000000000000"};
+//	t_cmd_node	*cmd_node;
+//	t_minishell mini;
+
+//	pid = fork();
+//	//parent
+//	if (pid)
+//		pid = wait(&pid);
+//	else
+//	{
+//		cmd_node = (t_cmd_node *)malloc(sizeof(t_cmd_node));
+//		cmd_node->str = str;
+//		ft_exit(cmd_node, &mini);
+//	}
+//	printf("parent : %d", pid);
+//	return (0);
+//}
+
+
 ////test environ function
 //int	main(int argc, char **argv, char **envp)
 //{
