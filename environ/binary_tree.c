@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   binary_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:22:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 17:07:56 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:29:58 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	tree_insert(t_tree_head *head, t_tree_node *leaf)
 	while (next)
 	{
 		tmp = ft_strlen(leaf->key);
-		//printf("tmp : %d, leaf key: %s\n", tmp, leaf->key);
 		tmp = ft_strncmp(next->key, leaf->key, tmp + 1);
 		if (tmp == 0)
 		{
@@ -199,7 +198,8 @@ static int	tree_recurv_traversal(t_tree_node *head, char **ret_str, int size)
 		{
 			ret_str[str_size] = key_value_to_str(stack[index]);
 			str_size += 1;
-			str_size += tree_recurv_traversal(stack[index]->left_node, &(ret_str[str_size]), size - str_size);
+			str_size += tree_recurv_traversal(stack[index]->left_node,
+						&(ret_str[str_size]), size - str_size);
 		}
 	}
 	free(stack);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 17:16:32 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:30:29 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_setenv(t_tree_head *head, char *key, char *value)
 	tmp->key = ft_strdup(key);
 	if (!value)
 		tmp->value = NULL;
-	else if(value[0] == '\0')
+	else if (value[0] == '\0')
 		tmp->value = ft_strdup("\0");
 	else
 		tmp->value = ft_strdup(value);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/25 15:57:10 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:31:42 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@
 typedef struct s_minishell	t_minishell;
 typedef struct s_ast_node	t_ast_node;
 typedef struct s_cmd_node	t_cmd_node;
-
+/* cd_flag : 0 is default L can be L or P */
 typedef struct s_cd
 {
-	int			cd_flag; //0 is default L can be L or P
+	int			cd_flag;
 	int			directory_index;
 	char		execute_name;
 	char		*home_dir;
