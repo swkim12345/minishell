@@ -6,11 +6,28 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 11:56:51 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:43:07 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environ.h"
+
+static void	parse_value(char *env, char **value, int size, int index)
+{
+	if (ft_strlen(env) != (size_t)size)
+	{
+		if (env[index + 1] == '\0')
+		{
+			*value = (char *)malloc(sizeof(char) * 1);
+			*value[0] = '\0';
+		}
+		else
+			*value = ft_strdup(&env[index + 1]);
+		env[index] = '=';
+	}
+	else
+		*value = NULL;
+}
 
 int	parse_env(char *env, char **key, char **value)
 {
@@ -30,19 +47,7 @@ int	parse_env(char *env, char **key, char **value)
 		}
 	}
 	*key = ft_strdup(env);
-	if (ft_strlen(env) != (size_t)size)
-	{
-		if (env[index + 1] == '\0')
-		{
-			*value = (char *)malloc(sizeof(char) * 1);
-			*value[0] = '\0';
-		}
-		else
-			*value = ft_strdup(&env[index + 1]);
-		env[index] = '=';
-	}
-	else
-		*value = NULL;
+	parse_value(env, value, size, index);
 	return (FUNC_SUC);
 }
 
