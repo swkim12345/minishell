@@ -65,13 +65,11 @@ int	ft_unsetenv(t_tree_head *head, char *key)
 t_tree_head	*ft_initenv(char **envp)
 {
 	t_tree_head	*head;
-	int			index;
 
 	head = (t_tree_head *)malloc(sizeof(t_tree_head));
 	if (!head)
 		return (NULL);
 	ft_memset((void *)head, 0, sizeof(t_tree_head));
-	index = -1;
 	return (ft_push_node_to_tree(head, envp));
 }
 
