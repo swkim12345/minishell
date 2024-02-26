@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 12:56:58 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:31:20 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,28 +71,18 @@ t_tree_head	*ft_initenv(char **envp)
 	head = (t_tree_head *)malloc(sizeof(t_tree_head));
 	if (!head)
 		return (NULL);
-	head->head = NULL;
-	head->size = 0;
+	ft_memset((void *)head, 0, sizeof(t_tree_head));
 	index = -1;
-	while (envp[++index])
-	{
-		tmp = (t_tree_node *)malloc(sizeof(t_tree_node));
-		ft_memset((void *)tmp, 0, sizeof(t_tree_node));
-		if (parse_env(envp[index], &tmp->key, &tmp->value) == FUNC_FAIL)
-		{
-			free_tree_delete(head);
-			return (NULL);
-		}
-		if (!tmp)
-		{
-			free_tree_delete(head);
-			free(tmp);
-			return (NULL);
-		}
-		tmp->index = index;
-		head->size += 1;
-		tree_insert(head, tmp);
-		tmp = NULL;
-	}
-	return (head);
+	return (ft_push_node_to_tree(head, envp));
+}
+
+char	**ft_charenv(t_tree_head *head)
+{
+	char		**ret;
+
+	ret = (char **)malloc(sizeof(char *) * (head->size + 1));
+	if (!ret)
+		return (NULL);
+	tree_recurv_traversal(head->head, ret, head->size);
+	return (ret);
 }
