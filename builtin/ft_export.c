@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 17:16:05 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:00:29 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,34 @@ static	int	print_export(t_minishell *minishell)
 	return (FUNC_SUC);
 }
 
+static	int	put_env(t_cmd_node *cmd_node, t_minishell *minishell, int index)
+{
+	char	*key;
+	char	*value;
+
+	minishell->error = set_error_msg(minishell->execute_name,
+			cmd_node->str[0], cmd_node->str[index], "not a valid identifier");
+	if (!ft_isalpha(cmd_node->str[index][0]))
+		return (print_error_msg(minishell->error, 1, TRUE));
+	if (parse_env(cmd_node->str[index], &key, &value) == FUNC_FAIL)
+		return (print_error_msg(minishell->error, 1, TRUE));
+	if (ft_setenv(minishell->export, key, value) == FUNC_FAIL)
+	{
+		free(key);
+		free(value);
+		free_error(minishell->error);
+		return (FUNC_FAIL);
+	}
+	if (value && *value)
+		ft_setenv(minishell->env, key, value);
+	free(key);
+	free(value);
+	return (FUNC_SUC);
+}
+
 int	ft_export(t_cmd_node *cmd_node, t_minishell *minishell)
 {
 	int		index;
-	int		ret;
 	char	*key;
 	char	*value;
 
@@ -41,19 +65,8 @@ int	ft_export(t_cmd_node *cmd_node, t_minishell *minishell)
 		return (print_export(minishell));
 	while (cmd_node->str[++index])
 	{
-		minishell->error = set_error_msg(minishell->execute_name,
-				cmd_node->str[0], cmd_node->str[index], "not a valid identifier");
-		if (!ft_isalpha(cmd_node->str[index][0]))
-			return (print_error_msg(minishell->error, 1, TRUE));
-		ret = parse_env(cmd_node->str[index], &key, &value);
-		if (ret == FUNC_FAIL)
-			return (print_error_msg(minishell->error, 1, TRUE));
-		free_error(minishell->error);
-		ret = ft_setenv(minishell->export, key, value);
-		if (ret == FUNC_FAIL)
+		if (put_env(cmd_node, minishell, index) == FUNC_FAIL)
 			return (FUNC_FAIL);
-		if (value && *value)
-			ret = ft_setenv(minishell->env, key, value);
 	}
 	return (FUNC_SUC);
 }

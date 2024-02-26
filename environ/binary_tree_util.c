@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 17:27:58 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:56:51 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ int	parse_env(char *env, char **key, char **value)
 	if (ft_strlen(env) != (size_t)size)
 	{
 		if (env[index + 1] == '\0')
-			*value = ft_strdup("\0");
+		{
+			*value = (char *)malloc(sizeof(char) * 1);
+			*value[0] = '\0';
+		}
 		else
 			*value = ft_strdup(&env[index + 1]);
 		env[index] = '=';
@@ -41,45 +44,6 @@ int	parse_env(char *env, char **key, char **value)
 	else
 		*value = NULL;
 	return (FUNC_SUC);
-}
-
-t_tree_node	*init_tree_node(void)
-{
-	t_tree_node	*node;
-
-	node = (t_tree_node *)malloc(sizeof(t_tree_node));
-	if (!node)
-		return (NULL);
-	ft_memset((void *)node, 0, sizeof(t_tree_node));
-	return (node);
-}
-
-void	node_delete(t_tree_node *node)
-{
-	if (!node)
-		return ;
-	free(node->key);
-	free(node->value);
-	free(node);
-}
-
-static void	recur_tree_delete(t_tree_node *node)
-{
-	if (!node)
-		return ;
-	free(node->key);
-	free(node->value);
-	recur_tree_delete(node->left_node);
-	recur_tree_delete(node->right_node);
-	free(node);
-}
-
-void	free_tree_delete(t_tree_head *head)
-{
-	if (!head)
-		return ;
-	recur_tree_delete(head->head);
-	free(head);
 }
 
 void	exchange_node_key_value(t_tree_node *n, t_tree_node *t)
@@ -93,4 +57,26 @@ void	exchange_node_key_value(t_tree_node *n, t_tree_node *t)
 	n->value = t->value;
 	t->key = key;
 	t->value = value;
+}
+
+char	*key_value_to_str(t_tree_node *node)
+{
+	char	*ret;
+	char	*tmp;
+
+	if (node->value == NULL)
+		ret = ft_strdup(node->key);
+	else if (node->value[0] == '\0')
+		ret = ft_strjoin(node->key, "=\"\"");
+	else
+	{
+		tmp = ft_strjoin(node->key, "=\"");
+		ret = ft_strjoin(tmp, node->value);
+		free(tmp);
+		tmp = ft_strdup(ret);
+		free(ret);
+		ret = ft_strjoin(tmp, "\"");
+		free(tmp);
+	}
+	return (ret);
 }
