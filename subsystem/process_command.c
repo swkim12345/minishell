@@ -80,7 +80,7 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 	pid = fork();
 	if (pid == 0)
 	{
-		envp = ft_charenv(minishell->export);
+		envp = ft_charenv(minishell->export, FALSE);
 		printf("here\n");
 		if (!ft_strchr(cmd_node->cmd_name, '/'))
 		{
