@@ -6,7 +6,7 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/02/26 21:46:34 by minsepar         ###   ########.fr        #
+#    Updated: 2024/02/26 21:48:40 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ INNER_SRCS = inner_parser/argument_parser_str_list.c inner_parser/argument_parse
 
 PARSER_SRCS = parser/lexar.c parser/parser.c parser/set_mem.c parser/traverse.c parser/util.c
 
-SINGAL_SRCS = signal/signal.c
+SIGNAL_SRCS = signal/signal.c
 
 SUBSYSTEM_SRCS = subsystem/process_command.c
 
