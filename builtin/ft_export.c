@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 13:57:54 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:39:33 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static	int	print_export(t_minishell *minishell)
 		index++;
 	}
 	free(env);
+	env = NULL;
 	return (FUNC_SUC);
 }
 
@@ -61,7 +62,7 @@ int	ft_export(t_cmd_node *cmd_node, t_minishell *minishell)
 	char	*value;
 
 	index = 0;
-	if (!cmd_node || !cmd_node->str || !cmd_node->str[0])
+	if (!cmd_node || !cmd_node->str || !cmd_node->str[1])
 		return (print_export(minishell));
 	while (cmd_node->str[++index])
 	{
