@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 18:40:59 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:02:06 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,10 @@ void	parse_asterisk(t_str_list *str_list, t_parse_str *parse_str)
 			enqueue(str_list, cur_node);
 		}
 		else
+		{
+			free(cur_node->str);
 			free(cur_node);
+		}
 		cur_node = dequeue(&dir_file_list);
 	}
 	if (found_flag == FALSE)
