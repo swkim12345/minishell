@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/26 17:32:05 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:47:49 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,14 @@ void	cleanup(t_cd *info, char *temp_cwd)
 	free(temp_cwd);
 }
 
+void	set_pwd_old_pwd(t_minishell *minishell, char *temp_cwd)
+{
+	ft_setenv(minishell->export, "OLDPWD", temp_cwd);
+	ft_setenv(minishell->env, "OLDPWD", temp_cwd);
+	ft_setenv(minishell->export, "PWD", minishell->cwd);
+	ft_setenv(minishell->env, "PWD", minishell->cwd);
+}
+
 //change shell error to msg
 int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 {
@@ -290,14 +298,15 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 		temp_str = getcwd(0, 0);
 		if (!temp_str)
 			shell_error(minishell, info.execute_name, info.directory);
-		free(temp_cwd);
+		set_pwd_old_pwd(minishell, temp_cwd);
+		if (temp_cwd)
+			free(temp_cwd);
 		minishell->cwd = temp_str;
 		return (0);
 	}
 	if (info.directory[0] == '/' || info.directory[0] == '.'
 		|| (info.directory[0] == '.' && info.directory[1] == '.'))
 		info.cur_path = info.directory;
-	printf("1: %s\n", info.cur_path);
 	if (info.cd_flag & NO_DOT_RELATIVE)
 		find_curpath(&info, minishell);
 	if (info.cd_flag & OPTION_FLAG)
@@ -309,14 +318,15 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 			shell_error(minishell, info.execute_name, info.directory);
 		minishell->cwd = temp_str;
 		//export temp_cwd to oldpwd
-		free(temp_cwd);
+		set_pwd_old_pwd(minishell, temp_cwd);
+		if (temp_cwd)
+			free(temp_cwd);
+		free(temp_str);
 		system("pwd");
 		return (minishell->exit_code);
 	}
-	printf("2: %s\n", info.cur_path);
 	if (info.cur_path[0] != '/')
 		set_curpath_pwd(&info, minishell);
-	printf("3: %s\n", info.cur_path);
 	parse_dots(&info, minishell);
 	if (chdir(info.cur_path) == -1)
 	{
@@ -326,6 +336,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 			shell_error(minishell, info.execute_name, info.directory);
 		}
 	}
+	set_pwd_old_pwd(minishell, temp_cwd);
 	printf("minishell->cwd: [%s]\n", minishell->cwd);
 	system("pwd");
 	cleanup(&info, temp_cwd);

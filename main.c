@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/26 20:39:08 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:41:42 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ int	main(int argc, char **argv, char **envp)
 			exit_handle(&shell, EXIT_SUCCESS);
 		else if (ft_strlen(shell.input_str) > 0)
 			process_command(&cmd_node, &shell);
-		add_history(shell.input_str);
+		if (ft_strlen(shell.input_str) != 0)
+			add_history(shell.input_str);
 		free(shell.input_str);
 		free_2d_str(cmd_node.str);
 	}
