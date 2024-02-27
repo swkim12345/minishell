@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 21:48:28 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:50:54 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_cmd_node		t_cmd_node;
 typedef struct s_ast_node		t_ast_node;
 typedef struct s_minishell		t_minishell;
 typedef struct s_redirection	t_redirection;
+typedef struct s_tmp_file		t_tmp_file;
 
 typedef struct s_redirection {
 	int							index;	//if heredoc:index or not use NOTDEFINED
