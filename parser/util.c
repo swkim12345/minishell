@@ -6,11 +6,31 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 15:44:51 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:08:17 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+t_ast_node	*init_ast_node(int child_node)
+{
+	t_ast_node	*ret;
+	t_cmd_node	*node;
+
+	ret = (t_ast_node *)malloc(sizeof(t_ast_node));
+	ft_memset((void *)ret, 0, sizeof(ret));
+	if (CMDNODE & child_node)
+	{
+		node = (t_cmd_node *)malloc(sizeof(t_cmd_node));
+		ft_memset((void *)node, 0, sizeof(node));
+		ret->cmd_node = node;
+	}
+	if (LEFTNODE & child_node)
+		ret->left_node = init_ast_node(CMDNODE);
+	if (RIGHTNODE & child_node)
+		ret->right_node = init_ast_node(CMDNODE);
+	return (ret);
+}
 
 int	syntax_err_message(char *msg, int end, int ret, t_minishell *minishell)
 {
@@ -85,4 +105,15 @@ int	bracket_finder(char *str)
 		}
 	}
 	return (NOTDEFINED);
+}
+
+
+int			skip_space(char *str)
+{
+	int	index;
+
+	index = 0;
+	while (str[index] == ' ' || (str[index] >= 9 && str[index] <= 13))
+		index++;
+	return (index);
 }
