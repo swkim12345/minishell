@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 21:34:59 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:42:02 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,7 +322,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	{
 		info.cur_path = ft_strdup(info.home_dir);
 		if (chdir(info.cur_path) == -1)
-			return (builtin_error(minishell, cmd_node->cmd_name, info.home_dir));
+			return (cd_error(&info, minishell, cmd_node->cmd_name, info.home_dir));
 		set_pwd_old_pwd(cmd_node, minishell, &info);
 		return (minishell->exit_code);
 	}
@@ -334,7 +334,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	if (info.cd_flag & OPTION_FLAG)
 	{
 		if (chdir(info.cur_path) == -1)
-			return (builtin_error(minishell, cmd_node->cmd_name, info.cur_path));
+			return (cd_error(&info, minishell, cmd_node->cmd_name, info.cur_path));
 		//export temp_cwd to oldpwd
 		set_pwd_old_pwd(cmd_node, minishell, &info);
 		system("pwd");
@@ -344,7 +344,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 		set_curpath_pwd(&info, minishell);
 	parse_dots(&info, minishell);
 	if (chdir(info.cur_path) == -1)
-		return (builtin_error(minishell, cmd_node->cmd_name, info.directory));
+		return (cd_error(&info, minishell, cmd_node->cmd_name, info.directory));
 	set_pwd_old_pwd(cmd_node, minishell, &info);
 	printf("minishell->cwd: [%s]\n", minishell->cwd);
 	system("pwd");
