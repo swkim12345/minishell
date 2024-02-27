@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 17:31:16 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:15:37 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,12 +287,13 @@ void	set_pwd_old_pwd(t_minishell *minishell, t_cd *info)
 	ft_setenv(minishell->env, "OLDPWD", old_pwd);
 	ft_setenv(minishell->export, "PWD", minishell->cwd);
 	ft_setenv(minishell->env, "PWD", minishell->cwd);
+	if (info->cur_path)
+		free(info->cur_path);
 	free(old_pwd);
 }
 
 void	free_t_cd(t_cd *info)
 {
-
 	if (info->cur_path)
 		free(info->cur_path);
 	info->cur_path = 0;
@@ -346,7 +347,6 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	set_pwd_old_pwd(minishell, &info);
 	printf("minishell->cwd: [%s]\n", minishell->cwd);
 	system("pwd");
-	free_t_cd(&info);
 	return (0);
 }
 
