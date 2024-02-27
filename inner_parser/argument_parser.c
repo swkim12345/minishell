@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 18:39:04 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:40:59 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void	get_cwd_files(t_str_list *str_list)
 	t_dirent = readdir(dir);
 	while (t_dirent)
 	{
-		enqueue(str_list, create_node(t_dirent->d_name));
+		enqueue(str_list, create_node(ft_strdup(t_dirent->d_name)));
 		t_dirent = readdir(dir);
 	}
 	free(cwd);
