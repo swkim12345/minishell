@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:11:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 13:29:40 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:00:22 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void		free_tree_delete(t_tree_head *head);
 int			parse_env(char *env, char **key, char **value, t_minishell *minishell);
 char		*key_value_to_str(t_tree_node *node, int quote_flag);
 void		exchange_node_key_value(t_tree_node *n, t_tree_node *t);
+char		*env_parse_value(char *str, t_minishell *minishell);
 
 /* binary_tree.c */
 int			tree_insert(t_tree_head *head, t_tree_node *leaf);

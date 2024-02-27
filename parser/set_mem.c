@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:36:45 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 17:16:33 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:15:51 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ void	free_redirection_node(t_redirection *red)
 
 void	free_cmd_node(t_cmd_node *node)
 {
-	int			i;
-
-	i = -1;
 	if (node == NULL)
 		return ;
 	if (node->cmd_name)

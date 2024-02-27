@@ -6,17 +6,11 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 20:09:07 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:12:41 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-////lexar
-//static int	lexar_file_parser(t_ast_node *node, t_redirection *red, int index)
-//{
-
-//}
 
 //trim redirection
 // shift index, error found : NOTDEFINED
@@ -24,7 +18,7 @@ static char	*lexar_redirect(t_ast_node *node, int index, t_minishell *minishell)
 {
 	char		*ptr;
 	char		*file_name;
-	char		*sub_str
+	//char		*sub_str;
 	t_redirection	*red;
 
 	ptr = node->cmd_node->str[0]; //
