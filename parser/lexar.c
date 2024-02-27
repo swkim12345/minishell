@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 21:12:41 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:28:21 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,6 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 	cmd_str = string_parser(ptr, minishell);
 	free_2d_str(node->cmd_node->str);
 	node->cmd_node->str = cmd_str;
+	printf("lexar cmd_str: %s\n", cmd_str[0]);
 	return (FUNC_SUC);
 }

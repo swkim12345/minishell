@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 20:58:51 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:34:34 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,20 @@ static int	exit_arg_check(t_cmd_node *cmd_node, t_minishell *minishell)
 	index = -1;
 	ret = 0;
 	err = set_error_msg(minishell->execute_name, cmd_node->str[0],
-			NULL, "numeric argument required");
+			cmd_node->str[1], "numeric argument required");
 	while (cmd_node->str[1][++index])
 	{
 		if (!ft_isdigit(cmd_node->str[1][index]))
 		{
-			ret = 255;
-			break ;
+			print_error_msg(err, 1, 0);
+			return (1);
 		}
 	}
 	if (ft_atol(cmd_node->str[1], &ret) == NOTDEFINED)
-		ret = 255;
-	if (ret != FUNC_SUC)
+	{
 		print_error_msg(err, 1, 0);
+		ret = 1;
+	}
 	return (ret);
 }
 

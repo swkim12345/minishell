@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 21:23:28 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:29:45 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ int	main(int argc, char **argv, char **envp)
 		cmd_node = *ast->cmd_node;
 		cmd_node.cmd_name = cmd_node.str[0];
 		if (!shell.input_str)
-			exit_handle(&shell, EXIT_SUCCESS);
-		else if (str_equal(shell.input_str, "exit"))
 			exit_handle(&shell, EXIT_SUCCESS);
 		else if (ft_strlen(shell.input_str) > 0)
 			process_command(&cmd_node, &shell);
