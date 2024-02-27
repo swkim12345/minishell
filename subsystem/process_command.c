@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/26 21:30:47 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:54:39 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,12 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 	if (pid == 0)
 	{
 		envp = ft_charenv(minishell->export, FALSE);
-		printf("here\n");
+		printf("here----------------------------\n");
+		int i = 0;
+		while (envp[i])
+		{
+			printf("envp: [%s]\n", envp[i]);
+		}
 		if (!ft_strchr(cmd_node->cmd_name, '/'))
 		{
 			printf("cmd_name: %s\n", cmd_node->cmd_name);
