@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 15:29:53 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:07:32 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	init_shell(t_minishell *shell, char **envp, char **argv)
 	shell->tmp_file_counter = 0;
 	shell->env = ft_initenv(envp, shell);
 	shell->export = ft_initenv(envp, shell);
-	shell->execute_name = argv[0];
+	if (ft_strncmp(argv[0], "./", 2) == 0)
+		shell->execute_name = ft_substr(argv[0], 2, ft_strlen(argv[0]));
+	else
+		shell->execute_name = ft_strdup(argv[0]);
 }
 
 void	exit_handle(t_minishell *shell, int status)
