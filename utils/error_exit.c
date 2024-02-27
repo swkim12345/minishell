@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:14:59 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/25 21:09:56 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:26:14 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	shell_error(t_minishell *minishell, char *command, char *arg)
 	int	status;
 
 	status = errno;
+	printf("shell_error\n");
 	minishell->error
 		= set_error_msg(minishell->execute_name, command, arg, 0);
 	print_error_msg(minishell->error, 0, 0);
