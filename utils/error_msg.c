@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:17:00 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 19:04:06 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:45:14 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,11 @@ int	print_error_msg(t_error *error, int error_num, int quote_flag)
 	ft_putstr_fd("\n", STDERR_FILENO);
 	free_error(error);
 	return (FUNC_FAIL);
+}
+
+int	builtin_error(t_minishell *minishell, char *command, char *arg)
+{
+	minishell->error = set_error_msg(minishell->execute_name, command, arg, 0);
+	print_error_msg(minishell->error, 0, 0);
+	return (1);
 }

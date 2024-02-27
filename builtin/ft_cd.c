@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 13:47:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:49:04 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,10 +294,10 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	else if (!info.directory && info.home_dir)
 	{
 		if (chdir(info.home_dir) == -1)
-			return (0);
+			return (builtin_error(minishell, cmd_node->cmd_name, info.home_dir));
 		temp_str = getcwd(0, 0);
 		if (!temp_str)
-			shell_error(minishell, info.execute_name, info.directory);
+			return (builtin_error(minishell, cmd_node->cmd_name, 0));
 		set_pwd_old_pwd(minishell, temp_cwd);
 		if (temp_cwd)
 			free(temp_cwd);
@@ -312,10 +312,10 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	if (info.cd_flag & OPTION_FLAG)
 	{
 		if (chdir(info.cur_path) == -1)
-			shell_error(minishell, info.execute_name, info.directory);
+			return (builtin_error(minishell, cmd_node->cmd_name, info.cur_path));
 		temp_str = getcwd(0, 0);
 		if (!temp_str)
-			shell_error(minishell, info.execute_name, info.directory);
+			return (builtin_error(minishell, cmd_node->cmd_name, 0));
 		minishell->cwd = temp_str;
 		//export temp_cwd to oldpwd
 		set_pwd_old_pwd(minishell, temp_cwd);
@@ -333,7 +333,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 		if (chdir(info.directory) == -1)
 		{
 			free(temp_cwd);
-			shell_error(minishell, info.execute_name, info.directory);
+			return (builtin_error(minishell, cmd_node->cmd_name, info.directory));
 		}
 	}
 	set_pwd_old_pwd(minishell, temp_cwd);
