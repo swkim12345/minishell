@@ -6,13 +6,13 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/02/26 21:48:40 by minsepar         ###   ########.fr        #
+#    Updated: 2024/02/26 21:49:58 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -fsanitize=address -Wall -Werror -Wextra 
+CFLAGS = -Wall -Werror -Wextra 
 
 NAME = minishell
 
