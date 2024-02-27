@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 14:44:49 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:04:57 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*lexar_redirect(t_ast_node *node, int index, t_minishell *minishell)
 			red->flag = GT_SIGN;
 	}
 	index++;
-	ptr = ft_strjoin(ptr, ptr[index--]);
+	ptr = ft_strjoin(ptr, &ptr[index--]);
 	free_doub_char(node->cmd_node->str);
 	if (red->flag == DB_LT_SIGN || red->flag == DB_GT_SIGN)
 		index--;
@@ -78,7 +78,7 @@ static char	*lexar_redirect(t_ast_node *node, int index, t_minishell *minishell)
 		}
 		else
 		{
-			file_name = string_parser(&ptr[index], minishell);
+			file_name = *string_parser(&ptr[index], minishell);
 			break ;
 		}
 	}
@@ -95,6 +95,7 @@ static char	*lexar_redirect(t_ast_node *node, int index, t_minishell *minishell)
 int	lexar(t_ast_node *node, t_minishell *minishell)
 {
 	char		*ptr;
+	char		**cmd_str;
 	int			index;
 	int			str_flag;
 	int			tmp;
@@ -144,5 +145,9 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 			tmp += skip_space(&ptr[index + tmp]);
 		}
 	}
-	//use inner parser to parse subshell
+	//use inner parser to string
+	cmd_str = string_parser(ptr, minishell);
+	free_doub_char(node->cmd_node->str);
+	node->cmd_node->str = cmd_str;
+	return (FUNC_SUC);
 }
