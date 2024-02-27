@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 17:13:14 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:39:04 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void	get_cwd_files(t_str_list *str_list)
 		t_dirent = readdir(dir);
 	}
 	free(cwd);
-	
+	closedir(dir);
 }
 
 static void	is_match_init(t_inner_parser *inner_parser)
