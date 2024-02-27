@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 17:07:32 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:48:19 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,21 @@ void	init_shell(t_minishell *shell, char **envp, char **argv)
 		shell->execute_name = ft_strdup(argv[0]);
 }
 
+void	free_t_minishell(t_minishell *shell)
+{
+	(void) shell;
+	// free(shell->input_str);
+	// free_2d_str();
+	// free_2d_str(shell->export);
+	// free(shell->cwd);
+	// free(shell->execute_name);
+	// free_tree_delete(shell->env);
+	// free_tree_delete(shell->export);
+}
+
 void	exit_handle(t_minishell *shell, int status)
 {
-	free(shell->input_str);
+	(void) shell;
 	printf("exit\n");
 	exit(status);
 }
