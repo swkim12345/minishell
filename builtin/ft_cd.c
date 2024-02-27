@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 21:24:46 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:33:05 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ int	check_cdpath(t_cd *info, t_minishell *minishell)
 
 void	find_curpath(t_cd *info, t_minishell *minishell)
 {
+	printf("find_curpath\n");
 	info->cd_flag |= NO_DOT_RELATIVE;
 	if (info->cdpath)
 		check_cdpath(info, minishell);
@@ -264,6 +265,7 @@ void	set_curpath_pwd(t_cd *info, t_minishell *minishell)
 		temp_str = easy_cat(minishell->cwd, "/");
 	else
 		temp_str = ft_strdup(minishell->cwd);
+	free(info->cur_path);
 	info->cur_path = easy_cat(temp_str, info->cur_path);
 	free(temp_str);
 }
