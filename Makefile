@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
+#    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/02/27 15:40:47 by minsepar         ###   ########.fr        #
+#    Updated: 2024/02/27 15:53:54 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra 
 
 NAME = minishell
-
+#not use main_copy.c, it is just for test
 SRCS = main_copy.c
 
 BUILTIN_SRCS = builtin/builtin.c builtin/ft_cd.c builtin/ft_echo.c builtin/ft_env.c builtin/ft_exit.c builtin/ft_export.c builtin/ft_pwd.c builtin/ft_unset.c
@@ -24,8 +24,8 @@ ENVIRON_SRCS = environ/binary_tree_mem.c environ/binary_tree_util.c environ/bina
 
 INNER_SRCS = inner_parser/argument_parser_str_list.c inner_parser/argument_parser_utils.c inner_parser/argument_parser.c
 
-PARSER_SRCS = parser/lexar.c parser/parser.c parser/traverse.c parser/set_mem.c parser/util.c
-#PARSER_SRCS = parser/lexar.c parser/parser.c parser/set_mem.c parser/util.c
+#PARSER_SRCS = parser/lexar.c parser/parser.c parser/traverse.c parser/set_mem.c parser/util.c
+PARSER_SRCS = parser/lexar.c parser/parser.c parser/set_mem.c parser/util.c
 
 TRAVERSR_SRCS = parser/traverse.c 
 
@@ -72,7 +72,7 @@ $(LIBFT):
 #	$(CC) $(CFLAGS) $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS) $(LIBFT) -o $(NAME) -lreadline
 
 $(NAME): $(LIBFT) 
-	$(CC) -g -fsanitize=address $(CFLAGS) $(SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
+	$(CC) -g -fsanitize=address $(CFLAGS) $(SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(PARSER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
 
 clean:
 	rm -rf $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(PARSER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)

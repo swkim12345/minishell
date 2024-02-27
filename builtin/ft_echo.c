@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 21:28:52 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/26 20:25:19 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:51:08 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,6 @@ void	print_echo(char **str, int nflag)
 	if (!nflag)
 		printf("\n");
 }
-
-void	free_2d_str(char **arr)
-{
-	int	i;
-
-	i = -1;
-	while (arr[++i])
-		free(arr[i]);
-	free(arr[i]);
-	free(arr);
-}
-
 int	is_nflag(char *str)
 {
 	if (ft_strlen(str) > 1 && str[0] == '-' && str[1] == 'n')

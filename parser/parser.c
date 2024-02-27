@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 15:14:58 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:18:58 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,38 @@ int	bracket_parser(char *str, int index, int str_flag, t_minishell *minishell)
 	return (index);
 }
 
+static int	pipe_recurv_parser(t_ast_node *head, int str_end,
+			int dup_str_start, t_minishell *minishell)
+{
+	char	*ptr;
+	char	*tmp;
+	int		size;
+
+	ptr = head->cmd_node->str[0];
+	if (str_end <= 0)
+		return (syntax_err_message(ptr, dup_str_start, -1, minishell));
+	size = ft_strlen(ptr);
+	head->str = ft_substr(ptr, str_end, dup_str_start);
+	head->next_ast_node = init_ast_node(CMDNODE);
+	
+	tmp = ft_substr(ptr, dup_str_start, size);
+	head->next_ast_node->cmd_node->str = \
+		init_doub_char(&tmp, 1);
+	free(tmp);
+
+	tmp = ft_substr(ptr, 0, str_end);
+	free_2d_str(head->cmd_node->str);
+	head->cmd_node->str = \
+		init_doub_char(&tmp, 1);
+	free(tmp);
+
+	if (recurv_parser(head->next_ast_node, minishell) == FUNC_FAIL)
+		return (FUNC_FAIL);
+	if (recurv_parser(head, minishell) == FUNC_FAIL)
+		return (FUNC_FAIL);
+	return (FUNC_SUC);
+}
+
 static int	split_recurv_parser(t_ast_node *head, int str_end,
 			int dup_str_start, t_minishell *minishell)
 {
@@ -45,17 +77,18 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 	if (str_end <= 0)
 		return (syntax_err_message(ptr, dup_str_start, -1, minishell));
 	size = ft_strlen(ptr);
-	head->str = dup_str(ptr, 0, str_end);
+	head->str = ft_substr(ptr, str_end, dup_str_start);
 	head->left_node = init_ast_node(CMDNODE);
 	head->right_node = init_ast_node(CMDNODE);
-	tmp = dup_str(ptr, 0, str_end);
+	tmp = ft_substr(ptr, 0, str_end);
 	head->left_node->cmd_node->str = \
 		init_doub_char(&tmp, 1);
 	free(tmp);
-	tmp = dup_str(ptr, dup_str_start, size);
+	tmp = ft_substr(ptr, dup_str_start, size);
 	head->right_node->cmd_node->str = \
 		init_doub_char(&tmp, 1);
 	free(tmp);
+	free_cmd_node(head->cmd_node);
 	if (recurv_parser(head->left_node, minishell) == FUNC_FAIL)
 		return (FUNC_FAIL);
 	if (recurv_parser(head->right_node, minishell) == FUNC_FAIL)
@@ -70,16 +103,17 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 	char		*ptr;
 
 	index = -1;
-	ptr = head->cmd_node->str[0];
+	ptr = head->cmd_node->str[0]; 
 	while (ptr[++index])
-	{	
+	{
+		printf("in while ptr: %s\n", ptr);
 		index += skip_space(&ptr[index]);
 		if (ptr[index] == '\"' || ptr[index] == '\'')
 		{
 			tmp = finder(&ptr[index + 1], ptr[index]);
 			if (tmp == NOTDEFINED)
-				return (syntax_err_message(ptr, index, -1, minishell));
-			index += tmp;
+				return (syntax_err_message(ptr, index + 1, -1, minishell));
+			index += tmp + 1;
 			continue ;
 		}
 		if (ptr[index] == '(')
@@ -95,8 +129,9 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 		if (ptr[index] == '&' && ptr[index + 1] == '&')
 			return (split_recurv_parser(head, index - 1, index + 2, minishell));
 		if (ptr[index] == '|')
-			return (split_recurv_parser(head, index - 1, index + 1, minishell));
+			return (pipe_recurv_parser(head, index - 1, index + 1, minishell));
 	}
+	printf("parser ptr: %s\n", ptr);
 	tmp = lexar(head, minishell);
 	if (tmp == FUNC_FAIL)
 		return (FUNC_FAIL);

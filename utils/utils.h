@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:10:28 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 15:40:22 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:51:43 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	command_permission_error(t_minishell *minishell, char *command);
 void	command_is_directory_error(t_minishell *minishell, char *command);
 
 /* common_util.c */
+int		str_equal(char *s1, char *s2);
+int		ft_isspace(int c);
 char	*to_lowercase_str(const char *str);
 void	free_2d_str(char **arr);
 

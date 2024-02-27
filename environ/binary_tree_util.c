@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 15:43:56 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:42:09 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,22 +85,30 @@ char	*key_value_to_str(t_tree_node *node, int quote_flag)
 
 	if (node->value == NULL)
 		ret = ft_strdup(node->key);
-	else if (node->value[0] == '\0')
-		ret = ft_strjoin(node->key, "=\"\"");
 	else if (quote_flag)
 	{
-		tmp = ft_strjoin(node->key, "=\"");
-		ret = ft_strjoin(tmp, node->value);
-		free(tmp);
-		tmp = ft_strjoin(ret, "\"");
-		free(ret);
-		ret = tmp;
+		if (node->value[0] == '\0')
+			return (ft_strjoin(node->key, "=\"\""));
+		else
+		{
+			tmp = ft_strjoin(node->key, "=\"");
+			ret = ft_strjoin(tmp, node->value);
+			free(tmp);
+			tmp = ft_strjoin(ret, "\"");
+			free(ret);
+			ret = tmp;
+		}
 	}
 	else
 	{
-		tmp = ft_strjoin(node->key, "=");
-		ret = ft_strjoin(tmp, node->value);
-		free(tmp);
+		if (node->value[0] == '\0')
+			return (ft_strjoin(node->key, "="));
+		else
+		{
+			tmp = ft_strjoin(node->key, "=");
+			ret = ft_strjoin(tmp, node->value);
+			free(tmp);
+		}
 	}
 	return (ret);
 }
