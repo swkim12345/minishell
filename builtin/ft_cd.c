@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 21:33:05 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:34:59 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,13 +260,15 @@ void	parse_dots(t_cd *info, t_minishell *minishell)
 void	set_curpath_pwd(t_cd *info, t_minishell *minishell)
 {
 	char	*temp_str;
+	char	*cur_path_old;
 
 	if (minishell->cwd[ft_strlen(minishell->cwd) - 1] != '/')
 		temp_str = easy_cat(minishell->cwd, "/");
 	else
 		temp_str = ft_strdup(minishell->cwd);
-	free(info->cur_path);
+	cur_path_old = info->cur_path;
 	info->cur_path = easy_cat(temp_str, info->cur_path);
+	free(cur_path_old);
 	free(temp_str);
 }
 
