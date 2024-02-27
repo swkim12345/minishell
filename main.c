@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 20:48:37 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:50:37 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	check()
 
 int	main(int argc, char **argv, char **envp)
 {
-	atexit(check);
+	// atexit(check);
 	t_minishell	shell;
 	t_cmd_node	cmd_node;
 
