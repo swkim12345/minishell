@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 20:17:30 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:22:35 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,9 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 	// struct stat	file_info;
 
 	pid = fork();
-	envp = minishell->envp;
 	if (pid == 0)
 	{
-		// envp = ft_charenv(minishell->export, FALSE);
+		envp = ft_charenv(minishell->export, TRUE);
 		printf("here----------------------------\n");
 		int i = 0;
 		while (envp[i])
