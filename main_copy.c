@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main copy.c                                        :+:      :+:    :+:   */
+/*   main_copy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 14:52:39 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:30:16 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void	init_shell(t_minishell *shell, char **envp)
+void	init_shell(t_minishell *shell, char **envp, char **argv)
 {
 	shell->cwd = getcwd(0, 0);
 	shell->input_str = 0;
@@ -21,6 +21,7 @@ void	init_shell(t_minishell *shell, char **envp)
 	shell->tmp_file_counter = 0;
 	shell->env = ft_initenv(envp, shell);
 	shell->export = ft_initenv(envp, shell);
+	shell->execute_name = argv[0];
 }
 
 void	exit_handle(t_minishell *shell, int status)
@@ -50,7 +51,7 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd_node	cmd_node;
 
 	// atexit(check);
-	init_shell(&shell, envp);
+	init_shell(&shell, envp, argv);
 	set_signal_handler();
 	set_term();
 	(void) argc;

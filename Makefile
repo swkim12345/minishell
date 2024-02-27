@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
+#    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/02/27 15:24:30 by sunghwki         ###   ########.fr        #
+#    Updated: 2024/02/27 15:40:47 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,10 @@ ENVIRON_SRCS = environ/binary_tree_mem.c environ/binary_tree_util.c environ/bina
 
 INNER_SRCS = inner_parser/argument_parser_str_list.c inner_parser/argument_parser_utils.c inner_parser/argument_parser.c
 
-PARSER_SRCS = parser/lexar.c parser/parser.c parser/set_mem.c parser/traverse.c parser/util.c
+PARSER_SRCS = parser/lexar.c parser/parser.c parser/traverse.c parser/set_mem.c parser/util.c
+#PARSER_SRCS = parser/lexar.c parser/parser.c parser/set_mem.c parser/util.c
+
+TRAVERSR_SRCS = parser/traverse.c 
 
 SIGNAL_SRCS = signal/signal.c
 
@@ -72,7 +75,7 @@ $(NAME): $(LIBFT)
 	$(CC) -g -fsanitize=address $(CFLAGS) $(SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
 
 clean:
-	rm -rf $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
+	rm -rf $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(PARSER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
 
 fclean:
 	make clean
