@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 21:42:02 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:49:35 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	find_local_dir(t_cd *info, t_minishell *minishell)
 		info->cur_path = info->check_str;
 	else
 	{
-		info->cur_path = info->directory;
+		info->cur_path = ft_strdup(info->directory);
 		free(info->check_str);
 	}
 	free(temp_str);
