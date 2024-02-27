@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 15:08:17 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:44:05 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	free_ast_tree(t_ast_node *head)
 		if (head->cmd_node->cmd_name)
 			free(head->cmd_node->cmd_name);
 		if (head->cmd_node->str)
-			free_doub_char(head->cmd_node->str);
+			free_2d_str(head->cmd_node->str);
 		free(head->cmd_node);
 	}
 	if (head->red)
