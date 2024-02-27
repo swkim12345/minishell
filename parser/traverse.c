@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 15:57:07 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:35:34 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	wait_processes(pid_t last_pid, pid_t first_pid)
 	int	status_code;
 
 	last_pid = waitpid(last_pid, &wstatus, 0);
+	(void) first_pid;
 	//if heredoc wait for first to finish and delete heredoc file
 	// if (cmd->here_doc_flag)
 	// {
@@ -143,6 +144,19 @@ int	pipe_traverse(t_ast_node *head, t_minishell *minishell)
 	return (info.ret);
 }
 
+int	get_heredoc_fd(t_minishell *minishell, int index)
+{
+	t_tmp_file	*cur_node;
+
+	cur_node = minishell->tmp_list;
+	while (index > 0)
+	{
+		cur_node = cur_node->next;
+		index--;
+	}
+	return (cur_node->fd);
+}
+
 int	set_read_fd(t_ast_node *ast_node, t_minishell *minishell)
 {
 	int				fd;
@@ -161,6 +175,7 @@ int	set_read_fd(t_ast_node *ast_node, t_minishell *minishell)
 	if (dup2(fd, 0) == -1)
 		print_error_msg(minishell->error, errno, 0);
 	close(fd);
+	return (1);
 }
 
 int set_write_fd(t_ast_node *ast_node, t_minishell *minishell)
