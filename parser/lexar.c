@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 12:53:59 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:44:49 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ static char	*lexar_redirect(t_ast_node *node, int index, t_minishell *minishell)
 	if (red->flag == DB_LT_SIGN || red->flag == DB_GT_SIGN)
 		index--;
 	//next token to redirection -> file name
-	//not expend *
+	//not expend * -> not use inner parser
+	
 	//expend $
 	//discard "", ''
 	//error in ()
@@ -70,14 +71,16 @@ static char	*lexar_redirect(t_ast_node *node, int index, t_minishell *minishell)
 	while (ptr[index])
 	{
 		index += skip_space(&ptr[index]);
-		if (ptr[index] == '$')
+		if (ptr[index] == '*')
 		{
-			file_name = ft_getenv(minishell->env, &ptr[index + 1]);
-			if (file_name == NULL)
-				return (syntax_err_message(ptr, index, -1, minishell));
+			file_name = ft_strdup("*");
 			break ;
 		}
-		
+		else
+		{
+			file_name = string_parser(&ptr[index], minishell);
+			break ;
+		}
 	}
 	//strdup filename and strjoin node str
 	red->str = ft_strdup(file_name);
