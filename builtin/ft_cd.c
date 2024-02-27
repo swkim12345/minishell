@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 17:16:07 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:31:16 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,19 @@ int	check_option(char *str)
 	return (option_num);
 }
 
-void	init_t_cd(t_cd *info, t_cmd_node *cmd_node)
+void	init_t_cd(t_cd *info, t_cmd_node *cmd_node, t_minishell *minishell)
 {
 	int	i;
 	int	option_result;
 
 	i = 1;
 	info->execute_name = cmd_node->cmd_name;
-	info->home_dir = getenv("HOME");
-	info->cdpath = getenv("CDPATH");
+	info->home_dir = ft_getenv(minishell->env, "HOME");
+	info->cdpath = ft_getenv(minishell->env, "CDPATH");
 	if (!info->home_dir)
 		return ;
 	printf("info->home %s\n", info->home_dir);
+	printf("info->cdpath %s\n", info->cdpath);
 	info->cd_flag = 0;
 	while (cmd_node->str[i])
 	{
@@ -291,10 +292,10 @@ void	set_pwd_old_pwd(t_minishell *minishell, t_cd *info)
 
 void	free_t_cd(t_cd *info)
 {
-	free(info->home_dir);
-	free(info->cur_path);
-	free(info->cdpath);
-	free(info);
+
+	if (info->cur_path)
+		free(info->cur_path);
+	info->cur_path = 0;
 }
 
 //change shell error to msg
@@ -303,7 +304,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	t_cd	info;
 	char	*temp_str;
 
-	init_t_cd(&info, cmd_node);
+	init_t_cd(&info, cmd_node, minishell);
 	printf("directory: [%p], home_dir: [%s]\n", info.directory, info.home_dir);
 	if (!info.directory && !info.home_dir)
 		return (0);
