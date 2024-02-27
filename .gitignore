@@ -4,6 +4,7 @@ minishell
 test.c
 a.out
 *.a
+*/*.a
 */*.dSYM
 *.dSYM
 */*.vscode
