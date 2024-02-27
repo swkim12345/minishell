@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 16:11:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 20:08:27 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:29:40 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		node_delete(t_tree_node *node);
 void		free_tree_delete(t_tree_head *head);
 
 /* binary_tree_util.c */
-int			parse_env(char *env, char **key, char **value);
+int			parse_env(char *env, char **key, char **value, t_minishell *minishell);
 char		*key_value_to_str(t_tree_node *node, int quote_flag);
 void		exchange_node_key_value(t_tree_node *n, t_tree_node *t);
 
@@ -47,15 +47,14 @@ t_tree_node	*tree_search(t_tree_node *node, t_tree_node **parent, char *key);
 t_tree_node	*tree_pop(t_tree_node *head, char *key);
 
 /* env_to_binary.c */
-t_tree_head	*char_to_tree(char **str);
 int			tree_recurv_traversal(t_tree_node *head, char **ret_str, int size, int quote_flag);
-t_tree_head	*ft_push_node_to_tree(t_tree_head *head, char **envp);
+t_tree_head	*ft_push_node_to_tree(t_tree_head *head, char **envp, t_minishell *minishell);
 
 /* environ.c */
 int			ft_setenv(t_tree_head *head, char *key, char *value);
 char		*ft_getenv(t_tree_head *head, char *key); // return value
 int			ft_unsetenv(t_tree_head *head, char *key);
-t_tree_head	*ft_initenv(char **envp);
+t_tree_head	*ft_initenv(char **envp, t_minishell *minishell);
 char		**ft_charenv(t_tree_head *head, int quote_flag);
 
 #endif

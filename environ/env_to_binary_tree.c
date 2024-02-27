@@ -6,32 +6,11 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 12:02:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 20:08:00 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:26:59 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
-
-t_tree_head	*char_to_tree(char **str)
-{
-	int			index;
-	t_tree_node	*node;
-	t_tree_head	*ret;
-
-	index = -1;
-	ret = (t_tree_head *)malloc(sizeof(t_tree_head));
-	ret->head = 0;
-	ret->size = 0;
-	while (str[++index])
-	{
-		node = (t_tree_node *)malloc(sizeof(t_tree_node));
-		ft_memset((void *)node, 0, sizeof(t_tree_node));
-		parse_env(str[index], &node->key, &node->value);
-		tree_insert(ret, node);
-		ret->size += 1;
-	}
-	return (ret);
-}
 
 int	tree_recurv_traversal(t_tree_node *head, char **ret_str, int size, int quote_flag)
 {
@@ -66,7 +45,7 @@ int	tree_recurv_traversal(t_tree_node *head, char **ret_str, int size, int quote
 	return (str_size);
 }
 
-t_tree_head	*ft_push_node_to_tree(t_tree_head *head, char **envp)
+t_tree_head	*ft_push_node_to_tree(t_tree_head *head, char **envp, t_minishell *minishell)
 {
 	int			index;
 	t_tree_node	*tmp;
@@ -80,7 +59,7 @@ t_tree_head	*ft_push_node_to_tree(t_tree_head *head, char **envp)
 			free_tree_delete(head);
 			return (NULL);
 		}
-		if (parse_env(envp[index], &tmp->key, &tmp->value) == FUNC_FAIL)
+		if (parse_env(envp[index], &tmp->key, &tmp->value, minishell) == FUNC_FAIL)
 		{
 			free_tree_delete(head);
 			return (NULL);

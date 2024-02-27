@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/25 19:04:02 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:26:25 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,10 @@ void		free_ast_tree(t_ast_node *node);
 
 /* lexar.c */
 int			count_redirect(t_ast_node *node, t_minishell *minishell);
-int			lexar(t_ast_node *node, char *ptr, t_minishell *minishell);
+int			lexar(t_ast_node *node, t_minishell *minishell);
 
 /* parser.c */
-t_ast_node	*new_parser(char *str, t_minishell *minishell);
+t_ast_node	*parser(char *str, t_minishell *minishell);
 int			recurv_parser(t_ast_node *head, t_minishell *minishell);
 int			traverse(t_ast_node *head, t_minishell *minishell, int check_pipe);
 
