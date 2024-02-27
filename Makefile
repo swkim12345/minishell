@@ -6,13 +6,13 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/02/26 20:30:02 by minsepar         ###   ########.fr        #
+#    Updated: 2024/02/27 14:55:58 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -fsanitize=address -Wall -Werror -Wextra 
+CFLAGS = -Wall -Werror -Wextra 
 
 NAME = minishell
 
@@ -26,7 +26,7 @@ INNER_SRCS = inner_parser/argument_parser_str_list.c inner_parser/argument_parse
 
 PARSER_SRCS = parser/lexar.c parser/parser.c parser/set_mem.c parser/traverse.c parser/util.c
 
-SINGAL_SRCS = signal/signal.c
+SIGNAL_SRCS = signal/signal.c
 
 SUBSYSTEM_SRCS = subsystem/process_command.c
 
@@ -65,8 +65,11 @@ all: $(NAME)
 $(LIBFT):
 	make -C ./libft all bonus
 
-$(NAME): $(LIBFT) $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
-	$(CC) $(CFLAGS) $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS) $(LIBFT) -o $(NAME) -lreadline
+#$(NAME): $(LIBFT) $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
+#	$(CC) $(CFLAGS) $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS) $(LIBFT) -o $(NAME) -lreadline
+
+$(NAME): $(LIBFT) 
+	$(CC) -g -fsanitize=address $(CFLAGS) $(SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
 
 clean:
 	rm -rf $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)

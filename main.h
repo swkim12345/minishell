@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/26 20:40:31 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:44:15 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_cmd_info
 }	t_cmd_info;
 
 /* main.c */
-void	init_shell(t_minishell *shell, char **envp);
+void	init_shell(t_minishell *shell, char **envp, char **argv);
 void	exit_handle(t_minishell *shell, int status);
 
 /* common_util.c */

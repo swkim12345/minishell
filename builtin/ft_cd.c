@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/26 17:32:05 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:16:19 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,8 @@ void	parse_dots(t_cd *info, t_minishell *minishell)
 	char		*temp_str;
 	t_str_list	stack;
 
+	(void) minishell;
+
 	i = 0;
 	start = 0;
 	init_str_list(&stack);
@@ -228,7 +230,7 @@ void	parse_dots(t_cd *info, t_minishell *minishell)
 			start += 1;
 		i++;
 	}
-	if (info->cur_path[i - 2] == '.' && info->cur_path[i - 1] == '.'
+	if (i > 2 && info->cur_path[i - 2] == '.' && info->cur_path[i - 1] == '.'
 		&& i - start == 2 && stack.size > 1)
 	{
 		cur = pop(&stack);
@@ -249,7 +251,8 @@ void	parse_dots(t_cd *info, t_minishell *minishell)
 		stack.tail->str[i] = 0;
 	}
 	printf("tail_str: %s\n", stack.tail->str);
-	minishell->cwd = stack_to_str(&stack);
+	free(info->cur_path);
+	info->cur_path = stack_to_str(&stack);
 }
 
 void	set_curpath_pwd(t_cd *info, t_minishell *minishell)
@@ -264,11 +267,17 @@ void	set_curpath_pwd(t_cd *info, t_minishell *minishell)
 	free(temp_str);
 }
 
-void	cleanup(t_cd *info, char *temp_cwd)
+void	cleanup(char *temp_cwd)
 {
-	if (info->cd_flag ^ PATH_TYPE)
-		free(info->cur_path);
 	free(temp_cwd);
+}
+
+void	set_pwd_old_pwd(t_minishell *minishell, char *temp_cwd)
+{
+	ft_setenv(minishell->export, "OLDPWD", temp_cwd);
+	ft_setenv(minishell->env, "OLDPWD", temp_cwd);
+	ft_setenv(minishell->export, "PWD", minishell->cwd);
+	ft_setenv(minishell->env, "PWD", minishell->cwd);
 }
 
 //change shell error to msg
@@ -286,49 +295,55 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	else if (!info.directory && info.home_dir)
 	{
 		if (chdir(info.home_dir) == -1)
-			return (0);
+			return (builtin_error(minishell, cmd_node->cmd_name, info.home_dir));
 		temp_str = getcwd(0, 0);
 		if (!temp_str)
-			shell_error(minishell, info.execute_name, info.directory);
-		free(temp_cwd);
+			return (builtin_error(minishell, cmd_node->cmd_name, 0));
+		set_pwd_old_pwd(minishell, temp_cwd);
+		if (temp_cwd)
+			free(temp_cwd);
 		minishell->cwd = temp_str;
 		return (0);
 	}
 	if (info.directory[0] == '/' || info.directory[0] == '.'
 		|| (info.directory[0] == '.' && info.directory[1] == '.'))
-		info.cur_path = info.directory;
-	printf("1: %s\n", info.cur_path);
+		info.cur_path = ft_strdup(info.directory);
 	if (info.cd_flag & NO_DOT_RELATIVE)
 		find_curpath(&info, minishell);
 	if (info.cd_flag & OPTION_FLAG)
 	{
 		if (chdir(info.cur_path) == -1)
-			shell_error(minishell, info.execute_name, info.directory);
+			return (builtin_error(minishell, cmd_node->cmd_name, info.cur_path));
 		temp_str = getcwd(0, 0);
 		if (!temp_str)
-			shell_error(minishell, info.execute_name, info.directory);
+			return (builtin_error(minishell, cmd_node->cmd_name, 0));
 		minishell->cwd = temp_str;
 		//export temp_cwd to oldpwd
-		free(temp_cwd);
+		set_pwd_old_pwd(minishell, temp_cwd);
+		if (temp_cwd)
+			free(temp_cwd);
+		free(temp_str);
 		system("pwd");
 		return (minishell->exit_code);
 	}
-	printf("2: %s\n", info.cur_path);
 	if (info.cur_path[0] != '/')
 		set_curpath_pwd(&info, minishell);
-	printf("3: %s\n", info.cur_path);
 	parse_dots(&info, minishell);
 	if (chdir(info.cur_path) == -1)
 	{
 		if (chdir(info.directory) == -1)
 		{
 			free(temp_cwd);
-			shell_error(minishell, info.execute_name, info.directory);
+			return (builtin_error(minishell, cmd_node->cmd_name, info.directory));
+	
 		}
+		minishell->cwd = ft_strdup(info.directory);
 	}
+	minishell->cwd = info.cur_path;
+	set_pwd_old_pwd(minishell, temp_cwd);
+	cleanup(temp_cwd);
 	printf("minishell->cwd: [%s]\n", minishell->cwd);
 	system("pwd");
-	cleanup(&info, temp_cwd);
 	return (0);
 }
 
