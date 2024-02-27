@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 16:17:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:16:07 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,6 +294,7 @@ void	free_t_cd(t_cd *info)
 	free(info->home_dir);
 	free(info->cur_path);
 	free(info->cdpath);
+	free(info);
 }
 
 //change shell error to msg
@@ -344,6 +345,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	set_pwd_old_pwd(minishell, &info);
 	printf("minishell->cwd: [%s]\n", minishell->cwd);
 	system("pwd");
+	free_t_cd(&info);
 	return (0);
 }
 
