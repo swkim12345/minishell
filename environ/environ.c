@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 20:06:49 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:25:25 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_unsetenv(t_tree_head *head, char *key)
 	return (FUNC_FAIL);
 }
 
-t_tree_head	*ft_initenv(char **envp)
+t_tree_head	*ft_initenv(char **envp, t_minishell *minishell)
 {
 	t_tree_head	*head;
 	int			index;
@@ -72,7 +72,7 @@ t_tree_head	*ft_initenv(char **envp)
 		return (NULL);
 	ft_memset((void *)head, 0, sizeof(t_tree_head));
 	index = -1;
-	return (ft_push_node_to_tree(head, envp));
+	return (ft_push_node_to_tree(head, envp, minishell));
 }
 
 char	**ft_charenv(t_tree_head *head, int quote_flag)

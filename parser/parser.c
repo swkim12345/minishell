@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/22 16:59:04 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:26:16 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 		init_doub_char(dup_str(ptr, 0, str_end), 1);
 	head->right_node->cmd_node->str = \
 		init_doub_char(dup_str(ptr, dup_str_start, size), 1);
-	tmp = recur_lexar(head->left_node);
+	tmp = recurv_parser(head->left_node, minishell);
 	if (tmp == FUNC_FAIL)
 		return (FUNC_FAIL);
-	tmp = recur_lexar(head->right_node);
+	tmp = recurv_parser(head->right_node, minishell);
 	if (tmp == FUNC_FAIL)
 		return (FUNC_FAIL);
 	return (FUNC_SUC);
@@ -97,13 +97,13 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 		if (ptr[index] == '|')
 			return (split_recurv_parser(head, index - 1, index + 1, minishell));
 	}
-	tmp = lexar(head, ptr, minishell);
+	tmp = lexar(head, minishell);
 	if (tmp == FUNC_FAIL)
 		return (FUNC_FAIL);
 	return (FUNC_SUC);
 }
 
-t_ast_node	*new_parser(char *str, t_minishell *minishell)
+t_ast_node	*parser(char *str, t_minishell *minishell)
 {
 	t_ast_node	*ret;
 	int			err;
