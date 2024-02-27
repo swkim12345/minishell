@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 20:05:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:45:14 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ static char	*parse_value(char *env, int size, int index, t_minishell *minishell)
 		else
 		{
 			tmp = ft_strdup(&env[index + 1]);
-			printf("tmp: %s\n", tmp);
 			tmp_value = string_parser(tmp, minishell);
-			printf("tmp_value: %p\n", tmp_value);
 			value = ft_strdup(tmp_value[0]);
 			free(tmp);
 			free_2d_str(tmp_value);
