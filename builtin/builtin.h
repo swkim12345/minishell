@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 15:40:18 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:38:31 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int		ft_env(t_cmd_node *cmd_node, t_minishell *minishell);
 int		ft_export(t_cmd_node *cmd_node, t_minishell *minishell);
 
 /* ft_pwd.c */
-int		ft_pwd(t_cmd_node *node, t_minishell *minishell);
+int		ft_pwd(t_minishell *minishell);
 
 /* ft_unset.c */
 int		ft_unset(t_cmd_node *cmd_node, t_minishell *minishell);
