@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 21:19:11 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:47:12 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	pipe_recurv_parser(t_ast_node *head, int str_end,
 	if (str_end <= 0)
 		return (syntax_err_message(ptr, dup_str_start, -1, minishell));
 	size = ft_strlen(ptr);
-	head->str = ft_substr(ptr, str_end, dup_str_start);
+	head->log_opr = ft_substr(ptr, str_end, dup_str_start);
 	head->next_ast_node = init_ast_node(CMDNODE);
 	
 	tmp = ft_substr(ptr, dup_str_start, size);
@@ -77,7 +77,7 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 	if (str_end <= 0)
 		return (syntax_err_message(ptr, dup_str_start, -1, minishell));
 	size = ft_strlen(ptr);
-	head->str = ft_substr(ptr, str_end, dup_str_start);
+	head->log_opr = ft_substr(ptr, str_end, dup_str_start);
 	head->left_node = init_ast_node(CMDNODE);
 	head->right_node = init_ast_node(CMDNODE);
 	tmp = ft_substr(ptr, 0, str_end);

@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:36:45 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 21:15:51 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:47:12 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	free_ast_tree(t_ast_node *node)
 		free_cmd_node(node->cmd_node);
 	if (node->red)
 		free_redirection_node(node->red);
-	if (node->str)
-		free(node->str);
+	if (node->log_opr)
+		free(node->log_opr);
 	free(node);
 	node = NULL;
 	return ;

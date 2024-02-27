@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 21:28:21 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:49:10 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*lexar_redirect(t_ast_node *node, int index, t_minishell *minishell)
 {
 	char		*ptr;
 	char		*file_name;
-	//char		*sub_str;
+	t_tmp_file	*tmp_file;
 	t_redirection	*red;
 
 	ptr = node->cmd_node->str[0]; //
@@ -78,13 +78,21 @@ static char	*lexar_redirect(t_ast_node *node, int index, t_minishell *minishell)
 	red->str = ft_strdup(file_name);
 	node->cmd_node->str = init_doub_char(&ptr, 1);
 	free(ptr);
-	//add heredoc
+	//add heredoc, else => not add file name to minishell
 	if (red->flag == DB_LT_SIGN)
 	{
 		//add file name
-		
+		tmp_file = (t_tmp_file *)malloc(sizeof(t_tmp_file));
+		ft_memset((void *)tmp_file, 0, sizeof(t_tmp_file));
+		tmp_file->tmp = ft_strjoin(minishell->tmp_file_name, ft_itoa(minishell->tmp_file_counter));
+		tmp_file->fd = open(tmp_file->tmp, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		if (tmp_file->fd == -1) //add file descriptor error
+			return (FUNC_FAIL);
+		red->index = minishell->tmp_file_counter;
+		minishell->tmp_file_counter++;
+		tmp_file_list_push(tmp_file, minishell);
 	}
-
+	
 	//return function success
 	//or return function failed
 	return (FUNC_SUC);

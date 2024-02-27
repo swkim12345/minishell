@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   traverse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 15:35:34 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:47:12 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	recur_traverse(t_ast_node *head, t_minishell *minishell) //fork로 실행, w
 		printf("cmd_node : %s\n", head->cmd_node->str[0]);
 		return (TRUE);
 	}
-	if (head->str)
-		printf("str : %s\n", head->str);
-	if ((str_equal(head->str, AND) && ret) ||
-	(str_equal(head->str, OR) && !ret))
+	if (head->log_opr)
+		printf("str : %s\n", head->log_opr);
+	if ((str_equal(head->log_opr, AND) && ret) ||
+	(str_equal(head->log_opr, OR) && !ret))
 		ret = traverse(head->right_node, minishell, 1);
 	return (ret);
 }
