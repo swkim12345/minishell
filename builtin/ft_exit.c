@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 20:58:51 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:53:23 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ int	ft_exit(t_cmd_node *cmd_node, t_minishell *minishell)
 		return (print_error_msg(err, 1, 0));
 	}
 	minishell->exit_code = exit_arg_check(cmd_node, minishell);
+	free_t_minishell(minishell);
 	exit(minishell->exit_code);
 }
