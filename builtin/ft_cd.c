@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 14:49:04 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:16:19 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,8 @@ void	parse_dots(t_cd *info, t_minishell *minishell)
 	char		*temp_str;
 	t_str_list	stack;
 
+	(void) minishell;
+
 	i = 0;
 	start = 0;
 	init_str_list(&stack);
@@ -228,7 +230,7 @@ void	parse_dots(t_cd *info, t_minishell *minishell)
 			start += 1;
 		i++;
 	}
-	if (info->cur_path[i - 2] == '.' && info->cur_path[i - 1] == '.'
+	if (i > 2 && info->cur_path[i - 2] == '.' && info->cur_path[i - 1] == '.'
 		&& i - start == 2 && stack.size > 1)
 	{
 		cur = pop(&stack);
@@ -249,7 +251,8 @@ void	parse_dots(t_cd *info, t_minishell *minishell)
 		stack.tail->str[i] = 0;
 	}
 	printf("tail_str: %s\n", stack.tail->str);
-	minishell->cwd = stack_to_str(&stack);
+	free(info->cur_path);
+	info->cur_path = stack_to_str(&stack);
 }
 
 void	set_curpath_pwd(t_cd *info, t_minishell *minishell)
@@ -264,10 +267,8 @@ void	set_curpath_pwd(t_cd *info, t_minishell *minishell)
 	free(temp_str);
 }
 
-void	cleanup(t_cd *info, char *temp_cwd)
+void	cleanup(char *temp_cwd)
 {
-	if (info->cd_flag ^ PATH_TYPE)
-		free(info->cur_path);
 	free(temp_cwd);
 }
 
@@ -306,7 +307,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	}
 	if (info.directory[0] == '/' || info.directory[0] == '.'
 		|| (info.directory[0] == '.' && info.directory[1] == '.'))
-		info.cur_path = info.directory;
+		info.cur_path = ft_strdup(info.directory);
 	if (info.cd_flag & NO_DOT_RELATIVE)
 		find_curpath(&info, minishell);
 	if (info.cd_flag & OPTION_FLAG)
@@ -334,12 +335,15 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 		{
 			free(temp_cwd);
 			return (builtin_error(minishell, cmd_node->cmd_name, info.directory));
+	
 		}
+		minishell->cwd = ft_strdup(info.directory);
 	}
+	minishell->cwd = info.cur_path;
 	set_pwd_old_pwd(minishell, temp_cwd);
+	cleanup(temp_cwd);
 	printf("minishell->cwd: [%s]\n", minishell->cwd);
 	system("pwd");
-	cleanup(&info, temp_cwd);
 	return (0);
 }
 
