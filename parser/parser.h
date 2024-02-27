@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 15:09:33 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:44:09 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int			skip_space(char *str);
 /* set_mem.c */
 char		**init_doub_char(char **input, int size);
 char		*dup_str(char *str, int start, int end);
-void		free_doub_char(char **input);
 void		free_cmd_node(t_cmd_node *node);
 void		free_ast_tree(t_ast_node *node);
 
