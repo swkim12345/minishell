@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 16:51:10 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:10:15 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,8 @@ void	free_t_minishell(t_minishell *shell);
 /* common_util.c */
 int	str_equal(char *s1, char *s2);
 void	set_signal_handler();
+
+/* traverse.c */
+t_tmp_file	*get_heredoc_file(t_minishell *minishell, int index);
 
 #endif
