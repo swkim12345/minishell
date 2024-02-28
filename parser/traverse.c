@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 19:55:37 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 20:09:05 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ int	recur_traverse(t_ast_node *head, t_minishell *minishell) //fork로 실행, w
 		printf("cmd_node : %s\n", head->cmd_node->str[0]);
 		return (TRUE);
 	}
-	if (head->flag)
-		printf("flag [%d]", head->flag);
-	if ((head->flag & AND_FLAG) && ret ||
-	((head->flag & OR_FLAG) && !ret))
+	printf("flag [%d]", head->flag);
+	if (((head->flag & AND_FLAG) && !ret) ||
+	((head->flag & OR_FLAG) && ret))
+	{
+		printf("right node enter\n");
 		ret = traverse(head->right_node, minishell, 1);
+	}
 	return (ret);
 }
 
@@ -243,6 +245,7 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 	int	ret;
 
 	printf("traverse\n");
+	print_ast_node(head);
 	if (!head && head->cmd_node->str[0] == NULL)
 		return (FUNC_FAIL);
 	else if (check_pipe && head->next_ast_node)
@@ -251,10 +254,19 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 		ret = pipe_traverse(head, minishell);
 	}
 	else if (head->flag & BRACKET_FLAG)
+	{
+		printf("subshell\n");
 		ret = subshell_traverse(head, minishell);
+	}
 	else if (head->cmd_node)
+	{
+		printf("process command\n");
 		ret = process_command(head->cmd_node, minishell);
+	}
 	else
+	{
+		printf("recur traverse\n");
 		ret = recur_traverse(head, minishell);
+	}
 	return (ret);
 }
