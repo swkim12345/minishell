@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 15:51:18 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 21:14:09 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,20 @@ void	free_2d_str(char **arr)
 		free(arr[i]);
 	free(arr[i]);
 	free(arr);
+}
+
+void	free_tmp_list(t_tmp_list *list)
+{
+	t_tmp_file	*cur;
+	t_tmp_file	*next;
+
+	cur = list->head;
+	while (cur)
+	{
+		next = cur->next;
+		free(cur->tmp);
+		free(cur);
+		cur = next;
+	}
+	free(list);
 }

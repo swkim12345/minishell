@@ -8,6 +8,10 @@
 		"readline.h": "c",
 		"history.h": "c",
 		"stat.h": "c",
-		"chrono": "c"
+		"chrono": "c",
+		"tuple": "c",
+		"algorithm": "c",
+		"complex": "c",
+		"new": "c"
 	}
 }
