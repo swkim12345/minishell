@@ -6,7 +6,7 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/02/27 15:40:47 by minsepar         ###   ########.fr        #
+#    Updated: 2024/02/27 20:48:56 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Werror -Wextra
 
 NAME = minishell
 
-SRCS = main_copy.c
+SRCS = main.c
 
 BUILTIN_SRCS = builtin/builtin.c builtin/ft_cd.c builtin/ft_echo.c builtin/ft_env.c builtin/ft_exit.c builtin/ft_export.c builtin/ft_pwd.c builtin/ft_unset.c
 
@@ -72,7 +72,7 @@ $(LIBFT):
 #	$(CC) $(CFLAGS) $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS) $(LIBFT) -o $(NAME) -lreadline
 
 $(NAME): $(LIBFT) 
-	$(CC) -g -fsanitize=address $(CFLAGS) $(SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
+	$(CC) -g $(CFLAGS) $(SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
 
 clean:
 	rm -rf $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(PARSER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)

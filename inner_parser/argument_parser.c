@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/19 19:15:10 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 15:40:29 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,19 +106,19 @@ void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote,
 	printf("dollar cur_char: [%c]\n", **str);
 	start_index = parse_str->cursor;
 	while (**str && !isspace(**str) && (!in_quote || **str != '\"')
-		&& **str != '$')
+		&& **str != '$' && **str != '\"')
 		parse_single_char(parse_str, str, 0, minishell);
 	env_name = ft_substr(parse_str->str, start_index, parse_str->cursor);
 	substitude_name = getenv(env_name);
 	printf("find name: %s\n", env_name);
 	printf("found name: %s\n", substitude_name);
+	printf("env_name: %s\n", env_name);
 	free(env_name);
 	if (!substitude_name)
 	{
 		parse_str->cursor = start_index;
 		parse_str->str[start_index] = 0;
 		//printf("subname_null: %s\n", env_name);
-		append_char(parse_str, '$');
 		return ;
 	}
 	parse_env_var_found(parse_str, substitude_name, start_index);
@@ -165,9 +165,11 @@ void	get_cwd_files(t_str_list *str_list)
 	t_dirent = readdir(dir);
 	while (t_dirent)
 	{
-		enqueue(str_list, create_node(t_dirent->d_name));
+		enqueue(str_list, create_node(ft_strdup(t_dirent->d_name)));
 		t_dirent = readdir(dir);
 	}
+	free(cwd);
+	closedir(dir);
 }
 
 static void	is_match_init(t_inner_parser *inner_parser)
@@ -251,11 +253,47 @@ void	parse_asterisk(t_str_list *str_list, t_parse_str *parse_str)
 			enqueue(str_list, cur_node);
 		}
 		else
+		{
+			free(cur_node->str);
 			free(cur_node);
+		}
 		cur_node = dequeue(&dir_file_list);
 	}
 	if (found_flag == FALSE)
 		pattern_not_found(str_list, pattern);
+}
+
+int	contains_assignment(char *str)
+{
+	while (*str)
+	{
+		printf("cur_char: [%c]\n", *str);
+		if (*str == '=')
+			return (1);
+		if (*str == '\'')
+		{
+			str++;
+			while (*str && *str != '\'')
+				str++;
+		}
+		else if (*str == '\"')
+		{
+			str++;
+			while (*str && *str != '\"')
+				str++;
+		}
+		str++;
+	}
+	return (0);
+}
+
+void	parse_assignment(t_parse_str *parse_str, char **str)
+{
+	while (**str && !ft_isspace(**str))
+	{
+		append_char(parse_str, **str);
+		(*str)++;
+	}
 }
 
 void	parse_single_word(char **str, t_str_list *str_list,
@@ -266,7 +304,12 @@ void	parse_single_word(char **str, t_str_list *str_list,
 	init_parse_str(&parse_str);
 	while (**str && !ft_isspace(**str))
 	{
-		if (**str == '\"')
+		if (contains_assignment(*str) == TRUE)
+		{
+			printf("contains assignment\n");
+			parse_assignment(&parse_str, str);
+		}
+		else if (**str == '\"')
 			parse_double_quote(&parse_str, str, minishell);
 		else if (**str == '\'')
 			parse_single_quote(&parse_str, str);
@@ -298,12 +341,14 @@ char	**string_parser(char *str, t_minishell *minishell)
 	return (list_to_char_arr(&str_list));
 }
 
-// int main(int argc, char **argv)
+// int main(int argc, char **argv, char **envp)
 // {
 // 	char **str;
+// 	t_minishell minishell;
+// 	// init_shell(&minishell, envp, argv);
 
 // 	char *input_str = readline(0);
-// 	str = string_parser(input_str);
+// 	str = string_parser(input_str, &minishell);
 // 	int i = 0;
 // 	printf("input_str: %s\n", input_str);
 // 	while (str[i])
