@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_copy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 15:30:16 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:52:22 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,19 @@ void	init_shell(t_minishell *shell, char **envp, char **argv)
 	shell->env = ft_initenv(envp, shell);
 	shell->export = ft_initenv(envp, shell);
 	shell->execute_name = argv[0];
+	shell->tmp_list = NULL;
 }
+
+void	free_t_minishell(t_minishell *shell)
+{
+	(void) shell;
+	free(shell->input_str);
+	free(shell->cwd);
+	free(shell->execute_name);
+	free_tree_delete(shell->env);
+	free_tree_delete(shell->export);
+}
+
 
 void	exit_handle(t_minishell *shell, int status)
 {
@@ -45,9 +57,15 @@ void	check()
 	system("leaks minishell");
 }
 
+//void	fake_traverse(t_ast_node *node, t_minishell *minishell)
+//{
+	
+//}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	shell;
+	t_ast_node	*ast;
 	t_cmd_node	cmd_node;
 
 	// atexit(check);
@@ -68,11 +86,16 @@ int	main(int argc, char **argv, char **envp)
 		shell.input_str = readline("minishell-1.0$ ");
 		if (!shell.input_str)
 			exit_handle(&shell, 134);
-		cmd_node.str = ft_split(shell.input_str, ' ');
-		cmd_node.cmd_name = cmd_node.str[0];
+		//cmd_node.str = ft_split(shell.input_str, ' ');
+		ast = parser(shell.input_str, &shell);
+		if (!ast)
+		{
+			printf("살려주시라요\n");
+			continue ;
+		}
+		cmd_node = *ast->cmd_node;
+		//cmd_node.cmd_name = cmd_node.str[0];
 		if (!shell.input_str)
-			exit_handle(&shell, EXIT_SUCCESS);
-		else if (str_equal(shell.input_str, "exit"))
 			exit_handle(&shell, EXIT_SUCCESS);
 		else if (ft_strlen(shell.input_str) > 0)
 			process_command(&cmd_node, &shell);
