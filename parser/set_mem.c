@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_mem.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:36:45 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 19:40:11 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:58:23 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ void	free_ast_tree(t_ast_node *node)
 		free_cmd_node(&(node->cmd_node));
 	if (node->red)
 		free_redirection_node(node->red);
-	if (node->log_opr)
-		free(node->log_opr);
 	free(node);
 	node = NULL;
 	return ;

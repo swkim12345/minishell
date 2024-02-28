@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 19:15:06 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 20:02:30 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,8 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	i = -1;
 
 	ft_strlcat(ptr, &ptr[index], ft_strlen(ptr) + ft_strlen(&ptr[index]) + 1);
-	printf("ptr after strlcat: %s\n", ptr);
-	printf("red->str: %s\n", red->str);
+	//printf("ptr after strlcat: %s\n", ptr);
+	//printf("red->str: %s\n", red->str);
 	
 	if (red->flag == DB_LT_SIGN)
 	{
@@ -164,7 +164,6 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 		minishell->tmp_file_counter++;
 		tmp_file_list_push(tmp_file, minishell);
 	}
-	printf("start	: %d\n", start);
 	if (red->flag == DB_LT_SIGN || red->flag == DB_GT_SIGN)
 		return (start - 3);
 	else
