@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 13:49:31 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 13:51:37 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,13 +301,6 @@ void	set_pwd_old_pwd(t_cmd_node *cmd_node, t_minishell *minishell, t_cd *info)
 	if (info->cur_path)
 		free(info->cur_path);
 	free(old_pwd);
-}
-
-void	free_t_cd(t_cd *info)
-{
-	if (info->cur_path)
-		free(info->cur_path);
-	info->cur_path = 0;
 }
 
 //change shell error to msg
