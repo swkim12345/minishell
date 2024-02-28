@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/26 21:30:47 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 12:48:36 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,13 @@ char	*find_from_path(t_cmd_node *cmd_node, t_minishell *minishell)
 		ft_strlcat(temp_str, "/", malloc_size);
 		ft_strlcat(temp_str, cmd_node->cmd_name, malloc_size);
 		if (access(temp_str, F_OK) == 0)
+		{
+			free_2d_str(parsed_path);
 			return (temp_str);
+		}
 		free(temp_str);
 	}
+	free_2d_str(parsed_path);
 	return (0);
 }
 
@@ -77,26 +81,39 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 	char		**envp;
 	// struct stat	file_info;
 
+	// envp = minishell->envp;
 	pid = fork();
 	if (pid == 0)
 	{
 		envp = ft_charenv(minishell->export, FALSE);
-		printf("here\n");
+		// printf("here----------------------------\n");
+		// int i = 0;
+		// while (envp[i])
+		// {
+		// 	printf("envp: [%s]\n", envp[i]);
+		// 	i++;
+		// }
 		if (!ft_strchr(cmd_node->cmd_name, '/'))
 		{
-			printf("cmd_name: %s\n", cmd_node->cmd_name);
 			execute_path = find_from_path(cmd_node, minishell);
 			check_file_valid(execute_path, cmd_node, minishell);
+			printf("cmd_name: %s\n", cmd_node->cmd_name);
 			//arg 가 그냥 fixed 할수 없음. 고쳐야 됨
 			if (execve(execute_path, cmd_node->str, minishell->envp) == -1)
+			{
+				printf("error\n");
 				shell_error(minishell, cmd_node->cmd_name, cmd_node->str[1]);
+			}
 		}
 		else
 		{
-			printf("cmd_name: %s\n", cmd_node->cmd_name);
 			check_file_valid(cmd_node->cmd_name, cmd_node, minishell);
+			printf("cmd_name: %s\n", cmd_node->cmd_name);
 			if (execve(cmd_node->cmd_name, cmd_node->str, envp) == -1)
+			{
+				printf("error\n");
 				shell_error(minishell, cmd_node->cmd_name, 0);
+			}
 		}
 	}
 	else
@@ -112,8 +129,14 @@ int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 	ft_unsetenv(minishell->export, "_");
 	ft_setenv(minishell->env, "_", cmd_node->cmd_name);
 	if (is_builtin_fn(cmd_node))
+	{
+		printf("running builtin fn\n");
 		minishell->exit_code = process_builtin(cmd_node, minishell);
+	}
 	else
+	{
+		printf("running builtin fn\n");
 		minishell->exit_code = process_extern_cmd(cmd_node, minishell);
+	}
 	return (minishell->exit_code);
 }

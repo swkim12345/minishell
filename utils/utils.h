@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:10:28 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 15:51:43 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:40:58 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_error	*set_error_msg(char *execute_name, char *builtin, char *arg, char *msg);
 void	free_error(t_error *error);
 int		print_error_msg(t_error *error, int error_num, int quote_flag);
 int	builtin_error(t_minishell *minishell, char *command, char *arg);
-
+int	cd_error(t_cd *info, t_minishell *minishell, char *command, char *arg);
 
 /* error_exit.c */
 void	shell_error(t_minishell *minishell, char *command, char *message);
