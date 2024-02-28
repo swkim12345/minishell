@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 20:44:16 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 12:35:09 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,17 +91,17 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 		// }
 		if (!ft_strchr(cmd_node->cmd_name, '/'))
 		{
-			printf("cmd_name: %s\n", cmd_node->cmd_name);
 			execute_path = find_from_path(cmd_node, minishell);
 			check_file_valid(execute_path, cmd_node, minishell);
+			printf("cmd_name: %s\n", cmd_node->cmd_name);
 			//arg 가 그냥 fixed 할수 없음. 고쳐야 됨
 			if (execve(execute_path, cmd_node->str, minishell->envp) == -1)
 				shell_error(minishell, cmd_node->cmd_name, cmd_node->str[1]);
 		}
 		else
 		{
-			printf("cmd_name: %s\n", cmd_node->cmd_name);
 			check_file_valid(cmd_node->cmd_name, cmd_node, minishell);
+			printf("cmd_name: %s\n", cmd_node->cmd_name);
 			if (execve(cmd_node->cmd_name, cmd_node->str, envp) == -1)
 				shell_error(minishell, cmd_node->cmd_name, 0);
 		}
