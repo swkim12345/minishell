@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 16:52:22 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:34:02 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	init_shell(t_minishell *shell, char **envp, char **argv)
 
 void	free_t_minishell(t_minishell *shell)
 {
-	(void) shell;
 	free(shell->input_str);
 	free(shell->cwd);
 	free(shell->execute_name);
