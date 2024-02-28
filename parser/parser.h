@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 19:37:22 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:54:48 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@
 # define GT_SIGN 2
 # define DB_GT_SIGN 4
 
+# define NO_FLAG 0
+# define OR_FLAG 1
+# define AND_FLAG 2
+
 # define NONODE			0
 # define LEFTNODE		1
 # define RIGHTNODE		2
@@ -37,7 +41,6 @@
 
 # include "../main.h"
 
-# define BRACKET_FLAG 1
 
 typedef struct s_cmd_node		t_cmd_node;
 typedef struct s_ast_node		t_ast_node;
@@ -68,7 +71,6 @@ typedef struct s_ast_node
 	int							flag;	//lexar flag
 	int							index;	//redirection index in t_minishell
 	int							err_flag;	//syntax error flag, TRUE -> stop parsing
-	char						*log_opr;	//||, &&
 }	t_ast_node;
 
 typedef struct s_pipe_io
