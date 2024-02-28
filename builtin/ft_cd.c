@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 13:22:46 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 13:24:30 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,15 +283,15 @@ void	set_pwd_old_pwd(t_cmd_node *cmd_node, t_minishell *minishell, t_cd *info)
 
 	old_pwd = minishell->cwd;
 	printf("%s\n", old_pwd);
-	if (info->cur_path)
-		minishell->cwd = ft_strdup(info->cur_path);
-	else if (info->cd_flag & OPTION_FLAG)
+	if (info->cd_flag & OPTION_FLAG)
 	{
 		printf("option flag -P\n");
 		minishell->cwd = getcwd(0,0);
 		if (minishell->cwd)
 			minishell->exit_code = builtin_error(minishell, cmd_node->cmd_name, 0);
 	}
+	else if (info->cur_path)
+		minishell->cwd = ft_strdup(info->cur_path);
 	else
 		minishell->cwd = ft_strdup(info->home_dir);
 	ft_setenv(minishell->export, "OLDPWD", old_pwd);
