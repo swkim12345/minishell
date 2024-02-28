@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 16:35:42 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:12:11 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,19 @@ int	pipe_traverse(t_ast_node *head, t_minishell *minishell)
 	info.ret = wait_processes(info.pid, info.first_pid);
 	//free pipelist
 	return (info.ret);
+}
+
+t_tmp_file	*get_heredoc_file(t_minishell *minishell, int index)
+{
+	t_tmp_file	*cur_node;
+
+	cur_node = minishell->tmp_list->head;
+	while (index > 0)
+	{
+		cur_node = cur_node->next;
+		index--;
+	}
+	return (cur_node);
 }
 
 int	get_heredoc_fd(t_minishell *minishell, int index)

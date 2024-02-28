@@ -5,8 +5,7 @@ CFLAGS = -Wall -Werror -Wextra
 
 NAME = minishell
 
-SRCS = main.c traverse.c \
-	parser.c \
+SRCS = traverse.c parser.c \
 	../inner_parser/argument_parser_str_list.c ../inner_parser/argument_parser_utils.c
 
 
@@ -15,6 +14,9 @@ OBJS = $(SRCS:.c=.o)
 LIBFT = libftprintf.a
 
 all: $(NAME)
+
+test: 
+	cc $(SRCS) test.c
 
 %.o: %.c
 	$(CC) -c -g $(FLAGS) $< -o $@

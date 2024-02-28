@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 15:14:58 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:06:15 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,25 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 	if (tmp == FUNC_FAIL)
 		return (FUNC_FAIL);
 	return (FUNC_SUC);
+}
+
+int	read_heredoc(t_minishell *minishell, t_redirection *redirection
+	, t_tmp_file *tmp_file)
+{
+	int			fd;
+	char		*line;
+
+	if (fd == -1)
+		shell_error(minishell, "heredoc", 0);
+	while (1)
+	{
+		line = readline("> ");
+		if (!line || str_equal(line, redirection->str))
+			break ;
+		ft_putstr_fd(line, fd);
+		free(line);
+	}
+	return (0);
 }
 
 t_ast_node	*parser(char *str, t_minishell *minishell)
