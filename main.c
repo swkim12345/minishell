@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 19:17:11 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 21:08:56 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	init_shell(t_minishell *shell, char **envp, char **argv)
 		shell->execute_name = ft_substr(argv[0], 2, ft_strlen(argv[0]));
 	else
 		shell->execute_name = ft_strdup(argv[0]);
+	shell->tmp_list = (t_tmp_list *)malloc(sizeof(t_tmp_list));
 }
 
 void	free_t_minishell(t_minishell *shell)

@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 20:47:32 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 21:08:00 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 	if (str_end <= 0)
 	{
 		head->err_flag = TRUE;
-		syntax_err_message(ptr, dup_str_start, -1, minishell);
+		return (syntax_err_message(ptr, dup_str_start, -1, minishell));
 	}
 	size = ft_strlen(ptr);
 	if (ft_strncmp(&ptr[str_end + 1], "&&", ft_strlen("&&")) == 0)
@@ -117,7 +117,7 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 			if (tmp == NOTDEFINED)
 			{
 				head->err_flag = TRUE;
-				syntax_err_message(ptr, index + 1, -1, minishell);
+				return (syntax_err_message(ptr, index + 1, -1, minishell));
 			}
 			index += tmp + 1;
 			continue ;
@@ -128,7 +128,7 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 			if (tmp == NOTDEFINED)
 			{
 				head->err_flag = TRUE;
-				syntax_err_message(ptr, index + 1, -1, minishell);
+				return (syntax_err_message(ptr, index + 1, -1, minishell));
 			}
 			index += tmp;
 			continue ;
@@ -177,7 +177,7 @@ t_ast_node	*parser(char *str, t_minishell *minishell)
 	err = recurv_parser(ret, minishell);
 	if (err == FUNC_FAIL)
 	{
-		free_ast_tree(ret);
+		//free_ast_tree(ret);
 		return (NULL);
 	}
 	return (ret);
