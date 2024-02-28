@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 17:24:23 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:08:55 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	main(int argc, char **argv, char **envp)
 	set_term();
 	(void) argc;
 	(void) argv;
+	(void) cmd_node;
 
 	// int i = 0;
 	// while (envp[i])
@@ -78,20 +79,28 @@ int	main(int argc, char **argv, char **envp)
 	// 	printf("%s\n", envp[i]);
 	// 	i++;
 	// }
-	while (1)
-	{
-		shell.input_str = readline("minishell-1.0$ ");
-		if (!shell.input_str)
-			exit_handle(&shell, 134);
-		cmd_node.str = ft_split(shell.input_str, ' ');
-		cmd_node.cmd_name = cmd_node.str[0];
-		if (!shell.input_str)
-			exit_handle(&shell, EXIT_SUCCESS);
-		else if (ft_strlen(shell.input_str) > 0)
-			process_command(&cmd_node, &shell);
-		if (ft_strlen(shell.input_str) != 0)
-			add_history(shell.input_str);
-		free(shell.input_str);
-		free_2d_str(cmd_node.str);
-	}
+	// while (1)
+	// {
+	// 	shell.input_str = readline("minishell-1.0$ ");
+	// 	if (!shell.input_str)
+	// 		exit_handle(&shell, 134);
+	// 	cmd_node.str = ft_split(shell.input_str, ' ');
+	// 	cmd_node.cmd_name = cmd_node.str[0];
+	// 	if (!shell.input_str)
+	// 		exit_handle(&shell, EXIT_SUCCESS);
+	// 	else if (ft_strlen(shell.input_str) > 0)
+	// 		process_command(&cmd_node, &shell);
+	// 	if (ft_strlen(shell.input_str) != 0)
+	// 		add_history(shell.input_str);
+	// 	free(shell.input_str);
+	// 	free_2d_str(cmd_node.str);
+	// }
+
+	t_ast_node	*head;
+
+	char *str[] = {"echo", "hello", NULL};
+
+	
+	printf("start----------------------------------\n");
+	traverse(head, &shell, 1);
 }
