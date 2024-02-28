@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 20:15:53 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 20:53:17 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,7 @@ t_pipe_io	*init_pipe_list(int num_pipe)
 {
 	t_pipe_io	*pipe_list;
 
-	pipe_list = malloc(sizeof(t_pipe_io) * (num_pipe + 1));
-	ft_memset((void *)pipe_list, 0, sizeof(t_pipe_io) * (num_pipe + 1));
+	pipe_list = ft_calloc(sizeof(t_pipe_io) * (num_pipe + 1), 1);
 	return (pipe_list);
 }
 
@@ -141,7 +140,11 @@ int	pipe_traverse(t_ast_node *head, t_minishell *minishell)
 		if (info.current_pipe == 0)
 			info.first_pid = info.pid;
 		head = head->next_ast_node;
+		if (info.current_pipe != 0)
+			close(info.pipe_list[info.current_pipe - 1].pipe_fd[0]);
+		close(info.pipe_list[info.current_pipe].pipe_fd[1]);
 	}
+	close(info.pipe_list[info.current_pipe - 1].pipe_fd[0]);
 	info.ret = wait_processes(info.pid, info.first_pid);
 	//free pipelist
 	return (info.ret);
