@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   common_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/22 19:44:23 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:51:18 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,15 @@ char	*to_lowercase_str(const char *str)
 	}
 	return_str[i] = 0;
 	return (return_str);
+}
+
+void	free_2d_str(char **arr)
+{
+	int	i;
+
+	i = -1;
+	while (arr[++i])
+		free(arr[i]);
+	free(arr[i]);
+	free(arr);
 }

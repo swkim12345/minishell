@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 15:44:05 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:51:33 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ t_ast_node	*init_ast_node(int child_node)
 	t_cmd_node	*node;
 
 	ret = (t_ast_node *)malloc(sizeof(t_ast_node));
-	ft_memset((void *)ret, 0, sizeof(ret));
+	ft_memset((void *)ret, 0, sizeof(t_ast_node));
 	if (CMDNODE & child_node)
 	{
 		node = (t_cmd_node *)malloc(sizeof(t_cmd_node));
-		ft_memset((void *)node, 0, sizeof(node));
+		ft_memset((void *)node, 0, sizeof(t_cmd_node));
 		ret->cmd_node = node;
 	}
 	if (LEFTNODE & child_node)
@@ -34,7 +34,8 @@ t_ast_node	*init_ast_node(int child_node)
 
 int	syntax_err_message(char *msg, int end, int ret, t_minishell *minishell)
 {
-	msg[end] = '\0';
+	if (end != NOTDEFINED)
+		msg[end] = '\0';
 	ft_putstr_fd(minishell->execute_name, STDERR_FILENO);
 	ft_putstr_fd(": syntax error near unexpected token `", STDERR_FILENO);
 	ft_putstr_fd(msg, STDERR_FILENO);
@@ -42,41 +43,57 @@ int	syntax_err_message(char *msg, int end, int ret, t_minishell *minishell)
 	return (ret);
 }
 
-void	free_ast_tree(t_ast_node *head)
+void	redirect_node_push(t_ast_node *node, t_redirection *red)
 {
 	t_redirection	*tmp;
-	int				i;
 
-	free_ast_tree(head->left_node && head->right_node && head->next_ast_node);
-	if (head->cmd_node)
+	if (node->red == NULL)
+		node->red = red;
+	else
 	{
-		if (head->cmd_node->cmd_name)
-			free(head->cmd_node->cmd_name);
-		if (head->cmd_node->str)
-			free_2d_str(head->cmd_node->str);
-		free(head->cmd_node);
+		tmp = node->red;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = red;
 	}
-	if (head->red)
+}
+
+void	tmp_file_list_push(t_tmp_file *list, t_minishell *minishell)
+{
+	t_tmp_file	*next;
+	t_tmp_list	*tmp_list;
+
+	tmp_list = minishell->tmp_list;
+	next = 0;
+	if (tmp_list == NULL)
 	{
-		i = 0;
-		tmp = head->red;
-		while (tmp[i].str)
-		{
-			free(tmp[i].str);
-			i++;
-		}
-		free(tmp);
+		tmp_list = (t_tmp_list *)malloc(sizeof(t_tmp_list));
+		tmp_list->head = list;
+		tmp_list->tail = list;
 	}
-	free(head);
+	else
+	{
+		next = tmp_list->head;
+	}
+	if (next == NULL)
+	{
+		tmp_list->head = list;
+		tmp_list->tail = list;
+	}
+	else
+	{
+		next = tmp_list->tail;
+		next->next = list;
+		tmp_list->tail = list;
+	}
+	minishell->tmp_file_counter++;
 }
 
 int	finder(char *str, char checker)
 {
 	int	index;
-	int	count;
 
 	index = -1;
-	count = 0;
 	while (str[++index])
 	{
 		if (str[index] == checker)
@@ -91,7 +108,7 @@ int	bracket_finder(char *str)
 	int	index;
 
 	index = -1;
-	if (str == '(')
+	if (*str == '(')
 	{
 		count = 1;
 		while (str[++index])
@@ -106,7 +123,6 @@ int	bracket_finder(char *str)
 	}
 	return (NOTDEFINED);
 }
-
 
 int			skip_space(char *str)
 {
