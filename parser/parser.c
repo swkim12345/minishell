@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 19:49:11 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:57:34 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,12 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 		syntax_err_message(ptr, dup_str_start, -1, minishell);
 	}
 	size = ft_strlen(ptr);
-	head->log_opr = ft_substr(ptr, str_end + 1, dup_str_start - str_end - 1);
+	if (ft_strncmp(&ptr[str_end], "&&", ft_strlen("&&")) == 0)
+		head->flag = AND_FLAG;
+	else if (ft_strncmp(&ptr[str_end], "||", ft_strlen("||")) == 0)
+		head->flag = OR_FLAG;
+	else
+		head->flag = NO_FLAG;
 	head->left_node = init_ast_node(CMDNODE);
 	head->right_node = init_ast_node(CMDNODE);
 	tmp = ft_substr(ptr, 0, str_end);

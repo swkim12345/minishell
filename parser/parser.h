@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 19:51:39 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:57:41 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@
 # define GT_SIGN 2
 # define DB_GT_SIGN 4
 
+# define NO_FLAG 0
+# define OR_FLAG 1
+# define AND_FLAG 2
+
 # define NONODE			0
 # define LEFTNODE		1
 # define RIGHTNODE		2
@@ -37,7 +41,6 @@
 
 # include "../main.h"
 
-# define BRACKET_FLAG 1
 
 typedef struct s_cmd_node		t_cmd_node;
 typedef struct s_ast_node		t_ast_node;
