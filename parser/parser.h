@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 19:37:22 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:51:39 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ typedef struct s_ast_node
 	int							flag;	//lexar flag
 	int							index;	//redirection index in t_minishell
 	int							err_flag;	//syntax error flag, TRUE -> stop parsing
-	char						*log_opr;	//||, &&
 }	t_ast_node;
 
 typedef struct s_pipe_io
