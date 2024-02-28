@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_mem.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:36:45 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 21:47:12 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:32:23 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	free_redirection_node(t_redirection *red)
 		free(red);
 		red = tmp;
 	}
+	tmp = NULL;
 }
 
 void	free_cmd_node(t_cmd_node *node)
@@ -47,6 +48,7 @@ void	free_cmd_node(t_cmd_node *node)
 	if (node->str)
 		free_2d_str(node->str);
 	free(node);
+	node = NULL;
 }
 
 void	free_ast_tree(t_ast_node *node)
