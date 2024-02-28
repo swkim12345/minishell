@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 19:15:28 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:38:09 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 	head->right_node->cmd_node->str = \
 		init_doub_char(&tmp, 1);
 	free(tmp);
-	free_cmd_node(head->cmd_node);
+	free_cmd_node(&(head->cmd_node));
 	if (recurv_parser(head->left_node, minishell) == FUNC_FAIL)
 		return (FUNC_FAIL);
 	if (recurv_parser(head->right_node, minishell) == FUNC_FAIL)
