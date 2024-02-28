@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 16:35:09 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:10:15 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_ast_node	t_ast_node;
 typedef struct s_cmd_node	t_cmd_node;
 typedef struct s_str_node	t_str_node;
 typedef struct s_tmp_file	t_tmp_file;
+typedef struct s_tmp_list	t_tmp_list;
 
 typedef struct s_tmp_file
 {
@@ -59,8 +60,8 @@ typedef struct s_tmp_file
 
 typedef struct s_tmp_list
 {
-	t_tmp_list	*head;
-	t_tmp_list	*tail;
+	t_tmp_file	*head;
+	t_tmp_file	*tail;
 }	t_tmp_list;
 
 typedef struct s_minishell
@@ -92,5 +93,8 @@ void	free_t_minishell(t_minishell *shell);
 /* common_util.c */
 int	str_equal(char *s1, char *s2);
 void	set_signal_handler();
+
+/* traverse.c */
+t_tmp_file	*get_heredoc_file(t_minishell *minishell, int index);
 
 #endif
