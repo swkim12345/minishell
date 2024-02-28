@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 12:52:33 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:42:37 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*parse_value(char *env, int size, int index, t_minishell *minishell)
 		{
 			tmp = ft_strdup(&env[index + 1]);
 			dup_str = string_parser(tmp, minishell);
-			value = dup_str[0];
+			value = ft_strdup(dup_str[0]);
 			free_2d_str(dup_str);
 			free(tmp);
 		}

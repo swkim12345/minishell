@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 21:47:12 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 15:15:37 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 	ptr = head->cmd_node->str[0]; 
 	while (ptr[++index])
 	{
-		printf("in while ptr: %s\n", ptr);
 		index += skip_space(&ptr[index]);
 		if (ptr[index] == '\"' || ptr[index] == '\'')
 		{

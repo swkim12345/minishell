@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:38:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 13:38:33 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:40:49 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	ft_unset(t_cmd_node *cmd_node, t_minishell *minishell)
 				cmd_node->cmd_name,
 				cmd_node->str[index], "not a valid identifier");
 		i = 0;
-		if (!(ft_isalpha(cmd_node->str[index][i]) == TRUE && cmd_node->str[index][i] != '_'))
+		if (!(ft_isalpha(cmd_node->str[index][i]) == TRUE || cmd_node->str[index][i] == '_'))
 			return (print_error_msg(minishell->error, 1, FALSE));
 		while (cmd_node->str[index][++i])
 		{
-			if (!(cmd_node->str[index][i] == '_') && ft_isalnum(cmd_node->str[index][i]))
+			if (!(cmd_node->str[index][i] == '_' || ft_isalnum(cmd_node->str[index][i])))
 				return (print_error_msg(minishell->error, 1, FALSE));
 		}
 		free_error(minishell->error);

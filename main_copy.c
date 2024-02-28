@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 12:21:36 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:01:39 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_shell(t_minishell *shell, char **envp, char **argv)
 	shell->env = ft_initenv(envp, shell);
 	shell->export = ft_initenv(envp, shell);
 	shell->execute_name = argv[0];
+	shell->tmp_list = NULL;
 }
 
 void	exit_handle(t_minishell *shell, int status)
@@ -53,7 +54,7 @@ void	check()
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	shell;
-	//t_ast_node	*ast;
+	t_ast_node	*ast;
 	t_cmd_node	cmd_node;
 
 	// atexit(check);
@@ -74,15 +75,15 @@ int	main(int argc, char **argv, char **envp)
 		shell.input_str = readline("minishell-1.0$ ");
 		if (!shell.input_str)
 			exit_handle(&shell, 134);
-		cmd_node.str = ft_split(shell.input_str, ' ');
-		//ast = parser(shell.input_str, &shell);
-		//if (!ast)
-		//{
-		//	printf("살려주시라요\n");
-		//	continue ;
-		//}
-		//cmd_node = *ast->cmd_node;
-		cmd_node.cmd_name = cmd_node.str[0];
+		//cmd_node.str = ft_split(shell.input_str, ' ');
+		ast = parser(shell.input_str, &shell);
+		if (!ast)
+		{
+			printf("살려주시라요\n");
+			continue ;
+		}
+		cmd_node = *ast->cmd_node;
+		//cmd_node.cmd_name = cmd_node.str[0];
 		if (!shell.input_str)
 			exit_handle(&shell, EXIT_SUCCESS);
 		else if (ft_strlen(shell.input_str) > 0)
