@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 19:29:36 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:59:21 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	print_ast_node(t_ast_node *ast_node)
 	printf("right_node: [%p]\n", ast_node->right_node);
 	printf("next_ast_node: [%p]\n", ast_node->next_ast_node);
 	printf("cmd_node: [%p]\n", ast_node->cmd_node);
-	printf("log_opr: [%s]\n", ast_node->log_opr);
+	printf("log_opr: [%d]\n", ast_node->flag);
 }
 
 void	print_cmd_node(t_cmd_node *cmd_node)
