@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:36:45 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 19:32:23 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:40:11 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,22 @@ void	free_redirection_node(t_redirection *red)
 		tmp = red->next;
 		free_2d_str(&red->str);
 		free(red);
+		red = NULL;
 		red = tmp;
 	}
-	tmp = NULL;
+	
 }
 
-void	free_cmd_node(t_cmd_node *node)
+void	free_cmd_node(t_cmd_node **node)
 {
-	if (node == NULL)
+	if (*node == NULL)
 		return ;
-	if (node->cmd_name)
-		free(node->cmd_name);
-	if (node->str)
-		free_2d_str(node->str);
-	free(node);
-	node = NULL;
+	if ((*node)->cmd_name)
+		free((*node)->cmd_name);
+	if ((*node)->str)
+		free_2d_str((*node)->str);
+	free(*node);
+	*node = NULL;
 }
 
 void	free_ast_tree(t_ast_node *node)
@@ -62,7 +63,7 @@ void	free_ast_tree(t_ast_node *node)
 	if (node->right_node)
 		free_ast_tree(node->right_node);
 	if (node->cmd_node)
-		free_cmd_node(node->cmd_node);
+		free_cmd_node(&(node->cmd_node));
 	if (node->red)
 		free_redirection_node(node->red);
 	if (node->log_opr)
