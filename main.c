@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 21:14:21 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 21:25:25 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_shell(t_minishell *shell, char **envp, char **argv)
 		shell->execute_name = ft_substr(argv[0], 2, ft_strlen(argv[0]));
 	else
 		shell->execute_name = ft_strdup(argv[0]);
-	shell->tmp_list = (t_tmp_list *)malloc(sizeof(t_tmp_list));
+	shell->tmp_list = (t_tmp_list *)ft_calloc(sizeof(t_tmp_list), 1);
 }
 
 void	free_t_minishell(t_minishell *shell)

@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 21:08:00 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 21:34:33 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,12 +159,13 @@ int	read_heredoc(t_minishell *minishell, t_redirection *redirection
 	while (1)
 	{
 		line = readline("> ");
+		printf("read_heredoc_str : %s\n", redirection->str);
 		if (!line || str_equal(line, redirection->str))
 			break ;
 		ft_putstr_fd(line, fd);
 		free(line);
 	}
-	return (0);
+	return (FUNC_SUC);
 }
 
 t_ast_node	*parser(char *str, t_minishell *minishell)
