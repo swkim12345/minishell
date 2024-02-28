@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 21:08:56 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 21:14:21 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	free_t_minishell(t_minishell *shell)
 	free(shell->input_str);
 	free(shell->cwd);
 	free(shell->execute_name);
+	free_tmp_list(shell->tmp_list);
 	free_tree_delete(shell->env);
 	free_tree_delete(shell->export);
 }
