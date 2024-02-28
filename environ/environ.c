@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 14:47:02 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:31:39 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ft_getenv(t_tree_head *head, char *key)
 	t_tree_node	*tmp;
 
 	tmp = tree_search(head->head, NULL, key);
-	if (tmp)
+	if (tmp && tmp->value)
 		return (tmp->value);
 	return (NULL);
 }
