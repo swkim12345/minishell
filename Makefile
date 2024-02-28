@@ -6,7 +6,7 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/02/28 19:11:03 by minsepar         ###   ########.fr        #
+#    Updated: 2024/02/28 19:18:22 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ $(LIBFT):
 #	$(CC) $(CFLAGS) $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS) $(LIBFT) -o $(NAME) -lreadline
 
 $(NAME): $(LIBFT) 
-	$(CC) -g $(CFLAGS) $(SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
+	$(CC) -g $(CFLAGS) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
 
 clean:
 	rm -rf $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(PARSER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)

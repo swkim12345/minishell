@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 18:52:51 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:15:28 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ int	read_heredoc(t_minishell *minishell, t_redirection *redirection
 	int			fd;
 	char		*line;
 
+	fd = tmp_file->fd;
 	if (fd == -1)
 		shell_error(minishell, "heredoc", 0);
 	while (1)
