@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 21:49:10 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 12:21:53 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static char	*lexar_redirect(t_ast_node *node, int index, t_minishell *minishell)
 {
 	char		*ptr;
 	char		*file_name;
+	//char		**cmd_str;
 	t_tmp_file	*tmp_file;
 	t_redirection	*red;
 
@@ -57,7 +58,6 @@ static char	*lexar_redirect(t_ast_node *node, int index, t_minishell *minishell)
 	//not expend * -> not use inner parser
 	
 	//expend $
-	//discard "", ''
 	//error in ()
 	while (ptr[index])
 	{
@@ -87,15 +87,14 @@ static char	*lexar_redirect(t_ast_node *node, int index, t_minishell *minishell)
 		tmp_file->tmp = ft_strjoin(minishell->tmp_file_name, ft_itoa(minishell->tmp_file_counter));
 		tmp_file->fd = open(tmp_file->tmp, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (tmp_file->fd == -1) //add file descriptor error
-			return (FUNC_FAIL);
+			return (NULL); //maybe leak inside
 		red->index = minishell->tmp_file_counter;
 		minishell->tmp_file_counter++;
 		tmp_file_list_push(tmp_file, minishell);
 	}
-	
 	//return function success
 	//or return function failed
-	return (FUNC_SUC);
+	return (ptr);
 }
 
 //check redirection, ()
@@ -125,7 +124,7 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 		//check for redirection
 		if (ptr[index] == '<' || ptr[index] == '>')
 		{
-			if (lexar_redirect(node, index, minishell))
+			if (lexar_redirect(node, index, minishell)) //error
 			{
 				return (syntax_err_message(ptr, index, -1, minishell));
 			}

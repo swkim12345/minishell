@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 13:22:48 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 12:54:17 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,46 @@ static	int	print_export(t_minishell *minishell)
 
 static	int	put_env(t_cmd_node *cmd_node, t_minishell *minishell, int index)
 {
+	//char	**tmp;
 	char	*key;
 	char	*value;
+	//int		index;
+	//int		size;
+	//char	*env;
 
+	////pre innerparser
+	//env = cmd_node->str[index];
+	//index = -1;
+	//size = ft_strlen(env);
+	//while (env[++index])
+	//{
+	//	if (env[index] == '=')
+	//	{
+	//		if (index == 0)
+	//			return (FUNC_FAIL);
+	//		env[index] = '\0';
+	//		break ;
+	//	}
+	//}
+	//*key = *string_parser(env, minishell);
+	//*value = *string_parser(env, minishell);
+	////strjoin
+	//env = ft_strjoin(key, "=");
+	//free(key);
+	key = NULL;
+	value = NULL;
 	minishell->error = set_error_msg(minishell->execute_name,
 			cmd_node->str[0], cmd_node->str[index], "not a valid identifier");
-	if (!ft_isalpha(cmd_node->str[index][0]))
-		return (print_error_msg(minishell->error, 1, TRUE));
 	if (parse_env(cmd_node->str[index], &key, &value, minishell) == FUNC_FAIL)
+	{
+		if (key && value)
+		{
+			minishell->error = set_error_msg(minishell->execute_name,
+					cmd_node->str[0], cmd_node->str[index], "not a valid identifier");
+		}
 		return (print_error_msg(minishell->error, 1, TRUE));
+	}
+		
 	if (ft_setenv(minishell->export, key, value) == FUNC_FAIL)
 	{
 		free(key);
