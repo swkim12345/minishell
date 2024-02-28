@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 17:24:23 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:17:11 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	// atexit(check);
 	t_minishell	shell;
-	t_cmd_node	cmd_node;
+	t_ast_node	*head;
 
 	// atexit(check);
 	init_shell(&shell, envp, argv);
@@ -83,15 +83,14 @@ int	main(int argc, char **argv, char **envp)
 		shell.input_str = readline("minishell-1.0$ ");
 		if (!shell.input_str)
 			exit_handle(&shell, 134);
-		cmd_node.str = ft_split(shell.input_str, ' ');
-		cmd_node.cmd_name = cmd_node.str[0];
+		head = parser(shell.input_str, &shell);
 		if (!shell.input_str)
 			exit_handle(&shell, EXIT_SUCCESS);
 		else if (ft_strlen(shell.input_str) > 0)
-			process_command(&cmd_node, &shell);
+			traverse(head, &shell, 1);
 		if (ft_strlen(shell.input_str) != 0)
 			add_history(shell.input_str);
 		free(shell.input_str);
-		free_2d_str(cmd_node.str);
 	}
+
 }

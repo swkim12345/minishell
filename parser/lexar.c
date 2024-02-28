@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 19:08:40 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:15:06 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@
 static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 {
 	char			*ptr;
-	char			**tmp;
 	int				start;
 	int				i;
 	t_tmp_file		*tmp_file;

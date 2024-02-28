@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   traverse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 17:12:11 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:16:58 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,8 @@ int	set_read_fd(t_ast_node *ast_node, t_minishell *minishell)
 		fd = open(redirect_node->str, O_RDONLY);
 	else if (redirect_node->flag & DB_LT_SIGN)
 		fd = get_heredoc_fd(minishell, ast_node->index);
+	else
+		return (1);
 	if (fd < 0)
 	{
 		print_error_msg(minishell->error, errno, 0);
@@ -201,6 +203,8 @@ int set_write_fd(t_ast_node *ast_node, t_minishell *minishell)
 		fd = open(redirect_node->str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	else if (redirect_node->flag & DB_GT_SIGN)
 		fd = open(redirect_node->str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	else
+		return (1);
 	if (fd < 0)
 	{
 		print_error_msg(minishell->error, errno, 0);
@@ -209,6 +213,7 @@ int set_write_fd(t_ast_node *ast_node, t_minishell *minishell)
 	if (dup2(fd, 0) == -1)
 		print_error_msg(minishell->error, errno, 0);
 	close(fd);
+	return (1);
 }
 
 int	process_redirection(t_ast_node *ast_node, t_minishell *minishell)
@@ -237,6 +242,7 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 {
 	int	ret;
 
+	printf("traverse\n");
 	if (!head && head->cmd_node->str[0] == NULL)
 		return (FUNC_FAIL);
 	else if (check_pipe && head->next_ast_node)
@@ -247,7 +253,7 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 	else if (head->flag & BRACKET_FLAG)
 		ret = subshell_traverse(head, minishell);
 	else if (head->cmd_node)
-		process_command(head->cmd_node, minishell);
+		ret = process_command(head->cmd_node, minishell);
 	else
 		ret = recur_traverse(head, minishell);
 	return (ret);
