@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 20:54:25 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:35:09 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,12 @@ typedef struct s_tmp_file
 	t_tmp_file	*next;
 }	t_tmp_file;
 
+typedef struct s_tmp_list
+{
+	t_tmp_list	*head;
+	t_tmp_list	*tail;
+}	t_tmp_list;
+
 typedef struct s_minishell
 {
 	char		*cwd;
@@ -68,7 +74,7 @@ typedef struct s_minishell
 	int			tmp_file_counter;
 	t_tree_head	*env;
 	t_tree_head	*export;
-	t_tmp_file	*tmp_list;
+	t_tmp_list	*tmp_list;
 	t_error		*error;
 }	t_minishell;
 
