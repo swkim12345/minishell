@@ -48,19 +48,20 @@ static int	exit_arg_check(t_cmd_node *cmd_node, t_minishell *minishell)
 	index = -1;
 	ret = 0;
 	err = set_error_msg(minishell->execute_name, cmd_node->str[0],
-			NULL, "numeric argument required");
+			cmd_node->str[1], "numeric argument required");
 	while (cmd_node->str[1][++index])
 	{
 		if (!ft_isdigit(cmd_node->str[1][index]))
 		{
-			ret = 255;
-			break ;
+			print_error_msg(err, 1, 0);
+			return (1);
 		}
 	}
 	if (ft_atol(cmd_node->str[1], &ret) == NOTDEFINED)
-		ret = 255;
-	if (ret != FUNC_SUC)
+	{
 		print_error_msg(err, 1, 0);
+		ret = 1;
+	}
 	return (ret);
 }
 

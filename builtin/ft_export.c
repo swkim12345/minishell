@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 12:40:12 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:42:08 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ static	int	put_env(t_cmd_node *cmd_node, t_minishell *minishell, int index)
 {
 	char	*key;
 	char	*value;
-
+	
+	key = NULL;
+	value = NULL;
 	minishell->error = set_error_msg(minishell->execute_name,
 			cmd_node->str[0], cmd_node->str[index], "not a valid identifier");
-	if (!ft_isalpha(cmd_node->str[index][0]))
-		return (print_error_msg(minishell->error, 1, TRUE));
 	if (parse_env(cmd_node->str[index], &key, &value, minishell) == FUNC_FAIL)
 		return (print_error_msg(minishell->error, 1, TRUE));
 	if (ft_setenv(minishell->export, key, value) == FUNC_FAIL)
