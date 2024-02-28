@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 22:06:41 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 22:24:57 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ int	set_read_fd(t_ast_node *ast_node, t_minishell *minishell)
 	int				fd;
 	t_redirection	*redirect_node;
 
+	printf("read_fd\n");
 	redirect_node = ast_node->red;
 	if (redirect_node->flag & LT_SIGN)
 		fd = open(redirect_node->str, O_RDONLY);
@@ -207,6 +208,7 @@ int set_write_fd(t_ast_node *ast_node, t_minishell *minishell)
 	int				fd;
 	t_redirection	*redirect_node;
 
+	printf("write_fd\n");
 	redirect_node = ast_node->red;
 	if (redirect_node->flag & GT_SIGN)
 		fd = open(redirect_node->str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
@@ -281,5 +283,15 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 		printf("recur traverse\n");
 		ret = recur_traverse(head, minishell);
 	}
+	int fd = open("/dev/stdin", O_RDONLY);
+	if (fd == -1)
+		printf("error\n");
+	dup2(fd, 0);
+	close(fd);
+	fd = open("/dev/stdout", O_WRONLY);
+	if (fd == -1)
+		printf("error\n");
+	dup2(fd, 1);
+	close(fd);
 	return (ret);
 }
