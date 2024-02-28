@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 15:40:29 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:56:48 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote,
 	char	*substitude_name;
 	int		start_index;
 
-	printf("dollar cur_char: [%c]\n", **str);
+	//printf("dollar cur_char: [%c]\n", **str);
 	start_index = parse_str->cursor;
 	while (**str && !isspace(**str) && (!in_quote || **str != '\"')
 		&& **str != '$' && **str != '\"')
@@ -267,7 +267,7 @@ int	contains_assignment(char *str)
 {
 	while (*str)
 	{
-		printf("cur_char: [%c]\n", *str);
+		//printf("cur_char: [%c]\n", *str);
 		if (*str == '=')
 			return (1);
 		if (*str == '\'')

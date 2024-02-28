@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 21:41:03 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:51:33 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,30 @@ void	redirect_node_push(t_ast_node *node, t_redirection *red)
 void	tmp_file_list_push(t_tmp_file *list, t_minishell *minishell)
 {
 	t_tmp_file	*next;
+	t_tmp_list	*tmp_list;
 
-	if (minishell->tmp_list == NULL)
-		minishell->tmp_list = list;
+	tmp_list = minishell->tmp_list;
+	next = 0;
+	if (tmp_list == NULL)
+	{
+		tmp_list = (t_tmp_list *)malloc(sizeof(t_tmp_list));
+		tmp_list->head = list;
+		tmp_list->tail = list;
+	}
 	else
 	{
-		next = minishell->tmp_list;
-		while (next->next)
-			next = next->next;
+		next = tmp_list->head;
+	}
+	if (next == NULL)
+	{
+		tmp_list->head = list;
+		tmp_list->tail = list;
+	}
+	else
+	{
+		next = tmp_list->tail;
 		next->next = list;
+		tmp_list->tail = list;
 	}
 	minishell->tmp_file_counter++;
 }

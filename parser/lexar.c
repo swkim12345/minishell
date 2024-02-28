@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 15:59:13 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:23:57 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,9 @@
 static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 {
 	char			*ptr;
+	char			**tmp;
 	int				start;
+	int				i;
 	t_tmp_file		*tmp_file;
 	t_redirection	*red;
 
@@ -133,11 +135,24 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 			break ;
 		index++;
 	}
-	printf("ptr: %s\n", ptr);
-	printf("ptr after index : %s\n", &ptr[index]);
-	printf("start: %d, index: %d\n", start, index);
-	printf("%s\n", &ptr[start]);
-	red->str = ft_substr(&ptr[start], 0, index - start); //innerparser
+	//printf("ptr: %s\n", ptr);
+	//printf("ptr after index : %s\n", &ptr[index]);
+	//printf("start: %d, index: %d\n", start, index);
+	//printf("%s\n", &ptr[start]);
+	red->str = ft_substr(&ptr[start], 0, index - start);
+	i = -1;
+	//별표도 또한 확장해야 함. 그럴 때, 한가지 이상의 값이 들어요면 bash: * : ambiguos redirect 에러가 발생함.
+	if (red->flag != DB_LT_SIGN)
+	{
+		minishell->error = set_error_msg(minishell->execute_name, NULL, "*", "ambiguous redirect");
+		tmp = string_parser(red->str, minishell);
+		if (tmp[1] != NULL)
+		{
+			free_2d_str(tmp);
+			return (syntax_err_message(ptr, NOTDEFINED, -1, minishell));
+		}
+		free_2d_str(tmp);
+	}
 	ft_strlcat(ptr, &ptr[index], ft_strlen(ptr) + ft_strlen(&ptr[index]) + 1);
 	printf("ptr after strlcat: %s\n", ptr);
 	printf("red->str: %s\n", red->str);
@@ -155,7 +170,11 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 		minishell->tmp_file_counter++;
 		tmp_file_list_push(tmp_file, minishell);
 	}
-	return (start);
+	printf("start	: %d\n", start);
+	if (red->flag == DB_LT_SIGN || red->flag == DB_GT_SIGN)
+		return (start - 3);
+	else
+		return (start - 2);
 }
 
 //check redirection, ()
@@ -217,6 +236,7 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 	free_2d_str(node->cmd_node->str);
 	node->cmd_node->str = cmd_str;
 	index = -1;
+	//redirect -> heredoc
 	while (cmd_str[++index])
 		printf("cmd_str[%d]: %s\n", index, cmd_str[index]);
 	return (FUNC_SUC);
