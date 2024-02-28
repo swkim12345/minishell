@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 13:24:30 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 13:49:31 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,7 +287,7 @@ void	set_pwd_old_pwd(t_cmd_node *cmd_node, t_minishell *minishell, t_cd *info)
 	{
 		printf("option flag -P\n");
 		minishell->cwd = getcwd(0,0);
-		if (minishell->cwd)
+		if (!minishell->cwd)
 			minishell->exit_code = builtin_error(minishell, cmd_node->cmd_name, 0);
 	}
 	else if (info->cur_path)
