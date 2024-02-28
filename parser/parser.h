@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 21:50:54 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:42:57 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_ast_node
 	t_redirection				*red;	//redirection array
 	int							flag;	//lexar flag
 	int							index;	//redirection index in t_minishell
+	int							err_flag;	//syntax error flag, TRUE -> stop parsing
 	char						*log_opr;	//||, &&
 }	t_ast_node;
 

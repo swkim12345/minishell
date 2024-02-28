@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 17:23:57 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:08:40 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,12 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	index++;
 	start = index;
 	index += skip_space(&ptr[index]);
+	//syntax error newline
+	if (ptr[index] == '\0')
+	{
+		node->err_flag = TRUE;
+		syntax_err_message("newline", NOTDEFINED, NOTDEFINED, minishell);
+	}
 	while (ptr[index] != '\0')
 	{
 		if (ft_isspace(ptr[index]) == TRUE || ptr[index] == '<' || ptr[index] == '>' || ptr[index] == '\0' || ptr[index] == ' ')
@@ -141,18 +147,7 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	//printf("%s\n", &ptr[start]);
 	red->str = ft_substr(&ptr[start], 0, index - start);
 	i = -1;
-	//별표도 또한 확장해야 함. 그럴 때, 한가지 이상의 값이 들어요면 bash: * : ambiguos redirect 에러가 발생함.
-	if (red->flag != DB_LT_SIGN)
-	{
-		minishell->error = set_error_msg(minishell->execute_name, NULL, "*", "ambiguous redirect");
-		tmp = string_parser(red->str, minishell);
-		if (tmp[1] != NULL)
-		{
-			free_2d_str(tmp);
-			return (syntax_err_message(ptr, NOTDEFINED, -1, minishell));
-		}
-		free_2d_str(tmp);
-	}
+
 	ft_strlcat(ptr, &ptr[index], ft_strlen(ptr) + ft_strlen(&ptr[index]) + 1);
 	printf("ptr after strlcat: %s\n", ptr);
 	printf("red->str: %s\n", red->str);
@@ -236,7 +231,6 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 	free_2d_str(node->cmd_node->str);
 	node->cmd_node->str = cmd_str;
 	index = -1;
-	//redirect -> heredoc
 	while (cmd_str[++index])
 		printf("cmd_str[%d]: %s\n", index, cmd_str[index]);
 	return (FUNC_SUC);

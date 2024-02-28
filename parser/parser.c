@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 17:06:15 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:52:51 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,16 @@ static int	pipe_recurv_parser(t_ast_node *head, int str_end,
 	if (str_end <= 0)
 		return (syntax_err_message(ptr, dup_str_start, -1, minishell));
 	size = ft_strlen(ptr);
-	head->log_opr = ft_substr(ptr, str_end, dup_str_start);
 	head->next_ast_node = init_ast_node(CMDNODE);
-	
 	tmp = ft_substr(ptr, dup_str_start, size);
 	head->next_ast_node->cmd_node->str = \
 		init_doub_char(&tmp, 1);
 	free(tmp);
-
 	tmp = ft_substr(ptr, 0, str_end);
 	free_2d_str(head->cmd_node->str);
 	head->cmd_node->str = \
 		init_doub_char(&tmp, 1);
 	free(tmp);
-
 	if (recurv_parser(head->next_ast_node, minishell) == FUNC_FAIL)
 		return (FUNC_FAIL);
 	if (recurv_parser(head, minishell) == FUNC_FAIL)
@@ -75,7 +71,10 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 
 	ptr = head->cmd_node->str[0];
 	if (str_end <= 0)
-		return (syntax_err_message(ptr, dup_str_start, -1, minishell));
+	{
+		head->err_flag = TRUE;
+		syntax_err_message(ptr, dup_str_start, -1, minishell);
+	}
 	size = ft_strlen(ptr);
 	head->log_opr = ft_substr(ptr, str_end, dup_str_start);
 	head->left_node = init_ast_node(CMDNODE);
@@ -111,7 +110,10 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 		{
 			tmp = finder(&ptr[index + 1], ptr[index]);
 			if (tmp == NOTDEFINED)
-				return (syntax_err_message(ptr, index + 1, -1, minishell));
+			{
+				head->err_flag = TRUE;
+				syntax_err_message(ptr, index + 1, -1, minishell);
+			}
 			index += tmp + 1;
 			continue ;
 		}
@@ -119,7 +121,10 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 		{
 			tmp = bracket_finder(&ptr[index + 1]);
 			if (tmp == NOTDEFINED)
-				return (tmp);
+			{
+				head->err_flag = TRUE;
+				syntax_err_message(ptr, index + 1, -1, minishell);
+			}
 			index += tmp;
 			continue ;
 		}
