@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 17:10:15 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 20:35:02 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# include "libft/libft.h"
+# include "libft/ft_printf.h"
 # include "parser/parser.h"
 # include "builtin/builtin.h"
 # include "subsystem/subsystem.h"

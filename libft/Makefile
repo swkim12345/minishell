@@ -1,46 +1,42 @@
-CC = cc
-
-CFLAGS = -Wall -Werror -Wextra
-
-SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
- 		ft_isdigit.c ft_isprint.c ft_itoa.c ft_memchr.c ft_memcmp.c \
-		ft_memcpy.c ft_memmove.c ft_memset.c ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
-		ft_putstr_fd.c ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c ft_strjoin.c \
-		ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c \
-		ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c 
-
-BONUS_SRCS = ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c \
-		ft_lstclear_bonus.c ft_lstdelone_bonus.c ft_lstiter_bonus.c ft_lstlast_bonus.c \
-		ft_lstmap_bonus.c ft_lstnew_bonus.c ft_lstsize_bonus.c \
-		ft_strtok.c
-
-GNL_SRCS = get_next_line_bonus.c get_next_line_utils_bonus.c
-
-OBJECTS = $(SRCS:.c=.o)
-
-BONUS_OBJECTS = $(BONUS_SRCS:.c=.o)
-
-GNL_OBJECTS = $(GNL_SRCS:.c=.o)
-
 NAME = libftprintf.a
 
-all : $(NAME)
+SRCS = ft_printf.c ft_printf_utils.c ft_printf_utils2.c ft_printf_numlen.c \
+ft_printf_format.c ft_printf_format_d.c ft_printf_format_x.c
 
-$(NAME): $(OBJECTS) $(GNL_OBJECTS)
-	ar rucs $(NAME) $(OBJECTS) $(GNL_OBJECTS)
+BONUS_SRCS = $(SRCS:.c=_bonus.c)
+
+BONUS_OBJS = $(BONUS_SRCS:.c=.o)
+
+OBJS = $(SRCS:.c=.o)
+
+FLAGS = -Wall -Werror -Wextra
+
+CC = cc
+
+%.o: %.c
+	$(CC) -c $(FLAGS) $< -o $@
+
+all: $(OBJS)
+	make -C ./libft bonus
+	ar rucs $(NAME) $(OBJS)
+
+$(LIBFT):
+	make -C ./libft bonus
+
+bonus: $(BONUS_OBJS)
+	make -C ./libft all bonus
+	ar rucs $(NAME) $(BONUS_OBJS)
+
+re: 
+	make -C ./libft re
+	fclean all
 
 clean:
-	rm -f $(OBJECTS) $(BONUS_OBJECTS) $(GNL_OBJECTS)
+	rm -f $(OBJS) $(BONUS_OBJS)
+	make -C ./libft clean
 
 fclean: clean
 	rm -f $(NAME)
+	make -C ./libft fclean
 
-re: fclean all
-
-%.o: %.c
-	$(CC) -c $(CFLAGS) $< -o $@
-
-bonus: $(BONUS_OBJECTS) $(GNL_OBJECTS)
-	ar rucs $(NAME) $(BONUS_OBJECTS) $(GNL_OBJECTS)
-
-.PHONY: all clean fclean re bonus
+.PHONY: bonus re all clean fclean libft
