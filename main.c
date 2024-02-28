@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 15:29:53 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:53:48 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,26 @@ void	init_shell(t_minishell *shell, char **envp, char **argv)
 	shell->tmp_file_counter = 0;
 	shell->env = ft_initenv(envp, shell);
 	shell->export = ft_initenv(envp, shell);
-	shell->execute_name = argv[0];
+	if (ft_strncmp(argv[0], "./", 2) == 0)
+		shell->execute_name = ft_substr(argv[0], 2, ft_strlen(argv[0]));
+	else
+		shell->execute_name = ft_strdup(argv[0]);
+}
+
+void	free_t_minishell(t_minishell *shell)
+{
+	(void) shell;
+	free(shell->input_str);
+	free(shell->cwd);
+	free(shell->execute_name);
+	free_tree_delete(shell->env);
+	free_tree_delete(shell->export);
 }
 
 void	exit_handle(t_minishell *shell, int status)
 {
-	free(shell->input_str);
+	(void) shell;
+	free_t_minishell(shell);
 	printf("exit\n");
 	exit(status);
 }
@@ -47,6 +61,7 @@ void	check()
 
 int	main(int argc, char **argv, char **envp)
 {
+	// atexit(check);
 	t_minishell	shell;
 	t_cmd_node	cmd_node;
 
@@ -71,8 +86,6 @@ int	main(int argc, char **argv, char **envp)
 		cmd_node.str = ft_split(shell.input_str, ' ');
 		cmd_node.cmd_name = cmd_node.str[0];
 		if (!shell.input_str)
-			exit_handle(&shell, EXIT_SUCCESS);
-		else if (str_equal(shell.input_str, "exit"))
 			exit_handle(&shell, EXIT_SUCCESS);
 		else if (ft_strlen(shell.input_str) > 0)
 			process_command(&cmd_node, &shell);

@@ -6,7 +6,7 @@
 #    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/02/27 15:53:54 by sunghwki         ###   ########.fr        #
+#    Updated: 2024/02/27 20:48:56 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,10 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra 
 
 NAME = minishell
+
 #not use main_copy.c, it is just for test
 SRCS = main_copy.c
+
 
 BUILTIN_SRCS = builtin/builtin.c builtin/ft_cd.c builtin/ft_echo.c builtin/ft_env.c builtin/ft_exit.c builtin/ft_export.c builtin/ft_pwd.c builtin/ft_unset.c
 
