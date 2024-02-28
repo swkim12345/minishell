@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 12:37:11 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 12:44:11 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,13 @@ char	*find_from_path(t_cmd_node *cmd_node, t_minishell *minishell)
 		ft_strlcat(temp_str, "/", malloc_size);
 		ft_strlcat(temp_str, cmd_node->cmd_name, malloc_size);
 		if (access(temp_str, F_OK) == 0)
+		{
+			free_2d_str(parsed_path);
 			return (temp_str);
+		}
 		free(temp_str);
 	}
+	free_2d_str(parsed_path);
 	return (0);
 }
 
