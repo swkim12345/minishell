@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 12:48:36 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:29:36 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,34 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 	return (WIFEXITED(status));
 }
 
+void	print_ast_node(t_ast_node *ast_node)
+{
+	printf("ast_node------------------------\n");
+	printf("left_node: [%p]\n", ast_node->left_node);
+	printf("right_node: [%p]\n", ast_node->right_node);
+	printf("next_ast_node: [%p]\n", ast_node->next_ast_node);
+	printf("cmd_node: [%p]\n", ast_node->cmd_node);
+	printf("log_opr: [%s]\n", ast_node->log_opr);
+}
+
+void	print_cmd_node(t_cmd_node *cmd_node)
+{
+	printf("cmd_node-------------------------------\n");
+	printf("cmd_node: [%p]\n", cmd_node);
+	printf("cmd_name: [%s]\n", cmd_node->cmd_name);
+	int i = 0;
+	while (cmd_node->str[i])
+	{
+		printf("str[%d]: [%s]\n", i, cmd_node->str[i]);
+		i++;
+	}
+}
+
 int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 {
+	printf("%p\n", cmd_node->str);
 	cmd_node->cmd_name = cmd_node->str[0];
+	print_cmd_node(cmd_node);
 	//argumnet already expanded ..?
 	//expand_argument(cmd_node);
 	ft_unsetenv(minishell->export, "_");
