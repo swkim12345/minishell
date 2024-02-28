@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:10:28 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 21:40:58 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 21:23:05 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define UTILS_H
 
 # include "../main.h"
+
+typedef struct s_tmp_list	t_tmp_list;
 
 typedef struct s_error
 {
@@ -42,5 +44,6 @@ int		str_equal(char *s1, char *s2);
 int		ft_isspace(int c);
 char	*to_lowercase_str(const char *str);
 void	free_2d_str(char **arr);
+void	free_tmp_list(t_tmp_list *list);
 
 #endif

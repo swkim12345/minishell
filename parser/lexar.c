@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 20:02:30 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/28 21:54:29 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 
 	ptr = node->cmd_node->str[0]; 
 	red = (t_redirection *)malloc(sizeof(t_redirection));
+	tmp_file = NULL;
 	ft_memset((void *)red, 0, sizeof(t_redirection));
 	redirect_node_push(node, red);
 	if (ptr[index] == '<')
@@ -144,7 +145,8 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	//printf("ptr after index : %s\n", &ptr[index]);
 	//printf("start: %d, index: %d\n", start, index);
 	//printf("%s\n", &ptr[start]);
-	red->str = ft_substr(&ptr[start], 0, index - start);
+	
+	red->str = ft_substr(&ptr[start + skip_space(&ptr[start])], 0, index - start);
 	i = -1;
 
 	ft_strlcat(ptr, &ptr[index], ft_strlen(ptr) + ft_strlen(&ptr[index]) + 1);
@@ -159,11 +161,13 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 		tmp_file->tmp = ft_strjoin(minishell->tmp_file_name, ft_itoa(minishell->tmp_file_counter));
 		tmp_file->fd = open(tmp_file->tmp, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (tmp_file->fd == -1) //add file descriptor error
-			return (NOTDEFINED); //maybe leak inside
+			return (-2); //maybe leak inside
 		red->index = minishell->tmp_file_counter;
 		minishell->tmp_file_counter++;
 		tmp_file_list_push(tmp_file, minishell);
 	}
+	if (read_heredoc(minishell, red, tmp_file) != FUNC_SUC)
+		return (-2);
 	if (red->flag == DB_LT_SIGN || red->flag == DB_GT_SIGN)
 		return (start - 3);
 	else
@@ -199,7 +203,7 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 		if (ptr[index] == '<' || ptr[index] == '>')
 		{
 			index = lexar_redirect(node, minishell, index);
-			if (index == NOTDEFINED) //error
+			if (index == -2) //error
 			{
 				return (syntax_err_message(ptr, index, -1, minishell));
 			}
