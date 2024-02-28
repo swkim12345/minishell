@@ -3,14 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 11:29:07 by minsepar          #+#    #+#             */
-/*   Updated: 2023/12/15 17:57:11 by minsepar         ###   ########.fr       */
+/*   Updated: 2023/10/23 19:04:11 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+unsigned int	ft_strlen(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	char	*s_cpy;
+	size_t	s_len;
+
+	if (!s)
+		return (0);
+	while (*s && start > 0)
+	{
+		start--;
+		s++;
+	}
+	s_len = ft_strlen(s);
+	if (s_len < len)
+		len = s_len;
+	s_cpy = (char *)malloc(len + 1);
+	if (!s_cpy)
+		return (0);
+	i = 0;
+	while (s[i] && i < len)
+	{
+		s_cpy[i] = s[i];
+		i++;
+	}
+	s_cpy[i] = 0;
+	return (s_cpy);
+}
 
 void	*ft_free(void **zmem1, void *mem2, void *mem3)
 {

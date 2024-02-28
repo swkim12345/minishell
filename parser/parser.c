@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 19:57:34 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 20:14:41 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 		syntax_err_message(ptr, dup_str_start, -1, minishell);
 	}
 	size = ft_strlen(ptr);
-	if (ft_strncmp(&ptr[str_end], "&&", ft_strlen("&&")) == 0)
+	if (ft_strncmp(&ptr[str_end + 1], "&&", ft_strlen("&&")) == 0)
 		head->flag = AND_FLAG;
-	else if (ft_strncmp(&ptr[str_end], "||", ft_strlen("||")) == 0)
+	else if (ft_strncmp(&ptr[str_end + 1], "||", ft_strlen("||")) == 0)
 		head->flag = OR_FLAG;
 	else
 		head->flag = NO_FLAG;

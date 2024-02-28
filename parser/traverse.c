@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 20:09:05 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 20:15:53 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	recur_traverse(t_ast_node *head, t_minishell *minishell) //fork로 실행, w
 		printf("cmd_node : %s\n", head->cmd_node->str[0]);
 		return (TRUE);
 	}
-	printf("flag [%d]", head->flag);
+	printf("*******flag [%d]\n", head->flag);
+	printf("*******ret [%d]\n", ret);
 	if (((head->flag & AND_FLAG) && !ret) ||
 	((head->flag & OR_FLAG) && ret))
 	{
