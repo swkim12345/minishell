@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 21:36:43 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 22:06:41 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,12 +191,15 @@ int	set_read_fd(t_ast_node *ast_node, t_minishell *minishell)
 	if (fd < 0)
 	{
 		print_error_msg(minishell->error, errno, 0);
-		return (-1);
+		return (1);
 	}
 	if (dup2(fd, 0) == -1)
+	{
 		print_error_msg(minishell->error, errno, 0);
+		return (1);
+	}
 	close(fd);
-	return (1);
+	return (0);
 }
 
 int set_write_fd(t_ast_node *ast_node, t_minishell *minishell)
@@ -214,12 +217,15 @@ int set_write_fd(t_ast_node *ast_node, t_minishell *minishell)
 	if (fd < 0)
 	{
 		print_error_msg(minishell->error, errno, 0);
-		return (-1);
+		return (1);
 	}
-	if (dup2(fd, 0) == -1)
+	if (dup2(fd, 1) == -1)
+	{
 		print_error_msg(minishell->error, errno, 0);
+		return (1);
+	}
 	close(fd);
-	return (1);
+	return (0);
 }
 
 int	process_redirection(t_ast_node *ast_node, t_minishell *minishell)
@@ -228,6 +234,7 @@ int	process_redirection(t_ast_node *ast_node, t_minishell *minishell)
 	int				error_check;
 	int				i;
 
+	printf("redirection entered\n");
 	cur_node = ast_node->red;
 	error_check = 0;
 	i = 0;
@@ -239,6 +246,7 @@ int	process_redirection(t_ast_node *ast_node, t_minishell *minishell)
 			error_check = set_write_fd(ast_node, minishell);
 		if (error_check != 0)
 			return (error_check);
+		printf("redirection success\n");
 		cur_node = cur_node->next;
 	}
 	return (error_check);
@@ -250,6 +258,7 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 
 	printf("traverse\n");
 	print_ast_node(head);
+	process_redirection(head, minishell);
 	if (!head && head->cmd_node->str[0] == NULL)
 		return (FUNC_FAIL);
 	else if (check_pipe && head->next_ast_node)
