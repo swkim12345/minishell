@@ -15,6 +15,7 @@
 
 # include "../main.h"
 
+typedef struct s_tmp_file	t_tmp_file;
 typedef struct s_tmp_list	t_tmp_list;
 
 typedef struct s_error
