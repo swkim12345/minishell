@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 14:27:30 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:25:00 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,29 +49,54 @@ char	*get_error_token(char *ptr, int index)
 	return (ret);
 }
 
-
+static void	split_node(int end, int new_start, t_ast_node *node, int new_node_flag)
+{
+	char		*ptr;
+	char		*tmp;
+	int			size;
+	t_ast_node	*old_node;
+	t_ast_node	*new_node;
+	
+	old_node = node;
+	new_node = NULL;
+	ptr = ft_strdup(node->cmd_node->str[0]);
+	size = ft_strlen(&ptr[new_start]);
+	if (new_node_flag & LEFTNODE)
+	{
+		node->left_node = init_ast_node(CMDNODE);
+		old_node = node->left_node;
+	}
+	if (new_node_flag & RIGHTNODE)
+	{
+		node->right_node = init_ast_node(CMDNODE);
+		new_node = node->right_node;
+	}
+	if (new_node_flag & NEXTNODE)
+	{
+		node->next_ast_node = init_ast_node(CMDNODE);
+		new_node = node->next_ast_node;
+	}
+	tmp = ft_substr(ptr, 0, end);
+	free_2d_str(node->cmd_node->str);
+	old_node->cmd_node->str = init_doub_char(&tmp, 1);
+	free(tmp);
+	tmp = ft_substr(ptr, new_start, ft_strlen(&ptr[new_start]));
+	new_node->cmd_node->str = init_doub_char(&tmp, 1);
+	free(tmp);
+	free(ptr);
+}
 
 static int	pipe_recurv_parser(t_ast_node *head, int str_end,
 			int dup_str_start, t_minishell *minishell)
 {
 	char	*ptr;
-	char	*tmp;
 	int		size;
 
 	ptr = head->cmd_node->str[0];
 	if (str_end <= 0)
 		return (syntax_err_message(ptr, dup_str_start, -1, minishell));
 	size = ft_strlen(ptr);
-	head->next_ast_node = init_ast_node(CMDNODE);
-	tmp = ft_substr(ptr, dup_str_start, size);
-	head->next_ast_node->cmd_node->str = \
-		init_doub_char(&tmp, 1);
-	free(tmp);
-	tmp = ft_substr(ptr, 0, str_end);
-	free_2d_str(head->cmd_node->str);
-	head->cmd_node->str = \
-		init_doub_char(&tmp, 1);
-	free(tmp);
+	split_node(str_end, dup_str_start, head, NEXTNODE);
 	if (recurv_parser(head->next_ast_node, minishell) == FUNC_FAIL)
 		return (FUNC_FAIL);
 	if (recurv_parser(head, minishell) == FUNC_FAIL)
@@ -83,7 +108,6 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 			int dup_str_start, t_minishell *minishell)
 {
 	char	*ptr;
-	char	*tmp;
 	int		size;
 
 	ptr = head->cmd_node->str[0];
@@ -99,16 +123,7 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 		head->flag = OR_FLAG;
 	else
 		head->flag = NO_FLAG;
-	head->left_node = init_ast_node(CMDNODE);
-	head->right_node = init_ast_node(CMDNODE);
-	tmp = ft_substr(ptr, 0, str_end);
-	head->left_node->cmd_node->str = \
-		init_doub_char(&tmp, 1);
-	free(tmp);
-	tmp = ft_substr(ptr, dup_str_start, size);
-	head->right_node->cmd_node->str = \
-		init_doub_char(&tmp, 1);
-	free(tmp);
+	split_node(str_end, dup_str_start, head, LEFTNODE | RIGHTNODE);
 	free_cmd_node(&(head->cmd_node));
 	if (recurv_parser(head->left_node, minishell) == FUNC_FAIL)
 		return (FUNC_FAIL);
@@ -132,6 +147,8 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 	while (ptr[++index])
 	{
 		index += skip_space(&ptr[index]); //error occur
+		if (ptr[index] == '\0')
+			break ;
 		if (ptr[index] == '\"' || ptr[index] == '\'')
 		{
 			tmp = finder(&ptr[index + 1], ptr[index]);
@@ -197,13 +214,11 @@ t_ast_node	*parser(char *str, t_minishell *minishell)
 	t_ast_node	*ret;
 	int			err;
 
+	minishell->tmp_file_counter = 0;
 	ret = init_ast_node(CMDNODE);
 	ret->cmd_node->str = init_doub_char(&str, 1);
 	err = recurv_parser(ret, minishell);
 	if (err == FUNC_FAIL)
-	{
-		//free_ast_tree(ret);
 		return (NULL);
-	}
 	return (ret);
 }

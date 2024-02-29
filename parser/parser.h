@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 13:22:50 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:08:05 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@
 # define NONODE			0
 # define LEFTNODE		1
 # define RIGHTNODE		2
-# define CMDNODE		4
+# define NEXTNODE		4
+# define CMDNODE		8
 
 # include "../main.h"
 
