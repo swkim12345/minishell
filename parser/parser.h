@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 16:46:43 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:58:26 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@
 # define NONODE			0
 # define LEFTNODE		1
 # define RIGHTNODE		2
-# define CMDNODE		4
+# define NEXTNODE		4
+# define CMDNODE		8
 
 # include "../main.h"
 
@@ -48,7 +49,8 @@ typedef struct s_minishell		t_minishell;
 typedef struct s_redirection	t_redirection;
 typedef struct s_tmp_file		t_tmp_file;
 
-typedef struct s_redirection {
+typedef struct s_redirection 
+{
 	int							index;	//if heredoc:index or not use NOTDEFINED
 	int							flag;	// 0: <, 1: <<, 2: >, 4: >>
 	char						*str;	// file name or here doc delim

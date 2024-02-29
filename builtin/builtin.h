@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/29 11:00:05 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 13:44:16 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ int		ft_pwd(t_minishell *minishell);
 int		ft_unset(t_cmd_node *cmd_node, t_minishell *minishell);
 
 /* ft_exit.c */
-int	ft_exit(t_cmd_node *cmd_node, t_minishell *minishell);
+int		ft_exit(t_cmd_node *cmd_node, t_minishell *minishell);
 
 #endif
