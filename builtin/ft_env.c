@@ -6,22 +6,28 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:18:17 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 20:17:18 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 11:00:57 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-int	ft_env(t_cmd_node *cmd_node, t_minishell *minishell)
+int	ft_env(t_minishell *minishell)
 {
 	char	**ret;
 	int		index;
-	(void) cmd_node;
+	int		i;
 
 	ret = ft_charenv(minishell->env, FALSE);
 	index = -1;
 	while (ret[++index])
 	{
+		i = -1;
+		while (ret[index][++i])
+		{
+			if (ret[index][i] != '=')
+				continue ;
+		}
 		printf("%s\n", ret[index]);
 		free(ret[index]);
 	}
