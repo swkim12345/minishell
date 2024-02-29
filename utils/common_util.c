@@ -61,6 +61,8 @@ void	free_2d_str(char **arr)
 	int	i;
 
 	i = -1;
+	if (!arr)
+		return ;
 	while (arr[++i])
 		free(arr[i]);
 	free(arr[i]);
