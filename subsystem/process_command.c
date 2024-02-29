@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 20:21:19 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/28 22:02:08 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 	}
 	else
 	{
-		printf("running builtin fn\n");
+		printf("running builtin extern cmd\n");
 		minishell->exit_code = process_extern_cmd(cmd_node, minishell);
 	}
 	return (minishell->exit_code);
