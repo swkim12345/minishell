@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 22:24:57 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:42:41 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ int	get_heredoc_fd(t_minishell *minishell, int index)
 		cur_node = cur_node->next;
 		index--;
 	}
+	printf("heredoc_name: %s\n", cur_node->tmp);
 	return (cur_node->fd);
 }
 
@@ -184,18 +185,24 @@ int	set_read_fd(t_ast_node *ast_node, t_minishell *minishell)
 	printf("read_fd\n");
 	redirect_node = ast_node->red;
 	if (redirect_node->flag & LT_SIGN)
+	{
 		fd = open(redirect_node->str, O_RDONLY);
+		printf("file: %s\n", redirect_node->str);
+	}
 	else if (redirect_node->flag & DB_LT_SIGN)
 		fd = get_heredoc_fd(minishell, ast_node->index);
 	else
 		return (1);
+	printf("read fd: %d\n", fd);
 	if (fd < 0)
 	{
+		set_error_msg(minishell->execute_name, "dup2()", 0, "open failed");
 		print_error_msg(minishell->error, errno, 0);
 		return (1);
 	}
 	if (dup2(fd, 0) == -1)
 	{
+		set_error_msg(minishell->execute_name, "dup2()", 0, "dup2 failed");
 		print_error_msg(minishell->error, errno, 0);
 		return (1);
 	}
@@ -213,9 +220,11 @@ int set_write_fd(t_ast_node *ast_node, t_minishell *minishell)
 	if (redirect_node->flag & GT_SIGN)
 		fd = open(redirect_node->str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	else if (redirect_node->flag & DB_GT_SIGN)
-		fd = open(redirect_node->str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+		fd = open(redirect_node->str, O_CREAT | O_APPEND | O_WRONLY, 0644);
 	else
 		return (1);
+	printf("write fd: %d\n", fd);
+	printf("write file: %s\n", redirect_node->str);
 	if (fd < 0)
 	{
 		print_error_msg(minishell->error, errno, 0);
@@ -242,10 +251,13 @@ int	process_redirection(t_ast_node *ast_node, t_minishell *minishell)
 	i = 0;
 	while (cur_node)
 	{
-		if (cur_node->flag & LT_SIGN || cur_node->flag & DB_LT_SIGN)
+		printf("cur_node: %s\n", cur_node->str);
+		if ((cur_node->flag & LT_SIGN) || (cur_node->flag & DB_LT_SIGN))
 			error_check = set_read_fd(ast_node, minishell);
-		else if (cur_node->flag & GT_SIGN || cur_node->flag & DB_GT_SIGN)
+		else if ((cur_node->flag & GT_SIGN) || (cur_node->flag & DB_GT_SIGN))
 			error_check = set_write_fd(ast_node, minishell);
+		else
+			printf("not entered [%d]\n", cur_node->flag);
 		if (error_check != 0)
 			return (error_check);
 		printf("redirection success\n");
@@ -276,22 +288,16 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 	else if (head->cmd_node)
 	{
 		printf("process command\n");
-		ret = process_command(head->cmd_node, minishell);
+		if (head->cmd_node->str[0])
+			ret = process_command(head->cmd_node, minishell);
+		else
+			return (0);
 	}
-	else
+	else if (!head->cmd_node)
 	{
 		printf("recur traverse\n");
 		ret = recur_traverse(head, minishell);
 	}
-	int fd = open("/dev/stdin", O_RDONLY);
-	if (fd == -1)
-		printf("error\n");
-	dup2(fd, 0);
-	close(fd);
-	fd = open("/dev/stdout", O_WRONLY);
-	if (fd == -1)
-		printf("error\n");
-	dup2(fd, 1);
-	close(fd);
+	ret = 0;
 	return (ret);
 }

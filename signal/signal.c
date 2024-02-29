@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 21:29:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/29 12:34:46 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 13:10:14 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,18 @@ void	sigint_handler()
 	rl_redisplay();
 }
 
+void	sigint_cmd_handler()
+{
+	printf("\n");
+}
+
 void	set_command_handler()
 {
 	struct sigaction	sact;
 
 	sigemptyset(&sact.sa_mask);
 	sact.sa_flags = 0;
-	sact.sa_handler = NULL;
+	sact.sa_handler = sigint_cmd_handler;
 	signal(SIGQUIT, SIG_IGN);
 	sigaction(SIGINT, &sact, NULL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 12:29:44 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:37:40 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 		if (tmp_file->fd == -1) //add file descriptor error
 			return (-2); //maybe leak inside
 		red->index = minishell->tmp_file_counter;
-		minishell->tmp_file_counter++;
 		tmp_file_list_push(tmp_file, minishell);
 		if (read_heredoc(minishell, red, tmp_file) != FUNC_SUC)
 			return (-2);
