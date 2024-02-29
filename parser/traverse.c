@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 16:55:13 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 17:25:01 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,11 +173,8 @@ int	get_heredoc_fd(t_minishell *minishell, int index)
 
 	cur_node = minishell->tmp_list->head;
 	printf("ast_ndoe->index: %d\n", index);
-	while (index > 0)
-	{
+	while (--index > 0)
 		cur_node = cur_node->next;
-		index--;
-	}
 	printf("heredoc_name: %s\n", cur_node->tmp);
 	fd = open(cur_node->tmp, O_RDONLY);
 	return (fd);
