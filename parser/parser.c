@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
 /*   Updated: 2024/02/29 14:25:00 by sunghwki         ###   ########.fr       */
@@ -203,6 +203,7 @@ int	read_heredoc(t_minishell *minishell, t_redirection *redirection
 		if (!line || str_equal(line, redirection->str))
 			break ;
 		ft_putstr_fd(line, fd);
+		ft_putchar_fd('\n', fd);
 		free(line);
 	}
 	return (FUNC_SUC);
