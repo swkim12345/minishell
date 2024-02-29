@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 20:35:02 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:33:26 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # include "inner_parser/inner_parser.h"
 # include "environ/environ.h"
 # include "utils/utils.h"
+# include "signal/signal.h"
 
 typedef struct s_minishell	t_minishell;
 typedef struct s_str_list	t_str_list;
@@ -92,7 +93,6 @@ void	free_t_minishell(t_minishell *shell);
 
 /* common_util.c */
 int	str_equal(char *s1, char *s2);
-void	set_signal_handler();
 
 /* traverse.c */
 t_tmp_file	*get_heredoc_file(t_minishell *minishell, int index);
