@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/29 12:28:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 13:42:06 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	init_shell(t_minishell *shell, char **envp, char **argv)
 {
 	ft_memset(shell, 0, sizeof(t_minishell));
+	shell->stdin_fd = dup(0);
+	shell->stdout_fd = dup(1);
 	shell->cwd = getcwd(0, 0);
 	shell->envp = envp;
 	shell->tmp_file_name = "/tmp/minishell_tmp_";
@@ -96,7 +98,7 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strlen(shell.input_str) != 0)
 			add_history(shell.input_str);
 		free(shell.input_str);
-		printf("\nend of main\n");
+		printf("end of main\n");
 	}
 
 }

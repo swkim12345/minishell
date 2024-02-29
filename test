@@ -1,1 +1,11 @@
-hello world
+redirection success
+process command
+0x6030000053b0
+cmd_node-------------------------------
+cmd_node: [0x602000006bf0]
+cmd_name: [echo]
+str[0]: [echo]
+str[1]: [bye]
+str[2]: [world]
+running builtin fn
+bye world
