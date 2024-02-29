@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 21:29:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/29 17:40:24 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 19:24:44 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	set_command_handler()
 	sact.sa_flags = 0;
 	sact.sa_handler = NULL;
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTERM, SIG_IGN);
 	sigaction(SIGINT, &sact, NULL);
 }
 
@@ -44,6 +45,7 @@ void	set_parser_handler()
 	sact.sa_flags = 0;
 	sact.sa_handler = NULL;
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTERM, SIG_IGN);
 	sigaction(SIGINT, &sact, NULL);
 }
 
@@ -59,5 +61,6 @@ void	set_signal_handler()
 	sact.sa_flags = 0;
 	sact.sa_handler = sigint_handler;
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTERM, SIG_IGN);
 	sigaction(SIGINT, &sact, NULL);
 }

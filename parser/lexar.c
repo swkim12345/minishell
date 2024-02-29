@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 16:57:42 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 19:30:06 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ static int	heredoc_open_fd(t_redirection *red, t_minishell *minishell)
 	red->index = minishell->tmp_file_counter;
 	tmp_list_push(tmp_file, minishell);
 	if (read_heredoc(minishell, red, tmp_file) != FUNC_SUC)
+	{
+		printf("read_heredoc caught\n");
 		return (FUNC_FAIL);
+	}
 	return (FUNC_SUC);
 }
 

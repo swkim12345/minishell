@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/29 18:04:29 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 19:42:15 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,16 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		shell.input_str = readline("minishell-1.0$ ");
-		set_command_handler();
 		if (!shell.input_str)
 			exit_handle(&shell, 134);
 		head = parser(shell.input_str, &shell);
 		if (!shell.input_str)
 			exit_handle(&shell, EXIT_SUCCESS);
-		else if (ft_strlen(shell.input_str) > 0)
+		else if (ft_strlen(shell.input_str) > 0 && head)
 		{
 			traverse(head, &shell, 1);
 			clear_tmp_list(shell.tmp_list, &shell);
 		}
-		// set_signal_handler();
 		if (ft_strlen(shell.input_str) != 0)
 			add_history(shell.input_str);
 		free(shell.input_str);
