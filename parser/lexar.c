@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 22:04:51 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:29:44 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 		red->index = minishell->tmp_file_counter;
 		minishell->tmp_file_counter++;
 		tmp_file_list_push(tmp_file, minishell);
+		if (read_heredoc(minishell, red, tmp_file) != FUNC_SUC)
+			return (-2);
 	}
-	if (read_heredoc(minishell, red, tmp_file) != FUNC_SUC)
-		return (-2);
 	if (red->flag == DB_LT_SIGN || red->flag == DB_GT_SIGN)
 		return (start - 3);
 	else
@@ -124,7 +124,7 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 				return (syntax_err_message(ptr, index, -1, minishell));
 			continue ;
 		}
-		if (ptr[index] == '(')
+		if (ptr[index] == '(') // fix to check flag sign
 		{
 			if (str_flag == FALSE)
 			{

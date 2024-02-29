@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 21:10:29 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:31:31 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	bracket_finder(char *str)
 	int	count;
 	int	index;
 
-	index = -1;
+	index = 0;
 	if (*str == '(')
 	{
 		count = 1;
