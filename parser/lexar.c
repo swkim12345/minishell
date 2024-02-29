@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 16:55:41 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 17:34:24 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	printf("red->flag: %d\n", red->flag);
 	if (red->flag == DB_LT_SIGN)
 	{
-		node->index++;
+		node->index = minishell->tmp_file_counter + 1;
 		if (heredoc_open_fd(red, minishell) == FUNC_FAIL) //free add required
 			return (-2);
 	}
@@ -180,8 +180,5 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 	cmd_str = string_parser(ptr, minishell);
 	free_2d_str(node->cmd_node->str);
 	node->cmd_node->str = cmd_str;
-	index = -1;
-	while (cmd_str[++index])
-		printf("cmd_str[%d]: %s\n", index, cmd_str[index]);
 	return (FUNC_SUC);
 }
