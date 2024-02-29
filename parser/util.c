@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 12:31:31 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:46:43 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	redirect_node_push(t_ast_node *node, t_redirection *red)
 	}
 }
 
-void	tmp_file_list_push(t_tmp_file *list, t_minishell *minishell)
+void	tmp_list_push(t_tmp_file *list, t_minishell *minishell)
 {
 	if (minishell->tmp_list->tail == NULL)
 	{

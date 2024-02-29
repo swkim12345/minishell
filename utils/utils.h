@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:10:28 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 21:23:05 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:43:51 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int		str_equal(char *s1, char *s2);
 int		ft_isspace(int c);
 char	*to_lowercase_str(const char *str);
 void	free_2d_str(char **arr);
-void	free_tmp_list(t_tmp_list *list);
+void	free_tmp_list(t_tmp_list *list, t_minishell *minishell);
+void	clear_tmp_list(t_tmp_list *list, t_minishell *minishell);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/29 14:43:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:44:36 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_t_minishell(t_minishell *shell)
 	free(shell->input_str);
 	free(shell->cwd);
 	free(shell->execute_name);
-	free_tmp_list(shell->tmp_list);
+	free_tmp_list(shell->tmp_list, shell);
 	free_tree_delete(shell->env);
 	free_tree_delete(shell->export);
 }
@@ -93,9 +93,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			set_command_handler();
 			traverse(head, &shell, 1);
-			dup2(shell.stdin_fd, 0);
-			dup2(shell.stdout_fd, 1);
-			printf("change stdin stdout\n");
+			clear_tmp_list(shell.tmp_list, &shell);
 			set_signal_handler();
 		}
 		if (ft_strlen(shell.input_str) != 0)

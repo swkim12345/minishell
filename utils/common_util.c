@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   common_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 21:14:09 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:43:23 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,14 @@ void	free_2d_str(char **arr)
 	free(arr);
 }
 
-void	free_tmp_list(t_tmp_list *list)
+void	clear_tmp_list(t_tmp_list *list, t_minishell *minishell)
 {
 	t_tmp_file	*cur;
 	t_tmp_file	*next;
 
 	cur = list->head;
+	list->head = NULL;
+	list->tail = NULL;
 	while (cur)
 	{
 		next = cur->next;
@@ -80,5 +82,12 @@ void	free_tmp_list(t_tmp_list *list)
 		free(cur);
 		cur = next;
 	}
+	minishell->tmp_file_counter = 0;
+}
+
+void	free_tmp_list(t_tmp_list *list, t_minishell *minishell)
+{
+	clear_tmp_list(list, minishell);
 	free(list);
+	list = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 14:42:41 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:55:13 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,9 @@ int	pipe_traverse(t_ast_node *head, t_minishell *minishell)
 	info.num_pipe = get_num_pipe(head);
 	printf("num_pipe: %d\n", info.num_pipe);
 	info.pipe_list = init_pipe_list(info.num_pipe);
+	dup2(minishell->stdin_fd, 0);
+	dup2(minishell->stdout_fd, 1);
+	printf("change stdin stdout\n");
 	while (++info.current_pipe < info.num_pipe)
 	{
 		pipe(info.pipe_list[info.current_pipe].pipe_fd);
@@ -166,15 +169,18 @@ t_tmp_file	*get_heredoc_file(t_minishell *minishell, int index)
 int	get_heredoc_fd(t_minishell *minishell, int index)
 {
 	t_tmp_file	*cur_node;
+	int			fd;
 
 	cur_node = minishell->tmp_list->head;
+	printf("ast_ndoe->index: %d\n", index);
 	while (index > 0)
 	{
 		cur_node = cur_node->next;
 		index--;
 	}
 	printf("heredoc_name: %s\n", cur_node->tmp);
-	return (cur_node->fd);
+	fd = open(cur_node->tmp, O_RDONLY);
+	return (fd);
 }
 
 int	set_read_fd(t_ast_node *ast_node, t_minishell *minishell)
@@ -298,6 +304,9 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 		printf("recur traverse\n");
 		ret = recur_traverse(head, minishell);
 	}
+	dup2(minishell->stdin_fd, 0);
+	dup2(minishell->stdout_fd, 1);
+	printf("change stdin stdout\n");
 	ret = 0;
 	return (ret);
 }
