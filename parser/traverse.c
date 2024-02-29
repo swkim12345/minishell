@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 13:45:11 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:42:41 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ int	get_heredoc_fd(t_minishell *minishell, int index)
 		cur_node = cur_node->next;
 		index--;
 	}
+	printf("heredoc_name: %s\n", cur_node->tmp);
 	return (cur_node->fd);
 }
 
@@ -183,7 +184,6 @@ int	set_read_fd(t_ast_node *ast_node, t_minishell *minishell)
 
 	printf("read_fd\n");
 	redirect_node = ast_node->red;
-	minishell->stdin_fd = dup(0);
 	if (redirect_node->flag & LT_SIGN)
 	{
 		fd = open(redirect_node->str, O_RDONLY);
@@ -196,11 +196,13 @@ int	set_read_fd(t_ast_node *ast_node, t_minishell *minishell)
 	printf("read fd: %d\n", fd);
 	if (fd < 0)
 	{
+		set_error_msg(minishell->execute_name, "dup2()", 0, "open failed");
 		print_error_msg(minishell->error, errno, 0);
 		return (1);
 	}
 	if (dup2(fd, 0) == -1)
 	{
+		set_error_msg(minishell->execute_name, "dup2()", 0, "dup2 failed");
 		print_error_msg(minishell->error, errno, 0);
 		return (1);
 	}
@@ -215,11 +217,10 @@ int set_write_fd(t_ast_node *ast_node, t_minishell *minishell)
 
 	printf("write_fd\n");
 	redirect_node = ast_node->red;
-	minishell->stdout_fd = dup(1);
 	if (redirect_node->flag & GT_SIGN)
 		fd = open(redirect_node->str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	else if (redirect_node->flag & DB_GT_SIGN)
-		fd = open(redirect_node->str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+		fd = open(redirect_node->str, O_CREAT | O_APPEND | O_WRONLY, 0644);
 	else
 		return (1);
 	printf("write fd: %d\n", fd);
@@ -297,9 +298,6 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 		printf("recur traverse\n");
 		ret = recur_traverse(head, minishell);
 	}
-	dup2(minishell->stdin_fd, 0);
-	dup2(minishell->stdout_fd, 1);
-	printf("change stdin stdout\n");
 	ret = 0;
 	return (ret);
 }

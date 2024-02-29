@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/29 13:42:06 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:43:20 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,9 @@ int	main(int argc, char **argv, char **envp)
 		{
 			set_command_handler();
 			traverse(head, &shell, 1);
+			dup2(shell.stdin_fd, 0);
+			dup2(shell.stdout_fd, 1);
+			printf("change stdin stdout\n");
 			set_signal_handler();
 		}
 		if (ft_strlen(shell.input_str) != 0)
