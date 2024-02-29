@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 12:29:44 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 13:04:17 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 	while (ptr[++index])
 	{
 		index += skip_space(&ptr[index]);
+		if (ptr[index] == '\0')
+			break ;
 		if (ptr[index] == '\"' || ptr[index] == '\'')
 		{
 			tmp = finder(&ptr[index + 1], ptr[index]);
@@ -134,7 +136,7 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 				ptr[tmp + index] = ' ';
 				ptr[index] = ' ';
 				recurv_parser(node, minishell);
-				continue ;
+				return (TRUE);
 			}
 			tmp = bracket_finder(&ptr[index]);
 			if (tmp == NOTDEFINED)

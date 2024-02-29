@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 12:28:52 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:43:32 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 	while (ptr[++index])
 	{
 		index += skip_space(&ptr[index]); //error occur
+		if (ptr[index] == '\0')
+			break ;
 		if (ptr[index] == '\"' || ptr[index] == '\'')
 		{
 			tmp = finder(&ptr[index + 1], ptr[index]);
