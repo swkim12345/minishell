@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 14:48:44 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:11:25 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,28 @@ static int	find_next_token_red(char *ptr, int index, t_redirection *red)
 	index++;
 	return (index);
 }
+
+//static char *file_name_parser(char *ptr)
+//{
+//	t_parse_str	parse_str;
+//	char		*ret;
+//	int			index;
+
+//	init_parse_str(&parse_str);	
+//	index = -1;
+//	while (ptr[++index])
+//	{
+//		if (ft_isspace(ptr[index]) == TRUE)
+//			continue ;
+//		if (ptr[index] == '\"' || ptr[index] == '\'')
+//			continue ;
+//		append_char(&parse_str, ptr[index]);
+//	}
+//	ret = ft_strdup(parse_str.str); 
+//	free_parse_str(&parse_str);
+//	free(ptr);
+//	return (ret);
+//}
 
 static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 {
