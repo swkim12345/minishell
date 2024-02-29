@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:10:28 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/29 16:27:27 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 17:49:33 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../main.h"
 
+typedef struct s_tmp_file	t_tmp_file;
 typedef struct s_tmp_list	t_tmp_list;
 
 typedef struct s_error

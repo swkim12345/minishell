@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 14:25:00 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 17:54:57 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static void	split_node(int end, int new_start, t_ast_node *node, int new_node_fl
 	}
 	tmp = ft_substr(ptr, 0, end);
 	free_2d_str(node->cmd_node->str);
+	node->cmd_node->str = NULL;
 	old_node->cmd_node->str = init_doub_char(&tmp, 1);
 	free(tmp);
 	tmp = ft_substr(ptr, new_start, ft_strlen(&ptr[new_start]));
@@ -137,11 +138,9 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 	int			index;
 	int			tmp;
 	int			str_flag;
-	int			bracket_flag;
 	char		*ptr;
 
 	index = -1;
-	bracket_flag = FALSE;
 	str_flag = FALSE;
 	ptr = head->cmd_node->str[0]; 
 	while (ptr[++index])
@@ -163,13 +162,17 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 		if (ptr[index] == '(') //subshell not found error
 		{
 			tmp = bracket_finder(&ptr[index]);
-			if (str_flag == TRUE || tmp + index == NOTDEFINED || tmp == index + 1)
+			if (tmp + index == NOTDEFINED || tmp == index + 1)
 			{
 				head->err_flag = TRUE;
-				return (syntax_err_message(ptr, index + 1, -1, minishell));
+				return (syntax_err_message(&ptr[index], tmp, -1, minishell));
+			}
+			if (str_flag == TRUE)
+			{
+				head->err_flag = TRUE;
+				return (syntax_err_message(&ptr[index + 1], tmp - 1, -1, minishell));
 			}
 			index += tmp;
-			bracket_flag = TRUE;
 			continue ;
 		}
 		if (ptr[index] == '|' && ptr[index + 1] == '|')
@@ -180,7 +183,6 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 			return (pipe_recurv_parser(head, index - 1, index + 1, minishell));
 		str_flag = TRUE;
 	}
-	printf("parser ptr: %s\n", ptr);
 	tmp = lexar(head, minishell);
 	if (tmp == FUNC_FAIL)
 		return (FUNC_FAIL);
