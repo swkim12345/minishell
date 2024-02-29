@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:38:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 16:44:17 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 10:57:51 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,21 @@ int	ft_unset(t_cmd_node *cmd_node, t_minishell *minishell)
 				cmd_node->str[index], "not a valid identifier");
 		i = 0;
 		if (!(ft_isalpha(cmd_node->str[index][i]) == TRUE || cmd_node->str[index][i] == '_'))
-			return (print_error_msg(minishell->error, 1, FALSE));
+		{
+			print_error_msg(minishell->error, 1, FALSE);
+			continue ;
+		}
 		while (cmd_node->str[index][++i])
 		{
 			if (!(cmd_node->str[index][i] == '_' || ft_isalnum(cmd_node->str[index][i])))
-				return (print_error_msg(minishell->error, 1, FALSE));
+			{
+				print_error_msg(minishell->error, 1, FALSE);
+				continue ;
+			}
 		}
 		free_error(minishell->error);
-		if (ft_unsetenv(minishell->export, cmd_node->str[index]) == FUNC_FAIL)
-			return (FUNC_FAIL);
-		if (ft_unsetenv(minishell->env, cmd_node->str[index]) == FUNC_FAIL)
-			return (FUNC_FAIL);
+		ft_unsetenv(minishell->export, cmd_node->str[index]);
+		ft_unsetenv(minishell->env, cmd_node->str[index]);
 	}
 	return (FUNC_SUC);
 }
