@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/29 14:43:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 18:04:29 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_t_minishell(t_minishell *shell)
 	free(shell->input_str);
 	free(shell->cwd);
 	free(shell->execute_name);
-	free_tmp_list(shell->tmp_list);
+	free_tmp_list(shell->tmp_list, shell);
 	free_tree_delete(shell->env);
 	free_tree_delete(shell->export);
 }
@@ -84,6 +84,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		shell.input_str = readline("minishell-1.0$ ");
+		set_command_handler();
 		if (!shell.input_str)
 			exit_handle(&shell, 134);
 		head = parser(shell.input_str, &shell);
@@ -91,13 +92,10 @@ int	main(int argc, char **argv, char **envp)
 			exit_handle(&shell, EXIT_SUCCESS);
 		else if (ft_strlen(shell.input_str) > 0)
 		{
-			set_command_handler();
 			traverse(head, &shell, 1);
-			dup2(shell.stdin_fd, 0);
-			dup2(shell.stdout_fd, 1);
-			printf("change stdin stdout\n");
-			set_signal_handler();
+			clear_tmp_list(shell.tmp_list, &shell);
 		}
+		// set_signal_handler();
 		if (ft_strlen(shell.input_str) != 0)
 			add_history(shell.input_str);
 		free(shell.input_str);

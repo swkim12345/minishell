@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 16:24:51 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 17:02:00 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void	redirect_node_push(t_ast_node *node, t_redirection *red)
 		tmp->next = red;
 	}
 }
-
-
 
 int	finder(char *str, char checker)
 {
