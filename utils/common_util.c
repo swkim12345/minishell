@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 21:14:09 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:28:02 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,19 @@ void	free_tmp_list(t_tmp_list *list)
 		cur = next;
 	}
 	free(list);
+}
+
+void	tmp_list_push(t_tmp_file *file, t_minishell *minishell)
+{
+	if (minishell->tmp_list->tail == NULL)
+	{
+		minishell->tmp_list->head = file;
+		minishell->tmp_list->tail = file;
+	}
+	else
+	{
+		minishell->tmp_list->tail->next = file;
+		minishell->tmp_list->tail = file;
+	}
+	minishell->tmp_file_counter++;
 }

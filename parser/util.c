@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 13:57:09 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:24:51 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,7 @@ void	redirect_node_push(t_ast_node *node, t_redirection *red)
 	}
 }
 
-void	tmp_file_list_push(t_tmp_file *list, t_minishell *minishell)
-{
-	if (minishell->tmp_list->tail == NULL)
-	{
-		minishell->tmp_list->head = list;
-		minishell->tmp_list->tail = list;
-	}
-	else
-	{
-		minishell->tmp_list->tail->next = list;
-		minishell->tmp_list->tail = list;
-	}
-	minishell->tmp_file_counter++;
-}
+
 
 int	finder(char *str, char checker)
 {

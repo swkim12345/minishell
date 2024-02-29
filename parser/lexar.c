@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 14:48:44 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:55:41 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	heredoc_open_fd(t_redirection *red, t_minishell *minishell)
 	if (tmp_file->fd == -1) //add file descriptor error
 		return (FUNC_SUC); //maybe leak inside
 	red->index = minishell->tmp_file_counter;
-	tmp_file_list_push(tmp_file, minishell);
+	tmp_list_push(tmp_file, minishell);
 	if (read_heredoc(minishell, red, tmp_file) != FUNC_SUC)
 		return (FUNC_FAIL);
 	return (FUNC_SUC);
@@ -58,6 +58,28 @@ static int	find_next_token_red(char *ptr, int index, t_redirection *red)
 	return (index);
 }
 
+static char *file_name_parser(char *ptr)
+{
+	t_parse_str	parse_str;
+	char		*ret;
+	int			index;
+
+	init_parse_str(&parse_str);	
+	index = -1;
+	while (ptr[++index])
+	{
+		if (ft_isspace(ptr[index]) == TRUE)
+			continue ;
+		if (ptr[index] == '\"' || ptr[index] == '\'')
+			continue ;
+		append_char(&parse_str, ptr[index]);
+	}
+	ret = ft_strdup(parse_str.str); 
+	free_parse_str(&parse_str);
+	free(ptr);
+	return (ret);
+}
+
 static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 {
 	char			*ptr;
@@ -86,13 +108,15 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	//printf("ptr after index : %s\n", &ptr[index]);
 	//printf("start: %d, index: %d\n", start, index);
 	//printf("%s\n", &ptr[start]);
-	red->str = ft_substr(&ptr[start + skip_space(&ptr[start])], 0, index - start);
+	red->str = ft_substr(&ptr[start], 0, index - start);
+	red->str = file_name_parser(red->str);
 	ft_strlcat(ptr, &ptr[index], ft_strlen(ptr) + ft_strlen(&ptr[index]) + 1);
 	printf("ptr after strlcat: %s\n", ptr);
 	printf("red->str: %s\n", red->str);
 	printf("red->flag: %d\n", red->flag);
 	if (red->flag == DB_LT_SIGN)
 	{
+		node->index++;
 		if (heredoc_open_fd(red, minishell) == FUNC_FAIL) //free add required
 			return (-2);
 	}

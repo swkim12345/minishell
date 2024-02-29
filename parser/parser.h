@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 14:08:05 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:54:55 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ typedef struct s_minishell		t_minishell;
 typedef struct s_redirection	t_redirection;
 typedef struct s_tmp_file		t_tmp_file;
 
-typedef struct s_redirection {
+typedef struct s_redirection 
+{
 	int							index;	//if heredoc:index or not use NOTDEFINED
 	int							flag;	// 0: <, 1: <<, 2: >, 4: >>
 	char						*str;	// file name or here doc delim
@@ -92,7 +93,6 @@ typedef struct s_pipe_traverse
 
 /* util.c */
 void		redirect_node_push(t_ast_node *node, t_redirection *red);
-void		tmp_file_list_push(t_tmp_file *list, t_minishell *minishell);
 
 t_ast_node	*init_ast_node(int child_node);
 int			syntax_err_message(char *msg, int end, int ret,
