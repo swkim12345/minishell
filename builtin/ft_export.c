@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 11:03:22 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 13:28:40 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ static	int	put_env(t_cmd_node *cmd_node, t_minishell *minishell, int index)
 {
 	char	*key;
 	char	*value;
-	
+
 	key = NULL;
 	value = NULL;
 	minishell->error = set_error_msg(minishell->execute_name,
 			cmd_node->str[0], cmd_node->str[index], "not a valid identifier");
 	if (parse_env(cmd_node->str[index], &key, &value, minishell) == FUNC_FAIL)
 	{
-			print_error_msg(minishell->error, 1, TRUE);
-			return (FUNC_SUC);
+		print_error_msg(minishell->error, 1, TRUE);
+		return (FUNC_SUC);
 	}
 	if (ft_setenv(minishell->export, key, value) == FUNC_FAIL)
 	{

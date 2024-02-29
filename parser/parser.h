@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 21:20:50 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/02/29 13:26:40 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@
 # define REDIROUTPUT	"<"
 
 # define BRACKET_FLAG 1
-# define LT_SIGN 0
-# define DB_LT_SIGN 1
-# define GT_SIGN 2
-# define DB_GT_SIGN 4
+# define LT_SIGN 1
+# define DB_LT_SIGN 2
+# define GT_SIGN 4
+# define DB_GT_SIGN 8
 
 # define NO_FLAG 0
 # define OR_FLAG 1
