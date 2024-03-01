@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   traverse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 14:42:41 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/01 11:49:29 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,12 +243,10 @@ int	process_redirection(t_ast_node *ast_node, t_minishell *minishell)
 {
 	t_redirection	*cur_node;
 	int				error_check;
-	int				i;
 
 	printf("redirection entered\n");
 	cur_node = ast_node->red;
 	error_check = 0;
-	i = 0;
 	while (cur_node)
 	{
 		printf("cur_node: %s\n", cur_node->str);

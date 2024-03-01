@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 17:54:57 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/01 11:49:12 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,12 @@ static void	split_node(int end, int new_start, t_ast_node *node, int new_node_fl
 {
 	char		*ptr;
 	char		*tmp;
-	int			size;
 	t_ast_node	*old_node;
 	t_ast_node	*new_node;
 	
 	old_node = node;
 	new_node = NULL;
 	ptr = ft_strdup(node->cmd_node->str[0]);
-	size = ft_strlen(&ptr[new_start]);
 	if (new_node_flag & LEFTNODE)
 	{
 		node->left_node = init_ast_node(CMDNODE);
@@ -91,12 +89,10 @@ static int	pipe_recurv_parser(t_ast_node *head, int str_end,
 			int dup_str_start, t_minishell *minishell)
 {
 	char	*ptr;
-	int		size;
 
 	ptr = head->cmd_node->str[0];
 	if (str_end <= 0)
 		return (syntax_err_message(ptr, dup_str_start, -1, minishell));
-	size = ft_strlen(ptr);
 	split_node(str_end, dup_str_start, head, NEXTNODE);
 	if (recurv_parser(head->next_ast_node, minishell) == FUNC_FAIL)
 		return (FUNC_FAIL);
@@ -109,7 +105,6 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 			int dup_str_start, t_minishell *minishell)
 {
 	char	*ptr;
-	int		size;
 
 	ptr = head->cmd_node->str[0];
 	if (str_end <= 0)
@@ -117,7 +112,6 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 		head->err_flag = TRUE;
 		return (syntax_err_message(ptr, dup_str_start, -1, minishell));
 	}
-	size = ft_strlen(ptr);
 	if (ft_strncmp(&ptr[str_end + 1], "&&", ft_strlen("&&")) == 0)
 		head->flag = AND_FLAG;
 	else if (ft_strncmp(&ptr[str_end + 1], "||", ft_strlen("||")) == 0)

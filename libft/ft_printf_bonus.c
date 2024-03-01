@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 21:49:11 by minsepar          #+#    #+#             */
-/*   Updated: 2023/11/01 12:57:13 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/01 11:48:12 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,6 @@ int	ft_printf(const char *format_str, ...)
 
 void	parse_format(t_print_dto *dto, const char *format_str)
 {
-	ssize_t	len;
-
-	len = 0;
 	dto->format_idx++;
 	while (is_flag(format_str[dto->format_idx]))
 		set_flag(dto, format_str[dto->format_idx++]);
