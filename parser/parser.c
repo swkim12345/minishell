@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 17:51:01 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/01 21:26:12 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ int	read_heredoc(t_minishell *minishell, t_redirection *redirection
 	}
 	else
 		wait(&wstatus);
-	return (WIFEXITED(wstatus));
+	return (wstatus);
 }
 
 t_ast_node	*parser(char *str, t_minishell *minishell)

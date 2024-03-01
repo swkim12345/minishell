@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 22:02:08 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/01 22:14:20 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	check_file_valid(char *execute_path, t_cmd_node *cmd_node, t_minishell *mini
 {
 	struct stat	file_info;
 
+	printf("execute_path: [%s]\n", execute_path);
 	if (!execute_path)
 		command_not_found_error(minishell, cmd_node->cmd_name);
 	stat(execute_path, &file_info);
@@ -82,6 +83,7 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 	// struct stat	file_info;
 
 	// envp = minishell->envp;
+	status = 0;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -97,7 +99,7 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 		{
 			execute_path = find_from_path(cmd_node, minishell);
 			check_file_valid(execute_path, cmd_node, minishell);
-			printf("cmd_name: %s\n", cmd_node->cmd_name);
+			// ft_printf("cmd_name: [%s]\n", cmd_node->cmd_name);
 			//arg 가 그냥 fixed 할수 없음. 고쳐야 됨
 			if (execve(execute_path, cmd_node->str, minishell->envp) == -1)
 			{
@@ -108,7 +110,7 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 		else
 		{
 			check_file_valid(cmd_node->cmd_name, cmd_node, minishell);
-			printf("cmd_name: %s\n", cmd_node->cmd_name);
+			// ft_printf("cmd_name: [%s]\n", cmd_node->cmd_name);
 			if (execve(cmd_node->cmd_name, cmd_node->str, envp) == -1)
 			{
 				printf("error\n");
@@ -118,35 +120,35 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 	}
 	else
 		waitpid(pid, &status, 0);
-	return (WIFEXITED(status));
+	return (WEXITSTATUS(status));
 }
 
 void	print_ast_node(t_ast_node *ast_node)
 {
-	printf("ast_node------------------------\n");
-	printf("left_node: [%p]\n", ast_node->left_node);
-	printf("right_node: [%p]\n", ast_node->right_node);
-	printf("next_ast_node: [%p]\n", ast_node->next_ast_node);
-	printf("cmd_node: [%p]\n", ast_node->cmd_node);
-	printf("log_opr: [%d]\n", ast_node->flag);
+	ft_printf("ast_node------------------------\n");
+	ft_printf("left_node: [%p]\n", ast_node->left_node);
+	ft_printf("right_node: [%p]\n", ast_node->right_node);
+	ft_printf("next_ast_node: [%p]\n", ast_node->next_ast_node);
+	ft_printf("cmd_node: [%p]\n", ast_node->cmd_node);
+	ft_printf("flag: [%d]\n", ast_node->flag);
 }
 
 void	print_cmd_node(t_cmd_node *cmd_node)
 {
-	printf("cmd_node-------------------------------\n");
-	printf("cmd_node: [%p]\n", cmd_node);
-	printf("cmd_name: [%s]\n", cmd_node->cmd_name);
+	ft_printf("cmd_node---------------------------\n");
+	ft_printf("cmd_node: [%p]\n", cmd_node);
+	ft_printf("[%s]\n", cmd_node->cmd_name);
 	int i = 0;
 	while (cmd_node->str[i])
 	{
-		printf("str[%d]: [%s]\n", i, cmd_node->str[i]);
+		ft_printf("str[%d]: [%s]\n", i, cmd_node->str[i]);
 		i++;
 	}
 }
 
 int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 {
-	printf("%p\n", cmd_node->str);
+	ft_printf("%p\n", cmd_node->str);
 	cmd_node->cmd_name = cmd_node->str[0];
 	print_cmd_node(cmd_node);
 	//argumnet already expanded ..?
@@ -155,13 +157,17 @@ int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 	ft_setenv(minishell->env, "_", cmd_node->cmd_name);
 	if (is_builtin_fn(cmd_node))
 	{
-		printf("running builtin fn\n");
+		ft_printf("running builtin fn\n");
+		ft_printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 		minishell->exit_code = process_builtin(cmd_node, minishell);
+		ft_printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 	}
 	else
 	{
-		printf("running builtin extern cmd\n");
+		ft_printf("running builtin extern cmd\n");
+		ft_printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 		minishell->exit_code = process_extern_cmd(cmd_node, minishell);
+		ft_printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 	}
 	return (minishell->exit_code);
 }

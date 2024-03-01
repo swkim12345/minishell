@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 19:30:06 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/01 20:59:42 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,8 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 		}
 		if (ptr[index] == '(') // fix to check flag sign
 		{
+			ft_printf("###################\n");
+			node->flag |= BRACKET_FLAG;
 			if (str_flag == FALSE)
 			{
 				tmp = bracket_finder(&ptr[index]);

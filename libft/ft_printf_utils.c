@@ -6,21 +6,11 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 15:56:52 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/06 13:34:54 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/01 19:03:08 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
 
 t_print_dto	*dto_init(t_print_dto *dto)
 {
