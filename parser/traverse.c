@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 17:25:01 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 21:33:56 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,13 +180,12 @@ int	get_heredoc_fd(t_minishell *minishell, int index)
 	return (fd);
 }
 
-int	set_read_fd(t_ast_node *ast_node, t_minishell *minishell)
+int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
+		, t_ast_node *ast_node)
 {
 	int				fd;
-	t_redirection	*redirect_node;
 
 	printf("read_fd\n");
-	redirect_node = ast_node->red;
 	if (redirect_node->flag & LT_SIGN)
 	{
 		fd = open(redirect_node->str, O_RDONLY);
@@ -213,13 +212,11 @@ int	set_read_fd(t_ast_node *ast_node, t_minishell *minishell)
 	return (0);
 }
 
-int set_write_fd(t_ast_node *ast_node, t_minishell *minishell)
+int set_write_fd(t_redirection *redirect_node, t_minishell *minishell)
 {
 	int				fd;
-	t_redirection	*redirect_node;
 
 	printf("write_fd\n");
-	redirect_node = ast_node->red;
 	if (redirect_node->flag & GT_SIGN)
 		fd = open(redirect_node->str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	else if (redirect_node->flag & DB_GT_SIGN)
@@ -256,9 +253,9 @@ int	process_redirection(t_ast_node *ast_node, t_minishell *minishell)
 	{
 		printf("cur_node: %s\n", cur_node->str);
 		if ((cur_node->flag & LT_SIGN) || (cur_node->flag & DB_LT_SIGN))
-			error_check = set_read_fd(ast_node, minishell);
+			error_check = set_read_fd(cur_node, minishell, ast_node);
 		else if ((cur_node->flag & GT_SIGN) || (cur_node->flag & DB_GT_SIGN))
-			error_check = set_write_fd(ast_node, minishell);
+			error_check = set_write_fd(cur_node, minishell);
 		else
 			printf("not entered [%d]\n", cur_node->flag);
 		if (error_check != 0)

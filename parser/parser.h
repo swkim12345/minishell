@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 16:58:26 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 21:35:03 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,9 @@ int	wait_processes(pid_t last_pid, pid_t first_pid);
 t_pipe_io	*init_pipe_list(int num_pipe);
 void	set_pipe_redirection(t_pipe_traverse *info, t_minishell *minishell);
 int	pipe_traverse(t_ast_node *head, t_minishell *minishell);
-int	set_read_fd(t_ast_node *ast_node, t_minishell *minishell);
-int set_write_fd(t_ast_node *ast_node, t_minishell *minishell);
+int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
+		, t_ast_node *ast_node);
+int set_write_fd(t_redirection *redirect_node, t_minishell *minishell);
 int	process_redirection(t_ast_node *ast_node, t_minishell *minishell);
 int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe);
 
