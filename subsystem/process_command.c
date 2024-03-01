@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/01 22:14:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/01 23:05:04 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	check_file_valid(char *execute_path, t_cmd_node *cmd_node, t_minishell *mini
 {
 	struct stat	file_info;
 
-	printf("execute_path: [%s]\n", execute_path);
+	ft_printf("execute_path: [%s]\n", execute_path);
 	if (!execute_path)
 		command_not_found_error(minishell, cmd_node->cmd_name);
 	stat(execute_path, &file_info);
