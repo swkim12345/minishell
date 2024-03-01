@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 19:11:37 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/01 15:53:48 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,7 +267,7 @@ int	contains_assignment(char *str)
 {
 	while (*str)
 	{
-		//printf("cur_char: [%c]\n", *str);
+		printf("cur_char: [%c]\n", *str);
 		if (*str == '=')
 			return (1);
 		if (*str == '\'')
@@ -291,6 +291,26 @@ void	parse_assignment(t_parse_str *parse_str, char **str)
 {
 	while (**str && !ft_isspace(**str))
 	{
+		if (**str == '\'')
+		{
+			append_char(parse_str, **str);
+			(*str)++;
+			while (**str && **str != '\'')
+			{
+				append_char(parse_str, **str);
+				(*str)++;
+			}
+		}
+		else if (**str == '\"')
+		{
+			append_char(parse_str, **str);
+			(*str)++;
+			while (**str && **str != '\"')
+			{
+				append_char(parse_str, **str);
+				(*str)++;
+			}
+		}
 		append_char(parse_str, **str);
 		(*str)++;
 	}
