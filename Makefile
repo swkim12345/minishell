@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
+#    By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/02/28 20:40:07 by minsepar         ###   ########.fr        #
+#    Updated: 2024/03/01 13:58:17 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ ENVIRON_SRCS = environ/binary_tree_mem.c environ/binary_tree_util.c environ/bina
 INNER_SRCS = inner_parser/argument_parser_str_list.c inner_parser/argument_parser_utils.c inner_parser/argument_parser.c
 
 PARSER_SRCS = parser/lexar.c parser/parser.c parser/traverse.c parser/set_mem.c parser/util.c
-#PARSER_SRCS = parser/lexar.c parser/parser.c parser/set_mem.c parser/util.c
 
 TRAVERSR_SRCS = parser/traverse.c 
 
@@ -51,13 +50,6 @@ SUBSYSTEM_OBJS = $(SUBSYSTEM_SRCS:.c=.o)
 
 UTIL_OBJS = $(UTIL_SRCS:.c=.o)
 
-
-
-
-
-
-
-
 LIBFT = ./libft/libftprintf.a
 
 all: $(NAME)
@@ -68,15 +60,13 @@ all: $(NAME)
 $(LIBFT):
 	make -C ./libft all bonus
 
-#$(NAME): $(LIBFT) $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
-#	$(CC) $(CFLAGS) $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS) $(LIBFT) -o $(NAME) -lreadline
-
 $(NAME): $(LIBFT) 
-	$(CC) -g -fsanitize=address $(CFLAGS) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
+	$(CC) -g -fsanitize=address  -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include $(CFLAGS) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
 
 clean:
 	rm -rf $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(PARSER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
 	make -C ./libft clean
+
 fclean:
 	make clean
 	rm -rf $(NAME) $(LIBFT)

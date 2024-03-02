@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/29 14:43:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/01 15:22:57 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,35 @@ void	check()
 	system("leaks minishell");
 }
 
+char	*color_add_minishell(char *input, char *color)
+{
+	char	*ret;
+	char	*tmp;
+
+	tmp = ft_strdup(input);
+	ret = ft_strjoin(color, tmp);
+	free(tmp);
+	tmp = ret;
+	ret = ft_strjoin(tmp, RESET);
+	free(tmp);
+	tmp = ret;
+	ret = ft_strjoin(tmp, " $ ");
+	free(tmp);
+	return (ret);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	// atexit(check);
 	t_minishell	shell;
 	t_ast_node	*head;
+	char		*input_str;
 
 	// atexit(check);
 	init_shell(&shell, envp, argv);
 	set_signal_handler();
 	set_term();
+	input_str = color_add_minishell(shell.execute_name, BOLD_BLUE);
 	(void) argc;
 	(void) argv;
 
@@ -83,7 +102,7 @@ int	main(int argc, char **argv, char **envp)
 	// }
 	while (1)
 	{
-		shell.input_str = readline("minishell-1.0$ ");
+		shell.input_str = readline(input_str);
 		if (!shell.input_str)
 			exit_handle(&shell, 134);
 		head = parser(shell.input_str, &shell);
