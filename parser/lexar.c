@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/01 20:59:42 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:04:47 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,8 @@ static int	heredoc_open_fd(t_redirection *red, t_minishell *minishell)
 		return (FUNC_SUC); //maybe leak inside
 	red->index = minishell->tmp_file_counter;
 	tmp_list_push(tmp_file, minishell);
-	if (read_heredoc(minishell, red, tmp_file) != FUNC_SUC)
-	{
-		printf("read_heredoc caught\n");
-		return (FUNC_FAIL);
-	}
+	//if (read_heredoc(minishell, red, tmp_file) != FUNC_SUC)
+	//	return (FUNC_FAIL);
 	return (FUNC_SUC);
 }
 
@@ -184,6 +181,11 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 	}
 	cmd_str = string_parser(ptr, minishell);
 	free_2d_str(node->cmd_node->str);
+	//if (cmd_str[0][0] == '\0') //adhoc
+	//{
+	//	free(cmd_str[0]);
+	//	cmd_str[0] = NULL;
+	//}
 	node->cmd_node->str = cmd_str;
 	return (FUNC_SUC);
 }

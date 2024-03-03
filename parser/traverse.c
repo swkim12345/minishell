@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 12:58:00 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:26:08 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,12 +243,10 @@ int	process_redirection(t_ast_node *ast_node, t_minishell *minishell)
 {
 	t_redirection	*cur_node;
 	int				error_check;
-	int				i;
 
 	ft_printf("redirection entered\n");
 	cur_node = ast_node->red;
 	error_check = 0;
-	i = 0;
 	while (cur_node)
 	{
 		ft_printf("cur_node: %s\n", cur_node->str);

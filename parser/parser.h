@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 21:35:03 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:05:46 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@
 # define REDIRINPUT		">"
 # define REDIROUTPUT	"<"
 
-# define BRACKET_FLAG 1
+# define BRACKET_FLAG 16
+# define STRING_FLAG 2
+
 # define LT_SIGN 1
 # define DB_LT_SIGN 2
 # define GT_SIGN 4
@@ -70,7 +72,7 @@ typedef struct s_ast_node
 	t_ast_node					*next_ast_node;	//for pipe
 	t_cmd_node					*cmd_node;		
 	t_redirection				*red;	//redirection array
-	int							flag;	//lexar flag
+	int							flag;	//subshell flag
 	int							index;	//redirection index in t_minishell
 	int							err_flag;	//syntax error flag, TRUE -> stop parsing
 }	t_ast_node;
