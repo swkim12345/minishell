@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 21:29:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 15:42:46 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 21:40:45 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,9 @@ void	sigint_handler()
 	rl_redisplay();
 }
 
-void	sigint_cmd_handler()
+void	sigint_exit()
 {
-	printf("\n");
-}
-
-void	set_command_handler()
-{
-	struct sigaction	sact;
-
-	sigemptyset(&sact.sa_mask);
-	sact.sa_flags = 0;
-	sact.sa_handler = NULL;
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
-	sigaction(SIGINT, &sact, NULL);
-}
-
-void	set_parser_handler()
-{
-	struct sigaction	sact;
-
-	sigemptyset(&sact.sa_mask);
-	sact.sa_flags = 0;
-	sact.sa_handler = NULL;
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
-	sigaction(SIGINT, &sact, NULL);
+	exit(130);
 }
 
 void	set_signal_handler()
@@ -56,11 +32,30 @@ void	set_signal_handler()
 
 	//ahhhhh
 	(void) sigset;
-
 	sigemptyset(&sact.sa_mask);
 	sact.sa_flags = 0;
 	sact.sa_handler = sigint_handler;
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTERM, SIG_IGN);
+	sigaction(SIGINT, &sact, NULL);
+}
+
+void	set_signal_dfl()
+{
+	struct sigaction	sact;
+
+	sigemptyset(&sact.sa_mask);
+	sact.sa_flags = 0;
+	sact.sa_handler = SIG_DFL;
+	sigaction(SIGINT, &sact, NULL);
+}
+
+void	set_sigint_ign()
+{
+	struct sigaction	sact;
+
+	sigemptyset(&sact.sa_mask);
+	sact.sa_flags = 0;
+	sact.sa_handler = SIG_IGN;
 	sigaction(SIGINT, &sact, NULL);
 }

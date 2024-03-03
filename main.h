@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 13:40:49 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 18:33:49 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@
 # include "utils/utils.h"
 # include "signal/signal.h"
 
+# define NOT_CHECK_RED 1
+
 typedef struct s_minishell	t_minishell;
 typedef struct s_str_list	t_str_list;
 typedef struct s_tree_node	t_tree_node;
@@ -96,6 +98,7 @@ typedef struct s_minishell
 	int			tmp_file_counter;
 	int			stdin_fd;
 	int			stdout_fd;
+	int			flag;
 	t_tree_head	*env;
 	t_tree_head	*export;
 	t_tmp_list	*tmp_list;

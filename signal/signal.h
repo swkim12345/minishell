@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 23:51:56 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/29 12:31:23 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 20:38:02 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../main.h"
 
 void	set_signal_handler(void);
-void	set_command_handler(void);
+void	set_signal_dfl(void);
+void	set_sigint_ign(void);
 
 #endif

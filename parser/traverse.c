@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 18:06:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 21:49:57 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	subshell_traverse(t_ast_node *head, t_minishell *minishell)
 		minishell->stdout_fd = dup(1);
 		printf("after stdin_fd: %d\n", minishell->stdin_fd);
 		printf("after stdout_fd: %d\n", minishell->stdout_fd);
+		minishell->flag |= NOT_CHECK_RED;
 		traverse(head, minishell, 1);
 		exit(minishell->exit_code);
 	}
@@ -200,15 +201,15 @@ int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
 	char			**file_list;
 
 	ft_printf("read_fd\n");
-	file_list = string_parser(redirect_node->str, minishell);
-	if (get_file_num(file_list) > 1)
-	{
-		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, 0);
-		print_error_msg(minishell->error, 0, 0);
-		return (1);
-	}
 	if (redirect_node->flag & LT_SIGN)
 	{
+		file_list = string_parser(redirect_node->str, minishell);
+		if (get_file_num(file_list) > 1)
+		{
+			minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, "ambiguous redirect");
+			print_error_msg(minishell->error, 1, 0);
+			return (1);
+		}
 		fd = open(redirect_node->str, O_RDONLY);
 		ft_printf("file: %s\n", redirect_node->str);
 	}
@@ -241,8 +242,8 @@ int set_write_fd(t_redirection *redirect_node, t_minishell *minishell)
 	file_list = string_parser(redirect_node->str, minishell);
 	if (get_file_num(file_list) > 1)
 	{
-		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, 0);
-		print_error_msg(minishell->error, 0, 0);
+		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, "ambiguous redirect");
+		print_error_msg(minishell->error, 1, 0);
 		return (1);
 	}
 	if (redirect_node->flag & GT_SIGN)
@@ -297,8 +298,12 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 {
 	ft_printf("traverse\n");
 	print_ast_node(head);
-	if (process_redirection(head, minishell) == 1)
-		return (1); 
+	if (!(minishell->flag & NOT_CHECK_RED))
+	{
+		if (process_redirection(head, minishell) == 1)
+			return (1);
+	}
+	minishell->flag &= ~NOT_CHECK_RED;
 	if (!head && head->cmd_node->str[0] == NULL)
 		minishell->exit_code = 0;
 	else if (check_pipe && head->next_ast_node)
@@ -314,8 +319,10 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 	else if (head->cmd_node)
 	{
 		ft_printf("process command\n");
+		signal(SIGINT, SIG_IGN);
 		if (head->cmd_node->str[0])
 			minishell->exit_code = process_command(head->cmd_node, minishell);
+		set_signal_handler();
 	}
 	else if (!head->cmd_node)
 	{

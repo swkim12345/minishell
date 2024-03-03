@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 18:21:29 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 20:38:44 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 	pid = fork();
 	if (pid == 0)
 	{
+		set_signal_dfl();
 		fd = tmp_file->fd;
 		if (fd == -1)
 			shell_error(minishell, "heredoc", 0);
