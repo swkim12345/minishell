@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:17:00 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 13:17:14 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/01 14:21:46 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	print_error_msg(t_error *error, int error_num, int quote_flag)
 		ft_putstr_fd("\n", STDERR_FILENO);
 	}
 	free_error(error);
-	return (FUNC_FAIL);
+	return (error_num);
 }
 
 int	cd_error(t_cd *info, t_minishell *minishell, char *command, char *arg)

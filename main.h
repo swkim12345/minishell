@@ -3,19 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/29 16:57:18 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 11:37:38 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAIN_H
 # define MAIN_H
-# define EXIT_SUCCESS 0
-# define TRUE		1
-# define FALSE		0
-# define NOTDEFINED	-1
+# define EXIT_SUCCESS	0
+# define TRUE			1
+# define FALSE			0
+# define NOTDEFINED		-1
+
+# define RED			"\033[0;31m"
+# define GREEN			"\033[0;32m"
+# define YELLOW			"\033[0;33m"
+# define BLUE			"\033[0;34m"
+# define MAGENTA		"\033[0;35m"
+# define CYAN			"\033[0;36m"
+# define WHITE			"\033[0;37m"
+
+# define BOLD			"\033[1m"
+# define BOLD_RED		"\033[1;31m"
+# define BOLD_GREEN		"\033[1;32m"
+# define BOLD_YELLOW	"\033[1;33m"
+# define BOLD_BLUE		"\033[1;34m"
+# define BOLD_MAGENTA	"\033[1;35m"
+# define BOLD_CYAN		"\033[1;36m"
+# define BOLD_WHITE		"\033[1;37m"
+# define RESET			"\033[0m"
 
 # include <stdio.h>
 # include <unistd.h>
