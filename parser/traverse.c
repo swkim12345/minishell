@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 13:26:08 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 14:11:12 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,8 +287,6 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 		ft_printf("process command\n");
 		if (head->cmd_node->str[0])
 			minishell->exit_code = process_command(head->cmd_node, minishell);
-		else
-			return (0);
 	}
 	else if (!head->cmd_node)
 	{
