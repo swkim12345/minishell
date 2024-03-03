@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 16:35:45 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 18:06:49 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	subshell_traverse(t_ast_node *head, t_minishell *minishell)
 	if (pid == 0)
 	{
 		ft_printf("subshell\n");
-		head->flag = 0;
+		head->flag &= ~BRACKET_FLAG;
 		printf("stdin_fd: %d\n", minishell->stdin_fd);
 		printf("stdout_fd: %d\n", minishell->stdout_fd);
 		minishell->stdin_fd = dup(0);
