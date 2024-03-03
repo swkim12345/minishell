@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 14:57:28 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 17:10:04 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,11 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 		return (syntax_err_message(ptr, dup_str_start, FUNC_FAIL, minishell));
 	}
 	if (ft_strncmp(&ptr[str_end + 1], "&&", ft_strlen("&&")) == 0)
-		head->flag = AND_FLAG;
+		head->flag |= AND_FLAG;
 	else if (ft_strncmp(&ptr[str_end + 1], "||", ft_strlen("||")) == 0)
-		head->flag = OR_FLAG;
+		head->flag |= OR_FLAG;
 	else
-		head->flag = NO_FLAG;
+		head->flag |= NO_FLAG;
 	split_node(str_end, dup_str_start, head, LEFTNODE | RIGHTNODE);
 	free_cmd_node(&(head->cmd_node));
 	if (recurv_parser(head->left_node, minishell) == FUNC_FAIL)
