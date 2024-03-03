@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 17:02:00 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/02/29 19:38:56 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_ast_node	*init_ast_node(int child_node)
 
 int	syntax_err_message(char *msg, int end, int ret, t_minishell *minishell)
 {
-	if (end != NOTDEFINED)
+	if (end != NOTDEFINED && end != -2)
 		msg[end] = '\0';
 	ft_putstr_fd(minishell->execute_name, STDERR_FILENO);
 	ft_putstr_fd(": syntax error near unexpected token `", STDERR_FILENO);

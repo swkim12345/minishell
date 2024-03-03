@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:17:00 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 13:17:14 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/01 17:59:22 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,28 @@ int	print_error_msg(t_error *error, int error_num, int quote_flag)
 	return (FUNC_FAIL);
 }
 
+int	not_a_directory_error(t_cd *info, t_minishell *minishell
+	, char *command, char *arg)
+{
+	free(info->cur_path);
+	minishell->error = set_error_msg(minishell->execute_name,
+			command, arg, "Not a directory");
+	print_error_msg(minishell->error, 1, 0);
+	return (1);
+}
+
 int	cd_error(t_cd *info, t_minishell *minishell, char *command, char *arg)
 {
 	free(info->cur_path);
 	return (builtin_error(minishell, command, arg));
+}
+
+int	home_not_set_error(t_minishell *minishell, char *command, char *arg)
+{
+	minishell->error = set_error_msg(minishell->execute_name, command
+			, arg, "HOME not set");
+	print_error_msg(minishell->error, 1, 0);
+	return (1);
 }
 
 int	builtin_error(t_minishell *minishell, char *command, char *arg)

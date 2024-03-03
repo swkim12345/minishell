@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:10:28 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/29 17:00:16 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/01 17:43:59 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ void	free_error(t_error *error);
 int		print_error_msg(t_error *error, int error_num, int quote_flag);
 int	builtin_error(t_minishell *minishell, char *command, char *arg);
 int	cd_error(t_cd *info, t_minishell *minishell, char *command, char *arg);
+int	home_not_set_error(t_minishell *minishell, char *command, char *arg);
+int	no_file_directory_error(t_cd *info, t_minishell *minishell
+	, char *command, char *arg);
+int	not_a_directory_error(t_cd *info, t_minishell *minishell
+	, char *command, char *arg);
+
 
 /* error_exit.c */
 void	shell_error(t_minishell *minishell, char *command, char *message);

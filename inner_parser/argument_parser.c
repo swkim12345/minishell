@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 19:11:37 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/01 21:47:26 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,13 @@ void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote,
 	char	*substitude_name;
 	int		start_index;
 
-	printf("dollar cur_char: [%c]\n", **str);
+	ft_printf("dollar cur_char: [%c]\n", **str);
 	start_index = parse_str->cursor;
 	while (**str && !isspace(**str) && (!in_quote || **str != '\"')
 		&& **str != '$' && **str != '\"')
 		parse_single_char(parse_str, str, 0, minishell);
 	env_name = ft_substr(parse_str->str, start_index, parse_str->cursor);
-	substitude_name = getenv(env_name);
+	substitude_name = ft_getenv(minishell->env, env_name);
 	printf("find name: %s\n", env_name);
 	printf("found name: %s\n", substitude_name);
 	printf("env_name: %s\n", env_name);
@@ -137,6 +137,7 @@ void	parse_question_mark(t_parse_str *parse_str, char **str,
 		append_char(parse_str, exit_status[i]);
 		i++;
 	}
+	free(exit_status);
 	(*str)++;
 }
 
@@ -267,7 +268,7 @@ int	contains_assignment(char *str)
 {
 	while (*str)
 	{
-		//printf("cur_char: [%c]\n", *str);
+		ft_printf("cur_char: [%c]\n", *str);
 		if (*str == '=')
 			return (1);
 		if (*str == '\'')
@@ -291,6 +292,26 @@ void	parse_assignment(t_parse_str *parse_str, char **str)
 {
 	while (**str && !ft_isspace(**str))
 	{
+		if (**str == '\'')
+		{
+			append_char(parse_str, **str);
+			(*str)++;
+			while (**str && **str != '\'')
+			{
+				append_char(parse_str, **str);
+				(*str)++;
+			}
+		}
+		else if (**str == '\"')
+		{
+			append_char(parse_str, **str);
+			(*str)++;
+			while (**str && **str != '\"')
+			{
+				append_char(parse_str, **str);
+				(*str)++;
+			}
+		}
 		append_char(parse_str, **str);
 		(*str)++;
 	}
@@ -302,14 +323,14 @@ void	parse_single_word(char **str, t_str_list *str_list,
 	t_parse_str	parse_str;
 
 	init_parse_str(&parse_str);
+	if (contains_assignment(*str) == TRUE)
+	{
+		printf("contains assignment\n");
+		parse_assignment(&parse_str, str);
+	}
 	while (**str && !ft_isspace(**str))
 	{
-		if (contains_assignment(*str) == TRUE)
-		{
-			printf("contains assignment\n");
-			parse_assignment(&parse_str, str);
-		}
-		else if (**str == '\"')
+		if (**str == '\"')
 			parse_double_quote(&parse_str, str, minishell);
 		else if (**str == '\'')
 			parse_single_quote(&parse_str, str);
