@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 11:38:06 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 12:54:39 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static int	heredoc_open_fd(t_redirection *red, t_minishell *minishell)
 		return (FUNC_SUC); //maybe leak inside
 	red->index = minishell->tmp_file_counter;
 	tmp_list_push(tmp_file, minishell);
-	if (read_heredoc(minishell, red, tmp_file) != FUNC_SUC)
-		return (FUNC_FAIL);
+	//if (read_heredoc(minishell, red, tmp_file) != FUNC_SUC)
+	//	return (FUNC_FAIL);
 	return (FUNC_SUC);
 }
 

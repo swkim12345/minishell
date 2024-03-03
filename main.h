@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 11:37:38 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 12:48:10 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ typedef struct s_minishell
 	char		*cwd;
 	char		*input_str;
 	int			exit_code;
-	int			syntax_flag;
   	char		*execute_name;
+	char		*print_str;
 	char		**envp;
 	char		*tmp_file_name;
 	int			tmp_file_counter;

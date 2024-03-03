@@ -6,33 +6,33 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 11:57:11 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:01:41 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int	bracket_parser(char *str, int index, int str_flag, t_minishell *minishell)
-{
-	char	*ptr;
-	int		ret;
+//int	bracket_parser(char *str, int index, int str_flag, t_minishell *minishell)
+//{
+//	char	*ptr;
+//	int		ret;
 
-	ptr = &str[index];
-	if (*ptr == '(')
-	{
-		if (str_flag == TRUE)
-			return (syntax_err_message(ptr, index, -1, minishell));
-		else
-		{
-			ret = bracket_finder(ptr);
-			if (ret == NOTDEFINED)
-				return (syntax_err_message(ptr, index, -1, minishell));
-			else
-				return (ret);
-		}
-	}
-	return (index);
-}
+//	ptr = &str[index];
+//	if (*ptr == '(')
+//	{
+//		if (str_flag == TRUE)
+//			return (syntax_err_message(ptr, index, -1, minishell));
+//		else
+//		{
+//			ret = bracket_finder(ptr);
+//			if (ret == NOTDEFINED)
+//				return (syntax_err_message(ptr, index, -1, minishell));
+//			else
+//				return (ret);
+//		}
+//	}
+//	return (index);
+//}
 
 char	*get_error_token(char *ptr, int index)
 {
@@ -147,13 +147,28 @@ static int	subshell_recurv_parser(t_ast_node *head, int index, int flag, t_minis
 	ptr[tmp + index] = ' ';
 	ptr[index] = ' ';
 	index += tmp;
-	flag |= BRACKET_FLAG;
-	split_node(index, index + 1, head, LEFTNODE | RIGHTNODE);
-	head->left_node->flag = TRUE;
-	if (recurv_parser(head->left_node, minishell) == FUNC_FAIL)
-		return (FUNC_FAIL);
-	if (recurv_parser(head->right_node, minishell) == FUNC_FAIL)
-		return (FUNC_FAIL);
+	tmp = index;
+	while (TRUE)
+	{
+		tmp += skip_space(&ptr[tmp]);
+		if (ptr[tmp] == '\0')
+		{
+			head->flag = TRUE;
+			return (recurv_parser(head, minishell));
+		}
+		else if (ptr[tmp] == '(')
+			return (syntax_err_message(&ptr[tmp], tmp + 1, -1, minishell));
+		else if (ptr[tmp] == '|')
+			return (recurv_parser(head, minishell));
+		else if (ptr[tmp] == '&')
+			return (recurv_parser(head, minishell));
+		else
+		{
+			head->err_flag = TRUE;
+			return (syntax_err_message(&ptr[tmp], NOTDEFINED, -1, minishell)); //adhoc
+		}
+	}
+	head->left_node->flag = BRACKET_FLAG;
 	return (FUNC_SUC);
 }
 
@@ -239,7 +254,12 @@ t_ast_node	*parser(char *str, t_minishell *minishell)
 	ret = init_ast_node(CMDNODE);
 	ret->cmd_node->str = init_doub_char(&str, 1);
 	err = recurv_parser(ret, minishell);
+
+	//add heredoc 
 	if (err == FUNC_FAIL)
+	{
+		free_ast_tree(ret);
 		return (NULL);
+	}
 	return (ret);
 }

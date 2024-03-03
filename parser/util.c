@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 17:02:00 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 12:55:35 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	syntax_err_message(char *msg, int end, int ret, t_minishell *minishell)
 	ft_putstr_fd(": syntax error near unexpected token `", STDERR_FILENO);
 	ft_putstr_fd(msg, STDERR_FILENO);
 	ft_putstr_fd("'\n", STDERR_FILENO);
-	minishell->syntax_flag = TRUE;
 	return (ret);
 }
 

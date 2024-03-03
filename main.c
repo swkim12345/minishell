@@ -6,11 +6,28 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 11:38:32 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 12:20:00 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+char	*color_add_minishell(char *input, char *color)
+{
+	char	*ret;
+	char	*tmp;
+
+	tmp = ft_strdup(input);
+	ret = ft_strjoin(color, tmp);
+	free(tmp);
+	tmp = ret;
+	ret = ft_strjoin(tmp, RESET);
+	free(tmp);
+	tmp = ret;
+	ret = ft_strjoin(tmp, " $ ");
+	free(tmp);
+	return (ret);
+}
 
 void	init_shell(t_minishell *shell, char **envp, char **argv)
 {
@@ -26,6 +43,7 @@ void	init_shell(t_minishell *shell, char **envp, char **argv)
 		shell->execute_name = ft_substr(argv[0], 2, ft_strlen(argv[0]));
 	else
 		shell->execute_name = ft_strdup(argv[0]);
+	shell->print_str = color_add_minishell(shell->execute_name, BOLD_BLUE);
 	shell->tmp_list = (t_tmp_list *)ft_calloc(sizeof(t_tmp_list), 1);
 }
 
@@ -35,6 +53,7 @@ void	free_t_minishell(t_minishell *shell)
 	free(shell->input_str);
 	free(shell->cwd);
 	free(shell->execute_name);
+	free(shell->print_str);
 	free_tmp_list(shell->tmp_list, shell);
 	free_tree_delete(shell->env);
 	free_tree_delete(shell->export);
@@ -62,35 +81,16 @@ void	check()
 	system("leaks minishell");
 }
 
-char	*color_add_minishell(char *input, char *color)
-{
-	char	*ret;
-	char	*tmp;
-
-	tmp = ft_strdup(input);
-	ret = ft_strjoin(color, tmp);
-	free(tmp);
-	tmp = ret;
-	ret = ft_strjoin(tmp, RESET);
-	free(tmp);
-	tmp = ret;
-	ret = ft_strjoin(tmp, " $ ");
-	free(tmp);
-	return (ret);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	// atexit(check);
 	t_minishell	shell;
 	t_ast_node	*head;
-	char		*input_str;
 
 	// atexit(check);
 	init_shell(&shell, envp, argv);
 	set_signal_handler();
 	set_term();
-	input_str = color_add_minishell(shell.execute_name, BOLD_BLUE);
 	(void) argc;
 	(void) argv;
 
@@ -102,7 +102,7 @@ int	main(int argc, char **argv, char **envp)
 	// }
 	while (1)
 	{
-		shell.input_str = readline(input_str);
+		shell.input_str = readline(shell.print_str);
 		if (!shell.input_str)
 			exit_handle(&shell, 134);
 		head = parser(shell.input_str, &shell);
