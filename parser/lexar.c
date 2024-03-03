@@ -6,11 +6,33 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 15:03:43 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 16:41:26 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+int			err_token_finder(char *ptr, int index)
+{
+	while (ptr[index] != '\0')
+	{
+		if (ft_isspace(ptr[index]) == TRUE)
+			index++;
+		else if (ptr[index] == '\"' || ptr[index] == '\'')
+			return (index);
+		else if (ptr[index] == '(')
+			return (index);
+		else if (ptr[index] == '<' || ptr[index] == '>')
+		{
+			if (ptr[index + 1] == ptr[index])
+				return (index + 1);
+			else
+				return (index);
+		}
+		index++;
+	}
+	return (index);
+}
 
 static int	heredoc_open_fd(t_redirection *red, t_minishell *minishell)
 {
@@ -92,14 +114,18 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	index = find_next_token_red(ptr, index, red);
 	start = index;
 	index += skip_space(&ptr[index]);
-	if (ptr[index] == '\0')
+	if (ptr[index] == '\0' || ptr[index] == '<' || ptr[index] == '>')
 	{
 		node->err_flag = TRUE;
-		return (syntax_err_message("newline", NOTDEFINED, -2, minishell));
+		printf("ptr: %c\n", ptr[index]);
+		if (ptr[index] == '\0')
+			return (syntax_err_message("newline", NOTDEFINED, -2, minishell));
+		else
+			return (syntax_err_message(&ptr[index], NOTDEFINED, -2, minishell)); //substring 만드는 부분을 위로 올려서 처리.
 	}
 	while (ptr[index] != '\0')
 	{
-		if (ft_isspace(ptr[index]) == TRUE || ptr[index] == '<' || ptr[index] == '>' || ptr[index] == '\0')
+		if (ft_isspace(ptr[index]) == TRUE || ptr[index] == '<' || ptr[index] == '>')
 			break ;
 		index++;
 	}
@@ -196,15 +222,15 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 			tmp = subshell_recurv_parser(node, index, str_flag, minishell);
 			if (tmp == FUNC_FAIL)
 				return (FUNC_FAIL);
+			str_flag |= BRACKET_FLAG;
 			index = tmp - 1; //error?
 			continue ;
 		}
-		str_flag = TRUE;
+		str_flag |= STRING_FLAG;
 	}
-	if (node->flag == BRACKET_FLAG)
-	{
+	if (str_flag & BRACKET_FLAG)
 		return (recurv_parser(node, minishell));
-	}
+	node->flag |= BRACKET_FLAG;
 	cmd_str = string_parser(ptr, minishell);
 	free_2d_str(node->cmd_node->str);
 	node->cmd_node->str = cmd_str;
