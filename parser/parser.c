@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 14:34:17 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 14:46:11 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,8 @@ static int	traverse_redirection(t_minishell *minishell)
 {
 	t_tmp_file	*tmp;
 
+	if (minishell->tmp_list == NULL)
+		return (FUNC_SUC);
 	tmp = minishell->tmp_list->head;
 	if (tmp == NULL)
 		return (FUNC_SUC);

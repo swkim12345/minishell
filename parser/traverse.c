@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 14:11:12 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 15:13:54 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	subshell_traverse(t_ast_node *head, t_minishell *minishell)
 	{
 		ft_printf("subshell\n");
 		head->flag = 0;
+		minishell->stdin_fd = dup(0);
+		minishell->stdout_fd = dup(1);
 		process_redirection(head, minishell);
 		traverse(head, minishell, 1);
 		exit(minishell->exit_code);
@@ -178,12 +180,30 @@ int	get_heredoc_fd(t_minishell *minishell, int index)
 	return (fd);
 }
 
+int	get_file_num(char **file_list)
+{
+	int	i;
+
+	i = 0;
+	while (file_list[i])
+		i++;
+	return (i);
+}
+
 int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
 		, t_ast_node *ast_node)
 {
 	int				fd;
+	char			**file_list;
 
 	ft_printf("read_fd\n");
+	file_list = string_parser(redirect_node->str, minishell);
+	if (get_file_num(file_list) > 1)
+	{
+		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, 0);
+		print_error_msg(minishell->error, 0, 0);
+		return (1);
+	}
 	if (redirect_node->flag & LT_SIGN)
 	{
 		fd = open(redirect_node->str, O_RDONLY);
@@ -213,8 +233,15 @@ int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
 int set_write_fd(t_redirection *redirect_node, t_minishell *minishell)
 {
 	int				fd;
+	char			**file_list;
 
-	ft_printf("write_fd\n");
+	file_list = string_parser(redirect_node->str, minishell);
+	if (get_file_num(file_list) > 1)
+	{
+		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, 0);
+		print_error_msg(minishell->error, 0, 0);
+		return (1);
+	}
 	if (redirect_node->flag & GT_SIGN)
 		fd = open(redirect_node->str, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	else if (redirect_node->flag & DB_GT_SIGN)
@@ -242,26 +269,25 @@ int set_write_fd(t_redirection *redirect_node, t_minishell *minishell)
 int	process_redirection(t_ast_node *ast_node, t_minishell *minishell)
 {
 	t_redirection	*cur_node;
-	int				error_check;
 
 	ft_printf("redirection entered\n");
 	cur_node = ast_node->red;
-	error_check = 0;
+	minishell->exit_code = 0;
 	while (cur_node)
 	{
 		ft_printf("cur_node: %s\n", cur_node->str);
 		if ((cur_node->flag & LT_SIGN) || (cur_node->flag & DB_LT_SIGN))
-			error_check = set_read_fd(cur_node, minishell, ast_node);
+			minishell->exit_code = set_read_fd(cur_node, minishell, ast_node);
 		else if ((cur_node->flag & GT_SIGN) || (cur_node->flag & DB_GT_SIGN))
-			error_check = set_write_fd(cur_node, minishell);
+			minishell->exit_code = set_write_fd(cur_node, minishell);
 		else
 			ft_printf("not entered [%d]\n", cur_node->flag);
-		if (error_check != 0)
-			return (error_check);
+		if (minishell->exit_code != 0)
+			return (minishell->exit_code);
 		ft_printf("redirection success\n");
 		cur_node = cur_node->next;
 	}
-	return (error_check);
+	return (minishell->exit_code);
 }
 
 int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
