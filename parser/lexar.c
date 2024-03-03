@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 13:04:47 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:59:14 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ static int	heredoc_open_fd(t_redirection *red, t_minishell *minishell)
 	if (tmp_file->fd == -1) //add file descriptor error
 		return (FUNC_SUC); //maybe leak inside
 	red->index = minishell->tmp_file_counter;
+	tmp_file->eof = ft_strdup(red->str);
 	tmp_list_push(tmp_file, minishell);
-	//if (read_heredoc(minishell, red, tmp_file) != FUNC_SUC)
-	//	return (FUNC_FAIL);
 	return (FUNC_SUC);
 }
 
@@ -96,7 +95,7 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	if (ptr[index] == '\0')
 	{
 		node->err_flag = TRUE;
-		syntax_err_message("newline", NOTDEFINED, NOTDEFINED, minishell);
+		return (syntax_err_message("newline", NOTDEFINED, -2, minishell));
 	}
 	while (ptr[index] != '\0')
 	{
@@ -104,16 +103,9 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 			break ;
 		index++;
 	}
-	//printf("ptr: %s\n", ptr);
-	//printf("ptr after index : %s\n", &ptr[index]);
-	//printf("start: %d, index: %d\n", start, index);
-	//printf("%s\n", &ptr[start]);
 	red->str = ft_substr(&ptr[start], 0, index - start);
 	red->str = file_name_parser(red->str);
 	ft_strlcat(ptr, &ptr[index], ft_strlen(ptr) + ft_strlen(&ptr[index]) + 1);
-	printf("ptr after strlcat: %s\n", ptr);
-	printf("red->str: %s\n", red->str);
-	printf("red->flag: %d\n", red->flag);
 	if (red->flag == DB_LT_SIGN)
 	{
 		node->index = minishell->tmp_file_counter + 1;
@@ -126,7 +118,7 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 		return (start - 2);
 }
 
-//check redirection, ()
+//check redirection
 int	lexar(t_ast_node *node, t_minishell *minishell)
 {
 	char		*ptr;
@@ -148,7 +140,7 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 		{
 			tmp = finder(&ptr[index + 1], ptr[index]);
 			if (tmp == NOTDEFINED)
-				return (syntax_err_message(ptr, NOTDEFINED, -1, minishell));
+				return (syntax_err_message(ptr, NOTDEFINED, FUNC_FAIL, minishell));
 			index += tmp + 1;
 			continue ;
 		}
@@ -156,36 +148,12 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 		{
 			index = lexar_redirect(node, minishell, index);
 			if (index == -2)
-				return (syntax_err_message(ptr, index, -1, minishell));
+				return (FUNC_FAIL);
 			continue ;
-		}
-		if (ptr[index] == '(') // fix to check flag sign
-		{
-			ft_printf("###################\n");
-			node->flag |= BRACKET_FLAG;
-			if (str_flag == FALSE)
-			{
-				tmp = bracket_finder(&ptr[index]);
-				if (tmp == NOTDEFINED)
-					return (NOTDEFINED);
-				ptr[tmp + index] = ' ';
-				ptr[index] = ' ';
-				return (recurv_parser(node, minishell));
-			}
-			tmp = bracket_finder(&ptr[index]);
-			if (tmp == NOTDEFINED)
-				return (NOTDEFINED);
-			tmp += skip_space(&ptr[index + tmp]);
-			str_flag = TRUE;
 		}
 	}
 	cmd_str = string_parser(ptr, minishell);
 	free_2d_str(node->cmd_node->str);
-	//if (cmd_str[0][0] == '\0') //adhoc
-	//{
-	//	free(cmd_str[0]);
-	//	cmd_str[0] = NULL;
-	//}
 	node->cmd_node->str = cmd_str;
 	return (FUNC_SUC);
 }
