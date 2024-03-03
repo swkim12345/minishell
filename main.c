@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 13:25:55 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 14:21:32 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strlen(shell.input_str) != 0)
 			add_history(shell.input_str);
 		free(shell.input_str);
-		printf("end of main\n");
+		ft_printf("end of main\n");
 	}
 
 }
