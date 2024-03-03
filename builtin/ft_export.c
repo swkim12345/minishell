@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 16:13:00 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 12:12:53 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,25 @@ static	int	print_export(t_minishell *minishell)
 	return (FUNC_SUC);
 }
 
+static	int	free_key_value_msg(t_minishell *minishell,
+		char *key, char *value, int print_flag)
+{
+	if (key)
+		free(key);
+	if (value)
+		free(value);
+	if (print_flag == TRUE)
+	{
+		print_error_msg(minishell->error, 1, TRUE);
+		return (FUNC_SUC);
+	}
+	else
+	{
+		free_error(minishell->error);
+		return (FUNC_FAIL);
+	}
+}
+
 static	int	put_env(t_cmd_node *cmd_node, t_minishell *minishell, int index)
 {
 	char	*key;
@@ -40,40 +59,21 @@ static	int	put_env(t_cmd_node *cmd_node, t_minishell *minishell, int index)
 	minishell->error = set_error_msg(minishell->execute_name,
 			cmd_node->str[0], cmd_node->str[index], "not a valid identifier");
 	if (parse_env(cmd_node->str[index], &key, &value, minishell) == FUNC_FAIL)
-	{
-		print_error_msg(minishell->error, 1, TRUE);
-		return (FUNC_SUC);
-	}
+		return (free_key_value_msg(minishell, key, value, TRUE));
 	index = 0;
 	if (!(key[index] == '_' || ft_isalpha(key[index])))
-	{
-		free(key);
-		free(value);
-		print_error_msg(minishell->error, 1, TRUE);
-		return (FUNC_SUC);
-	}
+		return (free_key_value_msg(minishell, key, value, TRUE));
 	while (key[++index])
 	{
-		if (!(key[index] == '_' || ft_isalpha(key[index]) || ft_isdigit(key[index])))
-		{
-			free(key);
-			free(value);
-			print_error_msg(minishell->error, 1, TRUE);
-			return (FUNC_SUC);
-		}
+		if (!(key[index] == '_' || ft_isalpha(key[index])
+				|| ft_isdigit(key[index])))
+			return (free_key_value_msg(minishell, key, value, TRUE));
 	}
 	if (ft_setenv(minishell->export, key, value) == FUNC_FAIL)
-	{
-		free(key);
-		free(value);
-		free_error(minishell->error);
-		return (FUNC_FAIL);
-	}
+		return (free_key_value_msg(minishell, key, value, FALSE));
 	if (value && *value)
 		ft_setenv(minishell->env, key, value);
-	free(key);
-	free(value);
-	free_error(minishell->error);
+	free_key_value_msg(minishell, key, value, FALSE);
 	return (FUNC_SUC);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/01 21:47:26 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:05:03 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote,
 
 	ft_printf("dollar cur_char: [%c]\n", **str);
 	start_index = parse_str->cursor;
-	while (**str && !isspace(**str) && (!in_quote || **str != '\"')
+	while (**str && !ft_isspace(**str) && (!in_quote || **str != '\"')
 		&& **str != '$' && **str != '\"')
 		parse_single_char(parse_str, str, 0, minishell);
 	env_name = ft_substr(parse_str->str, start_index, parse_str->cursor);

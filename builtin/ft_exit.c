@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 20:52:31 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/01 14:07:26 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,11 @@ static int	exit_arg_check(t_cmd_node *cmd_node, t_minishell *minishell)
 	while (cmd_node->str[1][index])
 	{
 		if (!ft_isdigit(cmd_node->str[1][index]))
-		{
-			print_error_msg(err, 1, 0);
-			return (1);
-		}
+			return (print_error_msg(err, 255, 0));
 		index++;
 	}
 	if (ft_atol(cmd_node->str[1], &ret) == NOTDEFINED)
-	{
-		print_error_msg(err, 1, 0);
-		ret = 1;
-	}
+		return (print_error_msg(err, 255, 0));
 	return (ret);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_copy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/01 19:04:45 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:08:46 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,3 +103,4 @@ int	main(int argc, char **argv, char **envp)
 		free_2d_str(cmd_node.str);
 	}
 }
+
