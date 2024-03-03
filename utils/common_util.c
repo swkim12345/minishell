@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 16:06:31 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 17:00:44 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,10 @@ void	free_tmp_list(t_tmp_list *list, t_minishell *minishell)
 
 void	tmp_list_push(t_tmp_file *file, t_minishell *minishell)
 {
+	if (minishell->tmp_list == NULL)
+	{
+		minishell->tmp_list = (t_tmp_list *)ft_calloc(sizeof(t_tmp_list), 1);
+	}
 	if (minishell->tmp_list->tail == NULL)
 	{
 		minishell->tmp_list->head = file;
