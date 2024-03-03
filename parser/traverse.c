@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/01 22:33:54 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 12:58:00 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,7 +270,8 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 {
 	ft_printf("traverse\n");
 	print_ast_node(head);
-	process_redirection(head, minishell);
+	if (process_redirection(head, minishell) == 1)
+		return (1); 
 	if (!head && head->cmd_node->str[0] == NULL)
 		minishell->exit_code = 0;
 	else if (check_pipe && head->next_ast_node)
