@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 13:05:46 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:42:01 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,7 @@ void		free_redirection_node(t_redirection *node);
 int			lexar(t_ast_node *node, t_minishell *minishell);
 
 /* parser.c */
-int	read_heredoc(t_minishell *minishell, t_redirection *redirection
-	, t_tmp_file *tmp_file);
+int		read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file);
 t_ast_node	*parser(char *str, t_minishell *minishell);
 int			recurv_parser(t_ast_node *head, t_minishell *minishell);
 int			traverse(t_ast_node *head, t_minishell *minishell, int check_pipe);
