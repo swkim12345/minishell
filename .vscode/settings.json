@@ -12,6 +12,7 @@
 		"tuple": "c",
 		"algorithm": "c",
 		"complex": "c",
-		"new": "c"
+		"new": "c",
+		"filesystem": "c"
 	}
 }

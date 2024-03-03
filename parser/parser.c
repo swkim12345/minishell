@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 13:05:31 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:44:17 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static int	pipe_recurv_parser(t_ast_node *head, int str_end,
 
 	ptr = head->cmd_node->str[0];
 	if (str_end <= 0)
-		return (syntax_err_message(ptr, dup_str_start, -1, minishell));
+		return (syntax_err_message(ptr, dup_str_start, FUNC_FAIL, minishell));
 	split_node(str_end, dup_str_start, head, NEXTNODE);
 	if (recurv_parser(head->next_ast_node, minishell) == FUNC_FAIL)
 		return (FUNC_FAIL);
@@ -110,7 +110,7 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 	if (str_end <= 0)
 	{
 		head->err_flag = TRUE;
-		return (syntax_err_message(ptr, dup_str_start, -1, minishell));
+		return (syntax_err_message(ptr, dup_str_start, FUNC_FAIL, minishell));
 	}
 	if (ft_strncmp(&ptr[str_end + 1], "&&", ft_strlen("&&")) == 0)
 		head->flag = AND_FLAG;
@@ -137,12 +137,12 @@ static int	subshell_recurv_parser(t_ast_node *head, int index, int flag, t_minis
 	if (tmp + index == NOTDEFINED || tmp == index + 1)
 	{
 		head->err_flag = TRUE;
-		return (syntax_err_message(&ptr[index], tmp, -1, minishell));
+		return (syntax_err_message(&ptr[index], tmp, FUNC_FAIL, minishell));
 	}
 	if (flag & STRING_FLAG)
 	{
 		head->err_flag = TRUE;
-		return (syntax_err_message(&ptr[index + 1], tmp - 1, -1, minishell));
+		return (syntax_err_message(&ptr[index + 1], tmp - 1, FUNC_FAIL, minishell));
 	}
 	ptr[tmp + index] = ' ';
 	ptr[index] = ' ';
@@ -157,7 +157,7 @@ static int	subshell_recurv_parser(t_ast_node *head, int index, int flag, t_minis
 			return (recurv_parser(head, minishell));
 		}
 		else if (ptr[tmp] == '(')
-			return (syntax_err_message(&ptr[tmp], tmp + 1, -1, minishell));
+			return (syntax_err_message(&ptr[tmp], tmp + 1, FUNC_FAIL, minishell));
 		else if (ptr[tmp] == '|')
 			return (recurv_parser(head, minishell));
 		else if (ptr[tmp] == '&')
@@ -165,7 +165,7 @@ static int	subshell_recurv_parser(t_ast_node *head, int index, int flag, t_minis
 		else
 		{
 			head->err_flag = TRUE;
-			return (syntax_err_message(&ptr[tmp], NOTDEFINED, -1, minishell)); //adhoc
+			return (syntax_err_message(&ptr[tmp], NOTDEFINED, FUNC_FAIL, minishell)); //adhoc
 		}
 	}
 	head->left_node->flag = BRACKET_FLAG;
@@ -201,7 +201,7 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 			if (tmp == NOTDEFINED)
 			{
 				head->err_flag = TRUE;
-				return (syntax_err_message(ptr, index + 1, -1, minishell));
+				return (syntax_err_message(ptr, index + 1, FUNC_FAIL, minishell));
 			}
 			index += tmp + 1;
 			continue ;
@@ -214,8 +214,7 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 	return (FUNC_SUC);
 }
 
-int	read_heredoc(t_minishell *minishell, t_redirection *redirection
-	, t_tmp_file *tmp_file)
+int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 {
 	int			fd;
 	char		*line;
@@ -231,8 +230,8 @@ int	read_heredoc(t_minishell *minishell, t_redirection *redirection
 		while (1)
 		{
 			line = readline("> ");
-			printf("read_heredoc_str : %s\n", redirection->str);
-			if (!line || str_equal(line, redirection->str))
+			printf("read_heredoc_str : %s\n", tmp_file->eof);
+			if (!line || str_equal(line, tmp_file->eof))
 				break ;
 			ft_putstr_fd(line, fd);
 			ft_putchar_fd('\n', fd);
@@ -245,6 +244,21 @@ int	read_heredoc(t_minishell *minishell, t_redirection *redirection
 	return (wstatus);
 }
 
+static int	traverse_redirection(t_minishell *minishell)
+{
+	t_tmp_file	*tmp;
+
+	tmp = minishell->tmp_list->head;
+	if (tmp == NULL)
+		return (FUNC_SUC);
+	while (tmp)
+	{
+		read_heredoc(minishell, tmp);
+		tmp = tmp->next;
+	}
+	return (FUNC_SUC);
+}
+
 t_ast_node	*parser(char *str, t_minishell *minishell)
 {
 	t_ast_node	*ret;
@@ -254,8 +268,7 @@ t_ast_node	*parser(char *str, t_minishell *minishell)
 	ret = init_ast_node(CMDNODE);
 	ret->cmd_node->str = init_doub_char(&str, 1);
 	err = recurv_parser(ret, minishell);
-
-	//add heredoc 
+	traverse_redirection(minishell);
 	if (err == FUNC_FAIL)
 	{
 		free_ast_tree(ret);
