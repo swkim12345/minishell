@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 11:57:49 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:02:55 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define REDIRINPUT		">"
 # define REDIROUTPUT	"<"
 
-# define BRACKET_FLAG 1
+# define BRACKET_FLAG 16
 # define STRING_FLAG 2
 
 # define LT_SIGN 1
