@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 13:44:17 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 14:34:17 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 			ft_putchar_fd('\n', fd);
 			free(line);
 		}
-		return (FUNC_SUC);
+		exit(FUNC_SUC);
 	}
 	else
 		wait(&wstatus);
