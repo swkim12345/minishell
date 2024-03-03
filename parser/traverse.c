@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 15:13:54 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 16:35:45 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int	recur_traverse(t_ast_node *head, t_minishell *minishell) //fork로 실행, w
 
 	if (!head)
 		return (TRUE); //fix 필요(true만 리턴하면 안됨.)
-	if (head->red)
-		process_redirection(head, minishell);
 	ret = traverse(head->left_node, minishell, 1);
 	if (head->cmd_node)
 	{
@@ -46,9 +44,12 @@ int	subshell_traverse(t_ast_node *head, t_minishell *minishell)
 	{
 		ft_printf("subshell\n");
 		head->flag = 0;
+		printf("stdin_fd: %d\n", minishell->stdin_fd);
+		printf("stdout_fd: %d\n", minishell->stdout_fd);
 		minishell->stdin_fd = dup(0);
 		minishell->stdout_fd = dup(1);
-		process_redirection(head, minishell);
+		printf("after stdin_fd: %d\n", minishell->stdin_fd);
+		printf("after stdout_fd: %d\n", minishell->stdout_fd);
 		traverse(head, minishell, 1);
 		exit(minishell->exit_code);
 	}
@@ -172,6 +173,8 @@ int	get_heredoc_fd(t_minishell *minishell, int index)
 	int			fd;
 
 	cur_node = minishell->tmp_list->head;
+	if (cur_node == NULL)
+		return (-1);
 	ft_printf("ast_ndoe->index: %d\n", index);
 	while (--index > 0)
 		cur_node = cur_node->next;

@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 15:17:18 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 16:17:41 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 			ft_putchar_fd('\n', fd);
 			free(line);
 		}
+		close(fd);
 		exit(FUNC_SUC);
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   common_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 14:42:02 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 16:06:31 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void	clear_tmp_list(t_tmp_list *list, t_minishell *minishell)
 		free(cur);
 		cur = next;
 	}
-	minishell->tmp_list = 0;
 	minishell->tmp_file_counter = 0;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 14:41:32 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 15:54:39 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int	main(int argc, char **argv, char **envp)
 			exit_handle(&shell, EXIT_SUCCESS);
 		else if (ft_strlen(shell.input_str) > 0 && head)
 		{
+			shell.exit_code = 0;
 			traverse(head, &shell, 1);
 		}
 		if (ft_strlen(shell.input_str) != 0)
