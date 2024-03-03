@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 12:48:10 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:40:49 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_tmp_list	t_tmp_list;
 typedef struct s_tmp_file
 {
 	char		*tmp;	//임시파일 이름
+	char		*eof;	//heredoc 종료문자열
 	int			fd;		//임시파일 디스크립터
 	t_tmp_file	*next;
 }	t_tmp_file;

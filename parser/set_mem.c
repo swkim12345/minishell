@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:36:45 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/28 19:58:23 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:36:10 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,11 @@ void	free_redirection_node(t_redirection *red)
 	while (red)
 	{
 		tmp = red->next;
-		free_2d_str(&red->str);
+		free(red->str);
 		free(red);
 		red = NULL;
 		red = tmp;
 	}
-	
 }
 
 void	free_cmd_node(t_cmd_node **node)
