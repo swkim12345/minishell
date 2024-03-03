@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 14:34:17 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 14:57:28 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,60 +127,13 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 	return (FUNC_SUC);
 }
 
-static int	subshell_recurv_parser(t_ast_node *head, int index, int flag, t_minishell *minishell)
-{
-	char	*ptr;
-	int		tmp;
-
-	ptr = head->cmd_node->str[0]; 	
-	tmp = bracket_finder(&ptr[index]);
-	if (tmp + index == NOTDEFINED || tmp == index + 1)
-	{
-		head->err_flag = TRUE;
-		return (syntax_err_message(&ptr[index], tmp, FUNC_FAIL, minishell));
-	}
-	if (flag & STRING_FLAG)
-	{
-		head->err_flag = TRUE;
-		return (syntax_err_message(&ptr[index + 1], tmp - 1, FUNC_FAIL, minishell));
-	}
-	ptr[tmp + index] = ' ';
-	ptr[index] = ' ';
-	index += tmp;
-	tmp = index;
-	while (TRUE)
-	{
-		tmp += skip_space(&ptr[tmp]);
-		if (ptr[tmp] == '\0')
-		{
-			head->flag = TRUE;
-			return (recurv_parser(head, minishell));
-		}
-		else if (ptr[tmp] == '(')
-			return (syntax_err_message(&ptr[tmp], tmp + 1, FUNC_FAIL, minishell));
-		else if (ptr[tmp] == '|')
-			return (recurv_parser(head, minishell));
-		else if (ptr[tmp] == '&')
-			return (recurv_parser(head, minishell));
-		else
-		{
-			head->err_flag = TRUE;
-			return (syntax_err_message(&ptr[tmp], NOTDEFINED, FUNC_FAIL, minishell)); //adhoc
-		}
-	}
-	head->left_node->flag = BRACKET_FLAG;
-	return (FUNC_SUC);
-}
-
 int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 {
 	int			index;
 	int			tmp;
-	int			flag;
 	char		*ptr;
 
 	index = -1;
-	flag = FALSE;
 	ptr = head->cmd_node->str[0]; 
 	while (ptr[++index])
 	{
@@ -194,7 +147,16 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 		if (ptr[index] == '|')
 			return (pipe_recurv_parser(head, index - 1, index + 1, minishell));
 		if (ptr[index] == '(')
-			return (subshell_recurv_parser(head, index, flag, minishell));
+		{
+			tmp = bracket_finder(&ptr[index]);
+			if (tmp == NOTDEFINED)
+			{
+				head->err_flag = TRUE;
+				return (syntax_err_message(&ptr[index], index + 1, FUNC_FAIL, minishell));
+			}
+			index += tmp;
+			continue ;
+		}
 		if (ptr[index] == '\"' || ptr[index] == '\'')
 		{
 			tmp = finder(&ptr[index + 1], ptr[index]);
@@ -206,7 +168,6 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 			index += tmp + 1;
 			continue ;
 		}
-		flag |= STRING_FLAG;
 	}
 	tmp = lexar(head, minishell);
 	if (tmp == FUNC_FAIL)
@@ -248,6 +209,8 @@ static int	traverse_redirection(t_minishell *minishell)
 {
 	t_tmp_file	*tmp;
 
+	if (minishell->tmp_list == NULL)
+		return (FUNC_SUC);
 	tmp = minishell->tmp_list->head;
 	if (tmp == NULL)
 		return (FUNC_SUC);
