@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 17:10:04 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 20:35:57 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,6 @@ int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 		while (1)
 		{
 			line = readline("> ");
-			printf("read_heredoc_str : %s\n", tmp_file->eof);
 			if (!line || str_equal(line, tmp_file->eof))
 				break ;
 			ft_putstr_fd(line, fd);
