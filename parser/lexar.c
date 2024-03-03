@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 18:14:23 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/03 18:21:36 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,10 +229,13 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 		str_flag |= STRING_FLAG;
 	}
 	if (str_flag & BRACKET_FLAG)
-		return (recurv_parser(node, minishell));
-	node->flag |= BRACKET_FLAG;
+	{
+		tmp = recurv_parser(node, minishell);
+		node->flag |= BRACKET_FLAG;
+		return (tmp);
+	}
 	cmd_str = string_parser(ptr, minishell);
-	free_2d_str(node->cmd_node->str);
+	free_2d_str(node->cmd_node->str); 
 	node->cmd_node->str = cmd_str;
 	return (FUNC_SUC);
 }
