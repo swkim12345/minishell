@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/04 16:03:14 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:09:32 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,8 @@ void	print_cmd_node(t_cmd_node *cmd_node)
 
 int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 {
+	t_pipe_traverse	*info;
+
 	// ft_printf("%p\n", cmd_node->str);
 	cmd_node->cmd_name = cmd_node->str[0];
 	print_cmd_node(cmd_node);
@@ -167,6 +169,18 @@ int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 		//ft_printf("running builtin fn\n");
 		//ft_printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 		minishell->exit_code = process_builtin(cmd_node, minishell);
+		ft_printf("flag %d\n", minishell->flag);
+		if (minishell->flag & PIPE_TRAVERSE)
+		{
+			ft_printf("here\n");
+			info = minishell->pipe_info;
+			printf("info->current_pipe: %d\n", info->current_pipe);
+			close(info->pipe_list[info->current_pipe].pipe_fd[1]);
+			close(info->pipe_list[info->current_pipe - 1].pipe_fd[0]);
+			close(0);
+			close(1);
+			exit(minishell->exit_code);
+		}
 		//ft_printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 	}
 	else

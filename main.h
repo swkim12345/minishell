@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/04 16:22:51 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:44:13 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@
 # include "signal/signal.h"
 
 # define NOT_CHECK_RED 1
+# define PIPE_TRAVERSE 2
 
 typedef struct s_minishell	t_minishell;
 typedef struct s_str_list	t_str_list;
@@ -72,6 +73,7 @@ typedef struct s_cmd_node	t_cmd_node;
 typedef struct s_str_node	t_str_node;
 typedef struct s_tmp_file	t_tmp_file;
 typedef struct s_tmp_list	t_tmp_list;
+typedef struct s_pipe_traverse	t_pipe_traverse;
 
 typedef struct s_tmp_file
 {
@@ -104,6 +106,7 @@ typedef struct s_minishell
 	t_tree_head	*export;
 	t_tmp_list	*tmp_list;
 	t_error		*error;
+	t_pipe_traverse	*pipe_info;
 }	t_minishell;
 
 typedef struct s_cmd_info

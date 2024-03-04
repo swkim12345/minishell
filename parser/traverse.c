@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 16:19:25 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:55:27 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,10 @@ int	pipe_traverse(t_ast_node *head, t_minishell *minishell)
 		info.pid = fork();
 		if (info.pid == 0)
 		{
+			minishell->flag |= PIPE_TRAVERSE;
 			set_pipe_redirection(&info, minishell);
+			minishell->pipe_info = &info;
+			// close(info.pipe_list[info.current_pipe].pipe_fd[0]);
 			info.ret = traverse(head, minishell, 0);
 			exit(info.ret);
 		}
