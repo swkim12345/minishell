@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 21:04:24 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:19:33 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
 			return (1);
 		}
 		fd = open(file_list[0], O_RDONLY);
-		//ft_printf("file: %s\n", redirect_node->str);
+		ft_printf("file: %s\n", file_list[0]);
 	}
 	else if (redirect_node->flag & DB_LT_SIGN)
 		fd = get_heredoc_fd(minishell, ast_node->index);

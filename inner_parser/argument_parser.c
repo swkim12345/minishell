@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/04 12:19:04 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:05:58 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,13 +347,11 @@ void	parse_single_word(char **str, t_str_list *str_list,
 		else
 			parse_single_char(&parse_str, str, 0, minishell);
 	}
-	if (parse_str.cursor > 0)
-	{
-		if (parse_str.asterisk_flag == 1)
-			parse_asterisk(str_list, &parse_str);
-		else
-			add_string_node(str_list, &parse_str);
-	}
+
+	if (parse_str.asterisk_flag == 1)
+		parse_asterisk(str_list, &parse_str);
+	else
+		add_string_node(str_list, &parse_str);
 }
 
 char	**string_parser(char *str, t_minishell *minishell)
