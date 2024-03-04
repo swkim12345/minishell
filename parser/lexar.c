@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 17:12:48 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 21:31:44 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			err_token_finder(char *ptr, int index)
 	while (ptr[index] != '\0')
 	{
 		if (ft_isspace(ptr[index]) == TRUE)
-			index++;
+			break ;
 		else if (ptr[index] == '\"' || ptr[index] == '\'')
 			return (index);
 		else if (ptr[index] == '(')
@@ -105,6 +105,7 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 {
 	char			*ptr;
 	int				start;
+	int				tmp;
 	t_redirection	*red;
 
 	ptr = node->cmd_node->str[0]; 
@@ -114,17 +115,24 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	index = find_next_token_red(ptr, index, red);
 	start = index;
 	index += skip_space(&ptr[index]);
-	if (ptr[index] == '\0' || ptr[index] == '<' || ptr[index] == '>')
+	if (ptr[index] == '\0')
 	{
 		node->err_flag = TRUE;
-		printf("ptr: %c\n", ptr[index]);
-		if (ptr[index] == '\0')
-			return (syntax_err_message("newline", NOTDEFINED, -2, minishell));
-		else
-			return (syntax_err_message(&ptr[index], NOTDEFINED, -2, minishell)); //substring 만드는 부분을 위로 올려서 처리.
+		return (syntax_err_message("newline", NOTDEFINED, -2, minishell));
 	}
 	while (ptr[index] != '\0')
 	{
+		if (ptr[index] == '\"' || ptr[index] == '\'')
+		{
+			tmp = finder(&ptr[index + 1], ptr[index]);
+			if (tmp == NOTDEFINED)
+			{
+				node->err_flag = TRUE;
+				return (syntax_err_message(&ptr[index], NOTDEFINED, -2, minishell));
+			}
+			index += tmp + 2;
+			continue ;
+		}
 		if (ft_isspace(ptr[index]) == TRUE || ptr[index] == '<' || ptr[index] == '>')
 			break ;
 		index++;
@@ -132,6 +140,18 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	red->str = ft_substr(&ptr[start], 0, index - start);
 	red->str = file_name_parser(red->str);
 	ft_strlcat(ptr, &ptr[index], ft_strlen(ptr) + ft_strlen(&ptr[index]) + 1);
+	//ft_printf("red->str: %s\n", red->str);
+	//ft_printf("ptr: %s\n", ptr);
+	//ft_printf("start: %d\n", start);
+	//ft_printf("index: %d\n", index);
+	if (red->str[0] == '\0')
+	{
+		index = start;
+		node->err_flag = TRUE;
+		index += skip_space(&ptr[index]);
+		tmp = err_token_finder(ptr, index);
+		return (syntax_err_message(&ptr[index], tmp + 1, -2, minishell));
+	}
 	if (red->flag == DB_LT_SIGN)
 	{
 		node->index = minishell->tmp_file_counter + 1;
@@ -184,6 +204,34 @@ static int	subshell_recurv_parser(t_ast_node *head, int index, int flag, t_minis
 	return (tmp);
 }
 
+//static char	*parse_add_str_node(char *ptr)
+//{
+//	t_parse_str	parse_str;
+//	char		*ret;
+//	int			index;
+//	int			flag;
+
+//	init_parse_str(&parse_str);
+//	index = -1;
+//	while (ptr[++index])
+//	{
+//		if ()
+//	}
+//}
+
+//char	*add_str_node(t_ast_node *node, t_minishell *minishell)
+//{
+//	char	*ret;
+
+//	ret = readline("> ");
+//	if (ret == NULL)
+//	{
+//		node->err_flag = TRUE;
+//		return (NULL);
+//	}
+	
+//}
+
 //check redirection
 int	lexar(t_ast_node *node, t_minishell *minishell)
 {
@@ -196,7 +244,6 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 	index = -1;
 	str_flag = FALSE;
 	ptr = node->cmd_node->str[0];
-	printf("lexar ptr: %s\n", ptr);
 	while (ptr[++index])
 	{
 		index += skip_space(&ptr[index]);

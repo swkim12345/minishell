@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 13:26:35 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/03 21:07:32 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_option(char *str)
 	int	option_num;
 
 	option_num = 0;
-	ft_printf("option_str: %s\n", str);
+	//ft_printf("option_str: %s\n", str);
 	if (ft_strlen(str) > 1 && str[0] == '-' && (str[1] == 'L' || str[1] == 'P'))
 		str++;
 	else
@@ -46,13 +46,13 @@ void	init_t_cd(t_cd *info, t_cmd_node *cmd_node, t_minishell *minishell)
 	info->execute_name = cmd_node->cmd_name;
 	info->home_dir = ft_getenv(minishell->env, "HOME");
 	info->cdpath = ft_getenv(minishell->env, "CDPATH");
-	ft_printf("info->home %s\n", info->home_dir);
-	ft_printf("info->cdpath %s\n", info->cdpath);
+	//ft_printf("info->home %s\n", info->home_dir);
+	//ft_printf("info->cdpath %s\n", info->cdpath);
 	info->cd_flag = 0;
 	while (cmd_node->str[i])
 	{
 		option_result = check_option(cmd_node->str[i]);
-		ft_printf("[%s] option_result: %d\n", cmd_node->str[i], option_result);
+		//ft_printf("[%s] option_result: %d\n", cmd_node->str[i], option_result);
 		if (option_result != NOTDEFINED)
 			info->cd_flag = option_result;
 		else
@@ -60,7 +60,7 @@ void	init_t_cd(t_cd *info, t_cmd_node *cmd_node, t_minishell *minishell)
 		i++;
 	}
 	info->directory_index = i;
-	ft_printf("directory_index: %d\n", info->directory_index);
+	//ft_printf("directory_index: %d\n", info->directory_index);
 	info->directory = cmd_node->str[info->directory_index];
 	if (info->directory)
 	{
@@ -101,7 +101,7 @@ void	find_local_dir(t_cd *info, t_minishell *minishell)
 
 	temp_str = easy_cat(minishell->cwd, "/");
 	info->check_str = easy_cat(temp_str, info->directory);
-	ft_printf("check_str: %s\n", info->check_str);
+	//ft_printf("check_str: %s\n", info->check_str);
 	if (stat(info->check_str, &info->file_stat) == 0)
 		info->cur_path = info->check_str;
 	else
@@ -153,13 +153,13 @@ int	check_cdpath(t_cd *info, t_minishell *minishell)
 
 void	find_curpath(t_cd *info, t_minishell *minishell)
 {
-	ft_printf("find_curpath\n");
+	//ft_printf("find_curpath\n");
 	info->cd_flag |= NO_DOT_RELATIVE;
 	if (info->cdpath)
 		check_cdpath(info, minishell);
 	if (!info->cur_path)
 		find_local_dir(info, minishell);
-	ft_printf("cwd_1: %s\n", info->cur_path);
+	//ft_printf("cwd_1: %s\n", info->cur_path);
 }
 
 void	free_str_stack(t_str_list *stack)
@@ -186,7 +186,7 @@ char	*stack_to_str(t_str_list *stack)
 	while (cur_node)
 	{
 		i = -1;
-		ft_printf("cur_node: [%s]\n", cur_node->str);
+		//ft_printf("cur_node: [%s]\n", cur_node->str);
 		while (cur_node->str[++i])
 			append_char(&parse_str, cur_node->str[i]);
 		cur_node = cur_node->next;
@@ -218,7 +218,7 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 	i = 0;
 	start = 0;
 	init_str_list(&stack);
-	ft_printf("info curpath: %s\n", info->cur_path);
+	//ft_printf("info curpath: %s\n", info->cur_path);
 	while (info->cur_path[i])
 	{
 		if (ft_strncmp(&info->cur_path[i], "./", 2) == 0 && i - start == 0)
@@ -229,7 +229,7 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 		else if (ft_strncmp(&info->cur_path[i], "../", 3) == 0
 			&& i - start == 0)
 		{
-			ft_printf("here\n");
+			//ft_printf("here\n");
 			temp_str = stack_to_str(&stack);
 			if (stat(temp_str, &info->file_stat) == 0)
 			{
@@ -249,7 +249,7 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 			if (stack.size > 1)
 			{
 				cur = pop(&stack);
-				ft_printf("pop node: %s\n", cur->str);
+				//ft_printf("pop node: %s\n", cur->str);
 				free(cur->str);
 				free(cur);
 			}
@@ -257,8 +257,8 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 		else if (info->cur_path[i] == '/' && (i == 0 || i - start != 0))
 		{
 			temp_str = ft_substr(info->cur_path, start, i - start + 1);
-			ft_printf("token: %s\n", temp_str);
-			ft_printf("start: [%d], i: [%d]\n", start, i);
+			//ft_printf("token: %s\n", temp_str);
+			//ft_printf("start: [%d], i: [%d]\n", start, i);
 			enqueue(&stack, create_node(temp_str));
 			start = i + 1;
 		}
@@ -296,10 +296,10 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 	i = ft_strlen(stack.tail->str) - 1;
 	if (stack.size > 1 && stack.tail->str[i] == '/')
 	{
-		ft_printf("end with /\n");
+		//ft_printf("end with /\n");
 		stack.tail->str[i] = 0;
 	}
-	ft_printf("tail_str: %s\n", stack.tail->str);
+	//ft_printf("tail_str: %s\n", stack.tail->str);
 	free(info->cur_path);
 	info->cur_path = stack_to_str(&stack);
 	return (0);
@@ -330,10 +330,10 @@ void	set_pwd_old_pwd(t_cmd_node *cmd_node, t_minishell *minishell, t_cd *info)
 	char	*old_pwd;
 
 	old_pwd = minishell->cwd;
-	ft_printf("%s\n", old_pwd);
+	//ft_printf("%s\n", old_pwd);
 	if (info->cd_flag & OPTION_FLAG)
 	{
-		ft_printf("option flag -P\n");
+		//ft_printf("option flag -P\n");
 		minishell->cwd = getcwd(0,0);
 		if (!minishell->cwd)
 			minishell->exit_code = builtin_error(minishell, cmd_node->cmd_name, 0);
@@ -357,7 +357,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	t_cd	info;
 
 	init_t_cd(&info, cmd_node, minishell);
-	ft_printf("directory: [%p] [%s], home_dir: [%s]\n", info.directory, info.directory, info.home_dir);
+	//ft_printf("directory: [%p] [%s], home_dir: [%s]\n", info.directory, info.directory, info.home_dir);
 	if (!info.directory && !info.home_dir)
 		return (home_not_set_error(minishell, cmd_node->cmd_name, 0));
 	else if (!info.directory && info.home_dir)
@@ -382,7 +382,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 		}
 		//export temp_cwd to oldpwd
 		set_pwd_old_pwd(cmd_node, minishell, &info);
-		system("pwd");
+		//system("pwd");
 		return (minishell->exit_code);
 	}
 	if (info.cur_path[0] != '/')
@@ -400,8 +400,8 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	if (chdir(info.cur_path) == -1)
 		return (cd_error(&info, minishell, cmd_node->cmd_name, info.directory));
 	set_pwd_old_pwd(cmd_node, minishell, &info);
-	ft_printf("minishell->cwd: [%s]\n", minishell->cwd);
-	system("pwd");
+	//ft_printf("minishell->cwd: [%s]\n", minishell->cwd);
+	//system("pwd");
 	return (0);
 }
 
