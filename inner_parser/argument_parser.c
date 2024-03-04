@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 20:35:17 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:19:04 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ void	parse_single_char(t_parse_str *parse_str, char **str, int in_quote,
 	{
 		if (**str == '\\' && (*str)[1] == '\\')
 			(*str) += 1;
+		else if (**str == '\\' && (*str)[1] == '\0')
+		{
+			(*str)++;
+			return ;
+		}
 		else if (**str == '\\')
 			(*str)++;
 		else if (in_quote == FALSE && **str == '*'
@@ -101,14 +106,17 @@ void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote,
 {
 	char	*env_name;
 	char	*substitude_name;
-	int		start_index;
+	size_t		start_index;
 
 	//ft_printf("dollar cur_char: [%c]\n", **str);
 	start_index = parse_str->cursor;
+	append_char(parse_str, '$');
 	while (**str && !ft_isspace(**str) && (!in_quote || **str != '\"')
 		&& **str != '$' && **str != '\"')
 		parse_single_char(parse_str, str, 0, minishell);
-	env_name = ft_substr(parse_str->str, start_index, parse_str->cursor);
+	if (parse_str->cursor == start_index + 1)
+		return ;
+	env_name = ft_substr(parse_str->str, start_index + 1, parse_str->cursor);
 	substitude_name = ft_getenv(minishell->env, env_name);
 	//printf("find name: %s\n", env_name);
 	//printf("found name: %s\n", substitude_name);

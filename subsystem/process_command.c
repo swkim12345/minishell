@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 20:36:20 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:19:53 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 	// envp = minishell->envp;
 	status = 0;
 	pid = fork();
+	signal(SIGINT, SIG_DFL);
 	if (pid == 0)
 	{
 		envp = ft_charenv(minishell->export, FALSE);
@@ -119,7 +120,12 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 		}
 	}
 	else
+	{
+		// set_signal_handler();
+		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
+		set_signal_handler();
+	}
 	return (WEXITSTATUS(status));
 }
 
@@ -165,9 +171,10 @@ int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 	}
 	else
 	{
-		//ft_printf("running builtin extern cmd\n");
+		//ft_printf("running extern cmd\n");
 		//ft_printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 		minishell->exit_code = process_extern_cmd(cmd_node, minishell);
+		set_signal_handler();
 		//ft_printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
 	}
 	return (minishell->exit_code);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 21:31:44 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:19:14 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ static int	subshell_recurv_parser(t_ast_node *head, int index, int flag, t_minis
 		tmp += skip_space(&ptr[tmp]);
 		if (ptr[tmp] == '\0' || ptr[tmp] == '<' || ptr[tmp] == '>')
 		{
-			head->flag = BRACKET_FLAG;
+			head->flag |= BRACKET_FLAG;
 			return (tmp);
 		}
 		else if (ptr[tmp] == '(')

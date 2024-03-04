@@ -1,9 +1,0 @@
-redirection success
-process command
-0x602000006af0
-cmd_node-------------------------------
-cmd_node: [0x602000006a10]
-cmd_name: [echo]
-str[0]: [echo]
-running builtin fn
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 21:34:33 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:18:59 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	init_shell(t_minishell *shell, char **envp, char **argv)
 		shell->execute_name = ft_strdup(argv[0]);
 	shell->print_str = color_add_minishell(shell->execute_name, BOLD_BLUE);
 	shell->tmp_list = (t_tmp_list *)ft_calloc(sizeof(t_tmp_list), 1);
+	shell->flag = 0;
 }
 
 void	free_t_minishell(t_minishell *shell)
@@ -110,7 +111,9 @@ int	main(int argc, char **argv, char **envp)
 			exit_handle(&shell, EXIT_SUCCESS);
 		else if (ft_strlen(shell.input_str) > 0 && head)
 		{
-			shell.exit_code = traverse(head, &shell, 1);
+			//printf("[%s]\n", shell.input_str);
+			shell.exit_code = 0;
+			traverse(head, &shell, 1);
 		}
 		if (ft_strlen(shell.input_str) != 0)
 			add_history(shell.input_str);
