@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 17:35:39 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/04 20:20:37 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,17 @@ void	set_pipe_redirection(t_pipe_traverse *info, t_minishell *minishell)
 		fd = info->pipe_list[info->current_pipe - 1].pipe_fd[0];
 		if (dup2(fd, 0) == -1)
 			shell_error(minishell, 0, 0);
+		close(fd);
 	}
 	if (info->current_pipe != info->num_pipe - 1)
 	{
 		fd = info->pipe_list[info->current_pipe].pipe_fd[1];
 		if (dup2(fd, 1) == -1)
 			shell_error(minishell, 0, 0);
+		close(fd);
 	}
+	close(info->pipe_list[info->current_pipe].pipe_fd[0]);
+	close(info->pipe_list[info->current_pipe].pipe_fd[1]);
 }
 
 int	pipe_traverse(t_ast_node *head, t_minishell *minishell)
@@ -138,7 +142,10 @@ int	pipe_traverse(t_ast_node *head, t_minishell *minishell)
 		info.pid = fork();
 		if (info.pid == 0)
 		{
+			minishell->flag |= PIPE_TRAVERSE;
 			set_pipe_redirection(&info, minishell);
+			minishell->pipe_info = &info;
+			// close(info.pipe_list[info.current_pipe].pipe_fd[0]);
 			info.ret = traverse(head, minishell, 0);
 			exit(info.ret);
 		}
@@ -150,9 +157,9 @@ int	pipe_traverse(t_ast_node *head, t_minishell *minishell)
 		close(info.pipe_list[info.current_pipe].pipe_fd[1]);
 	}
 	close(info.pipe_list[info.current_pipe - 1].pipe_fd[0]);
-	info.ret = wait_processes(info.pid, info.first_pid);
+	minishell->exit_code = wait_processes(info.pid, info.first_pid);
 	//free pipelist
-	return (info.ret);
+	return (minishell->exit_code);
 }
 
 t_tmp_file	*get_heredoc_file(t_minishell *minishell, int index)
@@ -253,7 +260,7 @@ int set_write_fd(t_redirection *redirect_node, t_minishell *minishell)
 	else
 		return (1);
 	//ft_printf("write fd: %d\n", fd);
-	//ft_printf("write file: %s\n", redirect_node->str);
+	ft_printf("write file: %s\n", redirect_node->str);
 	if (fd < 0)
 	{
 		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, 0);
@@ -295,8 +302,15 @@ int	process_redirection(t_ast_node *ast_node, t_minishell *minishell)
 
 int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 {
-	//ft_printf("traverse\n");
 	print_ast_node(head);
+	if (check_pipe && head->next_ast_node)
+	{
+		// ft_printf("find next pipe\n");
+		minishell->exit_code = pipe_traverse(head, minishell);
+		dup2(minishell->stdin_fd, 0);
+		dup2(minishell->stdout_fd, 1);
+		return (minishell->exit_code);
+	}
 	if (!(minishell->flag & NOT_CHECK_RED))
 		process_redirection(head, minishell);
 	minishell->flag &= ~NOT_CHECK_RED;
@@ -304,19 +318,14 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 	{
 		if (!head && head->cmd_node->str[0] == NULL)
 			minishell->exit_code = 0;
-		else if (check_pipe && head->next_ast_node)
-		{
-			//ft_printf("find next pipe\n");
-			minishell->exit_code = pipe_traverse(head, minishell);
-		}
 		else if (head->flag & BRACKET_FLAG)
 		{
-			//ft_printf("subshell traverse\n");
+			// ft_printf("subshell command\n");
 			minishell->exit_code = subshell_traverse(head, minishell);
 		}
 		else if (head->cmd_node)
 		{
-			//ft_printf("process command\n");
+			// ft_printf("process command\n");
 			signal(SIGINT, SIG_IGN);
 			if (head->cmd_node->str[0])
 				minishell->exit_code = process_command(head->cmd_node, minishell);
@@ -324,7 +333,7 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 		}
 		else if (!head->cmd_node)
 		{
-			//ft_printf("recur traverse\n");
+			// ft_printf("recur traverse\n");
 			minishell->exit_code = recur_traverse(head, minishell);
 		}
 	}
