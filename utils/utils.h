@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:10:28 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/01 17:43:59 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 20:47:38 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	extern_cmd_error(t_minishell *minishell, char *command, char *arg);
 void	command_not_found_error(t_minishell *minishell, char *command);
 void	command_permission_error(t_minishell *minishell, char *command);
 void	command_is_directory_error(t_minishell *minishell, char *command);
+void	command_no_such_file(t_minishell *minishell, char *command);
+
 
 /* common_util.c */
 int		str_equal(char *s1, char *s2);
