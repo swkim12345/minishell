@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   traverse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 13:29:51 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:35:39 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
 	//ft_printf("read_fd\n");
 	if (redirect_node->flag & LT_SIGN)
 	{
-		file_list = string_parser(redirect_node->str, minishell);
+		file_list = string_parser(redirect_node->str, minishell); //add read file string parser
 		if (get_file_num(file_list) > 1)
 		{
 			minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, "ambiguous redirect");
