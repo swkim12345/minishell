@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 14:24:12 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:58:35 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 			continue ;
 		}
 		if (ft_isspace(ptr[index]) == TRUE || ptr[index] == '<' || ptr[index] == '>')
-			break ;
+			break ; //add syntax error msg
 		index++;
 	}
 	red->str = ft_substr(&ptr[start], 0, index - start);
@@ -155,7 +155,7 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	//ft_printf("index: %d\n", index);
 	if (red->str[0] == '\0')
 	{
-		index = start;
+		index = start - index;
 		node->err_flag = TRUE;
 		index += skip_space(&ptr[index]);
 		tmp = err_token_finder(ptr, index);

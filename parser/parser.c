@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 12:19:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:27:56 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-//int	bracket_parser(char *str, int index, int str_flag, t_minishell *minishell)
-//{
-//	char	*ptr;
-//	int		ret;
-
-//	ptr = &str[index];
-//	if (*ptr == '(')
-//	{
-//		if (str_flag == TRUE)
-//			return (syntax_err_message(ptr, index, -1, minishell));
-//		else
-//		{
-//			ret = bracket_finder(ptr);
-//			if (ret == NOTDEFINED)
-//				return (syntax_err_message(ptr, index, -1, minishell));
-//			else
-//				return (ret);
-//		}
-//	}
-//	return (index);
-//}
 
 char	*get_error_token(char *ptr, int index)
 {
