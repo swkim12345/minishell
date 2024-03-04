@@ -79,6 +79,7 @@ static int	find_next_token_red(char *ptr, int index, t_redirection *red)
 	return (index);
 }
 
+
 static char *eof_parser(char *ptr)
 {
 	t_parse_str	parse_str;

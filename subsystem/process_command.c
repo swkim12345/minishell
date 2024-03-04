@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/04 12:19:53 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:33:33 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,8 @@ int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 	print_cmd_node(cmd_node);
 	//argumnet already expanded ..?
 	//expand_argument(cmd_node);
-	ft_unsetenv(minishell->export, "_");
-	ft_setenv(minishell->env, "_", cmd_node->cmd_name);
+	// ft_unsetenv(minishell->export, "_");
+	// ft_setenv(minishell->env, "_", cmd_node->cmd_name);
 	if (is_builtin_fn(cmd_node))
 	{
 		//ft_printf("running builtin fn\n");
