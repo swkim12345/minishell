@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 20:28:04 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/04 20:38:13 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,7 @@ int set_write_fd(t_redirection *redirect_node, t_minishell *minishell)
 	else
 		return (1);
 	//ft_printf("write fd: %d\n", fd);
-	//ft_printf("write file: %s\n", redirect_node->str);
+	//ft_printf("write file: %s\n", file_list[0]);
 	if (fd < 0)
 	{
 		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, 0);
