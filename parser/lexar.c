@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 14:58:35 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:49:33 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,12 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 		node->err_flag = TRUE;
 		return (syntax_err_message("newline", NOTDEFINED, -2, minishell));
 	}
+	if (ptr[index] == '<' || ptr[index] == '>')
+	{
+		node->err_flag = TRUE;
+		tmp = err_token_finder(ptr, index);
+		return (syntax_err_message(&ptr[index], tmp - index + 1, -2, minishell));
+	}
 	while (ptr[index] != '\0')
 	{
 		if (ptr[index] == '\"' || ptr[index] == '\'')
@@ -144,15 +150,11 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 			continue ;
 		}
 		if (ft_isspace(ptr[index]) == TRUE || ptr[index] == '<' || ptr[index] == '>')
-			break ; //add syntax error msg
+			break ;
 		index++;
 	}
 	red->str = ft_substr(&ptr[start], 0, index - start);
 	ft_strlcat(ptr, &ptr[index], ft_strlen(ptr) + ft_strlen(&ptr[index]) + 1);
-	//ft_printf("red->str: %s\n", red->str);
-	//ft_printf("ptr: %s\n", ptr);
-	//ft_printf("start: %d\n", start);
-	//ft_printf("index: %d\n", index);
 	if (red->str[0] == '\0')
 	{
 		index = start - index;
@@ -168,6 +170,10 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 		if (heredoc_open_fd(red, minishell) == FUNC_FAIL) //free add required
 			return (-2);
 	}
+	ft_printf("red->str: -%s-\n", red->str);
+	ft_printf("ptr: %s\n", ptr);
+	ft_printf("start: %d\n", start);
+	ft_printf("index: %d\n", index);
 	if (red->flag == DB_LT_SIGN || red->flag == DB_GT_SIGN)
 		return (start - 3);
 	else

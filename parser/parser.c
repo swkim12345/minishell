@@ -3,14 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 14:27:56 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/04 20:12:50 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
+{
+	int			fd;
+	int			index;
+	char		*line;
+	char		*str;
+	char		**tmp;
+	pid_t		pid;
+	int			wstatus;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		set_signal_dfl();
+		fd = tmp_file->fd;
+		if (fd == -1)
+			shell_error(minishell, "heredoc", 0);
+		while (1)
+		{
+			line = readline("> ");
+			if (!line || str_equal(line, tmp_file->eof)) 
+				break ;
+			str = ft_strjoin("\"", line);//adhoc	free(line);
+			line = ft_strjoin(str, "\"");
+			free(str);
+			tmp = string_parser(line, minishell);
+			index = -1;
+			while (tmp[++index])
+			{
+				ft_putstr_fd(tmp[index], fd);
+				if (tmp[index + 1])
+					ft_putstr_fd(" ", fd);
+			}
+			ft_putchar_fd('\n', fd);
+			free(line);
+			free_2d_str(tmp);
+		}
+		close(fd);
+		exit(FUNC_SUC);
+	}
+	else
+		wait(&wstatus);
+	return (wstatus);
+}
 
 char	*get_error_token(char *ptr, int index)
 {
@@ -27,7 +72,7 @@ char	*get_error_token(char *ptr, int index)
 	return (ret);
 }
 
-static void	split_node(int end, int new_start, t_ast_node *node, int new_node_flag)
+static int	split_node(int end, int new_start, t_ast_node *node, int new_node_flag)
 {
 	char		*ptr;
 	char		*tmp;
@@ -61,6 +106,11 @@ static void	split_node(int end, int new_start, t_ast_node *node, int new_node_fl
 	new_node->cmd_node->str = init_doub_char(&tmp, 1);
 	free(tmp);
 	free(ptr);
+	tmp = new_node->cmd_node->str[0];
+	tmp += skip_space(tmp);
+	if (*tmp == '\0')
+		return (FUNC_FAIL);
+	return (FUNC_SUC);
 }
 
 static int	pipe_recurv_parser(t_ast_node *head, int str_end,
@@ -70,8 +120,15 @@ static int	pipe_recurv_parser(t_ast_node *head, int str_end,
 
 	ptr = head->cmd_node->str[0];
 	if (str_end <= 0)
+	{
+		head->err_flag = TRUE;
 		return (syntax_err_message(ptr, dup_str_start, FUNC_FAIL, minishell));
-	split_node(str_end, dup_str_start, head, NEXTNODE);
+	}
+	if (split_node(str_end, dup_str_start, head, NEXTNODE) == FUNC_FAIL)
+	{
+		head->err_flag = TRUE;
+		return (syntax_err_message("|", NOTDEFINED, FUNC_FAIL, minishell));
+	}
 	if (recurv_parser(head->next_ast_node, minishell) == FUNC_FAIL)
 		return (FUNC_FAIL);
 	if (recurv_parser(head, minishell) == FUNC_FAIL)
@@ -96,7 +153,15 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 		head->flag |= OR_FLAG;
 	else
 		head->flag |= NO_FLAG;
-	split_node(str_end, dup_str_start, head, LEFTNODE | RIGHTNODE);
+	if (split_node(str_end, dup_str_start, head, LEFTNODE | RIGHTNODE) == FUNC_FAIL)
+	{
+		head->err_flag = TRUE;
+		if (head->flag & AND_FLAG)
+			return (syntax_err_message("&&", NOTDEFINED, FUNC_FAIL, minishell));
+		if (head->flag & OR_FLAG)
+			return (syntax_err_message("||", NOTDEFINED, FUNC_FAIL, minishell));
+
+	}
 	free_cmd_node(&(head->cmd_node));
 	if (recurv_parser(head->left_node, minishell) == FUNC_FAIL)
 		return (FUNC_FAIL);
@@ -151,37 +216,6 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 	if (tmp == FUNC_FAIL)
 		return (FUNC_FAIL);
 	return (FUNC_SUC);
-}
-
-int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
-{
-	int			fd;
-	char		*line;
-	pid_t		pid;
-	int			wstatus;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		set_signal_dfl();
-		fd = tmp_file->fd;
-		if (fd == -1)
-			shell_error(minishell, "heredoc", 0);
-		while (1)
-		{
-			line = readline("> ");
-			if (!line || str_equal(line, tmp_file->eof))
-				break ;
-			ft_putstr_fd(line, fd);
-			ft_putchar_fd('\n', fd);
-			free(line);
-		}
-		close(fd);
-		exit(FUNC_SUC);
-	}
-	else
-		wait(&wstatus);
-	return (wstatus);
 }
 
 static int	traverse_redirection(t_minishell *minishell)
