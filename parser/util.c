@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 19:34:52 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 19:48:27 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_ast_node	*init_ast_node(int child_node)
 
 int	syntax_err_message(char *msg, int end, int ret, t_minishell *minishell)
 {
-	if (end != NOTDEFINED && end != -2)
+	if (end != NOTDEFINED && end != -2 && msg[end])
 		msg[end] = '\0';
 	ft_putstr_fd(minishell->execute_name, STDERR_FILENO);
 	ft_putstr_fd(": syntax error near unexpected token `", STDERR_FILENO);
