@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:14:59 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 20:36:36 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/04 21:30:25 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,3 @@ void	command_is_directory_error(t_minishell *minishell, char *command)
 	print_error_msg(minishell->error, 126, 0);
 	exit(126);
 }
-
-// int main(int argc, char **argv, char **envp)
-// {
-// 	t_minishell	shell;
-
-// 	init_shell(&shell, envp);
-// 	shell.execute_name = "bash";
-// 	shell_error(&shell, "cd", 0);
-// }

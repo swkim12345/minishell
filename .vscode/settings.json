@@ -13,6 +13,7 @@
 		"algorithm": "c",
 		"complex": "c",
 		"new": "c",
-		"filesystem": "c"
+		"filesystem": "c",
+		"fcntl.h": "c"
 	}
 }
