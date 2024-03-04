@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/04 12:18:18 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:22:51 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <termios.h>
+# include <sys/ioctl.h>
 
 # include <sys/stat.h>
 # include <sys/wait.h>

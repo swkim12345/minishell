@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 13:29:51 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:19:25 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,7 +295,6 @@ int	process_redirection(t_ast_node *ast_node, t_minishell *minishell)
 
 int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 {
-	//ft_printf("traverse\n");
 	print_ast_node(head);
 	if (!(minishell->flag & NOT_CHECK_RED))
 		process_redirection(head, minishell);
@@ -316,7 +315,7 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 		}
 		else if (head->cmd_node)
 		{
-			//ft_printf("process command\n");
+			// ft_printf("process command\n");
 			signal(SIGINT, SIG_IGN);
 			if (head->cmd_node->str[0])
 				minishell->exit_code = process_command(head->cmd_node, minishell);

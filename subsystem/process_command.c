@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/04 12:33:33 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:03:14 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	print_cmd_node(t_cmd_node *cmd_node)
 
 int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 {
-	//ft_printf("%p\n", cmd_node->str);
+	// ft_printf("%p\n", cmd_node->str);
 	cmd_node->cmd_name = cmd_node->str[0];
 	print_cmd_node(cmd_node);
 	//argumnet already expanded ..?

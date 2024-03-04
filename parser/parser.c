@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 12:19:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:22:36 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 	pid = fork();
 	if (pid == 0)
 	{
-		set_signal_dfl();
+		signal(SIGINT, SIG_DFL);
 		fd = tmp_file->fd;
 		if (fd == -1)
 			shell_error(minishell, "heredoc", 0);
@@ -193,7 +193,7 @@ int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 		{
 			line = readline("> ");
 			if (!line || str_equal(line, tmp_file->eof))
-				break ;
+				exit(0);
 			ft_putstr_fd(line, fd);
 			ft_putchar_fd('\n', fd);
 			free(line);
@@ -202,7 +202,12 @@ int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 		exit(FUNC_SUC);
 	}
 	else
+	{
+		set_heredoc_parent();
+		// signal(SIGINT, SIG_IGN);
 		wait(&wstatus);
+		set_signal_handler();
+	}
 	return (wstatus);
 }
 

@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/04 13:35:15 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:22:58 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	main(int argc, char **argv, char **envp)
 			exit_handle(&shell, EXIT_SUCCESS);
 		else if (ft_strlen(shell.input_str) > 0 && head)
 		{
-			//printf("[%s]\n", shell.input_str);
+			// printf("[%s]\n", shell.input_str);
 			shell.exit_code = 0;
 			traverse(head, &shell, 1);
 		}
