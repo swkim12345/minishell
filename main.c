@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 20:15:56 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:18:59 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	main(int argc, char **argv, char **envp)
 			exit_handle(&shell, EXIT_SUCCESS);
 		else if (ft_strlen(shell.input_str) > 0 && head)
 		{
-			printf("[%s]\n", shell.input_str);
+			//printf("[%s]\n", shell.input_str);
 			shell.exit_code = 0;
 			traverse(head, &shell, 1);
 		}
@@ -119,7 +119,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(shell.input_str);
 		clear_tmp_list(shell.tmp_list, &shell);
 		free(shell.input_str);
-		ft_printf("end of main\n");
+		//ft_printf("end of main\n");
 	}
 
 }

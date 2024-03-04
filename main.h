@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 18:33:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:18:18 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# include "libft/ft_printf.h"
+# include "libft///ft_printf.h"
 # include "parser/parser.h"
 # include "builtin/builtin.h"
 # include "subsystem/subsystem.h"
