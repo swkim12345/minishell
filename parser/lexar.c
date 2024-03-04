@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 17:49:33 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/04 20:27:29 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,10 +171,6 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 		if (heredoc_open_fd(red, minishell) == FUNC_FAIL) //free add required
 			return (-2);
 	}
-	ft_printf("red->str: -%s-\n", red->str);
-	ft_printf("ptr: %s\n", ptr);
-	ft_printf("start: %d\n", start);
-	ft_printf("index: %d\n", index);
 	if (red->flag == DB_LT_SIGN || red->flag == DB_GT_SIGN)
 		return (start - 3);
 	else
