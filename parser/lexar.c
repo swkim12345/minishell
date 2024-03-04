@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 14:09:43 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:24:12 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	find_next_token_red(char *ptr, int index, t_redirection *red)
 	return (index);
 }
 
-static char *file_name_parser(char *ptr)
+static char *eof_parser(char *ptr)
 {
 	t_parse_str	parse_str;
 	char		*ret;
@@ -102,8 +102,6 @@ static char *file_name_parser(char *ptr)
 			continue ;
 		}
 		if (ft_isspace(ptr[index]) == TRUE)
-			continue ;
-		if (ptr[index] == '\"' || ptr[index] == '\'')
 			continue ;
 		append_char(&parse_str, ptr[index]);
 	}
@@ -150,7 +148,6 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 		index++;
 	}
 	red->str = ft_substr(&ptr[start], 0, index - start);
-	red->str = file_name_parser(red->str);
 	ft_strlcat(ptr, &ptr[index], ft_strlen(ptr) + ft_strlen(&ptr[index]) + 1);
 	//ft_printf("red->str: %s\n", red->str);
 	//ft_printf("ptr: %s\n", ptr);
@@ -166,6 +163,7 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	}
 	if (red->flag == DB_LT_SIGN)
 	{
+		red->str = eof_parser(red->str);
 		node->index = minishell->tmp_file_counter + 1;
 		if (heredoc_open_fd(red, minishell) == FUNC_FAIL) //free add required
 			return (-2);
