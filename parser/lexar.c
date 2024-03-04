@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 12:19:14 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:56:56 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,27 +79,27 @@ static int	find_next_token_red(char *ptr, int index, t_redirection *red)
 	return (index);
 }
 
-static char *file_name_parser(char *ptr)
-{
-	t_parse_str	parse_str;
-	char		*ret;
-	int			index;
+// static char *file_name_parser(char *ptr)
+// {
+// 	t_parse_str	parse_str;
+// 	char		*ret;
+// 	int			index;
 
-	init_parse_str(&parse_str);	
-	index = -1;
-	while (ptr[++index])
-	{
-		if (ft_isspace(ptr[index]) == TRUE)
-			continue ;
-		if (ptr[index] == '\"' || ptr[index] == '\'')
-			continue ;
-		append_char(&parse_str, ptr[index]);
-	}
-	ret = ft_strdup(parse_str.str); 
-	free_parse_str(&parse_str);
-	free(ptr);
-	return (ret);
-}
+// 	init_parse_str(&parse_str);	
+// 	index = -1;
+// 	while (ptr[++index])
+// 	{
+// 		if (ft_isspace(ptr[index]) == TRUE)
+// 			continue ;
+// 		if (ptr[index] == '\"' || ptr[index] == '\'')
+// 			continue ;
+// 		append_char(&parse_str, ptr[index]);
+// 	}
+// 	ret = ft_strdup(parse_str.str); 
+// 	free_parse_str(&parse_str);
+// 	free(ptr);
+// 	return (ret);
+// }
 
 static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 {
@@ -138,7 +138,7 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 		index++;
 	}
 	red->str = ft_substr(&ptr[start], 0, index - start);
-	red->str = file_name_parser(red->str);
+	// red->str = file_name_parser(red->str);
 	ft_strlcat(ptr, &ptr[index], ft_strlen(ptr) + ft_strlen(&ptr[index]) + 1);
 	//ft_printf("red->str: %s\n", red->str);
 	//ft_printf("ptr: %s\n", ptr);
