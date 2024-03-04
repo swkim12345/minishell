@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 12:19:14 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 14:09:43 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,24 @@ static char *file_name_parser(char *ptr)
 {
 	t_parse_str	parse_str;
 	char		*ret;
+	int			flag;
 	int			index;
 
 	init_parse_str(&parse_str);	
 	index = -1;
 	while (ptr[++index])
 	{
+		if (ptr[index] == '\"' || ptr[index] == '\'')
+		{
+			flag = ptr[index];
+			index++;
+			while (ptr[index] != flag)
+			{
+				append_char(&parse_str, ptr[index]);
+				index++;
+			}
+			continue ;
+		}
 		if (ft_isspace(ptr[index]) == TRUE)
 			continue ;
 		if (ptr[index] == '\"' || ptr[index] == '\'')
