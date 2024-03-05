@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
 /*   Updated: 2024/03/05 13:59:33 by minsepar         ###   ########.fr       */
@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../main.h"
-#include <fcntl.h>
 
 void	parse_single_char(t_parse_str *parse_str, char **str, int in_quote,
 		t_minishell *minishell)
