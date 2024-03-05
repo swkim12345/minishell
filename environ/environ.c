@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 12:38:33 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/05 17:35:52 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,13 @@ char	*ft_getenv(t_tree_head *head, char *key)
 {
 	t_tree_node	*tmp;
 
-	tmp = tree_search(head->head, NULL, key);
+	// if (!head)
+	// {
+		
+	// 	tmp = getenv(key);
+	// }
+	// else
+		tmp = tree_search(head->head, NULL, key);
 	if (tmp && tmp->value)
 		return (tmp->value);
 	return (NULL);

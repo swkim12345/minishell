@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/05 20:57:59 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/05 22:20:39 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,9 @@ int	main(int argc, char **argv, char **envp)
 		// if (!shell.input_str)
 		// 	exit_handle(&shell, 134);
 		head = parser(shell.input_str, &shell);
-		if (!shell.input_str)
-			exit_handle(&shell, EXIT_SUCCESS);
-		else if (ft_strlen(shell.input_str) > 0 && head)
+		// if (!shell.input_str)
+		// 	exit_handle(&shell, EXIT_SUCCESS);
+		if (ft_strlen(shell.input_str) > 0 && head)
 		{
 			// printf("[%s]\n", shell.input_str);
 			shell.exit_code = 0;
