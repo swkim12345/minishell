@@ -346,13 +346,11 @@ void	parse_single_word(char **str, t_str_list *str_list,
 		else
 			parse_single_char(&parse_str, str, 0, minishell);
 	}
-	if (parse_str.cursor > 0)
-	{
-		if (parse_str.asterisk_flag == 1)
-			parse_asterisk(str_list, &parse_str);
-		else
-			add_string_node(str_list, &parse_str);
-	}
+
+	if (parse_str.asterisk_flag == 1)
+		parse_asterisk(str_list, &parse_str);
+	else
+		add_string_node(str_list, &parse_str);
 }
 
 char	**string_parser(char *str, t_minishell *minishell)
