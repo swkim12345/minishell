@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 13:42:01 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/05 14:33:24 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void		free_ast_tree(t_ast_node *head);
 void		free_redirection_node(t_redirection *node);
 
 /* lexar.c */
+char 		*eof_parser(char *ptr);
 int			lexar(t_ast_node *node, t_minishell *minishell);
 
 /* parser.c */

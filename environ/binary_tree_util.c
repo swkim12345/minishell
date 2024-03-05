@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/05 21:45:42 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/05 22:02:14 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ int	parse_env(char *env, char **key, char **value, t_minishell *minishell)
 	size = ft_strlen(env);
 	while (env[++index])
 	{
+		if (skip_space(&env[index]))
+		{
+			return (FUNC_FAIL);
+		}
 		if (env[index] == '=')
 		{
 			if (index == 0)
@@ -60,7 +64,6 @@ int	parse_env(char *env, char **key, char **value, t_minishell *minishell)
 			break ;
 		}
 	}
-	//ft_printf("env: %s\n", env);
 	*key = *string_parser(env, minishell);
 	*value = parse_value(env, size, index, minishell);
 	return (FUNC_SUC);

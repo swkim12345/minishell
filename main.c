@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/05 01:06:38 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/05 20:57:59 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*color_add_minishell(char *input, char *color)
 	ret = ft_strjoin(tmp, RESET);
 	free(tmp);
 	tmp = ret;
-	ret = ft_strjoin(tmp, " $ ");
+	ret = ft_strjoin(tmp, " $");
 	free(tmp);
 	return (ret);
 }

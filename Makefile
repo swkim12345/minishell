@@ -6,7 +6,7 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/05 18:03:02 by minsepar         ###   ########.fr        #
+#    Updated: 2024/03/05 22:02:31 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,21 +18,21 @@ NAME = minishell
 
 SRCS = main.c
 
-BUILTIN_SRCS = builtin/builtin.c builtin/ft_cd.c builtin/ft_echo.c builtin/ft_env.c builtin/ft_exit.c builtin/ft_export.c builtin/ft_pwd.c builtin/ft_unset.c
+BUILTIN_SRCS = $(addprefix builtin/, builtin.c ft_cd.c ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c)
 
-ENVIRON_SRCS = environ/binary_tree_mem.c environ/binary_tree_util.c environ/binary_tree.c environ/env_to_binary_tree.c environ/environ.c
+ENVIRON_SRCS = $(addprefix environ/, binary_tree_mem.c binary_tree_util.c binary_tree.c env_to_binary_tree.c environ.c)
 
-INNER_SRCS = inner_parser/argument_parser_str_list.c inner_parser/argument_parser_utils.c inner_parser/argument_parser.c
+INNER_SRCS = $(addprefix inner_parser/, argument_parser_utils.c argument_parser.c argument_parser_str_list.c)
 
-PARSER_SRCS = parser/lexar.c parser/parser.c parser/traverse.c parser/set_mem.c parser/util.c
+PARSER_SRCS = $(addprefix parser/, lexar.c parser.c traverse.c set_mem.c util.c)
 
-TRAVERSR_SRCS = parser/traverse.c 
+TRAVERSR_SRCS = $(addprefix parser/, traverse.c)
 
-SIGNAL_SRCS = signal/signal.c
+SIGNAL_SRCS = $(addprefix signal/, signal.c)
 
-SUBSYSTEM_SRCS = subsystem/process_command.c
+SUBSYSTEM_SRCS = $(addprefix subsystem/, process_command.c)
 
-UTIL_SRCS = utils/common_util.c utils/error_exit.c utils/error_msg.c
+UTIL_SRCS = $(addprefix utils/, common_util.c error_exit.c error_msg.c)
 
 SRCS_OBJS = $(SRCS:.c=.o)
 
