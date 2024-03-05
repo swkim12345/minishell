@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/04 22:05:44 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/05 13:59:33 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	parse_single_char(t_parse_str *parse_str, char **str, int in_quote,
 void	parse_double_quote(t_parse_str *parse_str, char **str,
 	t_minishell *minishell)
 {
+	parse_str->quote_flag = 1;
 	(*str)++;
 	while (**str && **str != '\"')
 	{
@@ -53,6 +54,7 @@ void	parse_double_quote(t_parse_str *parse_str, char **str,
 
 void	parse_single_quote(t_parse_str *parse_str, char **str)
 {
+	parse_str->quote_flag = 1;
 	(*str)++;
 	while (**str && **str != '\'')
 	{
@@ -111,7 +113,7 @@ void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote,
 	start_index = parse_str->cursor;
 	append_char(parse_str, '$');
 	while (**str && !ft_isspace(**str) && (!in_quote || **str != '\"')
-		&& **str != '$' && **str != '\"')
+		&& **str != '$' && **str != '\"' && **str != '\'' && **str != '/')
 		parse_single_char(parse_str, str, 0, minishell);
 	if (parse_str->cursor == start_index + 1)
 		return ;
@@ -154,7 +156,7 @@ void	parse_dollar_sign(t_parse_str *parse_str, char **str, int in_quote,
 	(*str)++;
 	if (**str == '\"' && in_quote == FALSE)
 		parse_double_quote(parse_str, str, minishell);
-	else if (**str == '\'')
+	else if (**str == '\'' && in_quote == FALSE)
 		parse_single_quote(parse_str, str);
 	else if (**str == '?')
 		parse_question_mark(parse_str, str, minishell);
@@ -346,11 +348,13 @@ void	parse_single_word(char **str, t_str_list *str_list,
 		else
 			parse_single_char(&parse_str, str, 0, minishell);
 	}
-
-	if (parse_str.asterisk_flag == 1)
-		parse_asterisk(str_list, &parse_str);
-	else
-		add_string_node(str_list, &parse_str);
+	if (parse_str.cursor > 0 || parse_str.quote_flag == 1)
+	{
+		if (parse_str.asterisk_flag == 1)
+			parse_asterisk(str_list, &parse_str);
+		else
+			add_string_node(str_list, &parse_str);
+	}
 }
 
 char	**string_parser(char *str, t_minishell *minishell)
@@ -362,6 +366,8 @@ char	**string_parser(char *str, t_minishell *minishell)
 	{
 		while (*str && ft_isspace(*str))
 			str++;
+		if (!(*str))
+			break ;
 		parse_single_word(&str, &str_list, minishell);
 	}
 	return (list_to_char_arr(&str_list));

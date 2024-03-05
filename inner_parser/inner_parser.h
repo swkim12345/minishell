@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inner_parser.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:38:39 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/27 21:02:52 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:40:04 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_parse_str
 	size_t	malloc_size;
 	size_t	cursor;
 	int		asterisk_flag;
+	int		quote_flag;
 }	t_parse_str;
 
 typedef struct s_str_node

@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 17:00:44 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/05 00:35:19 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*to_lowercase_str(const char *str)
 	return_str = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	while (str[i])
 	{
-		return_str[i] = str[i];
+		return_str[i] = ft_tolower(str[i]);
 		i++;
 	}
 	return_str[i] = 0;

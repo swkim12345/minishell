@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:27:41 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/29 13:30:22 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/05 00:38:01 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	process_builtin(t_cmd_node *cmd_node, t_minishell *minishell)
 	char	*cmd_name;
 	int		ret;
 
-	cmd_name = cmd_node->cmd_name;
+	cmd_name = to_lowercase_str(cmd_node->cmd_name);
 	ret = FUNC_SUC;
 	if (str_equal(cmd_name, "echo"))
 		ret = ft_echo(cmd_node);

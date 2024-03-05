@@ -103,9 +103,18 @@ int	main(int argc, char **argv, char **envp)
 	// }
 	while (1)
 	{
-		shell.input_str = readline(shell.print_str);
+		// shell.input_str = readline(shell.print_str);
+		shell.input_str = readline("minishell $");
 		if (!shell.input_str)
-			exit_handle(&shell, 134);
+		{
+			if (isatty(STDIN_FILENO))
+			{
+				write(2, "exit\n", 6);
+			}
+			exit (0);
+		}
+		// if (!shell.input_str)
+		// 	exit_handle(&shell, 134);
 		head = parser(shell.input_str, &shell);
 		if (!shell.input_str)
 			exit_handle(&shell, EXIT_SUCCESS);
@@ -121,5 +130,4 @@ int	main(int argc, char **argv, char **envp)
 		free(shell.input_str);
 		//ft_printf("end of main\n");
 	}
-
 }
