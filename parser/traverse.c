@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 22:19:33 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:43:14 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,13 +218,13 @@ int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
 			return (1);
 		}
 		fd = open(file_list[0], O_RDONLY);
-		ft_printf("file: %s\n", file_list[0]);
+		// ft_printf("file: [%s]\n", file_list[0]);
 	}
 	else if (redirect_node->flag & DB_LT_SIGN)
 		fd = get_heredoc_fd(minishell, ast_node->index);
 	else
 		return (1);
-	//ft_printf("read fd: %d\n", fd);
+	// ft_printf("read fd: %d\n", fd);
 	if (fd < 0)
 	{
 		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, 0);
@@ -302,7 +302,7 @@ int	process_redirection(t_ast_node *ast_node, t_minishell *minishell)
 
 int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 {
-	print_ast_node(head);
+	// print_ast_node(head);
 	if (check_pipe && head->next_ast_node)
 	{
 		// ft_printf("find next pipe\n");

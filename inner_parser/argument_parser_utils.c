@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parser_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:03:58 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/28 12:28:00 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:41:36 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@ void	free_parse_str(t_parse_str *parse_str)
 
 void	init_parse_str(t_parse_str *parse_str)
 {
+	ft_memset((void *)(parse_str), 0, sizeof(t_parse_str));
 	parse_str->str = malloc(11);
-	ft_memset((void *)(parse_str->str), 0, 11);
-	parse_str->str[0] = 0;
-	parse_str->cursor = 0;
 	parse_str->malloc_size = 10;
 	parse_str->asterisk_flag = -1;
 }
