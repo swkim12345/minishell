@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 21:41:12 by minsepar          #+#    #+#             */
-/*   Updated: 2023/10/22 20:51:11 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/04 21:31:28 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # endif
 # include <stdlib.h>
 # include <unistd.h>
+# include "libft.h"
 
 typedef struct s_fd_node
 {
@@ -32,7 +33,6 @@ void			*ft_read_line_helper(t_fd_node *cur, t_fd_node **front,
 					ssize_t *ret);
 void			*fd_deletenode(t_fd_node **front, int fd);
 char			*get_next_line(int fd);
-unsigned int	ft_strlen(const char *str);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 t_fd_node		*fd_newnode(int fd);
 t_fd_node		*fd_addnode(t_fd_node **front, int fd);

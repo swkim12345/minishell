@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   traverse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 20:28:04 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:19:33 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
 			return (1);
 		}
 		fd = open(file_list[0], O_RDONLY);
-		//ft_printf("file: %s\n", redirect_node->str);
+		ft_printf("file: %s\n", file_list[0]);
 	}
 	else if (redirect_node->flag & DB_LT_SIGN)
 		fd = get_heredoc_fd(minishell, ast_node->index);
@@ -260,7 +260,7 @@ int set_write_fd(t_redirection *redirect_node, t_minishell *minishell)
 	else
 		return (1);
 	//ft_printf("write fd: %d\n", fd);
-	//ft_printf("write file: %s\n", redirect_node->str);
+	// ft_printf("write file: %s\n", file_list[0]);
 	if (fd < 0)
 	{
 		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, 0);
