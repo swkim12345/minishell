@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/05 00:37:24 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:58:09 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 	t_pipe_traverse	*info;
 
 	// ft_printf("%p\n", cmd_node->str);
+	(void)info;
 	cmd_node->cmd_name = cmd_node->str[0];
 	// print_cmd_node(cmd_node);
 	//argumnet already expanded ..?
