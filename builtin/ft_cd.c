@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 21:07:32 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/05 01:28:59 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -393,7 +393,7 @@ int	ft_cd(t_cmd_node *cmd_node, t_minishell *minishell)
 	if (stat(info.cur_path, &info.file_stat) == 0)
 	{
 		if (!S_ISDIR(info.file_stat.st_mode))
-			return (not_a_directory_error(&info, minishell, cmd_node->cmd_name, info.cur_path));
+			return (not_a_directory_error(&info, minishell, cmd_node->cmd_name, info.directory));
 	}
 	else
 		return (cd_error(&info, minishell, cmd_node->cmd_name, info.directory));

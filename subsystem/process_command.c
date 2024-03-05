@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/04 20:49:34 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/05 00:37:24 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,9 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 		// }
 		if (!ft_strchr(cmd_node->cmd_name, '/'))
 		{
+			// ft_printf("[%s]\n", cmd_node->cmd_name);
+			if (strncmp(cmd_node->cmd_name, "", 1) == 0)
+				command_not_found_error(minishell, cmd_node->cmd_name);
 			execute_path = find_from_path(cmd_node, minishell);
 			check_file_valid(execute_path, cmd_node, minishell);
 			// //ft_printf("cmd_name: [%s]\n", cmd_node->cmd_name);
@@ -111,7 +114,6 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 		else
 		{
 			check_file_valid(cmd_node->cmd_name, cmd_node, minishell);
-			// //ft_printf("cmd_name: [%s]\n", cmd_node->cmd_name);
 			if (execve(cmd_node->cmd_name, cmd_node->str, envp) == -1)
 			{
 				//ft_printf("error\n");
@@ -132,23 +134,23 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 void	print_ast_node(t_ast_node *ast_node)
 {
 	(void) ast_node;
-	//ft_printf("ast_node------------------------\n");
-	//ft_printf("left_node: [%p]\n", ast_node->left_node);
-	//ft_printf("right_node: [%p]\n", ast_node->right_node);
-	//ft_printf("next_ast_node: [%p]\n", ast_node->next_ast_node);
-	//ft_printf("cmd_node: [%p]\n", ast_node->cmd_node);
-	//ft_printf("flag: [%d]\n", ast_node->flag);
+	ft_printf("ast_node------------------------\n");
+	ft_printf("left_node: [%p]\n", ast_node->left_node);
+	ft_printf("right_node: [%p]\n", ast_node->right_node);
+	ft_printf("next_ast_node: [%p]\n", ast_node->next_ast_node);
+	ft_printf("cmd_node: [%p]\n", ast_node->cmd_node);
+	ft_printf("flag: [%d]\n", ast_node->flag);
 }
 
 void	print_cmd_node(t_cmd_node *cmd_node)
 {
-	//ft_printf("cmd_node---------------------------\n");
-	//ft_printf("cmd_node: [%p]\n", cmd_node);
-	//ft_printf("[%s]\n", cmd_node->cmd_name);
+	ft_printf("cmd_node---------------------------\n");
+	ft_printf("cmd_node: [%p]\n", cmd_node);
+	ft_printf("[%s]\n", cmd_node->cmd_name);
 	int i = 0;
 	while (cmd_node->str[i])
 	{
-		//ft_printf("str[%d]: [%s]\n", i, cmd_node->str[i]);
+		ft_printf("str[%d]: [%s]\n", i, cmd_node->str[i]);
 		i++;
 	}
 }
@@ -159,7 +161,7 @@ int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 
 	// ft_printf("%p\n", cmd_node->str);
 	cmd_node->cmd_name = cmd_node->str[0];
-	print_cmd_node(cmd_node);
+	// print_cmd_node(cmd_node);
 	//argumnet already expanded ..?
 	//expand_argument(cmd_node);
 	// ft_unsetenv(minishell->export, "_");
