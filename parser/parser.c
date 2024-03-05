@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 16:22:36 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:24:15 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,6 @@ int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 	else
 		wait(&wstatus);
 	return (wstatus);
-}
-
-char	*get_error_token(char *ptr, int index)
-{
-	char	*ret;
-	int		start;
-	int		end;
-
-	index += skip_space(&ptr[index]);
-	start = index;
-	while (ptr[index] || ft_isspace(ptr[index]) == FALSE || ptr[index] == '|' || ptr[index] == '&')
-		index++;
-	end = index;
-	ret = ft_substr(ptr, start, end - start);
-	return (ret);
 }
 
 static int	split_node(int end, int new_start, t_ast_node *node, int new_node_flag)
@@ -160,7 +145,6 @@ static int	split_recurv_parser(t_ast_node *head, int str_end,
 			return (syntax_err_message("&&", NOTDEFINED, FUNC_FAIL, minishell));
 		if (head->flag & OR_FLAG)
 			return (syntax_err_message("||", NOTDEFINED, FUNC_FAIL, minishell));
-
 	}
 	free_cmd_node(&(head->cmd_node));
 	if (recurv_parser(head->left_node, minishell) == FUNC_FAIL)
@@ -180,7 +164,7 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 	ptr = head->cmd_node->str[0]; 
 	while (ptr[++index])
 	{
-		index += skip_space(&ptr[index]); //error occur
+		index += skip_space(&ptr[index]);
 		if (ptr[index] == '\0')
 			break ;
 		if (ptr[index] == '|' && ptr[index + 1] == '|')
@@ -212,8 +196,7 @@ int	recurv_parser(t_ast_node *head, t_minishell *minishell)
 			continue ;
 		}
 	}
-	tmp = lexar(head, minishell);
-	if (tmp == FUNC_FAIL)
+	if (lexar(head, minishell) == FUNC_FAIL)
 		return (FUNC_FAIL);
 	return (FUNC_SUC);
 }
