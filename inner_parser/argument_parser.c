@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/05 21:02:28 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/05 22:42:30 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	parse_env_var(t_str_list *str_list, t_parse_str *parse_str,
 	start_index = parse_str->cursor;
 	append_char(parse_str, '$');
 	while (**str && !ft_isspace(**str) && (!parse_str->quote_flag || **str != '\"')
-		&& **str != '$' && **str != '\"' && **str != '\'' && **str != '/')
+		&& **str != '$' && **str != '\"' && **str != '\'' && **str != '/' && **str != '|')
 		parse_single_char(str_list, parse_str, str, minishell);
 	if (parse_str->cursor == start_index + 1)
 		return ;
@@ -361,6 +361,7 @@ void	parse_single_word(char **str, t_str_list *str_list,
 	}
 	while (**str && !ft_isspace(**str))
 	{
+		parse_str.quote_flag = 0;
 		if (**str == '\"')
 			parse_double_quote(str_list, &parse_str, str, minishell);
 		else if (**str == '\'')
@@ -369,7 +370,6 @@ void	parse_single_word(char **str, t_str_list *str_list,
 			parse_dollar_sign(str_list, &parse_str, str, minishell);
 		else
 			parse_single_char(str_list, &parse_str, str, minishell);
-		parse_str.quote_flag = 0;
 	}
 	if (parse_str.cursor > 0 || parse_str.quote_flag == 1)
 	{
