@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/05 20:24:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/05 21:45:42 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ static char	*parse_value(char *env, int size, int index, t_minishell *minishell)
 		{
 			tmp = ft_strdup(&env[index + 1]);
 			dup_str = string_parser(tmp, minishell);
-			value = ft_strdup(dup_str[0]);
+			if (dup_str[0])
+				value = ft_strdup(dup_str[0]);
+			else
+				value = NULL;
 			free_2d_str(dup_str);
 			free(tmp);
 		}
