@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/05 14:33:13 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/05 21:41:11 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,7 +308,7 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 		return (tmp);
 	}
 	cmd_str = string_parser(ptr, minishell);
-	free_2d_str(node->cmd_node->str); 
+	free_2d_str(node->cmd_node->str);
 	node->cmd_node->str = cmd_str;
 	return (FUNC_SUC);
 }

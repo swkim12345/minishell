@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   binary_tree_util.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/05 16:58:45 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/05 21:42:01 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	parse_env(char *env, char **key, char **value, t_minishell *minishell)
 			break ;
 		}
 	}
-	//ft_printf("env: %s\n", env);
 	*key = *string_parser(env, minishell);
 	*value = parse_value(env, size, index, minishell);
 	return (FUNC_SUC);
