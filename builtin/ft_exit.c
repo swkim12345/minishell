@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/05 14:36:41 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/05 22:48:26 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static int	exit_arg_check(t_cmd_node *cmd_node, t_minishell *minishell)
 	cmd_node->str[1] = eof_parser(cmd_node->str[1]);
 	if (cmd_node->str[1][index] == '+' || cmd_node->str[1][index] == '-')
 		index++;
+	if (!cmd_node->str[1][index])
+		return (print_error_msg(err, 255, 0));
 	while (cmd_node->str[1][index])
 	{
 		if (!ft_isdigit(cmd_node->str[1][index]))
@@ -76,6 +78,7 @@ int	ft_exit(t_cmd_node *cmd_node, t_minishell *minishell)
 	minishell->exit_code = 255;
 	if (!cmd_node->str[1])
 		exit(0);
+	minishell->exit_code = exit_arg_check(cmd_node, minishell);
 	if (cmd_node->str[2])
 	{
 		err = set_error_msg(minishell->execute_name, cmd_node->str[0],
@@ -84,7 +87,6 @@ int	ft_exit(t_cmd_node *cmd_node, t_minishell *minishell)
 		free_t_minishell(minishell);
 		exit(minishell->exit_code);
 	}
-	minishell->exit_code = exit_arg_check(cmd_node, minishell);
 	free_t_minishell(minishell);
 	exit(minishell->exit_code);
 }
