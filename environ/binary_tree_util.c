@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   binary_tree_util.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 20:33:15 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/05 20:24:20 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ char	*key_value_to_str(t_tree_node *node, int quote_flag)
 char 	*env_parse_value(char *str, t_minishell *minishell)
 {
 	t_parse_str	parse_str;
+	t_str_list	str_list;
 
 	init_parse_str(&parse_str);
 	while (*str)
@@ -121,11 +122,11 @@ char 	*env_parse_value(char *str, t_minishell *minishell)
 		if (*str == '\'')
 			parse_single_quote(&parse_str, &str);
 		else if (*str == '\"')
-			parse_double_quote(&parse_str, &str, minishell);
+			parse_double_quote(&str_list, &parse_str, &str, minishell);
 		else if (*str == '$')
-			parse_env_var(&parse_str, &str, 0, minishell);
+			parse_env_var(&str_list, &parse_str, &str, minishell);
 		else
-			parse_single_char(&parse_str, &str, 0, minishell);
+			parse_single_char(&str_list, &parse_str, &str, minishell);
 	}
 	return (parse_str.str);
 }

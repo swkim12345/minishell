@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:03:58 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/04 23:41:36 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/05 18:14:33 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ void	init_str_node(t_str_node *str_node)
 
 void	init_str_list(t_str_list *str_list)
 {
-	str_list->head = 0;
-	str_list->tail = 0;
-	str_list->size = 0;
+	memset(str_list, 0, sizeof(t_str_list));
 }
 
 void	append_char(t_parse_str *parse_str, char c)

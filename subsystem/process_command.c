@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/05 00:37:24 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/05 15:31:41 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,14 @@ char	*find_from_path(t_cmd_node *cmd_node, t_minishell *minishell)
 int	is_builtin_fn(t_cmd_node *cmd_node)
 {
 	char	*lowercase_str;
-
+	char	*cmd_name;
+	
+	cmd_name = cmd_node->cmd_name;
 	lowercase_str = to_lowercase_str(cmd_node->cmd_name);
-	if (str_equal(lowercase_str, "echo") || str_equal(lowercase_str, "pwd")
-		|| str_equal(lowercase_str, "cd") || str_equal(lowercase_str, "export")
-		|| str_equal(lowercase_str, "unset") || str_equal(lowercase_str, "env")
-		|| str_equal(lowercase_str, "exit"))
+	if (str_equal(lowercase_str, "cd") || str_equal(lowercase_str, "echo")
+		|| str_equal(lowercase_str, "env") || str_equal(lowercase_str, "pwd")
+		|| str_equal(cmd_name, "export") || str_equal(cmd_name, "unset")
+		|| str_equal(cmd_name, "exit"))
 	{
 		free(lowercase_str);
 		return (1);
