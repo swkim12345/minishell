@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 14:55:25 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:59:18 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 			free(line);
 			free_2d_str(tmp);
 		}
+		free_tmp_list(minishell->tmp_list, minishell);
 		close(fd);
 		exit(FUNC_SUC);
 	}
