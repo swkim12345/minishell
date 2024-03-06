@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 18:03:00 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:08:08 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,6 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 			temp_str = ft_substr(info->cur_path, start, i - start + 1);
 			//ft_printf("token: %s\n", temp_str);
 			//ft_printf("start: [%d], i: [%d]\n", start, i);
-			printf("2\n");
 			enqueue(&stack, create_node(temp_str));
 			start = i + 1;
 		}
@@ -300,7 +299,6 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 	else if (info->cur_path[i - 1] != '/' 
 		&& !(i - start == 1 && info->cur_path[i - 1] == '.'))
 	{
-		printf("1\n");
 		temp_str = ft_substr(info->cur_path, start, i - start + 1);
 		enqueue(&stack, create_node(temp_str));
 		
