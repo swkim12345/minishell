@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/05 21:41:11 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/05 23:12:40 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 {
 	char			*ptr;
 	int				start;
+	int				name_start;
 	int				tmp;
 	t_redirection	*red;
 
@@ -142,6 +143,12 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	if (ptr[index] == '\0')
 	{
 		node->err_flag = TRUE;
+		if (node->flag & OR_FLAG)
+			return (syntax_err_message("||", NOTDEFINED, -2, minishell));
+		if (node->flag & AND_FLAG)
+			return (syntax_err_message("&&", NOTDEFINED, -2, minishell));
+		if (node->next_ast_node)
+			return (syntax_err_message("|", NOTDEFINED, -2, minishell));
 		return (syntax_err_message("newline", NOTDEFINED, -2, minishell));
 	}
 	if (ptr[index] == '<' || ptr[index] == '>')
@@ -167,7 +174,8 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 			break ;
 		index++;
 	}
-	red->str = ft_substr(&ptr[start], 0, index - start);
+	name_start = start + skip_space(&ptr[start]);
+	red->str = ft_substr(&ptr[name_start], 0, index - name_start);
 	ft_strlcat(ptr, &ptr[index], ft_strlen(ptr) + ft_strlen(&ptr[index]) + 1);
 	if (red->str[0] == '\0')
 	{
@@ -230,35 +238,6 @@ static int	subshell_recurv_parser(t_ast_node *head, int index, int flag, t_minis
 	return (tmp);
 }
 
-//static char	*parse_add_str_node(char *ptr)
-//{
-//	t_parse_str	parse_str;
-//	char		*ret;
-//	int			index;
-//	int			flag;
-
-//	init_parse_str(&parse_str);
-//	index = -1;
-//	while (ptr[++index])
-//	{
-//		if ()
-//	}
-//}
-
-//char	*add_str_node(t_ast_node *node, t_minishell *minishell)
-//{
-//	char	*ret;
-
-//	ret = readline("> ");
-//	if (ret == NULL)
-//	{
-//		node->err_flag = TRUE;
-//		return (NULL);
-//	}
-	
-//}
-
-//check redirection
 int	lexar(t_ast_node *node, t_minishell *minishell)
 {
 	char		*ptr;
