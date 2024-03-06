@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 21:33:50 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 22:10:14 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,77 +82,50 @@ void	exchange_node_key_value(t_tree_node *n, t_tree_node *t)
 	t->value = value;
 }
 
-//char	*key_value_to_str(t_tree_node *node, int quote_flag)
-//{
-//	char	*ret;
-//	char	*tmp;
-
-//	if (node->value == NULL)
-//		return (ft_strdup(node->key));
-//	if (quote_flag)
-//	{
-//		if (node->value[0] == '\0')
-//			return (ft_strjoin(node->key, "=\"\""));
-//		else
-//		{
-//			tmp = ft_strjoin(node->key, "=\"");
-//			ret = ft_strjoin(tmp, node->value);
-//			free(tmp);
-//			tmp = ft_strjoin(ret, "\"");
-//			free(ret);
-//			ret = tmp;
-//		}
-//	}
-//	else
-//	{
-//		tmp = ft_strjoin(node->key, "=");
-//		if (node->value[0] == '\0')
-//			return (tmp);
-//		else
-//		{
-//			ret = ft_strjoin(tmp, node->value);
-//			free(tmp);
-//		}
-//	}
-//	return (ret);
-//}
-
-char	*key_value_to_str(t_tree_node *node, int quote_flag)
+static char	*key_value_to_str_value(t_tree_node *node, int quote_flag)
 {
 	char	*ret;
 	char	*tmp;
 
+	if (quote_flag)
+	{
+		tmp = ft_strjoin(node->key, "=\"");
+		ret = ft_strjoin(tmp, node->value);
+		free(tmp);
+		tmp = ft_strjoin(ret, "\"");
+		free(ret);
+		ret = tmp;
+	}
+	else
+	{
+		tmp = ft_strjoin(node->key, "=");
+		ret = ft_strjoin(tmp, node->value);
+		free(tmp);
+	}
+	return (ret);
+}
+
+char	*key_value_to_str(t_tree_node *node, int quote_flag)
+{
 	if (node->value == NULL)
-		ret = ft_strdup(node->key);
+		return (ft_strdup(node->key));
 	else if (quote_flag)
 	{
 		if (node->value[0] == '\0')
 			return (ft_strjoin(node->key, "=\"\""));
 		else
-		{
-			tmp = ft_strjoin(node->key, "=\"");
-			ret = ft_strjoin(tmp, node->value);
-			free(tmp);
-			tmp = ft_strjoin(ret, "\"");
-			free(ret);
-			ret = tmp;
-		}
+			return (key_value_to_str_value(node, quote_flag));
 	}
 	else
 	{
 		if (node->value[0] == '\0')
 			return (ft_strjoin(node->key, "="));
 		else
-		{
-			tmp = ft_strjoin(node->key, "=");
-			ret = ft_strjoin(tmp, node->value);
-			free(tmp);
-		}
+			return (key_value_to_str_value(node, quote_flag));
 	}
-	return (ret);
 }
 
-char 	*env_parse_value(char *str, t_minishell *minishell)
+char	*env_parse_value(char *str, t_minishell *minishell)
 {
 	t_parse_str	parse_str;
 	t_str_list	str_list;
