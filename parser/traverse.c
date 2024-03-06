@@ -45,12 +45,12 @@ int	subshell_traverse(t_ast_node *head, t_minishell *minishell)
 	{
 		//ft_printf("subshell\n");
 		head->flag &= ~BRACKET_FLAG;
-		printf("stdin_fd: %d\n", minishell->stdin_fd);
-		printf("stdout_fd: %d\n", minishell->stdout_fd);
+		//printf("stdin_fd: %d\n", minishell->stdin_fd);
+		//printf("stdout_fd: %d\n", minishell->stdout_fd);
 		minishell->stdin_fd = dup(0);
 		minishell->stdout_fd = dup(1);
-		printf("after stdin_fd: %d\n", minishell->stdin_fd);
-		printf("after stdout_fd: %d\n", minishell->stdout_fd);
+		//printf("after stdin_fd: %d\n", minishell->stdin_fd);
+		//printf("after stdout_fd: %d\n", minishell->stdout_fd);
 		minishell->flag |= NOT_CHECK_RED;
 		traverse(head, minishell, 1);
 		exit(minishell->exit_code);
@@ -160,6 +160,7 @@ int	pipe_traverse(t_ast_node *head, t_minishell *minishell)
 	close(info.pipe_list[info.current_pipe - 1].pipe_fd[0]);
 	minishell->exit_code = wait_processes(info.pid, info.first_pid);
 	//free pipelist
+	free(info.pipe_list);
 	return (minishell->exit_code);
 }
 
@@ -187,7 +188,7 @@ int	get_heredoc_fd(t_minishell *minishell, int index)
 	//ft_printf("ast_ndoe->index: %d\n", index);
 	while (--index > 0)
 		cur_node = cur_node->next;
-	//ft_printf("heredoc_name: %s\n", cur_node->tmp);
+	//ft_printf("heredoc_name: [%s]\n", cur_node->tmp);
 	fd = open(cur_node->tmp, O_RDONLY);
 	return (fd);
 }
@@ -208,17 +209,20 @@ int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
 	int				fd;
 	char			**file_list;
 
-	//ft_printf("read_fd\n");
+	////ft_printf("read_fd\n");
+	//ft_printf("flag: [%d]\n", redirect_node->flag);
 	if (redirect_node->flag & LT_SIGN)
 	{
 		file_list = string_parser(redirect_node->str, minishell); //add read file string parser
-		if (get_file_num(file_list) > 1)
+		if (get_file_num(file_list) > 1 || file_list[0] == NULL)
 		{
 			minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, "ambiguous redirect");
 			print_error_msg(minishell->error, 1, 0);
+			free_2d_str(file_list);
 			return (1);
 		}
 		fd = open(file_list[0], O_RDONLY);
+		free_2d_str(file_list);
 		// ft_printf("file: [%s]\n", file_list[0]);
 	}
 	else if (redirect_node->flag & DB_LT_SIGN)
@@ -228,7 +232,7 @@ int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
 	// ft_printf("read fd: %d\n", fd);
 	if (fd < 0)
 	{
-		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, 0);
+		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, 0); //checked - error
 		print_error_msg(minishell->error, 0, 0);
 		return (1);
 	}
@@ -248,10 +252,11 @@ int set_write_fd(t_redirection *redirect_node, t_minishell *minishell)
 	char			**file_list;
 
 	file_list = string_parser(redirect_node->str, minishell);
-	if (get_file_num(file_list) > 1)
+	if (get_file_num(file_list) > 1 || file_list[0] == NULL)
 	{
 		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, "ambiguous redirect");
 		print_error_msg(minishell->error, 1, 0);
+		free_2d_str(file_list);
 		return (1);
 	}
 	if (redirect_node->flag & GT_SIGN)
@@ -259,9 +264,13 @@ int set_write_fd(t_redirection *redirect_node, t_minishell *minishell)
 	else if (redirect_node->flag & DB_GT_SIGN)
 		fd = open(file_list[0], O_CREAT | O_APPEND | O_WRONLY, 0644);
 	else
+	{
+		free_2d_str(file_list);
 		return (1);
+	}
 	//ft_printf("write fd: %d\n", fd);
 	// ft_printf("write file: %s\n", file_list[0]);
+	free_2d_str(file_list);
 	if (fd < 0)
 	{
 		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, 0);
@@ -313,7 +322,10 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 		return (minishell->exit_code);
 	}
 	if (!(minishell->flag & NOT_CHECK_RED))
-		process_redirection(head, minishell);
+	{
+		if (process_redirection(head, minishell) != 0)
+			return (minishell->exit_code);
+	}
 	minishell->flag &= ~NOT_CHECK_RED;
 	if (minishell->exit_code == 0)
 	{

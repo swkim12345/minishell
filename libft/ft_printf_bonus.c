@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 21:49:11 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 20:31:38 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:14:44 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*append_str(t_print_dto *dto, const char *append_str, ssize_t len)
 	{
 		while (dto->print_idx + len > dto->size)
 			dto->size *= 2;
-		temp_str = (char *)malloc(dto->size + 1);
+		temp_str = (char *)ft_calloc(sizeof(char), dto->size + 1);
 		if (!temp_str)
 			return (0);
 		temp_i = dto->print_idx;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/05 01:28:59 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:08:08 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ char	*stack_to_str(t_str_list *stack)
 	while (cur_node)
 	{
 		i = -1;
-		//ft_printf("cur_node: [%s]\n", cur_node->str);
+		ft_printf("cur_node: [%s]\n", cur_node->str);
 		while (cur_node->str[++i])
 			append_char(&parse_str, cur_node->str[i]);
 		cur_node = cur_node->next;
@@ -236,12 +236,14 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 				if (!S_ISDIR(info->file_stat.st_mode))
 				{
 					free_str_stack(&stack);
+					free(temp_str);
 					return (not_a_directory_error(info, minishell, cmd_node->cmd_name, info->home_dir));
 				}
 			}
 			else
 			{
 				free_str_stack(&stack);
+				free(temp_str);
 				return (cd_error(info, minishell, info->execute_name, info->directory));
 			}
 			i += 2;
@@ -253,6 +255,7 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 				free(cur->str);
 				free(cur);
 			}
+			free(temp_str);
 		}
 		else if (info->cur_path[i] == '/' && (i == 0 || i - start != 0))
 		{
@@ -266,32 +269,39 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 			start += 1;
 		i++;
 	}
-	if (i - 2 >= 0 && info->cur_path[i - 2] == '.'
-		&& info->cur_path[i - 1] == '.' && i - start == 2 && stack.size > 1)
+	if (i - start == 2 && info->cur_path[i - 2] == '.'
+		&& info->cur_path[i - 1] == '.')
 	{
-		temp_str = stack_to_str(&stack);
-		if (stat(temp_str, &info->file_stat) == 0)
+		if (stack.size > 1)
 		{
-			if (!S_ISDIR(info->file_stat.st_mode))
+			temp_str = stack_to_str(&stack);
+			if (stat(temp_str, &info->file_stat) == 0)
+			{
+				if (!S_ISDIR(info->file_stat.st_mode))
+				{
+					free_str_stack(&stack);
+					free(temp_str);
+					return (not_a_directory_error(info, minishell, cmd_node->cmd_name, info->home_dir));
+				}
+			}
+			else
 			{
 				free_str_stack(&stack);
-				return (not_a_directory_error(info, minishell, cmd_node->cmd_name, info->home_dir));
+				free(temp_str);
+				return (cd_error(info, minishell, info->execute_name, info->directory));
 			}
+			cur = pop(&stack);
+			free(temp_str);
+			free(cur->str);
+			free(cur);
 		}
-		else
-		{
-			free_str_stack(&stack);
-			return (cd_error(info, minishell, info->execute_name, info->directory));
-		}
-		cur = pop(&stack);
-		free(cur->str);
-		free(cur);
 	}
-	else if (info->cur_path[i - 1] != '/' && !((info->cur_path[i - 1] == '.')
-		&& i - start == 1))
+	else if (info->cur_path[i - 1] != '/' 
+		&& !(i - start == 1 && info->cur_path[i - 1] == '.'))
 	{
 		temp_str = ft_substr(info->cur_path, start, i - start + 1);
 		enqueue(&stack, create_node(temp_str));
+		
 	}
 	i = ft_strlen(stack.tail->str) - 1;
 	if (stack.size > 1 && stack.tail->str[i] == '/')
@@ -302,6 +312,7 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 	//ft_printf("tail_str: %s\n", stack.tail->str);
 	free(info->cur_path);
 	info->cur_path = stack_to_str(&stack);
+	free_str_stack(&stack);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/05 22:28:14 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:02:35 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 			if (!line || str_equal(line, tmp_file->eof)) 
 				break ;
 			str = ft_strjoin("\"", line);//adhoc	free(line);
+			free(line);
 			line = ft_strjoin(str, "\"");
 			free(str);
 			tmp = string_parser(line, minishell);
@@ -49,6 +50,7 @@ int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 			free(line);
 			free_2d_str(tmp);
 		}
+		free_tmp_list(minishell->tmp_list, minishell, FALSE);
 		close(fd);
 		exit(FUNC_SUC);
 	}

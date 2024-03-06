@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/05 22:42:30 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:41:52 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -378,6 +378,7 @@ void	parse_single_word(char **str, t_str_list *str_list,
 		else
 			add_string_node(str_list, &parse_str);
 	}
+	free_parse_str(&parse_str);
 }
 
 t_str_list	*string_to_str_list(char *str, t_minishell *minishell)

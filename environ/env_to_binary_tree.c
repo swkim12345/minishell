@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 12:02:22 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/05 22:19:17 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:13:13 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	tree_recurv_traversal(t_tree_node *head, char **ret_str, int size, int quote
 	tmp = head;
 	if (!head)
 		return (FUNC_SUC);
-	stack = (t_tree_node **)malloc(sizeof(t_tree_node *) * size);
+	stack = (t_tree_node **)ft_calloc(sizeof(t_tree_node *), size);
 	if (tmp)
 	{
 		while (tmp)

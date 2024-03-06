@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 21:50:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 20:31:38 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:22:09 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include "./libft/libft.h"
 
 typedef struct s_print_dto
 {
@@ -44,7 +45,6 @@ void		parse_format(t_print_dto *dto, const char *format_str);
 void		*append_str(t_print_dto *dto, const char *append_str, ssize_t len);
 
 /* ft_printf_utils.c */
-size_t		ft_strlen(char *s);
 t_print_dto	*dto_init(t_print_dto *dto);
 void		dto_clear(t_print_dto *dto);
 int			on_error(t_print_dto *dto, void *mem1);
