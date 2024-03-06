@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 14:10:11 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:11:42 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,6 +309,7 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 	//ft_printf("tail_str: %s\n", stack.tail->str);
 	free(info->cur_path);
 	info->cur_path = stack_to_str(&stack);
+	free_str_stack(&stack);
 	return (0);
 }
 
