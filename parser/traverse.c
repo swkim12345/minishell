@@ -160,6 +160,7 @@ int	pipe_traverse(t_ast_node *head, t_minishell *minishell)
 	close(info.pipe_list[info.current_pipe - 1].pipe_fd[0]);
 	minishell->exit_code = wait_processes(info.pid, info.first_pid);
 	//free pipelist
+	free(info.pipe_list);
 	return (minishell->exit_code);
 }
 
