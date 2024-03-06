@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:17:00 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 12:30:10 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 13:10:38 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	free_error(t_error *error)
 {
 	if (error == NULL)
 		return ;
-	if (error->execute_name)
-		free(error->execute_name);
+	//if (error->execute_name)
+	//	free(error->execute_name);
 	if (error->builtin)
 		free(error->builtin);
 	if (error->arg)
