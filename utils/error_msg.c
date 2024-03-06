@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:17:00 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 17:05:01 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 23:16:38 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,6 @@ t_error	*set_error_msg(char *execute_name, char *builtin, char *arg, char *msg)
 {
 	t_error	*error;
 
-	//ft_printf("set_error_msg\n");
-	//ft_printf("execute_name : %s\n", execute_name);
-	//ft_printf("builtin : %s\n", builtin);
-	//ft_printf("arg : %s\n", arg);
-	//ft_printf("msg : %s\n", msg);
 	error = (t_error *)ft_calloc(sizeof(t_error), 1);
 	if (execute_name)
 		error->execute_name = ft_strdup(execute_name);
@@ -108,8 +103,8 @@ int	cd_error(t_cd *info, t_minishell *minishell, char *command, char *arg)
 
 int	home_not_set_error(t_minishell *minishell, char *command, char *arg)
 {
-	minishell->error = set_error_msg(minishell->execute_name, command
-			, arg, "HOME not set");
+	minishell->error = set_error_msg(minishell->execute_name, command,
+			arg, "HOME not set");
 	print_error_msg(minishell->error, 1, 0);
 	return (1);
 }

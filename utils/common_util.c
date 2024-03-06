@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   common_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 17:03:07 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 23:15:14 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	str_equal(char *s1, char *s2)
 	return (0);
 }
 
-int		ft_isspace(int c)
+int	ft_isspace(int c)
 {
 	if (c >= 9 && c <= 12)
 		return (1);
@@ -72,7 +72,8 @@ void	free_2d_str(char **arr)
 	free(arr);
 }
 
-void	clear_tmp_list(t_tmp_list *list, t_minishell *minishell, int unlink_flag)
+void	clear_tmp_list(t_tmp_list *list, t_minishell *minishell,
+		int unlink_flag)
 {
 	t_tmp_file	*cur;
 	t_tmp_file	*next;
