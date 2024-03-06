@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parser_str_list.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:03:03 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 17:13:41 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 21:56:19 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ void	enqueue(t_str_list *str_list, t_str_node *str_node)
 		str_list->tail = str_node;
 	}
 	str_list->size++;
+}
+
+void	free_str_node(t_str_node *str_node)
+{
+	free(str_node->str);
+	free(str_node);
 }
 
 t_str_node	*dequeue(t_str_list *str_list)
