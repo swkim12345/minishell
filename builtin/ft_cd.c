@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 14:11:42 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:03:00 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ char	*stack_to_str(t_str_list *stack)
 	while (cur_node)
 	{
 		i = -1;
-		//ft_printf("cur_node: [%s]\n", cur_node->str);
+		ft_printf("cur_node: [%s]\n", cur_node->str);
 		while (cur_node->str[++i])
 			append_char(&parse_str, cur_node->str[i]);
 		cur_node = cur_node->next;
@@ -262,6 +262,7 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 			temp_str = ft_substr(info->cur_path, start, i - start + 1);
 			//ft_printf("token: %s\n", temp_str);
 			//ft_printf("start: [%d], i: [%d]\n", start, i);
+			printf("2\n");
 			enqueue(&stack, create_node(temp_str));
 			start = i + 1;
 		}
@@ -269,33 +270,37 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 			start += 1;
 		i++;
 	}
-	if (i - 2 >= 0 && info->cur_path[i - 2] == '.'
-		&& info->cur_path[i - 1] == '.' && i - start == 2 && stack.size > 1)
+	if (i - start == 2 && info->cur_path[i - 2] == '.'
+		&& info->cur_path[i - 1] == '.')
 	{
-		temp_str = stack_to_str(&stack);
-		if (stat(temp_str, &info->file_stat) == 0)
+		if (stack.size > 1)
 		{
-			if (!S_ISDIR(info->file_stat.st_mode))
+			temp_str = stack_to_str(&stack);
+			if (stat(temp_str, &info->file_stat) == 0)
+			{
+				if (!S_ISDIR(info->file_stat.st_mode))
+				{
+					free_str_stack(&stack);
+					free(temp_str);
+					return (not_a_directory_error(info, minishell, cmd_node->cmd_name, info->home_dir));
+				}
+			}
+			else
 			{
 				free_str_stack(&stack);
 				free(temp_str);
-				return (not_a_directory_error(info, minishell, cmd_node->cmd_name, info->home_dir));
+				return (cd_error(info, minishell, info->execute_name, info->directory));
 			}
-		}
-		else
-		{
-			free_str_stack(&stack);
+			cur = pop(&stack);
 			free(temp_str);
-			return (cd_error(info, minishell, info->execute_name, info->directory));
+			free(cur->str);
+			free(cur);
 		}
-		cur = pop(&stack);
-		free(temp_str);
-		free(cur->str);
-		free(cur);
 	}
-	else if (info->cur_path[i - 1] != '/' && !((info->cur_path[i - 1] == '.')
-		&& i - start == 1))
+	else if (info->cur_path[i - 1] != '/' 
+		&& !(i - start == 1 && info->cur_path[i - 1] == '.'))
 	{
+		printf("1\n");
 		temp_str = ft_substr(info->cur_path, start, i - start + 1);
 		enqueue(&stack, create_node(temp_str));
 		
