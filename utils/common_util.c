@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 23:15:14 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 23:19:08 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*to_lowercase_str(const char *str)
 	int		i;
 
 	i = 0;
-	return_str = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	return_str = ft_calloc(sizeof(char), ft_strlen(str) + 1);
 	while (str[i])
 	{
 		return_str[i] = ft_tolower(str[i]);
