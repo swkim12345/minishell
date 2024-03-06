@@ -212,10 +212,11 @@ int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
 	if (redirect_node->flag & LT_SIGN)
 	{
 		file_list = string_parser(redirect_node->str, minishell); //add read file string parser
-		if (get_file_num(file_list) > 1)
+		if (get_file_num(file_list) > 1 || file_list[0] == NULL)
 		{
 			minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, "ambiguous redirect");
 			print_error_msg(minishell->error, 1, 0);
+			free_2d_str(file_list);
 			return (1);
 		}
 		fd = open(file_list[0], O_RDONLY);
