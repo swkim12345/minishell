@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 12:13:30 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 20:06:51 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static int	ft_atol(const char *str, long *ret)
 
 	num = 0;
 	sign = 1;
-	while (*str == ' ' || (*str >= 9 && *str <= 13))
-		str++;
+	str += skip_space((char *)str);
 	if (*str == '+' || *str == '-')
 	{
 		if (*str == '-')
@@ -33,14 +32,11 @@ static int	ft_atol(const char *str, long *ret)
 		num += *str - '0';
 		str++;
 	}
+	*ret = num * sign;
 	if (num == 0)
-	{
-		*ret = 0;
 		return (0);
-	}
 	if (num * -1 == num || num % 10 != *(str - 1) - '0')
 		return (NOTDEFINED);
-	*ret = num * sign;
 	return (0);
 }
 
