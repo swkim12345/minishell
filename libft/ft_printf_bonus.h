@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 21:50:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 17:22:09 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 23:25:12 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ft_printf_BONUS_H
-# define ft_printf_BONUS_H
+#ifndef FT_PRINTF_BONUS_H
+# define FT_PRINTF_BONUS_H
+
 # define MINUS_FLAG 1
 # define PLUS_FLAG 2
 # define SPACE_FLAG 4
@@ -21,6 +22,7 @@
 # define WIDTH 0
 # define PRECISION 1
 # define PRINT_STR_LEN 2
+
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
