@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:38:39 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/05 20:20:16 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/06 22:08:15 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,18 @@ void	add_string_node(t_str_list *str_list, t_parse_str *parse_str);
 char	**list_to_char_arr(t_str_list *str_list);
 t_str_node	*create_node(char *str);
 t_str_node	*pop(t_str_list *list);
+void	free_str_node(t_str_node *str_node);
 
 /* argument_parser_utils.c */
 void	free_parse_str(t_parse_str *parse_str);
 void	init_parse_str(t_parse_str *parse_str);
-void	init_str_node(t_str_node *str_node);
-void	init_str_list(t_str_list *str_list);
 void	append_char(t_parse_str *parse_str, char c);
 void	parse_dollar_sign(t_str_list *str_list, t_parse_str *parse_str, char **str, t_minishell *minishell);
 char	**string_parser(char *str, t_minishell *minishell);
 void	parse_env_var(t_str_list *str_list, t_parse_str *parse_str, char **str,
 	t_minishell *minishell);
 char	*easy_cat(char *s1, char *s2);
+int	is_pattern_match(char *file_name, char *pattern);
 
 
 #endif
