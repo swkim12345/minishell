@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:03:03 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 12:25:39 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:41:41 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	add_string_node(t_str_list *str_list, t_parse_str *parse_str)
 	t_str_node	*node;
 
 	str = ft_substr(parse_str->str, 0, parse_str->cursor);
-	free_parse_str(parse_str);
 	node = create_node(str);
 	node->flag |= (parse_str->quote_flag & IN_QUOTE);
 	enqueue(str_list, node);
