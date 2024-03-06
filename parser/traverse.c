@@ -45,12 +45,12 @@ int	subshell_traverse(t_ast_node *head, t_minishell *minishell)
 	{
 		//ft_printf("subshell\n");
 		head->flag &= ~BRACKET_FLAG;
-		printf("stdin_fd: %d\n", minishell->stdin_fd);
-		printf("stdout_fd: %d\n", minishell->stdout_fd);
+		//printf("stdin_fd: %d\n", minishell->stdin_fd);
+		//printf("stdout_fd: %d\n", minishell->stdout_fd);
 		minishell->stdin_fd = dup(0);
 		minishell->stdout_fd = dup(1);
-		printf("after stdin_fd: %d\n", minishell->stdin_fd);
-		printf("after stdout_fd: %d\n", minishell->stdout_fd);
+		//printf("after stdin_fd: %d\n", minishell->stdin_fd);
+		//printf("after stdout_fd: %d\n", minishell->stdout_fd);
 		minishell->flag |= NOT_CHECK_RED;
 		traverse(head, minishell, 1);
 		exit(minishell->exit_code);
