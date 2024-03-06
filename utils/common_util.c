@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 14:38:52 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:01:15 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	clear_tmp_list(t_tmp_list *list, t_minishell *minishell)
 		next = cur->next;
 		unlink(cur->tmp);
 		free(cur->tmp);
+		free(cur->eof);
 		free(cur);
 		cur = next;
 	}
