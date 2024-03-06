@@ -263,9 +263,13 @@ int set_write_fd(t_redirection *redirect_node, t_minishell *minishell)
 	else if (redirect_node->flag & DB_GT_SIGN)
 		fd = open(file_list[0], O_CREAT | O_APPEND | O_WRONLY, 0644);
 	else
+	{
+		free_2d_str(file_list);
 		return (1);
+	}
 	//ft_printf("write fd: %d\n", fd);
 	// ft_printf("write file: %s\n", file_list[0]);
+	free_2d_str(file_list);
 	if (fd < 0)
 	{
 		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, 0);
