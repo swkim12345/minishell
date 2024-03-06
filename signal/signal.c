@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 21:29:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 14:24:01 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:28:25 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ void	set_signal_handler()
 
 	//ahhhhh
 	(void) sigset;
-	//sigemptyset(&sact.sa_mask);
+	sigemptyset(&sact.sa_mask);
 	sact.sa_handler = sigint_handler;
+	sact.sa_flags = SA_NOCLDWAIT;
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTERM, SIG_IGN);
 	sigaction(SIGINT, &sact, NULL);
@@ -40,8 +41,9 @@ void	set_signal_dfl()
 {
 	struct sigaction	sact;
 
-	//sigemptyset(&sact.sa_mask);
+	sigemptyset(&sact.sa_mask);
 	sact.sa_handler = SIG_DFL;
+	sact.sa_flags = SA_NOCLDWAIT;
 	sigaction(SIGINT, &sact, NULL);
 }
 
@@ -49,8 +51,9 @@ void	set_sigint_ign()
 {
 	struct sigaction	sact;
 
-	//sigemptyset(&sact.sa_mask);
+	sigemptyset(&sact.sa_mask);
 	sact.sa_handler = SIG_IGN;
+	sact.sa_flags = SA_NOCLDWAIT;
 	sigaction(SIGINT, &sact, NULL);
 }
 
@@ -65,7 +68,8 @@ void	set_heredoc_parent()
 {
 	struct sigaction	sact;
 
-	//sigemptyset(&sact.sa_mask);
+	sigemptyset(&sact.sa_mask);
 	sact.sa_handler = sigint_heredoc_p_handle;
+	sact.sa_flags = SA_NOCLDWAIT;
 	sigaction(SIGINT, &sact, NULL);
 }
