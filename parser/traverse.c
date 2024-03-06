@@ -250,10 +250,11 @@ int set_write_fd(t_redirection *redirect_node, t_minishell *minishell)
 	char			**file_list;
 
 	file_list = string_parser(redirect_node->str, minishell);
-	if (get_file_num(file_list) > 1)
+	if (get_file_num(file_list) > 1 || file_list[0] == NULL)
 	{
 		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, "ambiguous redirect");
 		print_error_msg(minishell->error, 1, 0);
+		free_2d_str(file_list);
 		return (1);
 	}
 	if (redirect_node->flag & GT_SIGN)
