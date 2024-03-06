@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:24:59 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/03 20:31:38 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:16:34 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*print_format_c(t_print_dto *dto, ssize_t *return_len)
 	*return_len = 1;
 	if (dto->nums[WIDTH] > *return_len)
 		*return_len = dto->nums[WIDTH];
-	return_str = (char *)malloc(*return_len + 1);
+	return_str = (char *)ft_calloc(sizeof(char), *return_len + 1);
 	if (!return_str)
 		return (0);
 	return_str[*return_len] = 0;
@@ -43,7 +43,7 @@ static int	print_format_s_helper(t_print_dto *dto, ssize_t *return_len,
 	*return_len = *len;
 	if (dto->nums[WIDTH] > *len)
 		*return_len = dto->nums[WIDTH];
-	*return_str = (char *)malloc(*return_len + 1);
+	*return_str = (char *)ft_calloc(sizeof(char), *return_len + 1);
 	if (!*return_str)
 		return (-1);
 	(*return_str)[*return_len] = 0;

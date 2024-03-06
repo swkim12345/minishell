@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 11:55:43 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 11:56:15 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:13:03 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@ t_tree_node	*init_tree_node(void)
 {
 	t_tree_node	*node;
 
-	node = (t_tree_node *)malloc(sizeof(t_tree_node));
+	node = (t_tree_node *)ft_calloc(sizeof(t_tree_node), 1);
 	if (!node)
 		return (NULL);
-	ft_memset((void *)node, 0, sizeof(t_tree_node));
 	return (node);
 }
 

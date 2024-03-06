@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:03:03 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 14:41:41 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:13:41 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	**list_to_char_arr(t_str_list *str_list)
 	int			i;
 
 	i = 0;
-	return_list = malloc(sizeof(char *) * (str_list->size + 1));
+	return_list = ft_calloc(sizeof(char *), str_list->size + 1);
 	return_list[str_list->size] = 0;
 	while (str_list->size > 0)
 	{

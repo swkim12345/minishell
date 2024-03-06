@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/05 17:35:52 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:13:26 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,9 @@ char	**ft_charenv(t_tree_head *head, int quote_flag)
 {
 	char		**ret;
 
-	ret = (char **)malloc(sizeof(char *) * (head->size + 1));
+	ret = (char **)ft_calloc(sizeof(char *), (head->size + 1));
 	if (!ret)
 		return (NULL);
-	ft_memset((void *)ret, 0, sizeof(char *) * (head->size + 1));
 	ret[head->size] = NULL;
 	tree_recurv_traversal(head->head, ret, head->size, quote_flag);
 	return (ret);
