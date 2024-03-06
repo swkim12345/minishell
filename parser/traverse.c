@@ -219,6 +219,7 @@ int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
 			return (1);
 		}
 		fd = open(file_list[0], O_RDONLY);
+		free_2d_str(file_list);
 		// ft_printf("file: [%s]\n", file_list[0]);
 	}
 	else if (redirect_node->flag & DB_LT_SIGN)
