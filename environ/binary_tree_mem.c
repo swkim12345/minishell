@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 11:55:43 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 17:13:03 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 22:11:29 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,17 @@ void	free_tree_delete(t_tree_head *head)
 		return ;
 	recur_tree_delete(head->head);
 	free(head);
+}
+
+void	exchange_node_key_value(t_tree_node *n, t_tree_node *t)
+{
+	char	*key;
+	char	*value;
+
+	key = n->key;
+	value = n->value;
+	n->key = t->key;
+	n->value = t->value;
+	t->key = key;
+	t->value = value;
 }
