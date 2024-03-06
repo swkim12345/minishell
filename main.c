@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 13:12:58 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:20:50 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,10 @@ int	main(int argc, char **argv, char **envp)
 			// printf("[%s]\n", shell.input_str);
 			shell.exit_code = 0;
 			traverse(head, &shell, 1);
-			free_ast_tree(head);
 		}
 		if (ft_strlen(shell.input_str) != 0)
 			add_history(shell.input_str);
+		free_ast_tree(head);
 		clear_tmp_list(shell.tmp_list, &shell);
 		free(shell.input_str);
 		//ft_printf("end of main\n");
