@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/05 01:28:59 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/06 13:50:24 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,8 @@ char	*stack_to_str(t_str_list *stack)
 		//ft_printf("cur_node: [%s]\n", cur_node->str);
 		while (cur_node->str[++i])
 			append_char(&parse_str, cur_node->str[i]);
+		free(cur_node->str);
+		free(cur_node);
 		cur_node = cur_node->next;
 	}
 	return_str = ft_substr(parse_str.str, 0, parse_str.cursor);
@@ -275,15 +277,18 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 			if (!S_ISDIR(info->file_stat.st_mode))
 			{
 				free_str_stack(&stack);
+				free(temp_str);
 				return (not_a_directory_error(info, minishell, cmd_node->cmd_name, info->home_dir));
 			}
 		}
 		else
 		{
 			free_str_stack(&stack);
+			free(temp_str);
 			return (cd_error(info, minishell, info->execute_name, info->directory));
 		}
 		cur = pop(&stack);
+		free(temp_str);
 		free(cur->str);
 		free(cur);
 	}
@@ -292,6 +297,7 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 	{
 		temp_str = ft_substr(info->cur_path, start, i - start + 1);
 		enqueue(&stack, create_node(temp_str));
+		
 	}
 	i = ft_strlen(stack.tail->str) - 1;
 	if (stack.size > 1 && stack.tail->str[i] == '/')
