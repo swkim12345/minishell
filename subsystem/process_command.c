@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/05 22:02:21 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/06 13:19:42 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ char	*find_from_path(t_cmd_node *cmd_node, t_minishell *minishell)
 		if (access(temp_str, F_OK) == 0)
 		{
 			free_2d_str(parsed_path);
+			path = 0;
 			return (temp_str);
 		}
 		free(temp_str);
 	}
 	free_2d_str(parsed_path);
+	path = 0;
 	return (0);
 }
 
