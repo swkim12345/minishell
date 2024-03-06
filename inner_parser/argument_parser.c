@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/05 13:59:33 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/05 22:42:30 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-void	parse_single_char(t_parse_str *parse_str, char **str, int in_quote,
+void	parse_single_char(t_str_list *str_list, t_parse_str *parse_str, char **str,
 		t_minishell *minishell)
 {
 	if (**str)
@@ -26,12 +26,12 @@ void	parse_single_char(t_parse_str *parse_str, char **str, int in_quote,
 		}
 		else if (**str == '\\')
 			(*str)++;
-		else if (in_quote == FALSE && **str == '*'
+		else if (parse_str->quote_flag == FALSE && **str == '*'
 			&& parse_str->asterisk_flag == -1)
 			parse_str->asterisk_flag = 1;
 		else if (**str == '$')
 		{
-			parse_dollar_sign(parse_str, str, in_quote, minishell);
+			parse_dollar_sign(str_list, parse_str, str, minishell);
 			return ;
 		}
 		append_char(parse_str, **str);
@@ -39,7 +39,7 @@ void	parse_single_char(t_parse_str *parse_str, char **str, int in_quote,
 	}
 }
 
-void	parse_double_quote(t_parse_str *parse_str, char **str,
+void	parse_double_quote(t_str_list *str_list, t_parse_str *parse_str, char **str,
 	t_minishell *minishell)
 {
 	parse_str->quote_flag = 1;
@@ -47,7 +47,7 @@ void	parse_double_quote(t_parse_str *parse_str, char **str,
 	while (**str && **str != '\"')
 	{
 		parse_str->asterisk_flag = 0;
-		parse_single_char(parse_str, str, 1, minishell);
+		parse_single_char(str_list, parse_str, str, minishell);
 	}
 	(*str)++;
 }
@@ -90,20 +90,43 @@ char	*easy_cat(char *s1, char *s2)
 	return (return_str);
 }
 
-void	parse_env_var_found(t_parse_str *parse_str,
+void	parse_env_var_found(t_str_list *str_list, t_parse_str *parse_str,
 	char *substitude_name, int start_index)
 {
+	// ft_printf("[%s]\n", substitude_name);
 	parse_str->cursor = start_index;
-	while (*substitude_name)
+	if (parse_str->quote_flag)
 	{
-		append_char(parse_str, *substitude_name);
-		substitude_name++;
+		while (*substitude_name)
+		{
+			append_char(parse_str, *substitude_name);
+			substitude_name++;
+		}
+		
+	}
+	else
+	{
+		while (*substitude_name)
+		{
+			while (*substitude_name && ft_isspace(*substitude_name))
+				substitude_name++;
+			while (*substitude_name && !ft_isspace(*substitude_name))
+			{
+				append_char(parse_str, *substitude_name);
+				substitude_name++;
+			}
+			if (*substitude_name)
+			{
+				add_string_node(str_list, parse_str);
+				init_parse_str(parse_str);
+			}
+		}
 	}
 	//printf("parse_str: %s\n", parse_str->str);
 }
 
-void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote,
-	t_minishell *minishell)
+void	parse_env_var(t_str_list *str_list, t_parse_str *parse_str,
+	char **str, t_minishell *minishell)
 {
 	char	*env_name;
 	char	*substitude_name;
@@ -112,9 +135,9 @@ void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote,
 	//ft_printf("dollar cur_char: [%c]\n", **str);
 	start_index = parse_str->cursor;
 	append_char(parse_str, '$');
-	while (**str && !ft_isspace(**str) && (!in_quote || **str != '\"')
-		&& **str != '$' && **str != '\"' && **str != '\'' && **str != '/')
-		parse_single_char(parse_str, str, 0, minishell);
+	while (**str && !ft_isspace(**str) && (!parse_str->quote_flag || **str != '\"')
+		&& **str != '$' && **str != '\"' && **str != '\'' && **str != '/' && **str != '|')
+		parse_single_char(str_list, parse_str, str, minishell);
 	if (parse_str->cursor == start_index + 1)
 		return ;
 	env_name = ft_substr(parse_str->str, start_index + 1, parse_str->cursor);
@@ -130,7 +153,7 @@ void	parse_env_var(t_parse_str *parse_str, char **str, int in_quote,
 		//printf("subname_null: %s\n", env_name);
 		return ;
 	}
-	parse_env_var_found(parse_str, substitude_name, start_index);
+	parse_env_var_found(str_list, parse_str, substitude_name, start_index);
 }
 
 void	parse_question_mark(t_parse_str *parse_str, char **str,
@@ -150,18 +173,17 @@ void	parse_question_mark(t_parse_str *parse_str, char **str,
 	(*str)++;
 }
 
-void	parse_dollar_sign(t_parse_str *parse_str, char **str, int in_quote,
-	t_minishell *minishell)
+void	parse_dollar_sign(t_str_list *str_list, t_parse_str *parse_str, char **str, t_minishell *minishell)
 {
 	(*str)++;
-	if (**str == '\"' && in_quote == FALSE)
-		parse_double_quote(parse_str, str, minishell);
-	else if (**str == '\'' && in_quote == FALSE)
+	if (**str == '\"' && parse_str->quote_flag == FALSE)
+		parse_double_quote(str_list, parse_str, str, minishell);
+	else if (**str == '\'' && parse_str->quote_flag == FALSE)
 		parse_single_quote(parse_str, str);
 	else if (**str == '?')
 		parse_question_mark(parse_str, str, minishell);
 	else
-		parse_env_var(parse_str, str, in_quote, minishell);
+		parse_env_var(str_list, parse_str, str, minishell);
 }
 
 void	get_cwd_files(t_str_list *str_list)
@@ -339,14 +361,15 @@ void	parse_single_word(char **str, t_str_list *str_list,
 	}
 	while (**str && !ft_isspace(**str))
 	{
+		parse_str.quote_flag = 0;
 		if (**str == '\"')
-			parse_double_quote(&parse_str, str, minishell);
+			parse_double_quote(str_list, &parse_str, str, minishell);
 		else if (**str == '\'')
 			parse_single_quote(&parse_str, str);
 		else if (**str == '$')
-			parse_dollar_sign(&parse_str, str, 0, minishell);
+			parse_dollar_sign(str_list, &parse_str, str, minishell);
 		else
-			parse_single_char(&parse_str, str, 0, minishell);
+			parse_single_char(str_list, &parse_str, str, minishell);
 	}
 	if (parse_str.cursor > 0 || parse_str.quote_flag == 1)
 	{
@@ -357,20 +380,31 @@ void	parse_single_word(char **str, t_str_list *str_list,
 	}
 }
 
-char	**string_parser(char *str, t_minishell *minishell)
+t_str_list	*string_to_str_list(char *str, t_minishell *minishell)
 {
-	t_str_list	str_list;
+	t_str_list	*str_list;
 
-	init_str_list(&str_list);
+	str_list = ft_calloc(1, sizeof(t_str_list));
 	while (*str)
 	{
 		while (*str && ft_isspace(*str))
 			str++;
 		if (!(*str))
 			break ;
-		parse_single_word(&str, &str_list, minishell);
+		parse_single_word(&str, str_list, minishell);
 	}
-	return (list_to_char_arr(&str_list));
+	return (str_list);
+}
+
+char	**string_parser(char *str, t_minishell *minishell)
+{
+	t_str_list	*str_list;
+	char		**str_arr;
+
+	str_list = string_to_str_list(str, minishell);
+	str_arr = list_to_char_arr(str_list);
+	free(str_list);
+	return (str_arr);
 }
 
 // int main(int argc, char **argv, char **envp)

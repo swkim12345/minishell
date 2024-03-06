@@ -76,16 +76,20 @@ t_str_node	*create_node(char *str)
 	str_node = (t_str_node *)ft_calloc(sizeof(t_str_node), 1);
 	str_node->str = str;
 	str_node->next = 0;
+	str_node->flag = 0;
 	return (str_node);
 }
 
 void	add_string_node(t_str_list *str_list, t_parse_str *parse_str)
 {
-	char	*str;
+	char		*str;
+	t_str_node	*node;
 
 	str = ft_substr(parse_str->str, 0, parse_str->cursor);
 	free_parse_str(parse_str);
-	enqueue(str_list, create_node(str));
+	node = create_node(str);
+	node->flag |= (parse_str->quote_flag & IN_QUOTE);
+	enqueue(str_list, node);
 }
 
 char	**list_to_char_arr(t_str_list *str_list)
