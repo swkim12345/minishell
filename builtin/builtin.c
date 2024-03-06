@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:27:41 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/05 00:38:01 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:47:45 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ int	process_builtin(t_cmd_node *cmd_node, t_minishell *minishell)
 		ret = ft_env(minishell);
 	else if (str_equal(cmd_name, "exit"))
 		ret = ft_exit(cmd_node, minishell);
+	free(cmd_name);
 	return (ret);
 }

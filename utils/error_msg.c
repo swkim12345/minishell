@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:17:00 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/03 13:07:28 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:30:10 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static void	print_error_msg_arg(char *arg, int quote_flag)
 
 void	free_error(t_error *error)
 {
+	if (error == NULL)
+		return ;
 	if (error->execute_name)
 		free(error->execute_name);
 	if (error->builtin)
@@ -46,22 +48,14 @@ t_error	*set_error_msg(char *execute_name, char *builtin, char *arg, char *msg)
 {
 	t_error	*error;
 
-	error = (t_error *)malloc(sizeof(t_error));
-	if (!execute_name)
-		error->execute_name = NULL;
-	else
+	error = (t_error *)ft_calloc(sizeof(t_error), 1);
+	if (execute_name)
 		error->execute_name = ft_strdup(execute_name);
-	if (!builtin)
-		error->builtin = NULL;
-	else
+	if (builtin)
 		error->builtin = ft_strdup(builtin);
-	if (!arg)
-		error->arg = NULL;
-	else
+	if (arg)
 		error->arg = ft_strdup(arg);
-	if (!msg)
-		error->msg = NULL;
-	else
+	if (msg)
 		error->msg = ft_strdup(msg);
 	return (error);
 }

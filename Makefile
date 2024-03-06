@@ -6,7 +6,7 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/05 22:29:23 by minsepar         ###   ########.fr        #
+#    Updated: 2024/03/06 12:54:37 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,9 +77,11 @@ re:
 	make all
 
 test:
-	cc main.c test.c ./signal/signal.c common_util.c -lreadline $(LIBFT)
+	make fclean
+	make -C ./libft all bonus
+	$(CC) -g $(CFLAGS) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
 
 run: re
 	./minishell
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test

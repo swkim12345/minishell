@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/05 22:48:26 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:13:30 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,10 @@ int	ft_exit(t_cmd_node *cmd_node, t_minishell *minishell)
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	minishell->exit_code = 255;
 	if (!cmd_node->str[1])
+	{
+		free_t_minishell(minishell);
 		exit(0);
+	}
 	minishell->exit_code = exit_arg_check(cmd_node, minishell);
 	if (cmd_node->str[2])
 	{
