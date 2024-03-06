@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 13:50:24 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 13:53:43 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ char	*stack_to_str(t_str_list *stack)
 			append_char(&parse_str, cur_node->str[i]);
 		free(cur_node->str);
 		free(cur_node);
-		cur_node = cur_node->next;
+		cur_node = pop(stack);
 	}
 	return_str = ft_substr(parse_str.str, 0, parse_str.cursor);
 	free(parse_str.str);
