@@ -209,8 +209,8 @@ int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
 	int				fd;
 	char			**file_list;
 
-	//ft_printf("read_fd\n");
-	ft_printf("flag: [%d]\n", redirect_node->flag);
+	////ft_printf("read_fd\n");
+	//ft_printf("flag: [%d]\n", redirect_node->flag);
 	if (redirect_node->flag & LT_SIGN)
 	{
 		file_list = string_parser(redirect_node->str, minishell); //add read file string parser
@@ -229,7 +229,7 @@ int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
 		fd = get_heredoc_fd(minishell, ast_node->index);
 	else
 		return (1);
-	 ft_printf("read fd: %d\n", fd);
+	// ft_printf("read fd: %d\n", fd);
 	if (fd < 0)
 	{
 		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, 0); //checked - error
