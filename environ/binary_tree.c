@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:22:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 12:56:45 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 21:06:01 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,17 @@ static int	tree_insert_node(t_tree_node **next, t_tree_node *leaf, int size)
 {
 	if (size == 0)
 	{
-		free((*next)->value);
-		(*next)->value = leaf->value;
+		if (!(*next)->value)
+		{
+			free((*next)->value);
+			(*next)->value = NULL;
+		}
+		if (leaf->value)
+			(*next)->value = ft_strdup(leaf->value);
 		node_delete(leaf);
 		return (FUNC_SUC);
 	}
-	if (size < 0)
+	else if (size < 0)
 	{
 		if (!(*next)->left_node)
 		{
@@ -30,7 +35,7 @@ static int	tree_insert_node(t_tree_node **next, t_tree_node *leaf, int size)
 		}
 		(*next) = (*next)->left_node;
 	}
-	if (size > 0)
+	else if (size > 0)
 	{
 		if (!(*next)->right_node)
 		{
@@ -79,15 +84,12 @@ t_tree_node	*tree_search(t_tree_node *node, t_tree_node **parent, char *key)
 		tmp = ft_strncmp(node->key, key, size + 1);
 		if (tmp == 0)
 			return (node);
-		else
-		{
-			if (flag == TRUE)
-				*parent = node;
-			if (tmp < 0)
-				node = node->left_node;
-			if (tmp > 0)
-				node = node->right_node;
-		}
+		if (flag == TRUE)
+			*parent = node;
+		if (tmp < 0)
+			node = node->left_node;
+		if (tmp > 0)
+			node = node->right_node;
 	}
 	return (NULL);
 }

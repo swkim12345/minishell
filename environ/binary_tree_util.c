@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 13:25:47 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 20:20:51 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ static char	*parse_value(char *env, int size, int index, t_minishell *minishell)
 	if (ft_strlen(env) != (size_t)size)
 	{
 		if (env[index + 1] == '\0')
-		{
-			value = (char *)malloc(sizeof(char) * 1);
-			value[0] = '\0';
-		}
+			value = (char *)ft_calloc(sizeof(char), 1);
 		else
 		{
 			tmp = ft_strdup(&env[index + 1]);
@@ -84,6 +81,41 @@ void	exchange_node_key_value(t_tree_node *n, t_tree_node *t)
 	t->key = key;
 	t->value = value;
 }
+
+//char	*key_value_to_str(t_tree_node *node, int quote_flag)
+//{
+//	char	*ret;
+//	char	*tmp;
+
+//	if (node->value == NULL)
+//		return (ft_strdup(node->key));
+//	if (quote_flag)
+//	{
+//		if (node->value[0] == '\0')
+//			return (ft_strjoin(node->key, "=\"\""));
+//		else
+//		{
+//			tmp = ft_strjoin(node->key, "=\"");
+//			ret = ft_strjoin(tmp, node->value);
+//			free(tmp);
+//			tmp = ft_strjoin(ret, "\"");
+//			free(ret);
+//			ret = tmp;
+//		}
+//	}
+//	else
+//	{
+//		tmp = ft_strjoin(node->key, "=");
+//		if (node->value[0] == '\0')
+//			return (tmp);
+//		else
+//		{
+//			ret = ft_strjoin(tmp, node->value);
+//			free(tmp);
+//		}
+//	}
+//	return (ret);
+//}
 
 char	*key_value_to_str(t_tree_node *node, int quote_flag)
 {
