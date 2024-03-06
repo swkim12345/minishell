@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 13:12:13 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 13:17:43 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static	int	free_key_value_msg(t_minishell *minishell,
 	else
 	{
 		free_error(minishell->error);
+		minishell->error = NULL;
 		return (FUNC_FAIL);
 	}
 }
