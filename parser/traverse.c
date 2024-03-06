@@ -188,7 +188,7 @@ int	get_heredoc_fd(t_minishell *minishell, int index)
 	//ft_printf("ast_ndoe->index: %d\n", index);
 	while (--index > 0)
 		cur_node = cur_node->next;
-	//ft_printf("heredoc_name: %s\n", cur_node->tmp);
+	ft_printf("heredoc_name: [%s]\n", cur_node->tmp);
 	fd = open(cur_node->tmp, O_RDONLY);
 	return (fd);
 }
@@ -210,6 +210,7 @@ int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
 	char			**file_list;
 
 	//ft_printf("read_fd\n");
+	ft_printf("flag: [%d]\n", redirect_node->flag);
 	if (redirect_node->flag & LT_SIGN)
 	{
 		file_list = string_parser(redirect_node->str, minishell); //add read file string parser
@@ -228,10 +229,10 @@ int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
 		fd = get_heredoc_fd(minishell, ast_node->index);
 	else
 		return (1);
-	// ft_printf("read fd: %d\n", fd);
+	 ft_printf("read fd: %d\n", fd);
 	if (fd < 0)
 	{
-		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, 0);
+		minishell->error = set_error_msg(minishell->execute_name, redirect_node->str, 0, 0); //checked - error
 		print_error_msg(minishell->error, 0, 0);
 		return (1);
 	}
@@ -321,7 +322,10 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 		return (minishell->exit_code);
 	}
 	if (!(minishell->flag & NOT_CHECK_RED))
-		process_redirection(head, minishell);
+	{
+		if (process_redirection(head, minishell) != 0)
+			return (minishell->exit_code);
+	}
 	minishell->flag &= ~NOT_CHECK_RED;
 	if (minishell->exit_code == 0)
 	{

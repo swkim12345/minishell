@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:17:00 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 13:15:00 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:38:32 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ t_error	*set_error_msg(char *execute_name, char *builtin, char *arg, char *msg)
 {
 	t_error	*error;
 
+	ft_printf("set_error_msg\n");
+	ft_printf("execute_name : %s\n", execute_name);
+	ft_printf("builtin : %s\n", builtin);
+	ft_printf("arg : %s\n", arg);
+	ft_printf("msg : %s\n", msg);
 	error = (t_error *)ft_calloc(sizeof(t_error), 1);
 	if (execute_name)
 		error->execute_name = ft_strdup(execute_name);

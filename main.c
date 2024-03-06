@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 14:20:50 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:03:49 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	free_t_minishell(t_minishell *shell)
 	free(shell->execute_name);
 	free(shell->print_str);
 	//free_error(shell->error);
-	free_tmp_list(shell->tmp_list, shell);
+	free_tmp_list(shell->tmp_list, shell, TRUE);
 	free_tree_delete(shell->env);
 	free_tree_delete(shell->export);
 }
@@ -128,7 +128,7 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strlen(shell.input_str) != 0)
 			add_history(shell.input_str);
 		free_ast_tree(head);
-		clear_tmp_list(shell.tmp_list, &shell);
+		clear_tmp_list(shell.tmp_list, &shell, TRUE);
 		free(shell.input_str);
 		//ft_printf("end of main\n");
 	}

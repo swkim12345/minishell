@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 15:01:15 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:03:07 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	free_2d_str(char **arr)
 	free(arr);
 }
 
-void	clear_tmp_list(t_tmp_list *list, t_minishell *minishell)
+void	clear_tmp_list(t_tmp_list *list, t_minishell *minishell, int unlink_flag)
 {
 	t_tmp_file	*cur;
 	t_tmp_file	*next;
@@ -85,7 +85,8 @@ void	clear_tmp_list(t_tmp_list *list, t_minishell *minishell)
 	while (cur)
 	{
 		next = cur->next;
-		unlink(cur->tmp);
+		if (unlink_flag)
+			unlink(cur->tmp);
 		free(cur->tmp);
 		free(cur->eof);
 		free(cur);
@@ -94,9 +95,9 @@ void	clear_tmp_list(t_tmp_list *list, t_minishell *minishell)
 	minishell->tmp_file_counter = 0;
 }
 
-void	free_tmp_list(t_tmp_list *list, t_minishell *minishell)
+void	free_tmp_list(t_tmp_list *list, t_minishell *minishell, int unlink_flag)
 {
-	clear_tmp_list(list, minishell);
+	clear_tmp_list(list, minishell, unlink_flag);
 	free(list);
 	list = 0;
 }
