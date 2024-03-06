@@ -188,7 +188,7 @@ int	get_heredoc_fd(t_minishell *minishell, int index)
 	//ft_printf("ast_ndoe->index: %d\n", index);
 	while (--index > 0)
 		cur_node = cur_node->next;
-	ft_printf("heredoc_name: [%s]\n", cur_node->tmp);
+	//ft_printf("heredoc_name: [%s]\n", cur_node->tmp);
 	fd = open(cur_node->tmp, O_RDONLY);
 	return (fd);
 }
