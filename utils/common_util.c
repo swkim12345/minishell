@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   common_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/05 00:35:19 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:43:09 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ void	free_2d_str(char **arr)
 	if (!arr)
 		return ;
 	while (arr[++i])
+	{
 		free(arr[i]);
+		arr[i] = 0;
+	}
 	free(arr[i]);
 	free(arr);
 }
