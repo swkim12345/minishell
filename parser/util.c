@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/04 19:48:27 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:12:52 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ t_ast_node	*init_ast_node(int child_node)
 	t_ast_node	*ret;
 	t_cmd_node	*node;
 
-	ret = (t_ast_node *)malloc(sizeof(t_ast_node));
-	ft_memset((void *)ret, 0, sizeof(t_ast_node));
+	ret = (t_ast_node *)ft_calloc(sizeof(t_ast_node), 1);
 	if (CMDNODE & child_node)
 	{
-		node = (t_cmd_node *)malloc(sizeof(t_cmd_node));
-		ft_memset((void *)node, 0, sizeof(t_cmd_node));
+		node = (t_cmd_node *)ft_calloc(sizeof(t_cmd_node), 1);
 		ret->cmd_node = node;
 	}
 	if (LEFTNODE & child_node)

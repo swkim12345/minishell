@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parser_str_list.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:03:03 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/26 16:47:01 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:25:39 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_str_node	*create_node(char *str)
 {
 	t_str_node	*str_node;
 
-	str_node = malloc(sizeof(t_str_node));
+	str_node = (t_str_node *)ft_calloc(sizeof(t_str_node), 1);
 	str_node->str = str;
 	str_node->next = 0;
 	return (str_node);

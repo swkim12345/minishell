@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/04 17:44:13 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:29:32 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,21 +91,21 @@ typedef struct s_tmp_list
 
 typedef struct s_minishell
 {
-	char		*cwd;
-	char		*input_str;
-	int			exit_code;
-  	char		*execute_name;
-	char		*print_str;
-	char		**envp;
-	char		*tmp_file_name;
-	int			tmp_file_counter;
-	int			stdin_fd;
-	int			stdout_fd;
-	int			flag;
-	t_tree_head	*env;
-	t_tree_head	*export;
-	t_tmp_list	*tmp_list;
-	t_error		*error;
+	char			**envp;
+	char			*cwd;
+	char			*input_str;
+  	char			*execute_name;
+	char			*print_str;
+	char			*tmp_file_name;
+	int				tmp_file_counter;
+	int				stdin_fd;
+	int				stdout_fd;
+	int				flag;
+	int				exit_code;
+	t_tree_head		*env;
+	t_tree_head		*export;
+	t_tmp_list		*tmp_list;
+	t_error			*error;
 	t_pipe_traverse	*pipe_info;
 }	t_minishell;
 
