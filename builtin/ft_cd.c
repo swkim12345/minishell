@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 13:53:43 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:10:11 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,9 +189,7 @@ char	*stack_to_str(t_str_list *stack)
 		//ft_printf("cur_node: [%s]\n", cur_node->str);
 		while (cur_node->str[++i])
 			append_char(&parse_str, cur_node->str[i]);
-		free(cur_node->str);
-		free(cur_node);
-		cur_node = pop(stack);
+		cur_node = cur_node->next;
 	}
 	return_str = ft_substr(parse_str.str, 0, parse_str.cursor);
 	free(parse_str.str);
@@ -238,12 +236,14 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 				if (!S_ISDIR(info->file_stat.st_mode))
 				{
 					free_str_stack(&stack);
+					free(temp_str);
 					return (not_a_directory_error(info, minishell, cmd_node->cmd_name, info->home_dir));
 				}
 			}
 			else
 			{
 				free_str_stack(&stack);
+				free(temp_str);
 				return (cd_error(info, minishell, info->execute_name, info->directory));
 			}
 			i += 2;
@@ -255,6 +255,7 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 				free(cur->str);
 				free(cur);
 			}
+			free(temp_str);
 		}
 		else if (info->cur_path[i] == '/' && (i == 0 || i - start != 0))
 		{
