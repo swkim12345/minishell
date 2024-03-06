@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 12:29:32 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 20:32:31 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# include "libft///ft_printf.h"
+# include "libft/ft_printf.h"
 # include "parser/parser.h"
 # include "builtin/builtin.h"
 # include "subsystem/subsystem.h"
@@ -64,22 +64,22 @@
 # define NOT_CHECK_RED 1
 # define PIPE_TRAVERSE 2
 
-typedef struct s_minishell	t_minishell;
-typedef struct s_str_list	t_str_list;
-typedef struct s_tree_node	t_tree_node;
-typedef struct s_tree_head	t_tree_head;
-typedef struct s_ast_node	t_ast_node;
-typedef struct s_cmd_node	t_cmd_node;
-typedef struct s_str_node	t_str_node;
-typedef struct s_tmp_file	t_tmp_file;
-typedef struct s_tmp_list	t_tmp_list;
+typedef struct s_minishell		t_minishell;
+typedef struct s_str_list		t_str_list;
+typedef struct s_tree_node		t_tree_node;
+typedef struct s_tree_head		t_tree_head;
+typedef struct s_ast_node		t_ast_node;
+typedef struct s_cmd_node		t_cmd_node;
+typedef struct s_str_node		t_str_node;
+typedef struct s_tmp_file		t_tmp_file;
+typedef struct s_tmp_list		t_tmp_list;
 typedef struct s_pipe_traverse	t_pipe_traverse;
 
 typedef struct s_tmp_file
 {
-	char		*tmp;	//임시파일 이름
-	char		*eof;	//heredoc 종료문자열
-	int			fd;		//임시파일 디스크립터
+	char		*tmp;
+	char		*eof;
+	int			fd;
 	t_tmp_file	*next;
 }	t_tmp_file;
 
@@ -94,7 +94,7 @@ typedef struct s_minishell
 	char			**envp;
 	char			*cwd;
 	char			*input_str;
-  	char			*execute_name;
+	char			*execute_name;
 	char			*print_str;
 	char			*tmp_file_name;
 	int				tmp_file_counter;
@@ -111,17 +111,16 @@ typedef struct s_minishell
 
 typedef struct s_cmd_info
 {
-	char	*cmd;			//명령어
-	char	*arguments;		//인자
+	char	*cmd;
+	char	*arguments;
 }	t_cmd_info;
 
-/* main.c */
-void	init_shell(t_minishell *shell, char **envp, char **argv);
-void	exit_handle(t_minishell *shell, int status);
-void	free_t_minishell(t_minishell *shell);
-
-/* common_util.c */
-int	str_equal(char *s1, char *s2);
+/* main_util.c */
+void		init_shell(t_minishell *shell, char **envp, char **argv, int argc);
+void		exit_handle(t_minishell *shell, int status);
+void		free_t_minishell(t_minishell *shell);
+void		set_term(void);
+void		exit_handle(t_minishell *shell, int status);
 
 /* traverse.c */
 t_tmp_file	*get_heredoc_file(t_minishell *minishell, int index);
