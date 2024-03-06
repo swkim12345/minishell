@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   common_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:45:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 17:03:07 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 21:25:03 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*to_lowercase_str(const char *str)
 	int		i;
 
 	i = 0;
-	return_str = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	return_str = ft_calloc(sizeof(char), ft_strlen(str) + 1);
 	while (str[i])
 	{
 		return_str[i] = ft_tolower(str[i]);

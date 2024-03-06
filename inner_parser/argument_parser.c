@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 21:03:59 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/06 21:32:26 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,7 +259,7 @@ void	pattern_not_found(t_str_list *str_list, char *pattern)
 	t_str_node	*node;
 
 	node = create_node(pattern);
-	node->str = pattern;
+	node->str = ft_strdup(pattern);
 	enqueue(str_list, node);
 }
 
