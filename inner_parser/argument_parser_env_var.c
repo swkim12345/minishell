@@ -6,13 +6,13 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 22:11:32 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 22:11:43 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 12:20:37 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-void	parse_env_var_noquote(t_str_list *str_list,
+static void	parse_env_var_noquote(t_str_list *str_list,
 		t_parse_str *parse_str, char *substitude_name)
 {
 	while (*substitude_name && ft_isspace(*substitude_name))
@@ -29,7 +29,7 @@ void	parse_env_var_noquote(t_str_list *str_list,
 	}
 }
 
-void	parse_env_var_found(t_str_list *str_list, t_parse_str *parse_str,
+static void	parse_env_var_found(t_str_list *str_list, t_parse_str *parse_str,
 	char *substitude_name, int start_index)
 {
 	parse_str->cursor = start_index;
@@ -48,6 +48,14 @@ void	parse_env_var_found(t_str_list *str_list, t_parse_str *parse_str,
 	}
 }
 
+static int	is_env_delimiter(char c, int quote_flag)
+{
+	if (ft_isspace(c) || (quote_flag && c == '\"') || c == '$' || c == '\"'
+		|| c == '\'' || c == '/' || c == '|')
+		return (TRUE);
+	return (FALSE);
+}
+
 void	parse_env_var(t_str_list *str_list, t_parse_str *parse_str,
 	char **str, t_minishell *minishell)
 {
@@ -57,9 +65,7 @@ void	parse_env_var(t_str_list *str_list, t_parse_str *parse_str,
 
 	start_index = parse_str->cursor;
 	append_char(parse_str, '$');
-	while (**str && !ft_isspace(**str) && (!parse_str->quote_flag
-			|| **str != '\"') && **str != '$' && **str != '\"' && **str != '\''
-		&& **str != '/' && **str != '|')
+	while (**str && !is_env_delimiter(**str, parse_str->quote_flag))
 		parse_single_char(str_list, parse_str, str, minishell);
 	if (parse_str->cursor == start_index + 1)
 		return ;

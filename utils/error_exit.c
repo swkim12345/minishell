@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:14:59 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 23:15:46 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:56:16 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,4 @@ void	command_is_directory_error(t_minishell *minishell, char *command)
 			command, 0, "is a directory");
 	print_error_msg(minishell->error, 126, 0);
 	exit(126);
-}
-
-void	command_no_such_file(t_minishell *minishell, char *command)
-{
-	minishell->error = set_error_msg(minishell->execute_name,
-			command, 0, "No such file or directory");
-	print_error_msg(minishell->error, 126, 0);
-	exit(127);
 }
