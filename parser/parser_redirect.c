@@ -6,55 +6,55 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:32:15 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 20:02:53 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 20:10:14 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-static void	read_heredoc_child_join(t_minishell *minishell,
-		t_tmp_file *tmp_file, int fd, char *line)
+static char	**read_heredoc_quote(t_minishell *minishell, char *line)
 {
-	char		*str;
-	char		**tmp;
-	int			index;
+	char	*str;
+	char	*tmp;
+	char	**ret;
 
 	str = ft_strjoin("\"", line);
-	free(line);
-	line = ft_strjoin(str, "\"");
+	tmp = ft_strjoin(str, "\"");
 	free(str);
-	tmp = string_parser(line, minishell);
-	index = -1;
-	while (tmp[++index])
-	{
-		ft_putstr_fd(tmp[index], fd);
-		if (tmp[index + 1])
-			ft_putstr_fd(" ", fd);
-	}
-	ft_putchar_fd('\n', fd);
-	free_2d_str(tmp);
+	ret = string_parser(tmp, minishell);
+	free(tmp);
+	return (ret);
 }
 
 static void	read_heredoc_child_while(t_minishell *minishell,
 			t_tmp_file *tmp_file, int fd)
 {
 	char		*line;
+	char		**tmp;
+	int			index;
 
 	while (1)
 	{
 		line = readline("> ");
 		if (!line || str_equal(line, tmp_file->eof))
 			break ;
-		read_heredoc_child_join(minishell, tmp_file, fd, line);
+		tmp = read_heredoc_quote(minishell, line);
+		index = -1;
+		while (tmp[++index])
+		{
+			ft_putstr_fd(tmp[index], fd);
+			if (tmp[index + 1])
+				ft_putstr_fd(" ", fd);
+		}
+		ft_putchar_fd('\n', fd);
 		free(line);
+		free_2d_str(tmp);
 	}
 }
 
 static void	read_heredoc_child(t_minishell *minishell, t_tmp_file *tmp_file)
 {
 	int			fd;
-	int			index;
-	char		**tmp;
 
 	set_heredoc_int_handler();
 	fd = tmp_file->fd;

@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 17:42:44 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 20:19:09 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,16 @@ char		**init_doub_char(char **input, int size);
 void		free_cmd_node(t_cmd_node **node);
 void		free_ast_tree(t_ast_node *head);
 void		free_redirection_node(t_redirection *node);
+
+/* lexar_err.c */
+int			err_token_finder(char *ptr, int index);
+
+/* lexar_redirection.c */
+int			lexar_redirect(t_ast_node *node, t_minishell *minishell, int index);
+
+/* lexar_subshell.c */
+int			subshell_recurv_parser(t_ast_node *head, int index,
+				int flag, t_minishell *minishell);
 
 /* lexar.c */
 char 		*eof_parser(char *ptr);

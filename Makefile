@@ -6,7 +6,7 @@
 #    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/07 17:53:29 by sunghwki         ###   ########.fr        #
+#    Updated: 2024/03/07 20:19:38 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ INNER_SRCS =	inner_parser/argument_parser_str_list.c inner_parser/argument_parse
 
 PARSER_SRCS = 	parser/parser.c parser/set_mem.c parser/util.c parser/parser_redirect.c parser/parser_recurv.c parser/parser_split.c
 
-LEXAR_SRCS =	parser/lexar.c
+LEXAR_SRCS =	parser/lexar.c parser/lexar_err.c parser/lexar_eof.c parser/lexar_redirect.c parser/lexar_subshell.c
 
 TRAVERSE_SRCS =	parser/traverse.c 
 
@@ -73,7 +73,7 @@ $(LIBFT):
 $(NAME): $(LIBFT) 
 #	$(CC) -g $(CFLAGS) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
 #	$(CC) -g -fsanitize=address $(CFLAGS) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
-	$(CC) -g $(CFLAGS) $(SRCS) $(PARSER_SRCS) $(LEXAR_SRCS) $(TRAVERSE_SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
+	$(CC) -g -fsanitize=address $(CFLAGS) $(SRCS) $(PARSER_SRCS) $(LEXAR_SRCS) $(TRAVERSE_SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
 
 clean:
 	rm -rf $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(PARSER_OBJS) $(LEXAR_OBJS) $(TRAVERSE_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
