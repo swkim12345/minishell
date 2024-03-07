@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:16:35 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 21:40:11 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 22:03:08 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,11 @@ static int	find_next_token_red(char *ptr, int index, t_redirection *red)
 	return (index);
 }
 
-int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
+static int	lexar_rediret_err(t_ast_node *node, t_minishell *minishell,
+		char *ptr, int index)
 {
-	char			*ptr;
-	int				start;
-	int				name_start;
-	int				tmp;
-	t_redirection	*red;
+	int	tmp;
 
-	ptr = node->cmd_node->str[0];
-	red = (t_redirection *)malloc(sizeof(t_redirection));
-	ft_memset((void *)red, 0, sizeof(t_redirection));
-	redirect_node_push(node, red);
-	index = find_next_token_red(ptr, index, red);
-	start = index;
-	index += skip_space(&ptr[index]);
 	if (ptr[index] == '\0')
 	{
 		node->err_flag = TRUE;
@@ -95,6 +85,25 @@ int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 		return (syntax_err_message(&ptr[index], tmp - index,
 				-2, minishell));
 	}
+	return (NOTDEFINED);
+}
+
+int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
+{
+	char			*ptr;
+	int				start;
+	int				name_start;
+	int				tmp;
+	t_redirection	*red;
+
+	ptr = node->cmd_node->str[0];
+	red = (t_redirection *)ft_calloc(sizeof(t_redirection), 1);
+	redirect_node_push(node, red);
+	index = find_next_token_red(ptr, index, red);
+	start = index;
+	index += skip_space(&ptr[index]);
+	if (ptr[index] == '\0' || ptr[index] == '<' || ptr[index] == '>') //split error function
+		return (lexar_rediret_err(node, minishell, ptr, index));
 	while (ptr[index] != '\0')
 	{
 		if (ptr[index] == '\"' || ptr[index] == '\'')
@@ -114,7 +123,7 @@ int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 			break ;
 		index++;
 	}
-	name_start = start + skip_space(&ptr[start]);
+	name_start = start + skip_space(&ptr[start]); 
 	red->str = ft_substr(&ptr[name_start], 0, index - name_start);
 	ft_strlcat(ptr, &ptr[index], ft_strlen(ptr) + ft_strlen(&ptr[index]) + 1);
 	if (red->str[0] == '\0')
