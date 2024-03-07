@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 22:05:12 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 22:19:19 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:46:09 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,6 @@ void	parse_single_char(t_str_list *str_list, t_parse_str *parse_str,
 		append_char(parse_str, **str);
 		*str = *str + 1;
 	}
-}
-
-int	contains_assignment(char *str)
-{
-	while (*str)
-	{
-		if (*str == '=')
-			return (1);
-		if (*str == '\'')
-		{
-			str++;
-			while (*str && *str != '\'')
-				str++;
-		}
-		else if (*str == '\"')
-		{
-			str++;
-			while (*str && *str != '\"')
-				str++;
-		}
-		str++;
-	}
-	return (0);
 }
 
 static void	parse_question_mark(t_parse_str *parse_str, char **str,
@@ -102,6 +79,19 @@ void	parse_single_quote(t_parse_str *parse_str, char **str)
 		parse_str->asterisk_flag = 0;
 		append_char(parse_str, **str);
 		(*str)++;
+	}
+	(*str)++;
+}
+
+void	parse_double_quote(t_str_list *str_list, t_parse_str *parse_str,
+			char **str, t_minishell *minishell)
+{
+	parse_str->quote_flag = 1;
+	(*str)++;
+	while (**str && **str != '\"')
+	{
+		parse_str->asterisk_flag = 0;
+		parse_single_char(str_list, parse_str, str, minishell);
 	}
 	(*str)++;
 }

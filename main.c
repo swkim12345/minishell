@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 12:50:42 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:17:13 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	main(int argc, char **argv, char **envp)
 		{
 			shell.exit_code = 0;
 			traverse(head, &shell, 1);
+			if (shell.flag & PIPE_TRAVERSE)
+				exit(shell.exit_code);
 		}
 		if (ft_strlen(shell.input_str) != 0)
 			add_history(shell.input_str);

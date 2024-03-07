@@ -6,13 +6,13 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 22:07:00 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 22:07:35 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:43:38 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-t_str_list	*string_to_str_list(char *str, t_minishell *minishell)
+static t_str_list	*string_to_str_list(char *str, t_minishell *minishell)
 {
 	t_str_list	*str_list;
 

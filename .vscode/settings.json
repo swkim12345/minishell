@@ -36,6 +36,7 @@
 		"vector": "c",
 		"ft_printf_bonus.h": "c",
 		"__node_handle": "c",
-		"errno.h": "c"
+		"errno.h": "c",
+		"signal.h": "c"
 	}
 }

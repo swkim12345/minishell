@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:17:00 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 23:16:38 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:56:54 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,26 +92,5 @@ int	not_a_directory_error(t_cd *info, t_minishell *minishell
 	minishell->error = set_error_msg(minishell->execute_name,
 			command, arg, "Not a directory");
 	print_error_msg(minishell->error, 1, 0);
-	return (1);
-}
-
-int	cd_error(t_cd *info, t_minishell *minishell, char *command, char *arg)
-{
-	free(info->cur_path);
-	return (builtin_error(minishell, command, arg));
-}
-
-int	home_not_set_error(t_minishell *minishell, char *command, char *arg)
-{
-	minishell->error = set_error_msg(minishell->execute_name, command,
-			arg, "HOME not set");
-	print_error_msg(minishell->error, 1, 0);
-	return (1);
-}
-
-int	builtin_error(t_minishell *minishell, char *command, char *arg)
-{
-	minishell->error = set_error_msg(minishell->execute_name, command, arg, 0);
-	print_error_msg(minishell->error, 0, 0);
 	return (1);
 }

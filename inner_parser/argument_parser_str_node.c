@@ -6,11 +6,11 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 12:25:42 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 12:26:12 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:46:20 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../main.h"
+#include "../main.h"
 
 t_str_node	*create_node(char *str)
 {

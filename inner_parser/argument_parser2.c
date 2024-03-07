@@ -6,23 +6,33 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 21:59:42 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 15:23:37 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:40:56 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-void	parse_double_quote(t_str_list *str_list, t_parse_str *parse_str,
-			char **str, t_minishell *minishell)
+static int	contains_assignment(char *str)
 {
-	parse_str->quote_flag = 1;
-	(*str)++;
-	while (**str && **str != '\"')
+	while (*str)
 	{
-		parse_str->asterisk_flag = 0;
-		parse_single_char(str_list, parse_str, str, minishell);
+		if (*str == '=')
+			return (1);
+		if (*str == '\'')
+		{
+			str++;
+			while (*str && *str != '\'')
+				str++;
+		}
+		else if (*str == '\"')
+		{
+			str++;
+			while (*str && *str != '\"')
+				str++;
+		}
+		str++;
 	}
-	(*str)++;
+	return (0);
 }
 
 static void	pattern_not_found(t_str_list *str_list, char *pattern)
@@ -34,7 +44,7 @@ static void	pattern_not_found(t_str_list *str_list, char *pattern)
 	enqueue(str_list, node);
 }
 
-void	parse_asterisk(t_str_list *str_list, t_parse_str *parse_str)
+static void	parse_asterisk(t_str_list *str_list, t_parse_str *parse_str)
 {
 	int			found_flag;
 	t_str_list	dir_file_list;
@@ -61,7 +71,7 @@ void	parse_asterisk(t_str_list *str_list, t_parse_str *parse_str)
 		pattern_not_found(str_list, pattern);
 }
 
-void	parse_assignment(t_parse_str *parse_str, char **str)
+static void	parse_assignment(t_parse_str *parse_str, char **str)
 {
 	while (**str && !ft_isspace(**str))
 	{
