@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:36:45 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 22:17:54 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 19:16:58 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,22 @@ void	free_ast_tree(t_ast_node *node)
 	free(node);
 	node = NULL;
 	return ;
+}
+
+t_ast_node	*init_ast_node(int child_node)
+{
+	t_ast_node	*ret;
+	t_cmd_node	*node;
+
+	ret = (t_ast_node *)ft_calloc(sizeof(t_ast_node), 1);
+	if (CMDNODE & child_node)
+	{
+		node = (t_cmd_node *)ft_calloc(sizeof(t_cmd_node), 1);
+		ret->cmd_node = node;
+	}
+	if (LEFTNODE & child_node)
+		ret->left_node = init_ast_node(CMDNODE);
+	if (RIGHTNODE & child_node)
+		ret->right_node = init_ast_node(CMDNODE);
+	return (ret);
 }
