@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:03:39 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 17:13:26 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 21:05:11 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,6 @@ int	ft_setenv(t_tree_head *head, char *key, char *value)
 {
 	t_tree_node	*tmp;
 
-	tmp = tree_search(head->head, NULL, key);
-	if (tmp)
-	{
-		free(tmp->value);
-		tmp->value = NULL;
-		if (value)
-			tmp->value = ft_strdup(value);
-		return (FUNC_SUC);
-	}
 	tmp = init_tree_node();
 	if (!tmp)
 		return (FUNC_FAIL);
@@ -44,13 +35,7 @@ char	*ft_getenv(t_tree_head *head, char *key)
 {
 	t_tree_node	*tmp;
 
-	// if (!head)
-	// {
-		
-	// 	tmp = getenv(key);
-	// }
-	// else
-		tmp = tree_search(head->head, NULL, key);
+	tmp = tree_search(head->head, NULL, key);
 	if (tmp && tmp->value)
 		return (tmp->value);
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 12:32:24 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:23:32 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ static char	*parse_value(char *env, int size, int index, t_minishell *minishell)
 	if (ft_strlen(env) != (size_t)size)
 	{
 		if (env[index + 1] == '\0')
-		{
-			value = (char *)malloc(sizeof(char) * 1);
-			value[0] = '\0';
-		}
+			value = (char *)ft_calloc(sizeof(char), 1);
 		else
 		{
 			tmp = ft_strdup(&env[index + 1]);
@@ -72,70 +69,45 @@ int	parse_env(char *env, char **key, char **value, t_minishell *minishell)
 	return (FUNC_SUC);
 }
 
-void	exchange_node_key_value(t_tree_node *n, t_tree_node *t)
-{
-	char	*key;
-	char	*value;
-
-	key = n->key;
-	value = n->value;
-	n->key = t->key;
-	n->value = t->value;
-	t->key = key;
-	t->value = value;
-}
-
-char	*key_value_to_str(t_tree_node *node, int quote_flag)
+static char	*key_value_to_str_value(t_tree_node *node, int quote_flag)
 {
 	char	*ret;
 	char	*tmp;
 
+	if (quote_flag)
+	{
+		tmp = ft_strjoin(node->key, "=\"");
+		ret = ft_strjoin(tmp, node->value);
+		free(tmp);
+		tmp = ft_strjoin(ret, "\"");
+		free(ret);
+		ret = tmp;
+	}
+	else
+	{
+		tmp = ft_strjoin(node->key, "=");
+		ret = ft_strjoin(tmp, node->value);
+		free(tmp);
+	}
+	return (ret);
+}
+
+char	*key_value_to_str(t_tree_node *node, int quote_flag)
+{
 	if (node->value == NULL)
-		ret = ft_strdup(node->key);
+		return (ft_strdup(node->key));
 	else if (quote_flag)
 	{
 		if (node->value[0] == '\0')
 			return (ft_strjoin(node->key, "=\"\""));
 		else
-		{
-			tmp = ft_strjoin(node->key, "=\"");
-			ret = ft_strjoin(tmp, node->value);
-			free(tmp);
-			tmp = ft_strjoin(ret, "\"");
-			free(ret);
-			ret = tmp;
-		}
+			return (key_value_to_str_value(node, quote_flag));
 	}
 	else
 	{
 		if (node->value[0] == '\0')
 			return (ft_strjoin(node->key, "="));
 		else
-		{
-			tmp = ft_strjoin(node->key, "=");
-			ret = ft_strjoin(tmp, node->value);
-			free(tmp);
-		}
+			return (key_value_to_str_value(node, quote_flag));
 	}
-	return (ret);
-}
-
-char	*env_parse_value(char *str, t_minishell *minishell)
-{
-	t_parse_str	parse_str;
-	t_str_list	str_list;
-
-	init_parse_str(&parse_str);
-	while (*str)
-	{
-		if (*str == '\'')
-			parse_single_quote(&parse_str, &str);
-		else if (*str == '\"')
-			parse_double_quote(&str_list, &parse_str, &str, minishell);
-		else if (*str == '$')
-			parse_env_var(&str_list, &parse_str, &str, minishell);
-		else
-			parse_single_char(&str_list, &parse_str, &str, minishell);
-	}
-	return (parse_str.str);
 }

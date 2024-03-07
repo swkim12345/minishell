@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 13:39:26 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:24:18 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 	pid = fork();
 	if (pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL); //fix ctrl-\ action
 		envp = ft_charenv(minishell->export, FALSE);
 		// printf("here----------------------------\n");
 		// int i = 0;
@@ -129,6 +130,20 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 		waitpid(pid, &status, 0);
+		//ft_printf("status: %d", status);
+		//ft_printf("termsig : %d\n", WTERMSIG(status));
+		if (WTERMSIG(status) == 2)
+		{
+			minishell->exit_code = 130;
+			ft_printf("\n");
+		}
+		else if (WTERMSIG(status) == 3)
+		{
+			minishell->exit_code = 131;
+			ft_printf("QUIT : 3\n");
+		}
+		else
+			minishell->exit_code = WEXITSTATUS(status);
 		set_signal_handler();
 	}
 	return (WEXITSTATUS(status));

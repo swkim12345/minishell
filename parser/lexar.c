@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 14:39:46 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 23:13:08 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int			err_token_finder(char *ptr, int index) //fix index pointer required
+int	err_token_finder(char *ptr, int index)
 {
 	while (ptr[index] != '\0')
 	{
@@ -52,15 +52,18 @@ static int	heredoc_open_fd(t_redirection *red, t_minishell *minishell)
 {
 	t_tmp_file	*tmp_file;
 	char		*tmp;
-	
-	//add file name
+
 	tmp_file = (t_tmp_file *)ft_calloc(sizeof(t_tmp_file), 1);
 	tmp = ft_itoa(minishell->tmp_file_counter);
 	tmp_file->tmp = ft_strjoin(minishell->tmp_file_name, tmp);
 	free(tmp);
 	tmp_file->fd = open(tmp_file->tmp, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (tmp_file->fd == -1) //add file descriptor error
-		return (FUNC_SUC); //maybe leak inside
+	if (tmp_file->fd == -1)
+	{
+		free(tmp_file->tmp);
+		free(tmp_file);
+		return (FUNC_SUC);
+	}
 	red->index = minishell->tmp_file_counter;
 	tmp_file->eof = ft_strdup(red->str);
 	tmp_list_push(tmp_file, minishell);
@@ -91,19 +94,18 @@ static int	find_next_token_red(char *ptr, int index, t_redirection *red)
 		else
 			red->flag = GT_SIGN;
 	}
-	index++;
+	index += 1;
 	return (index);
 }
 
-
-char *eof_parser(char *ptr)
+char	*eof_parser(char *ptr)
 {
 	t_parse_str	parse_str;
 	char		*ret;
 	int			flag;
 	int			index;
 
-	init_parse_str(&parse_str);	
+	init_parse_str(&parse_str);
 	index = -1;
 	while (ptr[++index])
 	{
@@ -122,7 +124,7 @@ char *eof_parser(char *ptr)
 			continue ;
 		append_char(&parse_str, ptr[index]);
 	}
-	ret = ft_strdup(parse_str.str); 
+	ret = ft_strdup(parse_str.str);
 	free_parse_str(&parse_str);
 	free(ptr);
 	return (ret);
@@ -136,7 +138,7 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	int				tmp;
 	t_redirection	*red;
 
-	ptr = node->cmd_node->str[0]; 
+	ptr = node->cmd_node->str[0];
 	red = (t_redirection *)malloc(sizeof(t_redirection));
 	ft_memset((void *)red, 0, sizeof(t_redirection));
 	redirect_node_push(node, red);
@@ -158,7 +160,8 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	{
 		node->err_flag = TRUE;
 		tmp = err_token_finder(ptr, index);
-		return (syntax_err_message(&ptr[index], tmp - index + 1, -2, minishell));
+		return (syntax_err_message(&ptr[index], tmp - index + 1,
+				-2, minishell));
 	}
 	while (ptr[index] != '\0')
 	{
@@ -168,12 +171,14 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 			if (tmp == NOTDEFINED)
 			{
 				node->err_flag = TRUE;
-				return (syntax_err_message(&ptr[index], NOTDEFINED, -2, minishell));
+				return (syntax_err_message(&ptr[index],
+						NOTDEFINED, -2, minishell));
 			}
 			index += tmp + 2;
 			continue ;
 		}
-		if (ft_isspace(ptr[index]) == TRUE || ptr[index] == '<' || ptr[index] == '>')
+		if (ft_isspace(ptr[index]) == TRUE || ptr[index] == '<'
+				|| ptr[index] == '>')
 			break ;
 		index++;
 	}
@@ -201,12 +206,13 @@ static int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 		return (start - 2);
 }
 
-static int	subshell_recurv_parser(t_ast_node *head, int index, int flag, t_minishell *minishell)
+static int	subshell_recurv_parser(t_ast_node *head, int index,
+		int flag, t_minishell *minishell)
 {
 	char	*ptr;
 	int		tmp;
 
-	ptr = head->cmd_node->str[0]; 	
+	ptr = head->cmd_node->str[0];
 	tmp = bracket_finder(&ptr[index]);
 	if (tmp + index == NOTDEFINED || tmp == index + 1)
 	{
@@ -248,7 +254,7 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 	int			index;
 	int			str_flag;
 	int			tmp;
-	
+
 	index = -1;
 	str_flag = FALSE;
 	ptr = node->cmd_node->str[0];

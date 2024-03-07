@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 13:31:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:24:10 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 		while (1)
 		{
 			line = readline("> ");
-			if (!line || str_equal(line, tmp_file->eof)) 
+			if (!line || str_equal(line, tmp_file->eof))
 				break ;
-			str = ft_strjoin("\"", line);//adhoc	free(line);
+			str = ft_strjoin("\"", line);
 			free(line);
 			line = ft_strjoin(str, "\"");
 			free(str);
@@ -69,7 +69,7 @@ static int	split_node(int end, int new_start, t_ast_node *node, int new_node_fla
 	char		*tmp;
 	t_ast_node	*old_node;
 	t_ast_node	*new_node;
-	
+
 	old_node = node;
 	new_node = NULL;
 	ptr = ft_strdup(node->cmd_node->str[0]);

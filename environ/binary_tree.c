@@ -6,21 +6,15 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:22:04 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/26 12:56:45 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 21:51:37 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environ.h"
 
-static int	tree_insert_node(t_tree_node **next, t_tree_node *leaf, int size)
+static int	tree_insert_not_node(t_tree_node **next,
+		t_tree_node *leaf, int size)
 {
-	if (size == 0)
-	{
-		free((*next)->value);
-		(*next)->value = leaf->value;
-		node_delete(leaf);
-		return (FUNC_SUC);
-	}
 	if (size < 0)
 	{
 		if (!(*next)->left_node)
@@ -30,7 +24,7 @@ static int	tree_insert_node(t_tree_node **next, t_tree_node *leaf, int size)
 		}
 		(*next) = (*next)->left_node;
 	}
-	if (size > 0)
+	else if (size > 0)
 	{
 		if (!(*next)->right_node)
 		{
@@ -40,6 +34,24 @@ static int	tree_insert_node(t_tree_node **next, t_tree_node *leaf, int size)
 		(*next) = (*next)->right_node;
 	}
 	return (FUNC_FAIL);
+}
+
+static int	tree_insert_node(t_tree_node **next, t_tree_node *leaf, int size)
+{
+	if (size == 0)
+	{
+		if (!(*next)->value)
+			(*next)->value = NULL;
+		if (leaf->value)
+		{
+			free((*next)->value);
+			(*next)->value = ft_strdup(leaf->value);
+		}
+		node_delete(leaf);
+		return (FUNC_SUC);
+	}
+	else
+		return (tree_insert_not_node(next, leaf, size));
 }
 
 int	tree_insert(t_tree_head *head, t_tree_node *leaf)
@@ -79,62 +91,12 @@ t_tree_node	*tree_search(t_tree_node *node, t_tree_node **parent, char *key)
 		tmp = ft_strncmp(node->key, key, size + 1);
 		if (tmp == 0)
 			return (node);
-		else
-		{
-			if (flag == TRUE)
-				*parent = node;
-			if (tmp < 0)
-				node = node->left_node;
-			if (tmp > 0)
-				node = node->right_node;
-		}
+		if (flag == TRUE)
+			*parent = node;
+		if (tmp < 0)
+			node = node->left_node;
+		if (tmp > 0)
+			node = node->right_node;
 	}
 	return (NULL);
-}
-
-t_tree_node	*tree_pop(t_tree_node *head, char *key)
-{
-	t_tree_node	*parent;
-	t_tree_node	*target;
-	t_tree_node	*node;
-
-	target = tree_search(head, &parent, key);
-	if (!target || !parent)
-		return (target);
-	if (target->left_node && target->right_node)
-	{
-		node = target->left_node;
-		if (!node->right_node)
-		{
-			exchange_node_key_value(node, target);
-			target->left_node = NULL;
-			return (node);
-		}
-		while (node->right_node->right_node)
-		{
-			node = node->right_node;
-		}
-		exchange_node_key_value(node->right_node, target);
-		target = node->right_node;
-		node->right_node = NULL;
-	}
-	else if (!target->right_node || !target->left_node)
-	{
-		if (target->right_node)
-			node = target->right_node;
-		else
-			node = target->left_node;
-		if (parent->right_node == target)
-			parent->right_node = node;
-		else
-			parent->left_node = node;
-	}
-	else
-	{
-		if (parent->right_node == target)
-			parent->right_node = NULL;
-		else
-			parent->left_node = NULL;
-	}
-	return (target);
 }

@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 13:17:43 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 19:40:16 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static	int	put_env(t_cmd_node *cmd_node, t_minishell *minishell, int index)
 	char	*value;
 
 	key = NULL;
-	value = NULL; //쌍따옴표 추가 후 inner parser 돌려주고, 에러메세지 세팅.
+	value = NULL;
 	minishell->error = set_error_msg(minishell->execute_name,
 			cmd_node->str[0], cmd_node->str[index], "not a valid identifier");
 	if (parse_env(cmd_node->str[index], &key, &value, minishell) == FUNC_FAIL)

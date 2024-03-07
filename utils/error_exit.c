@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:14:59 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 16:37:52 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/06 23:15:46 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@ void	shell_error(t_minishell *minishell, char *command, char *arg)
 	int	status;
 
 	status = errno;
-	//ft_printf("shell_error\n");
-	//ft_printf("minishell : %s\n", minishell->execute_name);
-	//ft_printf("command : %s\n", command);
-	//ft_printf("arg : %s\n", arg);
-	
-	//printf("shell_error\n");
 	if (status == 13)
 		command_permission_error(minishell, command);
 	else if (status == 2)
