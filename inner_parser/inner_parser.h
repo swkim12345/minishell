@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:38:39 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 15:45:39 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 23:19:51 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ t_str_node	*dequeue(t_str_list *str_list);
 t_str_node	*pop(t_str_list *list);
 char		**list_to_char_arr(t_str_list *str_list);
 void		add_string_node(t_str_list *str_list, t_parse_str *parse_str);
+
+/* argument_parser_str_list2.c */
+void		free_str_stack(t_str_list *stack);
+char		*stack_to_str(t_str_list *stack);
+char		*stack_to_str_free(t_str_list *stack);
 
 /* argument_parser_str_node.c */
 t_str_node	*create_node(char *str);
