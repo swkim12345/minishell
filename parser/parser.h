@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 20:42:50 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 22:49:18 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,12 @@ int			syntax_err_message(char *msg, int end, int ret,
 int			finder(char *str, char checker);
 int			bracket_finder(char *str);
 int			skip_space(char *str);
+
+/* lexar_redirect_helper.c */
+int			heredoc_open_fd(t_redirection *red, t_minishell *minishell);
+int			find_next_token_red(char *ptr, int index, t_redirection *red);
+int			lexar_redirect_err(t_ast_node *node, t_minishell *minishell,
+				char *ptr, int index);
 
 /* parser_redirect.c */
 int			traverse_redirection(t_minishell *minishell);
