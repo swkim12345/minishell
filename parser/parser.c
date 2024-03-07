@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 23:14:16 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:34:54 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,25 @@ int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 	return (wstatus);
 }
 
+static void	find_split_node(t_ast_node *node, int new_node_flag,
+			t_ast_node **old_node, t_ast_node **new_node)
+{
+	if (new_node_flag & LEFTNODE)
+	{
+		node->left_node = init_ast_node(CMDNODE);
+		*old_node = node->left_node;
+	}
+	if (new_node_flag & RIGHTNODE)
+	{
+		node->right_node = init_ast_node(CMDNODE);
+		*new_node = node->right_node;
+	}
+	if (new_node_flag & NEXTNODE)
+	{
+		node->next_ast_node = init_ast_node(CMDNODE);
+		*new_node = node->next_ast_node;
+	}
+}
 static int	split_node(int end, int new_start, t_ast_node *node, int new_node_flag)
 {
 	char		*ptr;
@@ -69,22 +88,8 @@ static int	split_node(int end, int new_start, t_ast_node *node, int new_node_fla
 	old_node = node;
 	new_node = NULL;
 	ptr = ft_strdup(node->cmd_node->str[0]);
-	if (new_node_flag & LEFTNODE)
-	{
-		node->left_node = init_ast_node(CMDNODE);
-		old_node = node->left_node;
-	}
-	if (new_node_flag & RIGHTNODE)
-	{
-		node->right_node = init_ast_node(CMDNODE);
-		new_node = node->right_node;
-	}
-	if (new_node_flag & NEXTNODE)
-	{
-		node->next_ast_node = init_ast_node(CMDNODE);
-		new_node = node->next_ast_node;
-	}
 	tmp = ft_substr(ptr, 0, end);
+	find_split_node(node, new_node_flag, &old_node, &new_node);
 	free_2d_str(node->cmd_node->str);
 	node->cmd_node->str = NULL;
 	old_node->cmd_node->str = init_doub_char(&tmp, 1);
