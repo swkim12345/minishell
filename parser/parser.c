@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 17:02:35 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 13:31:49 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 	pid_t		pid;
 	int			wstatus;
 
+	// signal(SIGINT, SIG_DFL);
 	pid = fork();
 	if (pid == 0)
 	{
-		set_signal_dfl();
+		set_heredoc_int_handler();
 		fd = tmp_file->fd;
 		if (fd == -1)
 			shell_error(minishell, "heredoc", 0);
@@ -55,7 +56,10 @@ int	read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file)
 		exit(FUNC_SUC);
 	}
 	else
+	{
+		signal(SIGINT, SIG_IGN);
 		wait(&wstatus);
+	}
 	return (wstatus);
 }
 

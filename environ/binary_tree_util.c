@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   binary_tree_util.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 15:52:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 13:25:47 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 12:32:24 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ char	*key_value_to_str(t_tree_node *node, int quote_flag)
 	return (ret);
 }
 
-char 	*env_parse_value(char *str, t_minishell *minishell)
+char	*env_parse_value(char *str, t_minishell *minishell)
 {
 	t_parse_str	parse_str;
 	t_str_list	str_list;

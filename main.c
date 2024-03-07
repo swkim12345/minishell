@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 20:27:41 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 12:50:42 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		shell.input_str = readline(shell.print_str);
-		head = parser(shell.input_str, &shell);
 		if (!shell.input_str)
 			exit_handle(&shell, EXIT_SUCCESS);
+		head = parser(shell.input_str, &shell);
 		if (ft_strlen(shell.input_str) > 0 && head)
 		{
 			shell.exit_code = 0;

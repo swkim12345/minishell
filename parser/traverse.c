@@ -339,7 +339,6 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 		else if (head->cmd_node)
 		{
 			// ft_printf("process command\n");
-			signal(SIGINT, SIG_IGN);
 			// printf("%s\n", head->cmd_node->str[0]);
 			if (head->cmd_node->str && head->cmd_node->str[0])
 				minishell->exit_code = process_command(head->cmd_node, minishell);

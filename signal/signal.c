@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 21:29:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 14:28:25 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 13:44:47 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ void	sigint_handler(int signum)
 	rl_redisplay();
 }
 
+void	sig_child_handler(int signum)
+{
+	printf("%d\n", signum);
+}
+
 void	set_signal_handler()
 {
 	struct sigaction	sact;
@@ -33,7 +38,7 @@ void	set_signal_handler()
 	sact.sa_handler = sigint_handler;
 	sact.sa_flags = SA_NOCLDWAIT;
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
+	signal(SIGCHLD, sig_child_handler);
 	sigaction(SIGINT, &sact, NULL);
 }
 
@@ -57,19 +62,28 @@ void	set_sigint_ign()
 	sigaction(SIGINT, &sact, NULL);
 }
 
-void	sigint_heredoc_p_handle(int signum)
+void	sigint_heredoc_handle(int signum)
 {
 	(void)signum;
 
 	printf("\n");
+	exit(1);
 }
 
-void	set_heredoc_parent()
+void	set_heredoc_int_handler()
 {
 	struct sigaction	sact;
 
 	sigemptyset(&sact.sa_mask);
-	sact.sa_handler = sigint_heredoc_p_handle;
+	sact.sa_handler = sigint_heredoc_handle;
 	sact.sa_flags = SA_NOCLDWAIT;
 	sigaction(SIGINT, &sact, NULL);
+}
+
+void	sig_term_handler(int signum)
+{
+	(void)signum;
+
+	printf("Quit: 3\n");
+	exit(131);
 }
