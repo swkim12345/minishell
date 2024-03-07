@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:11:23 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 20:11:51 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 21:40:23 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,30 +18,21 @@ int	err_token_finder(char *ptr, int index)
 	{
 		if (ft_isspace(ptr[index]) == TRUE)
 			break ;
-		else if (ptr[index] == '\"' || ptr[index] == '\'')
-			return (index);
-		else if (ptr[index] == '(')
-			return (index);
-		else if (ptr[index] == '&')
+		else if (ptr[index] == '\"' || ptr[index] == '\'' || ptr[index] == '(')
+			return (++index);
+		else if (ptr[index] == '&' || ptr[index] == '|')
 		{
-			if (ptr[index + 1] == '&')
-				return (index + 1);
+			if (ptr[index] == ptr[index + 1])
+				return (++index + 1);
 			else
-				return (index);
-		}
-		else if (ptr[index] == '|')
-		{
-			if (ptr[index + 1] == '|')
-				return (index + 1);
-			else
-				return (index);
+				return (++index);
 		}
 		else if (ptr[index] == '<' || ptr[index] == '>')
 		{
 			if (ptr[index + 1] == ptr[index])
-				return (index + 1);
+				return (++index + 1);
 			else
-				return (index);
+				return (++index);
 		}
 		index++;
 	}

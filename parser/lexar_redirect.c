@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:16:35 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 20:46:51 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 21:40:11 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 	{
 		node->err_flag = TRUE;
 		tmp = err_token_finder(ptr, index);
-		return (syntax_err_message(&ptr[index], tmp - index + 1,
+		return (syntax_err_message(&ptr[index], tmp - index,
 				-2, minishell));
 	}
 	while (ptr[index] != '\0')
@@ -123,7 +123,7 @@ int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 		node->err_flag = TRUE;
 		index += skip_space(&ptr[index]);
 		tmp = err_token_finder(ptr, index);
-		return (syntax_err_message(&ptr[index], tmp + 1, -2, minishell));
+		return (syntax_err_message(&ptr[index], tmp, -2, minishell));
 	}
 	if (red->flag == DB_LT_SIGN)
 	{
