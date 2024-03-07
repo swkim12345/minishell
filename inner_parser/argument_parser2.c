@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argument_parser2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 21:59:42 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 22:19:15 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:58:22 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	parse_asterisk(t_str_list *str_list, t_parse_str *parse_str)
 	cur_node = dequeue(&dir_file_list);
 	while (cur_node)
 	{
-		if (is_match(cur_node->str, pattern) == TRUE)
+		if (is_pattern_match(cur_node->str, pattern) == TRUE)
 		{
 			found_flag = 1;
 			enqueue(str_list, cur_node);

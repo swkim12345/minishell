@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inner_parser.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:38:39 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 22:08:15 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:59:03 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ t_str_node	*pop(t_str_list *list);
 void	free_str_node(t_str_node *str_node);
 
 /* argument_parser_utils.c */
+void	get_cwd_files(t_str_list *str_list);
+int		contains_assignment(char *str);
+
 void	free_parse_str(t_parse_str *parse_str);
 void	init_parse_str(t_parse_str *parse_str);
 void	append_char(t_parse_str *parse_str, char c);
