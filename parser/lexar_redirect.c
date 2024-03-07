@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:16:35 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 20:18:59 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 20:46:51 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)
 			continue ;
 		}
 		if (ft_isspace(ptr[index]) == TRUE || ptr[index] == '<'
-				|| ptr[index] == '>')
+			|| ptr[index] == '>')
 			break ;
 		index++;
 	}

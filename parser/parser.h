@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 20:19:09 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 20:42:50 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ int			read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file);
 
 /* parser_split.c */
 int			split_node(int end, int new_start, t_ast_node *node, int new_node_flag);
+int			split_recurv_parser(t_ast_node *head, int str_end,
+					int dup_str_start, t_minishell *minishell);
 
 /* parser_recurv.c */
 int			recurv_parser(t_ast_node *head, t_minishell *minishell);

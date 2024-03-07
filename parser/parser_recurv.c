@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:42:23 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 19:48:09 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 20:42:26 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	split_setflag_parser(t_ast_node *head, int str_end,
 	return (FUNC_SUC);
 }
 
-static int	split_recurv_parser(t_ast_node *head, int str_end,
+int	split_recurv_parser(t_ast_node *head, int str_end,
 			int dup_str_start, t_minishell *minishell)
 {
 	if (split_setflag_parser(head, str_end,
