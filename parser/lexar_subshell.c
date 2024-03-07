@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:17:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 22:22:50 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 22:56:45 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	subshell_parser_bracket(t_ast_node *head, int index,
 	return (index);
 }
 
-int	subshell_recurv_parser(t_ast_node *head, int index,
+int	subshell_lexar(t_ast_node *head, int index,
 		int flag, t_minishell *minishell)
 {
 	char	*ptr;
