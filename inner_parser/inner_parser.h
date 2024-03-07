@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:38:39 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 22:08:15 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 12:27:27 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,24 @@ typedef struct s_inner_parser
 	int	match;
 }	t_inner_parser;
 
+/* argument_parser_asterisk.c */
+int			is_pattern_match(char *file_name, char *pattern);
+
+/* argument_parser_env_var.c */
+void		parse_env_var(t_str_list *str_list, t_parse_str *parse_str,
+				char **str, t_minishell *minishell);
+
+/* argument_parser_str_list.c */
+void		enqueue(t_str_list *str_list, t_str_node *str_node);
+t_str_node	*dequeue(t_str_list *str_list);
+t_str_node	*pop(t_str_list *list);
+char		**list_to_char_arr(t_str_list *str_list);
+void		add_string_node(t_str_list *str_list, t_parse_str *parse_str);
+
+/* argument_parser_str_node.c */
+t_str_node	*create_node(char *str);
+void		free_str_node(t_str_node *str_node);
+
 /* argument_parser.c */
 void	parse_single_char(t_str_list *str_list, t_parse_str *parse_str, char **str,
 		t_minishell *minishell);
@@ -60,14 +78,6 @@ void	parse_single_word(char **str, t_str_list *str_list,
 		t_minishell *minishell);
 t_str_list	*string_to_str_list(char *str, t_minishell *minishell);
 
-/* argument_parser_str_list.c */
-void	enqueue(t_str_list *str_list, t_str_node *str_node);
-t_str_node	*dequeue(t_str_list *str_list);
-void	add_string_node(t_str_list *str_list, t_parse_str *parse_str);
-char	**list_to_char_arr(t_str_list *str_list);
-t_str_node	*create_node(char *str);
-t_str_node	*pop(t_str_list *list);
-void	free_str_node(t_str_node *str_node);
 
 /* argument_parser_utils.c */
 void	free_parse_str(t_parse_str *parse_str);
