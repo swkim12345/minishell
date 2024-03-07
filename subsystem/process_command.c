@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 13:20:50 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:02:41 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 	signal(SIGINT, SIG_DFL);
 	if (pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL); //fix ctrl-\ action
 		envp = ft_charenv(minishell->export, FALSE);
 		// printf("here----------------------------\n");
 		// int i = 0;
@@ -128,6 +129,20 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 		// set_signal_handler();
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
+		//ft_printf("status: %d", status);
+		//ft_printf("termsig : %d\n", WTERMSIG(status));
+		if (WTERMSIG(status) == 2)
+		{
+			minishell->exit_code = 130;
+			ft_printf("\n");
+		}
+		else if (WTERMSIG(status) == 3)
+		{
+			minishell->exit_code = 131;
+			ft_printf("QUIT : 3\n");
+		}
+		else
+			minishell->exit_code = WEXITSTATUS(status);
 		set_signal_handler();
 	}
 	return (WEXITSTATUS(status));
