@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 23:43:28 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:23:58 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			if (isatty(STDIN_FILENO))
 			write(2, "exit\n", 6);
-			exit (1);
+			exit (shell.exit_code);
 		}
 		// shell.input_str = readline(shell.print_str);
 		// if (!shell.input_str)
