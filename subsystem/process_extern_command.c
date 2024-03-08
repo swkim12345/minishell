@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_extern_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:34:20 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 16:46:37 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 12:52:14 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,8 @@ static int	process_cmd_parent(pid_t pid, t_minishell *minishell)
 int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 {
 	pid_t		pid;
-	int			status;
 	char		**envp;
 
-	status = 0;
 	pid = fork();
 	if (pid == 0)
 	{
