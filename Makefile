@@ -6,11 +6,11 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/08 19:56:04 by minsepar         ###   ########.fr        #
+#    Updated: 2024/03/08 20:13:55 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC =		clang
+CC =		gcc
 
 CFLAGS =	-Wall -Werror -Wextra -fsanitize=address
 
