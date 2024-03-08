@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:34:20 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/08 15:48:23 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 19:53:54 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,8 @@ static int	process_cmd_parent(pid_t pid, t_minishell *minishell)
 int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 {
 	pid_t		pid;
-	int			status;
 	char		**envp;
 
-	status = 0;
 	pid = fork();
 	if (pid == 0)
 	{
