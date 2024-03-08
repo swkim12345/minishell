@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/08 18:48:32 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 21:03:50 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	ft_exit(t_cmd_node *cmd_node, t_minishell *minishell)
 		err = set_error_msg(minishell->execute_name, cmd_node->str[0],
 				NULL, "too many arguments");
 		print_error_msg(err, 1, 0);
-		// free_t_minishell(minishell);
+		free_error_msg(err);
 		return (FUNC_FAIL);
 	}
 	free_t_minishell(minishell);
