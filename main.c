@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 19:25:38 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 23:43:28 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,16 @@ int	main(int argc, char **argv, char **envp)
 	init_shell(&shell, envp, argv, argc);
 	while (1)
 	{
-		shell.input_str = readline(shell.print_str);
+		shell.input_str = readline("minishell $");
 		if (!shell.input_str)
-			exit_handle(&shell, EXIT_SUCCESS);
+		{
+			if (isatty(STDIN_FILENO))
+			write(2, "exit\n", 6);
+			exit (1);
+		}
+		// shell.input_str = readline(shell.print_str);
+		// if (!shell.input_str)
+		// 	exit_handle(&shell, EXIT_SUCCESS);
 		head = parser(shell.input_str, &shell);
 		if (ft_strlen(shell.input_str) > 0 && head)
 		{
