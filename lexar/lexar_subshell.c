@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexar_subshell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:17:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 22:56:45 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:02:37 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "lexar.h"
 
 static int	subshell_parser_bracket(t_ast_node *head, int index,
 		int flag, t_minishell *minishell)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 20:18:42 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:14:47 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@
 
 # include "libft/ft_printf.h"
 # include "parser/parser.h"
+# include "lexar/lexar.h"
 # include "builtin/builtin.h"
 # include "subsystem/subsystem.h"
 # include "inner_parser/inner_parser.h"

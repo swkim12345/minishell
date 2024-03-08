@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/08 13:00:22 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:06:16 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,6 @@ int			finder(char *str, char checker);
 int			bracket_finder(char *str);
 int			skip_space(char *str);
 
-/* lexar_redirect_helper.c */
-int			heredoc_open_fd(t_redirection *red, t_minishell *minishell);
-int			find_next_token_red(char *ptr, int index, t_redirection *red);
-int			lexar_redirect_err(t_ast_node *node, t_minishell *minishell,
-				char *ptr, int index);
 
 /* parser_redirect.c */
 int			traverse_redirection(t_minishell *minishell);
@@ -122,7 +117,9 @@ int			split_recurv_parser(t_ast_node *head, int str_end,
 int			recurv_parser(t_ast_node *head, t_minishell *minishell);
 
 /* parser.c */
+int			read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file);
 t_ast_node	*parser(char *str, t_minishell *minishell);
+int			recurv_parser(t_ast_node *head, t_minishell *minishell);
 
 
 /* set_mem.c */
@@ -131,25 +128,6 @@ void		free_cmd_node(t_cmd_node **node);
 void		free_ast_tree(t_ast_node *head);
 void		free_redirection_node(t_redirection *node);
 
-/* lexar_err.c */
-int			err_token_finder(char *ptr, int index);
-
-/* lexar_redirection.c */
-int			lexar_redirect(t_ast_node *node, t_minishell *minishell, int index);
-
-/* lexar_subshell.c */
-int			subshell_lexar(t_ast_node *head, int index,
-				int flag, t_minishell *minishell);
-
-/* lexar.c */
-char		*eof_parser(char *ptr);
-int			lexar(t_ast_node *node, t_minishell *minishell);
-
-/* parser.c */
-int			read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file);
-t_ast_node	*parser(char *str, t_minishell *minishell);
-int			recurv_parser(t_ast_node *head, t_minishell *minishell);
-int			traverse(t_ast_node *head, t_minishell *minishell, int check_pipe);
 
 /* traverse.c */
 int			recur_traverse(t_ast_node *head, t_minishell *minishell);

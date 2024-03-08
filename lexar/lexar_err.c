@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexar_err.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:11:23 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 21:40:23 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:04:27 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "lexar.h"
 
 int	err_token_finder(char *ptr, int index)
 {

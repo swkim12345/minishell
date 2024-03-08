@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexar_eof.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:13:42 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 21:36:07 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:04:29 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "lexar.h"
 
 static int	eof_parser_quote(int index, t_parse_str *parse_str, char *ptr)
 {

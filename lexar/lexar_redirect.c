@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexar_redirect.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:16:35 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 22:49:52 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:04:23 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "lexar.h"
 
 static int	lexar_redirect_next_token(t_ast_node *node,
 			t_minishell *minishell, int index)

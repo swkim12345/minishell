@@ -6,7 +6,7 @@
 #    By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/08 13:02:03 by sunghwki         ###   ########.fr        #
+#    Updated: 2024/03/08 14:14:34 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,9 @@ INNER_SRCS =	inner_parser/argument_parser_str_list.c inner_parser/argument_parse
 
 PARSER_SRCS = 	parser/parser.c parser/set_mem.c parser/util.c parser/parser_redirect.c parser/parser_recurv.c parser/parser_split.c
 
-LEXAR_SRCS =	parser/lexar.c parser/lexar_err.c parser/lexar_eof.c parser/lexar_redirect.c parser/lexar_redirect_helper.c parser/lexar_subshell.c 
+LEXAR_SRCS =	lexar/lexar.c lexar/lexar_err.c lexar/lexar_eof.c lexar/lexar_redirect.c lexar/lexar_redirect_helper.c lexar/lexar_subshell.c 
 
-TRAVERSE_SRCS =	parser/traverse.c 
+TRAVERSE_SRCS =	traverse/pipe_traverse.c traverse/redirection_util.c traverse/redirection.c traverse/traverse.c
 
 SIGNAL_SRCS =	signal/signal.c
 
