@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 20:50:45 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/02/27 21:38:36 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:53:25 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int	ft_pwd(t_minishell *minishell)
 {
-	printf("%s\n", minishell->cwd);
+	ft_printf("%s\n", minishell->cwd);
 	return (FUNC_SUC);
 }
