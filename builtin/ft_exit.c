@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/08 21:05:16 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 21:07:48 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static int	exit_arg_check(t_cmd_node *cmd_node, t_minishell *minishell)
 	}
 	if (ft_atol(cmd_node->str[1], &ret) == NOTDEFINED)
 		exit(print_error_msg(err, 255, 0));
+	free_error(err);
 	return (ret);
 }
 
