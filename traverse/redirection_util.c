@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.h                                           :+:      :+:    :+:   */
+/*   redirection_util.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 23:51:56 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 17:35:29 by minsepar         ###   ########.fr       */
+/*   Created: 2024/03/07 20:15:18 by minsepar          #+#    #+#             */
+/*   Updated: 2024/03/07 20:33:43 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNAL_H
-# define SIGNAL_H
+#include "../main.h"
 
-# include "../main.h"
+void	reset_stdin_out(t_minishell *minishell)
+{
+	dup2(minishell->stdin_fd, 0);
+	dup2(minishell->stdout_fd, 1);
+}
 
-void	set_signal_handler(void);
-void	set_heredoc_int_handler(void);
+int	get_heredoc_fd(t_minishell *minishell, int index)
+{
+	t_tmp_file	*cur_node;
+	int			fd;
 
-#endif
+	cur_node = minishell->tmp_list->head;
+	if (cur_node == NULL)
+		return (-1);
+	while (--index > 0)
+		cur_node = cur_node->next;
+	fd = open(cur_node->tmp, O_RDONLY);
+	return (fd);
+}

@@ -6,7 +6,7 @@
 #    By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/08 12:52:39 by sunghwki         ###   ########.fr        #
+#    Updated: 2024/03/08 13:02:03 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,14 +18,18 @@ NAME =		minishell
 
 SRCS =		main.c main_util.c
 
-BUILTIN_SRCS =	builtin/builtin.c builtin/ft_cd.c builtin/ft_echo.c builtin/ft_env.c builtin/ft_exit.c builtin/ft_export.c builtin/ft_pwd.c builtin/ft_unset.c
+BUILTIN_SRCS =	builtin/builtin.c builtin/ft_cd.c builtin/ft_echo.c builtin/ft_env.c \
+				builtin/ft_exit.c builtin/ft_export.c builtin/ft_pwd.c builtin/ft_unset.c \
+				builtin/ft_cd2.c builtin/ft_cd_parse_dot.c builtin/parse_dot_loop.c \
+				builtin/ft_cd_find_curpath.c builtin/ft_cd3.c
 
 ENVIRON_SRCS =	environ/binary_tree_mem.c environ/binary_tree_util.c environ/binary_tree.c environ/env_to_binary_tree.c \
 				environ/environ.c environ/binary_tree_pop.c
 
 INNER_SRCS =	inner_parser/argument_parser_str_list.c inner_parser/argument_parser_utils.c inner_parser/argument_parser.c \
 				inner_parser/argument_parser2.c inner_parser/argument_parser3.c inner_parser/argument_parser_env_var.c \
-				inner_parser/argument_parser_asterisk.c inner_parser/argument_parser_str_node.c
+				inner_parser/argument_parser_asterisk.c inner_parser/argument_parser_str_node.c \
+				inner_parser/argument_parser_str_list2.c
 
 PARSER_SRCS = 	parser/parser.c parser/set_mem.c parser/util.c parser/parser_redirect.c parser/parser_recurv.c parser/parser_split.c
 
@@ -38,7 +42,7 @@ SIGNAL_SRCS =	signal/signal.c
 SUBSYSTEM_SRCS =	subsystem/process_command.c subsystem/process_extern_command.c subsystem/process_extern_command2.c
 
 UTIL_SRCS =		utils/common_util.c utils/error_exit.c utils/error_msg.c utils/cd_error_msg.c utils/error_exit2.c \
-				utils/tmp_list.c
+				utils/tmp_list.c utils/error_redirection.c
 
 SRCS_OBJS = $(SRCS:.c=.o)
 
@@ -76,7 +80,7 @@ $(NAME): $(LIBFT)
 	$(CC) -g -fsanitize=address -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include $(CFLAGS) $(SRCS) $(PARSER_SRCS) $(LEXAR_SRCS) $(TRAVERSE_SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
 
 clean:
-	rm -rf $(SRCS_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(PARSER_OBJS) $(LEXAR_OBJS) $(TRAVERSE_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
+	rm -rf $(SRCS_OBJS) $(TRAVERSE_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(PARSER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
 	make -C ./libft clean
 
 fclean:
