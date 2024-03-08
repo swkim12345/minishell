@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/08 20:13:06 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 21:31:14 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			if (isatty(STDIN_FILENO))
 				write(2, "exit\n", 6);
-			exit (shell.exit_code);
+			exit(shell.exit_code);
 		}
 		head = parser(shell.input_str, &shell);
 		if (ft_strlen(shell.input_str) > 0 && head)

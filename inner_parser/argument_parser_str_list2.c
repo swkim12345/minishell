@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 23:09:40 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/08 20:53:47 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 21:36:25 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*stack_to_str(t_str_list *stack)
 			append_char(&parse_str, cur_node->str[i]);
 		cur_node = cur_node->next;
 	}
-	// free(return_str);
 	return_str = ft_substr(parse_str.str, 0, parse_str.cursor);
 	free(parse_str.str);
 	return (return_str);

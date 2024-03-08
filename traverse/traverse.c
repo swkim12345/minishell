@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/08 20:36:38 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 21:34:57 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,20 @@ int	pipe_traverse(t_ast_node *head, t_minishell *minishell)
 	return (minishell->exit_code);
 }
 
+void	traverse_main_shell(t_ast_node *head, t_minishell *minishell)
+{
+	if (head->flag & BRACKET_FLAG)
+		minishell->exit_code = subshell_traverse(head, minishell);
+	else if (head->cmd_node)
+	{
+		if (head->cmd_node->str && head->cmd_node->str[0])
+			minishell->exit_code
+				= process_command(head->cmd_node, minishell);
+	}
+	else if (!head->cmd_node)
+		minishell->exit_code = recur_traverse(head, minishell);
+}
+
 int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 {
 	int	stop_flag;
@@ -89,18 +103,7 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 		stop_flag = process_redirection(head, minishell);
 	minishell->flag &= ~NOT_CHECK_RED;
 	if (stop_flag == FALSE)
-	{
-		if (head->flag & BRACKET_FLAG)
-			minishell->exit_code = subshell_traverse(head, minishell);
-		else if (head->cmd_node)
-		{
-			if (head->cmd_node->str && head->cmd_node->str[0])
-				minishell->exit_code
-					= process_command(head->cmd_node, minishell);
-		}
-		else if (!head->cmd_node)
-			minishell->exit_code = recur_traverse(head, minishell);
-	}
+		traverse_main_shell(head, minishell);
 	reset_stdin_out(minishell);
 	return (minishell->exit_code);
 }

@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 20:35:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 21:36:11 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_minishell		t_minishell;
 typedef struct s_redirection	t_redirection;
 typedef struct s_tmp_file		t_tmp_file;
 
-typedef struct	s_redirection
+typedef struct s_redirection
 {
 	int							index;
 	int							flag;
@@ -90,7 +90,6 @@ typedef struct s_pipe_traverse
 	pid_t		first_pid;
 	t_pipe_io	*pipe_list;
 }	t_pipe_traverse;
-
 
 /* util.c */
 void		redirect_node_push(t_ast_node *node, t_redirection *red);
