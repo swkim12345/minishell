@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 21:21:24 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 23:39:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 20:52:44 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static void	init_t_cd(t_cd *info, t_cmd_node *cmd_node, t_minishell *minishell)
 	info->home_dir = ft_getenv(minishell->env, "HOME");
 	info->cdpath = ft_getenv(minishell->env, "CDPATH");
 	info->cd_flag = 0;
+	minishell->exit_code = 0;
 	cd_check_cmd_str(cmd_node, info);
 	info->directory = cmd_node->str[info->directory_index];
 	if (info->directory)
