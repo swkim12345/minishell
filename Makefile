@@ -6,7 +6,7 @@
 #    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/09 13:19:37 by sunghwki         ###   ########.fr        #
+#    Updated: 2024/03/09 14:12:56 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ TRAVERSE_OBJS = $(TRAVERSE_SRCS:.c=.o)
 
 LEXAR_OBJS = $(LEXAR_SRCS:.c=.o)
 
-SIGNAL_OBJS = $(SINGAL_SRCS:.c=.o)
+SIGNAL_OBJS = $(SIGNAL_SRCS:.c=.o)
 
 SUBSYSTEM_OBJS = $(SUBSYSTEM_SRCS:.c=.o)
 
@@ -74,14 +74,15 @@ all: $(NAME)
 $(LIBFT):
 	make -C ./libft all bonus
 
-$(NAME): $(LIBFT) 
-	$(CC) -g $(CFLAGS) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(TRAVERSE_SRCS) $(LEXAR_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
+$(NAME): $(LIBFT) $(SRCS_OBJS) $(PARSER_OBJS) $(BUILTIN_OBJS) $(TRAVERSE_OBJS) $(LEXAR_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
+	$(CC) $(CFLAGS) $^ -o $(NAME) -lreadline
 
 clean:
-	rm -rf $(SRCS_OBJS) $(TRAVERSE_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(PARSER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
+	rm -rf $(SRCS_OBJS) $(TRAVERSE_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(LEXAR_OBJS)  $(INNER_OBJS) $(PARSER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
 	make -C ./libft clean
 
 fclean:
+	make -C ./libft fclean
 	make clean
 	rm -rf $(NAME) $(LIBFT)
 
@@ -89,7 +90,4 @@ re:
 	make fclean
 	make all
 
-run: re
-	./minishell
-
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re

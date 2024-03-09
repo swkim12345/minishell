@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/09 13:51:54 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:14:27 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # define NOTDEFINED		-1
 # define INDEX_ERR		-2
-
 
 # define OR				"||"
 # define AND			"&&"
