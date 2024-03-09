@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_extern_command2.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:39:43 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 16:45:44 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 12:51:59 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	process_extern_cmd_no_slash(t_cmd_node *cmd_node,
 {
 	char	*execute_path;
 
-	if (strncmp(cmd_node->cmd_name, "", 1) == 0)
+	if (ft_strncmp(cmd_node->cmd_name, "", 1) == 0)
 		command_not_found_error(minishell, cmd_node->cmd_name);
 	execute_path = find_from_path(cmd_node, minishell);
 	check_file_valid(execute_path, cmd_node, minishell);

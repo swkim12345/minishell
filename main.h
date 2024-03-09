@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/08 18:35:50 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/09 11:42:14 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@
 
 # include "libft/ft_printf.h"
 # include "parser/parser.h"
+# include "lexar/lexar.h"
+# include "traverse/traverse.h"
 # include "builtin/builtin.h"
 # include "subsystem/subsystem.h"
 # include "inner_parser/inner_parser.h"
@@ -122,7 +124,5 @@ void		exit_handle(t_minishell *shell, int status);
 void		free_t_minishell(t_minishell *shell);
 void		set_term(void);
 void		exit_handle(t_minishell *shell, int status);
-
-/* traverse.c */
 
 #endif

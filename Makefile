@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
+#    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/08 20:14:58 by minsepar         ###   ########.fr        #
+#    Updated: 2024/03/09 12:39:44 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,9 +31,11 @@ INNER_SRCS =	inner_parser/argument_parser_str_list.c inner_parser/argument_parse
 				inner_parser/argument_parser_asterisk.c inner_parser/argument_parser_str_node.c \
 				inner_parser/argument_parser_str_list2.c
 
-PARSER_SRCS = 	parser/lexar.c parser/parser.c parser/set_mem.c parser/util.c
-				
-TRAVERSE_SRCS =	traverse/traverse.c traverse/pipe_traverse.c traverse/redirection_util.c traverse/redirection.c
+PARSER_SRCS = 	parser/parser.c parser/set_mem.c parser/util.c parser/parser_redirect.c parser/parser_recurv.c parser/parser_split.c
+
+LEXAR_SRCS =	lexar/lexar.c lexar/lexar_err.c lexar/lexar_eof.c lexar/lexar_redirect.c lexar/lexar_redirect_helper.c lexar/lexar_subshell.c 
+
+TRAVERSE_SRCS =	traverse/pipe_traverse.c traverse/redirection_util.c traverse/redirection.c traverse/traverse.c
 
 SIGNAL_SRCS =	signal/signal.c
 
@@ -54,6 +56,8 @@ PARSER_OBJS = $(PARSER_SRCS:.c=.o)
 
 TRAVERSE_OBJS = $(TRAVERSE_SRCS:.c=.o)
 
+LEXAR_OBJS = $(LEXAR_SRCS:.c=.o)
+
 SIGNAL_OBJS = $(SINGAL_SRCS:.c=.o)
 
 SUBSYSTEM_OBJS = $(SUBSYSTEM_SRCS:.c=.o)
@@ -71,9 +75,9 @@ $(LIBFT):
 	make -C ./libft all bonus
 
 $(NAME): $(LIBFT) 
-#	$(CC) -g $(CFLAGS) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
+	$(CC) -g $(CFLAGS) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(TRAVERSE_SRCS) $(LEXAR_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
 #	$(CC) -g -fsanitize=address $(CFLAGS) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
-	$(CC) -g $(CFLAGS) $(SRCS) $(TRAVERSE_SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
+#	$(CC) -g -fsanitize=address -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include $(CFLAGS) $(SRCS) $(PARSER_SRCS) $(LEXAR_SRCS) $(TRAVERSE_SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
 
 clean:
 	rm -rf $(SRCS_OBJS) $(TRAVERSE_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(PARSER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
@@ -86,11 +90,6 @@ fclean:
 re:
 	make fclean
 	make all
-
-test:
-	make fclean
-	make -C ./libft all bonus
-	$(CC) -g $(CFLAGS) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS) $(LIBFT) -o $(NAME) -lreadline
 
 run: re
 	./minishell

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:23:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/08 15:51:48 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/09 12:18:25 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,16 @@ static	int	put_env(t_cmd_node *cmd_node, t_minishell *minishell, int index)
 int	ft_export(t_cmd_node *cmd_node, t_minishell *minishell)
 {
 	int		index;
+	int		tmp;
 
 	index = 0;
+	tmp = 0;
 	if (!cmd_node || !cmd_node->str || !cmd_node->str[1])
 		return (print_export(minishell));
 	while (cmd_node->str[++index])
 	{
-		put_env(cmd_node, minishell, index);
+		if (put_env(cmd_node, minishell, index) | tmp)
+			tmp = FUNC_FAIL;
 	}
-	return (FUNC_SUC);
+	return (tmp);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/08 21:36:11 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/09 11:45:30 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@
 # define NEXTNODE		4
 # define CMDNODE		8
 
+# define SYN_ERR		258
+
 # include "../main.h"
 
 typedef struct s_cmd_node		t_cmd_node;
@@ -76,20 +78,7 @@ typedef struct s_ast_node
 	int							err_flag;
 }	t_ast_node;
 
-typedef struct s_pipe_io
-{
-	int	pipe_fd[2];
-}	t_pipe_io;
 
-typedef struct s_pipe_traverse
-{
-	int			ret;
-	int			num_pipe;
-	int			current_pipe;
-	pid_t		pid;
-	pid_t		first_pid;
-	t_pipe_io	*pipe_list;
-}	t_pipe_traverse;
 
 /* util.c */
 void		redirect_node_push(t_ast_node *node, t_redirection *red);
@@ -102,49 +91,31 @@ int			finder(char *str, char checker);
 int			bracket_finder(char *str);
 int			skip_space(char *str);
 
+
+/* parser_redirect.c */
+int			traverse_redirection(t_minishell *minishell);
+int			read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file);
+
+/* parser_split.c */
+int			split_node(int end, int new_start, t_ast_node *node, int new_node_flag);
+int			split_recurv_parser(t_ast_node *head, int str_end,
+					int dup_str_start, t_minishell *minishell);
+
+/* parser_recurv.c */
+int			recurv_parser(t_ast_node *head, t_minishell *minishell);
+
+/* parser.c */
+int			read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file);
+t_ast_node	*parser(char *str, t_minishell *minishell);
+int			recurv_parser(t_ast_node *head, t_minishell *minishell);
+
+
 /* set_mem.c */
 char		**init_doub_char(char **input, int size);
 void		free_cmd_node(t_cmd_node **node);
 void		free_ast_tree(t_ast_node *head);
 void		free_redirection_node(t_redirection *node);
 
-/* lexar.c */
-char		*eof_parser(char *ptr);
-int			lexar(t_ast_node *node, t_minishell *minishell);
 
-/* parser.c */
-int			read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file);
-t_ast_node	*parser(char *str, t_minishell *minishell);
-int			recurv_parser(t_ast_node *head, t_minishell *minishell);
-int			traverse(t_ast_node *head, t_minishell *minishell, int check_pipe);
-
-/* traverse.c */
-int			recur_traverse(t_ast_node *head, t_minishell *minishell);
-int			subshell_traverse(t_ast_node *head, t_minishell *minishell);
-int			get_num_pipe(t_ast_node *head);
-int			pipe_traverse(t_ast_node *head, t_minishell *minishell);
-int			set_read_fd(t_redirection *redirect_node, t_minishell *minishell,
-				t_ast_node *ast_node);
-int			set_write_fd(t_redirection *redirect_node, t_minishell *minishell);
-int			process_redirection(t_ast_node *ast_node, t_minishell *minishell);
-int			traverse(t_ast_node *head, t_minishell *minishell, int check_pipe);
-
-/* pipe_traverse.c */
-int			wait_processes(pid_t last_pid, pid_t first_pid);
-t_pipe_io	*init_pipe_list(int num_pipe);
-void		set_pipe_redirection(t_pipe_traverse *info, t_minishell *minishell);
-void		process_pipe_child(t_minishell *minishell, t_pipe_traverse *info,
-				t_ast_node *head);
-int			get_num_pipe(t_ast_node *head);
-
-/* redirection.c */
-int			set_read_fd(t_redirection *redirect_node, t_minishell *minishell,
-				t_ast_node *ast_node);
-int			set_write_fd(t_redirection *redirect_node, t_minishell *minishell);
-int			process_redirection(t_ast_node *ast_node, t_minishell *minishell);
-
-/* redirection_util.c */
-void		reset_stdin_out(t_minishell *minishell);
-int			get_heredoc_fd(t_minishell *minishell, int index);
 
 #endif
