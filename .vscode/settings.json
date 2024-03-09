@@ -39,6 +39,7 @@
 		"errno.h": "c",
 		"signal.h": "c",
 		"set": "c",
-		"unordered_set": "c"
+		"unordered_set": "c",
+		"ratio": "c"
 	}
 }

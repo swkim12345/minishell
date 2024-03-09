@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/08 21:09:23 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/09 12:24:02 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
+
+static int	ft_atoi_sign(const char **str)
+{
+	int	sign;
+
+	sign = 1;
+	if (**str == '+' || **str == '-')
+	{
+		if (**str == '-')
+			sign *= -1;
+		(*str)++;
+	}
+	return (sign);
+}
 
 static int	ft_atol(const char *str, long *ret)
 {
@@ -18,15 +32,9 @@ static int	ft_atol(const char *str, long *ret)
 	long long	num;
 	long long	temp_num;
 
-	num = 0;
-	sign = 1;
 	str += skip_space((char *)str);
-	if (*str == '+' || *str == '-')
-	{
-		if (*str == '-')
-			sign *= -1;
-		str++;
-	}
+	sign = ft_atoi_sign(&str);
+	num = 0;
 	while (*str && *str >= '0' && *str <= '9')
 	{
 		temp_num = num;
