@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar_redirect_helper.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:47:24 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/08 14:04:25 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 12:01:54 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,21 @@ int	lexar_redirect_err(t_ast_node *node, t_minishell *minishell,
 	{
 		node->err_flag = TRUE;
 		if (node->flag & OR_FLAG)
-			return (syntax_err_message("||", NOTDEFINED, -2, minishell));
-		if (node->flag & AND_FLAG)
-			return (syntax_err_message("&&", NOTDEFINED, -2, minishell));
-		if (node->next_ast_node)
-			return (syntax_err_message("|", NOTDEFINED, -2, minishell));
-		return (syntax_err_message("newline", NOTDEFINED, -2, minishell));
+			syntax_err_message("||", NOTDEFINED, SYN_ERR, minishell);
+		else if (node->flag & AND_FLAG)
+			syntax_err_message("&&", NOTDEFINED, SYN_ERR, minishell);
+		else if (node->next_ast_node)
+			syntax_err_message("|", NOTDEFINED, SYN_ERR, minishell);
+		else
+			syntax_err_message("newline", NOTDEFINED, SYN_ERR, minishell);
+		return (-2);
 	}
 	if (ptr[index] == '<' || ptr[index] == '>')
 	{
 		node->err_flag = TRUE;
 		tmp = err_token_finder(ptr, index);
-		return (syntax_err_message(&ptr[index], tmp - index,
-				-2, minishell));
+		syntax_err_message(&ptr[index], tmp - index, SYN_ERR, minishell);
+		return (-2);
 	}
 	return (NOTDEFINED);
 }

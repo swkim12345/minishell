@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar_redirect.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:16:35 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/08 14:04:23 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 11:59:22 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static int	lexar_redirect_next_token(t_ast_node *node,
 			if (tmp == NOTDEFINED)
 			{
 				node->err_flag = TRUE;
-				return (syntax_err_message(&ptr[index],
-						NOTDEFINED, -2, minishell));
+				syntax_err_message(&ptr[index], NOTDEFINED, FUNC_FAIL, minishell);
+				return (-2);
 			}
 			index += tmp + 2;
 			continue ;
@@ -68,7 +68,8 @@ static int	lexar_redirect_err_token(t_ast_node *node, t_minishell *minishell,
 	node->err_flag = TRUE;
 	index += skip_space(&ptr[index]);
 	tmp = err_token_finder(ptr, index);
-	return (syntax_err_message(&ptr[index], tmp, -2, minishell));
+	syntax_err_message(&ptr[index], tmp, FUNC_FAIL, minishell);
+	return (-2);
 }
 
 int	lexar_redirect(t_ast_node *node, t_minishell *minishell, int index)

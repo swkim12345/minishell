@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:42:23 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 20:42:26 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 11:58:25 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ static int	pipe_recurv_parser(t_ast_node *head, int str_end,
 	if (str_end <= 0)
 	{
 		head->err_flag = TRUE;
-		return (syntax_err_message(ptr, dup_str_start, FUNC_FAIL, minishell));
+		syntax_err_message(ptr, dup_str_start, SYN_ERR, minishell);
+		return (FUNC_FAIL);
 	}
 	if (split_node(str_end, dup_str_start, head, NEXTNODE) == FUNC_FAIL)
 	{
 		head->err_flag = TRUE;
-		return (syntax_err_message("|", NOTDEFINED, FUNC_FAIL, minishell));
+		syntax_err_message("|", NOTDEFINED, SYN_ERR, minishell);
+		return (FUNC_FAIL);
 	}
 	if (recurv_parser(head->next_ast_node, minishell) == FUNC_FAIL)
 		return (FUNC_FAIL);
@@ -44,8 +46,8 @@ static int	split_setflag_parser(t_ast_node *head, int str_end,
 	if (str_end <= 0)
 	{
 		head->err_flag = TRUE;
-		return (syntax_err_message(ptr, dup_str_start,
-				FUNC_FAIL, minishell));
+		syntax_err_message(ptr, dup_str_start, SYN_ERR, minishell);
+		return (FUNC_FAIL);
 	}
 	if (ft_strncmp(&ptr[str_end + 1], "&&", ft_strlen("&&")) == 0)
 		head->flag |= AND_FLAG;
@@ -67,9 +69,15 @@ int	split_recurv_parser(t_ast_node *head, int str_end,
 	{
 		head->err_flag = TRUE;
 		if (head->flag & AND_FLAG)
-			return (syntax_err_message("&&", NOTDEFINED, FUNC_FAIL, minishell));
+		{
+			syntax_err_message("&&", NOTDEFINED, SYN_ERR, minishell);
+			return (FUNC_FAIL);
+		}
 		if (head->flag & OR_FLAG)
-			return (syntax_err_message("||", NOTDEFINED, FUNC_FAIL, minishell));
+		{
+			syntax_err_message("||", NOTDEFINED, SYN_ERR, minishell);
+			return (FUNC_FAIL);
+		}
 	}
 	free_cmd_node(&(head->cmd_node));
 	if (recurv_parser(head->left_node, minishell) == FUNC_FAIL)
@@ -91,7 +99,8 @@ static int	recurv_parser_sub(t_ast_node *head, t_minishell *minishell,
 		if (tmp == NOTDEFINED)
 		{
 			head->err_flag = TRUE;
-			return (syntax_err_message(&ptr[index], index + 1, -2, minishell));
+			syntax_err_message(&ptr[index], index + 1, 1, minishell);
+			return (-2);
 		}
 		index += tmp;
 	}
@@ -101,7 +110,8 @@ static int	recurv_parser_sub(t_ast_node *head, t_minishell *minishell,
 		if (tmp == NOTDEFINED)
 		{
 			head->err_flag = TRUE;
-			return (syntax_err_message(ptr, index + 1, -2, minishell));
+			syntax_err_message(ptr, index + 1, 1, minishell);
+			return (-2);
 		}
 		index += tmp + 1;
 	}

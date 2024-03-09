@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/08 14:01:34 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 11:51:42 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ static int	lexar_token_check(t_ast_node *node, t_minishell *minishell,
 	{
 		tmp = finder(&ptr[index + 1], ptr[index]);
 		if (tmp == NOTDEFINED)
-			return (syntax_err_message(ptr, NOTDEFINED, NOTDEFINED, minishell));
+		{
+			node->err_flag = TRUE;
+			syntax_err_message(ptr, NOTDEFINED, FUNC_FAIL, minishell);
+			return (NOTDEFINED);
+		}
 		index += tmp + 1;
 	}
 	else if (ptr[index] == '<' || ptr[index] == '>')

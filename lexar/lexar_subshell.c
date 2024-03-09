@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar_subshell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:17:12 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/08 14:02:37 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 11:49:34 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@ static int	subshell_parser_bracket(t_ast_node *head, int index,
 	if (tmp + index == NOTDEFINED || tmp == index + 1)
 	{
 		head->err_flag = TRUE;
-		return (syntax_err_message(&ptr[index], tmp, NOTDEFINED, minishell));
+		syntax_err_message(&ptr[index], tmp, SYN_ERR, minishell);
+		return (NOTDEFINED);
 	}
 	if (flag & STRING_FLAG)
 	{
 		head->err_flag = TRUE;
-		return (syntax_err_message(&ptr[index + 1], tmp - 1,
-				NOTDEFINED, minishell));
+		syntax_err_message(&ptr[index + 1], tmp - 1,
+			SYN_ERR, minishell);
+		return (NOTDEFINED);
 	}
 	ptr[tmp + index] = ' ';
 	ptr[index] = ' ';
@@ -59,8 +61,9 @@ int	subshell_lexar(t_ast_node *head, int index,
 		{
 			head->err_flag = TRUE;
 			tmp = err_token_finder(ptr, index);
-			return (syntax_err_message(&ptr[index], tmp - index,
-					FUNC_FAIL, minishell));
+			syntax_err_message(&ptr[index], tmp - index,
+				SYN_ERR, minishell);
+			return (FUNC_FAIL);
 		}
 	}
 	return (index);
