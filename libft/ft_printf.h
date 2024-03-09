@@ -3,27 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 21:50:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 23:25:29 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:32:12 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
+
 # define MINUS_FLAG 1
 # define PLUS_FLAG 2
 # define SPACE_FLAG 4
 # define ZERO_FLAG 8
 # define HASH_FLAG 16
 # define DOT_FLAG 32
+
 # define WIDTH 0
 # define PRECISION 1
 # define PRINT_STR_LEN 2
+
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
+
 # include "libft/libft.h"
 # include "libft/get_next_line_bonus.h"
 

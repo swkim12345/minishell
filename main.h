@@ -6,12 +6,13 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/09 11:42:14 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:31:27 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAIN_H
 # define MAIN_H
+
 # define EXIT_SUCCESS	0
 # define TRUE			1
 # define FALSE			0
@@ -35,6 +36,9 @@
 # define BOLD_WHITE		"\033[1;37m"
 # define RESET			"\033[0m"
 
+# define NOT_CHECK_RED 1
+# define PIPE_TRAVERSE 2
+
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -43,11 +47,9 @@
 # include <fcntl.h>
 # include <signal.h>
 # include <termios.h>
-# include <sys/ioctl.h>
 
 # include <sys/stat.h>
 # include <sys/wait.h>
-# include <sys/stat.h>
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -62,9 +64,6 @@
 # include "environ/environ.h"
 # include "utils/utils.h"
 # include "signal/signal.h"
-
-# define NOT_CHECK_RED 1
-# define PIPE_TRAVERSE 2
 
 typedef struct s_minishell		t_minishell;
 typedef struct s_str_list		t_str_list;
