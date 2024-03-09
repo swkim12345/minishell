@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:20:13 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 20:23:46 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/09 12:29:29 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	wait_processes(pid_t last_pid, pid_t first_pid)
 {
 	int	wstatus;
 
+	signal(SIGINT, SIG_IGN);
 	waitpid(last_pid, &wstatus, 0);
 	(void) first_pid;
 	while (1)

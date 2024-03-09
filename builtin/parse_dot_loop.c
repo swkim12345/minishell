@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:56:51 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 22:59:44 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:00:55 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,10 @@ static int	parse_dots_check_prefix_dir(t_cmd_node *cmd_node, t_cd *info,
 	return (0);
 }
 
-static void	parse_dots_dbl_dot(t_cmd_node *cmd_node, t_cd *info,
-			t_str_list *stack, t_minishell *minishell)
+static void	parse_dots_dbl_dot(t_cd *info, t_str_list *stack)
 {
 	t_str_node	*cur;
 
-	parse_dots_check_prefix_dir(cmd_node, info, stack, minishell);
 	info->i += 2;
 	info->start += 3;
 	if (stack->size > 1)
@@ -77,7 +75,7 @@ int	parse_dot_loop(t_cmd_node *cmd_node, t_cd *info,
 		{
 			if (parse_dots_check_prefix_dir(cmd_node, info, stack, minishell))
 				return (1);
-			parse_dots_dbl_dot(cmd_node, info, stack, minishell);
+			parse_dots_dbl_dot(info, stack);
 		}
 		else if (info->cur_path[info->i] == '/'
 			&& (info->i == 0 || info->i - info->start != 0))

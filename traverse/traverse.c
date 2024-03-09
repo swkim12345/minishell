@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/09 12:00:49 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/09 12:35:48 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe)
 	if (check_pipe && head->next_ast_node)
 	{
 		minishell->exit_code = pipe_traverse(head, minishell);
+		set_signal_handler();
 		reset_stdin_out(minishell);
 		return (minishell->exit_code);
 	}
