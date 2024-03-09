@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:28:05 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/08 20:10:32 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/09 12:12:38 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	exit_handle(t_minishell *shell, int status)
 {
 	(void) shell;
 	free_t_minishell(shell);
-	printf("exit\n");
+	ft_printf("exit\n");
 	exit(status);
 }
 

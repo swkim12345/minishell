@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 21:29:22 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 17:35:21 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/09 12:13:00 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	sigint_handler(int signum)
 {
 	(void)signum;
-	printf("\n");
+	ft_printf("\n");
 	rl_replace_line("", 1);
 	rl_on_new_line();
 	rl_redisplay();
@@ -37,7 +37,7 @@ void	set_signal_handler(void)
 void	sigint_heredoc_handle(int signum)
 {
 	(void)signum;
-	printf("\n");
+	ft_printf("\n");
 	exit(1);
 }
 
