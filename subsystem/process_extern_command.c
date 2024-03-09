@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:34:20 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 16:46:37 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 19:53:54 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	process_cmd_parent(pid_t pid, t_minishell *minishell)
 	else if (WTERMSIG(status) == 3)
 	{
 		minishell->exit_code = 131;
-		ft_printf("Quit: 3\n");
+		ft_printf("Quit: 3\n", 1);
 	}
 	else
 		minishell->exit_code = WEXITSTATUS(status);
@@ -90,10 +90,8 @@ static int	process_cmd_parent(pid_t pid, t_minishell *minishell)
 int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 {
 	pid_t		pid;
-	int			status;
 	char		**envp;
 
-	status = 0;
 	pid = fork();
 	if (pid == 0)
 	{

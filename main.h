@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:22:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 20:32:31 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:35:50 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_cmd_node		t_cmd_node;
 typedef struct s_str_node		t_str_node;
 typedef struct s_tmp_file		t_tmp_file;
 typedef struct s_tmp_list		t_tmp_list;
+typedef struct s_redirection	t_redirection;
 typedef struct s_pipe_traverse	t_pipe_traverse;
 
 typedef struct s_tmp_file
@@ -123,6 +124,5 @@ void		set_term(void);
 void		exit_handle(t_minishell *shell, int status);
 
 /* traverse.c */
-t_tmp_file	*get_heredoc_file(t_minishell *minishell, int index);
 
 #endif

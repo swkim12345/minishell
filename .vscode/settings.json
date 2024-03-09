@@ -37,6 +37,8 @@
 		"ft_printf_bonus.h": "c",
 		"__node_handle": "c",
 		"errno.h": "c",
-		"signal.h": "c"
+		"signal.h": "c",
+		"set": "c",
+		"unordered_set": "c"
 	}
 }

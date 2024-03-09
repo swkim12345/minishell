@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:10:28 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 16:59:40 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/07 23:38:03 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 # include "../main.h"
 
-typedef struct s_tmp_file	t_tmp_file;
-typedef struct s_tmp_list	t_tmp_list;
+typedef struct s_tmp_file		t_tmp_file;
+typedef struct s_tmp_list		t_tmp_list;
+typedef struct s_redirection	t_redirection;
 
 typedef struct s_error
 {
@@ -59,5 +60,11 @@ void	free_tmp_list(t_tmp_list *list, t_minishell *minishell,
 			int unlink_flag);
 void	clear_tmp_list(t_tmp_list *list, t_minishell *minishell,
 			int unlink_flag);
+
+/* error_redirection.c */
+int		redirection_error(t_minishell *minishell,
+			t_redirection *redirect_node);
+int		ambiguous_redirect_error(t_minishell *minishell,
+			t_redirection *redirect_node, char **file_list);
 
 #endif

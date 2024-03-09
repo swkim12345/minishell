@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/05 14:33:24 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/08 21:36:11 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,37 +44,36 @@
 
 # include "../main.h"
 
-
 typedef struct s_cmd_node		t_cmd_node;
 typedef struct s_ast_node		t_ast_node;
 typedef struct s_minishell		t_minishell;
 typedef struct s_redirection	t_redirection;
 typedef struct s_tmp_file		t_tmp_file;
 
-typedef struct s_redirection 
+typedef struct s_redirection
 {
-	int							index;	//if heredoc:index or not use NOTDEFINED
-	int							flag;	// 0: <, 1: <<, 2: >, 4: >>
-	char						*str;	// file name or here doc delim
+	int							index;
+	int							flag;
+	char						*str;
 	t_redirection				*next;
 }	t_redirection;
 
 typedef struct s_cmd_node
 {
-	char						*cmd_name;	//command name
-	char						**str;		//command arguments
+	char						*cmd_name;
+	char						**str;
 }	t_cmd_node;
 
 typedef struct s_ast_node
 {
 	t_ast_node					*left_node;
 	t_ast_node					*right_node;
-	t_ast_node					*next_ast_node;	//for pipe
+	t_ast_node					*next_ast_node;
 	t_cmd_node					*cmd_node;		
-	t_redirection				*red;	//redirection array
-	int							flag;	//subshell flag
-	int							index;	//redirection index in t_minishell
-	int							err_flag;	//syntax error flag, TRUE -> stop parsing
+	t_redirection				*red;
+	int							flag;
+	int							index;
+	int							err_flag;
 }	t_ast_node;
 
 typedef struct s_pipe_io
@@ -91,7 +90,6 @@ typedef struct s_pipe_traverse
 	pid_t		first_pid;
 	t_pipe_io	*pipe_list;
 }	t_pipe_traverse;
-
 
 /* util.c */
 void		redirect_node_push(t_ast_node *node, t_redirection *red);
@@ -111,29 +109,42 @@ void		free_ast_tree(t_ast_node *head);
 void		free_redirection_node(t_redirection *node);
 
 /* lexar.c */
-char 		*eof_parser(char *ptr);
+char		*eof_parser(char *ptr);
 int			lexar(t_ast_node *node, t_minishell *minishell);
 
 /* parser.c */
-int		read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file);
+int			read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file);
 t_ast_node	*parser(char *str, t_minishell *minishell);
 int			recurv_parser(t_ast_node *head, t_minishell *minishell);
 int			traverse(t_ast_node *head, t_minishell *minishell, int check_pipe);
 
 /* traverse.c */
-int	recur_traverse(t_ast_node *head, t_minishell *minishell); //fork로 실행, wait를 통해 wait, 이후 pipe관련 처리
-int	subshell_traverse(t_ast_node *head, t_minishell *minishell);
-int	get_num_pipe(t_ast_node *head);
-int	wait_processes(pid_t last_pid, pid_t first_pid);
+int			recur_traverse(t_ast_node *head, t_minishell *minishell);
+int			subshell_traverse(t_ast_node *head, t_minishell *minishell);
+int			get_num_pipe(t_ast_node *head);
+int			pipe_traverse(t_ast_node *head, t_minishell *minishell);
+int			set_read_fd(t_redirection *redirect_node, t_minishell *minishell,
+				t_ast_node *ast_node);
+int			set_write_fd(t_redirection *redirect_node, t_minishell *minishell);
+int			process_redirection(t_ast_node *ast_node, t_minishell *minishell);
+int			traverse(t_ast_node *head, t_minishell *minishell, int check_pipe);
+
+/* pipe_traverse.c */
+int			wait_processes(pid_t last_pid, pid_t first_pid);
 t_pipe_io	*init_pipe_list(int num_pipe);
-void	set_pipe_redirection(t_pipe_traverse *info, t_minishell *minishell);
-int	pipe_traverse(t_ast_node *head, t_minishell *minishell);
-int	set_read_fd(t_redirection *redirect_node, t_minishell *minishell
-		, t_ast_node *ast_node);
-int set_write_fd(t_redirection *redirect_node, t_minishell *minishell);
-int	process_redirection(t_ast_node *ast_node, t_minishell *minishell);
-int	traverse(t_ast_node *head, t_minishell *minishell, int check_pipe);
+void		set_pipe_redirection(t_pipe_traverse *info, t_minishell *minishell);
+void		process_pipe_child(t_minishell *minishell, t_pipe_traverse *info,
+				t_ast_node *head);
+int			get_num_pipe(t_ast_node *head);
 
+/* redirection.c */
+int			set_read_fd(t_redirection *redirect_node, t_minishell *minishell,
+				t_ast_node *ast_node);
+int			set_write_fd(t_redirection *redirect_node, t_minishell *minishell);
+int			process_redirection(t_ast_node *ast_node, t_minishell *minishell);
 
+/* redirection_util.c */
+void		reset_stdin_out(t_minishell *minishell);
+int			get_heredoc_fd(t_minishell *minishell, int index);
 
 #endif

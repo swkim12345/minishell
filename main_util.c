@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:28:05 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 20:28:14 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/09 12:12:38 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*color_add_minishell(char *input, char *color)
 	ret = ft_strjoin(tmp, RESET);
 	free(tmp);
 	tmp = ret;
-	ret = ft_strjoin(tmp, " $");
+	ret = ft_strjoin(tmp, "$ ");
 	free(tmp);
 	return (ret);
 }
@@ -67,7 +67,7 @@ void	exit_handle(t_minishell *shell, int status)
 {
 	(void) shell;
 	free_t_minishell(shell);
-	printf("exit\n");
+	ft_printf("exit\n");
 	exit(status);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:44:02 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/06 20:06:51 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/08 21:09:23 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 static int	ft_atol(const char *str, long *ret)
 {
-	int		sign;
-	long	num;
+	int			sign;
+	long long	num;
+	long long	temp_num;
 
 	num = 0;
 	sign = 1;
@@ -28,15 +29,18 @@ static int	ft_atol(const char *str, long *ret)
 	}
 	while (*str && *str >= '0' && *str <= '9')
 	{
+		temp_num = num;
 		num *= 10;
 		num += *str - '0';
+		if (temp_num > num)
+		{
+			if (!str[1] && *str - '0' == 8 && sign == -1)
+				break ;
+			return (NOTDEFINED);
+		}
 		str++;
 	}
 	*ret = num * sign;
-	if (num == 0)
-		return (0);
-	if (num * -1 == num || num % 10 != *(str - 1) - '0')
-		return (NOTDEFINED);
 	return (0);
 }
 
@@ -58,11 +62,12 @@ static int	exit_arg_check(t_cmd_node *cmd_node, t_minishell *minishell)
 	while (cmd_node->str[1][index])
 	{
 		if (!ft_isdigit(cmd_node->str[1][index]))
-			return (print_error_msg(err, 255, 0));
+			exit(print_error_msg(err, 255, 0));
 		index++;
 	}
 	if (ft_atol(cmd_node->str[1], &ret) == NOTDEFINED)
-		return (print_error_msg(err, 255, 0));
+		exit(print_error_msg(err, 255, 0));
+	free_error(err);
 	return (ret);
 }
 
@@ -71,20 +76,19 @@ int	ft_exit(t_cmd_node *cmd_node, t_minishell *minishell)
 	t_error	*err;
 
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
-	minishell->exit_code = 255;
 	if (!cmd_node->str[1])
 	{
 		free_t_minishell(minishell);
-		exit(0);
+		exit(minishell->exit_code);
 	}
+	minishell->exit_code = 255;
 	minishell->exit_code = exit_arg_check(cmd_node, minishell);
 	if (cmd_node->str[2])
 	{
 		err = set_error_msg(minishell->execute_name, cmd_node->str[0],
 				NULL, "too many arguments");
 		print_error_msg(err, 1, 0);
-		free_t_minishell(minishell);
-		exit(minishell->exit_code);
+		return (FUNC_FAIL);
 	}
 	free_t_minishell(minishell);
 	exit(minishell->exit_code);

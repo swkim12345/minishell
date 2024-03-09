@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   redirection_util.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 14:18:17 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/09 13:10:19 by minsepar         ###   ########.fr       */
+/*   Created: 2024/03/07 20:15:18 by minsepar          #+#    #+#             */
+/*   Updated: 2024/03/07 20:33:43 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-int	ft_env(t_minishell *minishell)
+void	reset_stdin_out(t_minishell *minishell)
 {
-	char	**ret;
-	int		index;
-	int		i;
+	dup2(minishell->stdin_fd, 0);
+	dup2(minishell->stdout_fd, 1);
+}
 
-	ret = ft_charenv(minishell->env, FALSE);
-	index = -1;
-	while (ret[++index])
-	{
-		i = -1;
-		while (ret[index][++i])
-		{
-			if (ret[index][i] != '=')
-				continue ;
-		}
-		free(ret[index]);
-	}
-	free(ret);
-	ret = NULL;
-	return (FUNC_SUC);
+int	get_heredoc_fd(t_minishell *minishell, int index)
+{
+	t_tmp_file	*cur_node;
+	int			fd;
+
+	cur_node = minishell->tmp_list->head;
+	if (cur_node == NULL)
+		return (-1);
+	while (--index > 0)
+		cur_node = cur_node->next;
+	fd = open(cur_node->tmp, O_RDONLY);
+	return (fd);
 }
