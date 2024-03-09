@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:39:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 17:40:16 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:21:36 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	split_node(int end, int new_start, t_ast_node *node, int new_node_flag)
 	old_node = node;
 	new_node = NULL;
 	ptr = ft_strdup(node->cmd_node->str[0]);
-	tmp = ft_substr(ptr, 0, end);
+	tmp = ft_substr(ptr, 0, end + 1);
 	find_split_node(node, new_node_flag, &old_node, &new_node);
 	free_2d_str(node->cmd_node->str);
 	node->cmd_node->str = NULL;
