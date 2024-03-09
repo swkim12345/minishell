@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 23:09:40 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 23:19:27 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 21:36:25 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	free_str_stack(t_str_list *stack)
 
 	while (stack->size > 0)
 	{
-		cur_node = dequeue(stack);
+		cur_node = pop(stack);
 		free(cur_node->str);
 		free(cur_node);
 	}

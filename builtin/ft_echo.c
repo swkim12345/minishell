@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 21:28:52 by minsepar          #+#    #+#             */
-/*   Updated: 2024/02/29 13:28:15 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:49:48 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	print_echo(char **str, int nflag)
 	while (str[++i])
 	{
 		if (i != 0)
-			printf(" ");
-		printf("%s", str[i]);
+			ft_putstr_fd(" ", 1);
+		ft_putstr_fd(str[i], 1);
 	}
 	if (!nflag)
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 }
 
 int	is_nflag(char *str)
@@ -68,6 +68,6 @@ void	print_argv(char **argv, int argc)
 	i = 0;
 	while (++i < argc)
 	{
-		printf("%s ", argv[i]);
+		ft_putstr_fd(argv[i], 1);
 	}
 }

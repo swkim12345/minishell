@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:42:39 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 23:04:33 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 20:59:51 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@ int	check_directory(t_cd *info, t_cmd_node *cmd_node, t_minishell *minishell)
 	if (stat(info->cur_path, &info->file_stat) == 0)
 	{
 		if (!S_ISDIR(info->file_stat.st_mode))
+		{
 			minishell->exit_code = not_a_directory_error(info,
 					minishell, cmd_node->cmd_name, info->directory);
+		}
 	}
 	else
+	{
 		minishell->exit_code
 			= cd_error(info, minishell, cmd_node->cmd_name, info->directory);
+	}
 	return (minishell->exit_code);
 }
 

@@ -6,13 +6,13 @@
 #    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/09 11:29:19 by sunghwki         ###   ########.fr        #
+#    Updated: 2024/03/09 11:31:47 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC =		clang
+CC =		gcc
 
-CFLAGS =	-Wall -Werror -Wextra 
+CFLAGS =	-Wall -Werror -Wextra
 
 NAME =		minishell
 

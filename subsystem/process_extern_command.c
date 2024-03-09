@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_extern_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:34:20 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/08 12:52:14 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 11:31:40 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	process_cmd_parent(pid_t pid, t_minishell *minishell)
 	else if (WTERMSIG(status) == 3)
 	{
 		minishell->exit_code = 131;
-		ft_printf("Quit: 3\n");
+		ft_printf("Quit: 3\n", 1);
 	}
 	else
 		minishell->exit_code = WEXITSTATUS(status);

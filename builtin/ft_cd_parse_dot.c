@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:51:19 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 23:41:20 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 20:28:03 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	parse_dots(t_cd *info, t_minishell *minishell, t_cmd_node *cmd_node)
 			= ft_substr(info->cur_path, info->start, info->i - info->start + 1);
 		enqueue(&stack, create_node(info->check_str));
 	}
-	printf("cur_path: %s\n", info->cur_path);
 	clear_end_slash(info, &stack);
 	return (0);
 }

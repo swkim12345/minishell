@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 23:15:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 23:39:21 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/08 20:38:52 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	set_pwd_old_pwd(t_cmd_node *cmd_node,
 	ft_setenv(minishell->env, "OLDPWD", old_pwd);
 	ft_setenv(minishell->export, "PWD", minishell->cwd);
 	ft_setenv(minishell->env, "PWD", minishell->cwd);
+	printf("%s\n", info->cur_path);
 	if (info->cur_path)
 		free(info->cur_path);
 	free(old_pwd);
