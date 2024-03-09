@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:42:23 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/09 13:19:31 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:31:11 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,19 +102,18 @@ static int	recurv_parser_sub(t_ast_node *head, t_minishell *minishell,
 			syntax_err_message(&ptr[index], index + 1, 1, minishell);
 			return (-2);
 		}
-		index += tmp;
 	}
-	if (ptr[index] == '\"' || ptr[index] == '\'')
+	else if (ptr[index] == '\"' || ptr[index] == '\'')
 	{
 		tmp = finder(&ptr[index + 1], ptr[index]);
-		if (tmp == NOTDEFINED)
+		if (tmp++ == NOTDEFINED)
 		{
 			head->err_flag = TRUE;
 			syntax_err_message(ptr, index + 1, 1, minishell);
 			return (-2);
 		}
-		index += tmp + 1;
 	}
+	index += tmp;
 	return (index);
 }
 

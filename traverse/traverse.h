@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 11:33:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/09 11:34:42 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:32:06 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,5 @@ int			process_redirection(t_ast_node *ast_node, t_minishell *minishell);
 /* redirection_util.c */
 void		reset_stdin_out(t_minishell *minishell);
 int			get_heredoc_fd(t_minishell *minishell, int index);
-
-
-
 
 #endif

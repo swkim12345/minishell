@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexar.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 14:00:49 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/08 14:42:28 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:31:25 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,5 @@ char		*eof_parser(char *ptr);
 
 /* lexar.c */
 int			lexar(t_ast_node *node, t_minishell *minishell);
-
 
 #endif

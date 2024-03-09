@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:16:35 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/09 11:59:22 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:27:29 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static int	lexar_redirect_next_token(t_ast_node *node,
 			if (tmp == NOTDEFINED)
 			{
 				node->err_flag = TRUE;
-				syntax_err_message(&ptr[index], NOTDEFINED, FUNC_FAIL, minishell);
+				syntax_err_message(&ptr[index], NOTDEFINED,
+					FUNC_FAIL, minishell);
 				return (-2);
 			}
 			index += tmp + 2;

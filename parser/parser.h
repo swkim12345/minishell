@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:45:18 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/09 11:45:30 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:32:11 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ typedef struct s_ast_node
 	int							err_flag;
 }	t_ast_node;
 
-
-
 /* util.c */
 void		redirect_node_push(t_ast_node *node, t_redirection *red);
 void		tmp_list_push(t_tmp_file *list, t_minishell *minishell);
@@ -91,15 +89,15 @@ int			finder(char *str, char checker);
 int			bracket_finder(char *str);
 int			skip_space(char *str);
 
-
 /* parser_redirect.c */
 int			traverse_redirection(t_minishell *minishell);
 int			read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file);
 
 /* parser_split.c */
-int			split_node(int end, int new_start, t_ast_node *node, int new_node_flag);
+int			split_node(int end, int new_start, t_ast_node *node,
+				int new_node_flag);
 int			split_recurv_parser(t_ast_node *head, int str_end,
-					int dup_str_start, t_minishell *minishell);
+				int dup_str_start, t_minishell *minishell);
 
 /* parser_recurv.c */
 int			recurv_parser(t_ast_node *head, t_minishell *minishell);
@@ -109,13 +107,10 @@ int			read_heredoc(t_minishell *minishell, t_tmp_file *tmp_file);
 t_ast_node	*parser(char *str, t_minishell *minishell);
 int			recurv_parser(t_ast_node *head, t_minishell *minishell);
 
-
 /* set_mem.c */
 char		**init_doub_char(char **input, int size);
 void		free_cmd_node(t_cmd_node **node);
 void		free_ast_tree(t_ast_node *head);
 void		free_redirection_node(t_redirection *node);
-
-
 
 #endif
