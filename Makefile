@@ -6,11 +6,11 @@
 #    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/09 14:16:31 by sunghwki         ###   ########.fr        #
+#    Updated: 2024/03/09 14:26:33 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC =		clang
+CC =		cc
 
 CFLAGS =	-Wall -Werror -Wextra
 
@@ -68,6 +68,8 @@ LIBFT = ./libft/libftprintf.a
 
 all: $(NAME)
 
+bonus: $(NAME)
+
 %.o: %.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
@@ -90,4 +92,4 @@ re:
 	make fclean
 	make all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re
