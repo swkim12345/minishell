@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 14:18:17 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/09 13:10:19 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:38:07 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	ft_env(t_minishell *minishell)
 			if (ret[index][i] != '=')
 				continue ;
 		}
+		ft_printf("%s\n", ret[index]);
 		free(ret[index]);
 	}
 	free(ret);
