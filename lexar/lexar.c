@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/09 11:51:42 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/09 13:53:20 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ static int	lexar_token_check(t_ast_node *node, t_minishell *minishell,
 		{
 			node->err_flag = TRUE;
 			syntax_err_message(ptr, NOTDEFINED, FUNC_FAIL, minishell);
-			return (NOTDEFINED);
+			return (INDEX_ERR);
 		}
 		index += tmp + 1;
 	}
 	else if (ptr[index] == '<' || ptr[index] == '>')
 	{
 		index = lexar_redirect(node, minishell, index);
-		if (index == -2)
-			return (NOTDEFINED);
+		if (index == INDEX_ERR)
+			return (INDEX_ERR);
 	}
 	return (index);
 }
@@ -68,7 +68,7 @@ static int	lexar_bracket(t_ast_node *node, t_minishell *minishell,
 	{
 		tmp = subshell_lexar(node, index, *str_flag, minishell);
 		if (tmp == FUNC_FAIL)
-			return (NOTDEFINED);
+			return (INDEX_ERR);
 		*str_flag |= BRACKET_FLAG;
 		index = tmp - 1;
 	}
@@ -92,12 +92,12 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 		if (ptr[index] == '\0')
 			break ;
 		index = lexar_token_check(node, minishell, index);
-		if (index == NOTDEFINED)
+		if (index == INDEX_ERR)
 			return (FUNC_FAIL);
 		else
 		{
 			index = lexar_bracket(node, minishell, index, &str_flag);
-			if (index == NOTDEFINED)
+			if (index == INDEX_ERR)
 				return (FUNC_FAIL);
 		}
 	}
