@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   inner_parser.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:38:39 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 23:19:51 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:33:03 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INNER_PARSER_H
 # define INNER_PARSER_H
 
-# include "../main.h"
-
 # define IN_QUOTE 1
+
+# include "../main.h"
 
 typedef struct s_minishell	t_minishell;
 

@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:37:09 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 23:40:55 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:32:47 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
-
-# include "../main.h"
 
 # define OPTION_FLAG 1
 # define PATH_TYPE 2
@@ -21,6 +19,8 @@
 
 # define FUNC_SUC	0
 # define FUNC_FAIL	1
+
+# include "../main.h"
 
 typedef struct s_minishell	t_minishell;
 typedef struct s_ast_node	t_ast_node;

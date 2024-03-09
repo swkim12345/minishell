@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   traverse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/09 12:35:48 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/09 16:57:22 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,11 @@ int	subshell_traverse(t_ast_node *head, t_minishell *minishell)
 		exit(minishell->exit_code);
 	}
 	else
+	{
+		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &minishell->exit_code, 0);
+		set_signal_handler();
+	}
 	return (WEXITSTATUS(minishell->exit_code));
 }
 
