@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 22:56:51 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/09 12:58:26 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/09 12:59:15 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static void	parse_dots_dbl_dot(t_cmd_node *cmd_node, t_cd *info,
 			t_str_list *stack, t_minishell *minishell)
 {
 	t_str_node	*cur;
+	(void) cmd_node;
+	(void) minishell;
 
 	// parse_dots_check_prefix_dir(cmd_node, info, stack, minishell);
 	info->i += 2;
