@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/09 13:53:20 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/12 21:30:28 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,11 @@ static int	lexar_bracket(t_ast_node *node, t_minishell *minishell,
 	}
 	else
 		*str_flag |= STRING_FLAG;
+	if (ptr[index] == ')')
+	{
+		syntax_err_message(&ptr[index], 1, SYN_ERR, minishell);
+		return (INDEX_ERR);
+	}
 	return (index);
 }
 
