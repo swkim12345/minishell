@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/09 14:20:51 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/12 21:44:18 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 		head = parser(shell.input_str, &shell);
 		if (ft_strlen(shell.input_str) > 0 && head)
 		{
-			traverse(head, &shell, 1);
+			traverse(head, &shell, 1, 3);
 			if (shell.flag & PIPE_TRAVERSE)
 				exit(shell.exit_code);
 		}

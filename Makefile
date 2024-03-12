@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
+#    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/09 14:26:33 by sunghwki         ###   ########.fr        #
+#    Updated: 2024/03/12 22:22:39 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,9 @@ bonus: $(NAME)
 $(LIBFT):
 	make -C ./libft all bonus
 
-$(NAME): $(LIBFT) $(SRCS_OBJS) $(PARSER_OBJS) $(BUILTIN_OBJS) $(TRAVERSE_OBJS) $(LEXAR_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
+#$(NAME): $(LIBFT) $(SRCS_OBJS) $(PARSER_OBJS) $(BUILTIN_OBJS) $(TRAVERSE_OBJS) $(LEXAR_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
+#	$(CC) $(CFLAGS) $^ -o $(NAME) -lreadline
+$(NAME): $(LIBFT) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(TRAVERSE_SRCS) $(LEXAR_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS)
 	$(CC) $(CFLAGS) $^ -o $(NAME) -lreadline
 
 clean:
