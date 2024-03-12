@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_recurv.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:42:23 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/09 13:31:11 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/12 23:02:37 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	pipe_recurv_parser(t_ast_node *head, int str_end,
 		syntax_err_message(ptr, dup_str_start, SYN_ERR, minishell);
 		return (FUNC_FAIL);
 	}
-	if (split_node(str_end, dup_str_start, head, NEXTNODE) == FUNC_FAIL)
+	if (split_node(str_end, dup_str_start, head, NEXTNODE | LEFTNODE) == FUNC_FAIL)
 	{
 		head->err_flag = TRUE;
 		syntax_err_message("|", NOTDEFINED, SYN_ERR, minishell);
@@ -32,7 +32,7 @@ static int	pipe_recurv_parser(t_ast_node *head, int str_end,
 	}
 	if (recurv_parser(head->next_ast_node, minishell) == FUNC_FAIL)
 		return (FUNC_FAIL);
-	if (recurv_parser(head, minishell) == FUNC_FAIL)
+	if (recurv_parser(head->left_node, minishell) == FUNC_FAIL)
 		return (FUNC_FAIL);
 	return (FUNC_SUC);
 }
