@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/13 11:42:08 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:50:32 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	print_ast_node(t_ast_node *head)
 	ft_printf("right: [%p]\n", head->right_node);
 	ft_printf("next_ast_node: [%p]\n", head->next_ast_node);
 	ft_printf("cmd_node: [%p]\n", head->cmd_node);
+	ft_printf("red: [%p]\n", head->red);
 	ft_printf("--------------------\n");
 }
 
@@ -120,7 +121,7 @@ int	traverse(t_ast_node *head, t_minishell *minishell,
 
 	// printf("%d\n", recur_mode);
 	stop_flag = FALSE;
-	// print_ast_node(head);
+	print_ast_node(head);
 	if (!(minishell->flag & NOT_CHECK_RED))
 		stop_flag = process_redirection(head, minishell);
 	minishell->flag &= ~NOT_CHECK_RED;
