@@ -16,15 +16,13 @@ CC = cc
 %.o: %.c
 	$(CC) -c $(FLAGS) $< -o $@
 
-all: $(OBJS)
-	make -C ./libft all bonus
-	ar rucs $(NAME) $(OBJS)
-
 $(LIBFT):
 	make -C ./libft all bonus
 
-bonus: $(BONUS_OBJS)
-	make -C ./libft all bonus
+all: $(OBJS) $(LIBFT)
+	ar rucs $(NAME) $(OBJS)
+
+bonus: $(BONUS_OBJS) $(LIBFT)
 	ar rucs $(NAME) $(BONUS_OBJS)
 
 re: 
