@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/13 11:11:59 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:03:46 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@ void	readline_clean(t_ast_node *head, t_minishell *shell)
 	free(shell->input_str);
 }
 
+void	red_tester(t_redirection *red)
+{
+	if (!red)
+		return ;
+	printf("==============REDIRECTION START================\n");
+	printf("red->type: %d\n", red->index);
+	printf("red->flag: %d\n", red->flag);
+	printf("red->str : %s\n", red->str);
+	printf("red->next: %p\n", red->next);
+	printf("==============REDIRECTION END==================\n\n\n");
+	
+	red_tester(red->next);
+}
 
 //check traverse
 void	trav_tester(t_ast_node *head, t_minishell *shell)
@@ -42,6 +55,11 @@ void	trav_tester(t_ast_node *head, t_minishell *shell)
 		printf("==============CMD_NODE START===================\n");
 		printf("cmd_name: %s\n", head->cmd_node->str[0]);
 		printf("==============CMD_NODE END=====================\n\n\n");
+	}
+	if (head->red)
+	{
+		printf("redirection go : %p\n\n\n", head->red);
+		red_tester(head->red);
 	}
 	if (head->left_node)
 	{
@@ -76,15 +94,15 @@ int	main(int argc, char **argv, char **envp)
 			exit(shell.exit_code);
 		}
 		head = parser(shell.input_str, &shell);
-		trav_tester(head, &shell);
-		//if (ft_strlen(shell.input_str) > 0 && head)
-		//{
-		//	traverse(head, &shell, 1);
-		//	if (shell.flag & PIPE_TRAVERSE)
-		//		exit(shell.exit_code);
-		//}
-		//if (ft_strlen(shell.input_str) != 0)
-		//	add_history(shell.input_str);
-		//readline_clean(head, &shell);
+		//trav_tester(head, &shell);
+		if (ft_strlen(shell.input_str) > 0 && head)
+		{
+			traverse(head, &shell, 1, 3);
+			if (shell.flag & PIPE_TRAVERSE)
+				exit(shell.exit_code);
+		}
+		if (ft_strlen(shell.input_str) != 0)
+			add_history(shell.input_str);
+		readline_clean(head, &shell);
 	}
 }

@@ -6,7 +6,7 @@
 #    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/12 21:23:32 by sunghwki         ###   ########.fr        #
+#    Updated: 2024/03/13 13:04:04 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,11 +76,10 @@ bonus: $(NAME)
 $(LIBFT):
 	make -C ./libft all bonus
 
-$(NAME): $(LIBFT) $(SRCS_OBJS) $(PARSER_OBJS) $(BUILTIN_OBJS) $(TRAVERSE_OBJS) $(LEXAR_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
-	$(CC) -g $(CFLAGS) $^ -o $(NAME) -lreadline
-
-debug: $(LIBFT) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(TRAVERSE_SRCS) $(LEXAR_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS)
-	$(CC) -g $(CFLAGS) $^ -o $(NAME) -lreadline
+#$(NAME): $(LIBFT) $(SRCS_OBJS) $(PARSER_OBJS) $(BUILTIN_OBJS) $(TRAVERSE_OBJS) $(LEXAR_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
+#	$(CC) $(CFLAGS) $^ -o $(NAME) -lreadline
+$(NAME): $(LIBFT) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(TRAVERSE_SRCS) $(LEXAR_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS)
+	$(CC) $(CFLAGS) -g $^ -o $(NAME) -lreadline
 
 clean:
 	rm -rf $(SRCS_OBJS) $(TRAVERSE_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(LEXAR_OBJS)  $(INNER_OBJS) $(PARSER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
