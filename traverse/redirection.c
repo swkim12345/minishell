@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:13:58 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/13 13:58:16 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:06:49 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	process_redirection(t_ast_node *ast_node, t_minishell *minishell)
 		minishell->exit_code = 0;
 	while (cur_node)
 	{
-		// ft_printf("cur_node->str: [%s]\n", cur_node->str);
 		if ((cur_node->flag & LT_SIGN) || (cur_node->flag & DB_LT_SIGN))
 			minishell->exit_code = set_read_fd(cur_node, minishell, ast_node);
 		else if ((cur_node->flag & GT_SIGN) || (cur_node->flag & DB_GT_SIGN))
