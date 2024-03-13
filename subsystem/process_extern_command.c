@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_extern_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:34:20 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/09 11:31:40 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:33:58 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	process_extern_cmd(t_cmd_node *cmd_node, t_minishell *minishell)
 		signal(SIGQUIT, SIG_DFL);
 		envp = ft_charenv(minishell->export, FALSE);
 		if (!ft_strchr(cmd_node->cmd_name, '/'))
-			process_extern_cmd_no_slash(cmd_node, minishell);
+			process_extern_cmd_no_slash(cmd_node, minishell, envp);
 		else
 		{
 			check_file_valid(cmd_node->cmd_name, cmd_node, minishell);
