@@ -67,17 +67,6 @@ void	process_pipe_child(t_minishell *minishell, t_pipe_traverse *info,
 	exit(info->ret);
 }
 
-t_ast_node	*get_next_node_pipe(t_ast_node *head)
-{
-	t_ast_node	*cur;
-
-	printf("%p\n", head);
-	cur = head;
-	while (cur->next_ast_node)
-		cur = cur->next_ast_node;
-	return (cur);
-}
-
 int	get_num_pipe(t_ast_node *head)
 {
 	t_ast_node	*cur;

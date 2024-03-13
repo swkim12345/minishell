@@ -31,8 +31,8 @@ typedef struct s_pipe_traverse
 }	t_pipe_traverse;
 
 /* traverse.c */
-int			recur_traverse(t_ast_node *head, t_minishell *minishell,
-				int recur_mode);
+int			recur_traverse(t_ast_node *head,
+				t_minishell *minishell, int recur_mode);
 int			subshell_traverse(t_ast_node *head, t_minishell *minishell);
 int			get_num_pipe(t_ast_node *head);
 int			pipe_traverse(t_ast_node *head, t_minishell *minishell);
@@ -61,6 +61,8 @@ int			process_redirection(t_ast_node *ast_node, t_minishell *minishell);
 void		reset_stdin_out(t_minishell *minishell);
 int			get_heredoc_fd(t_minishell *minishell, int index);
 
-t_ast_node	*get_next_node_pipe(t_ast_node *head);
+/* traverse_util.c */
+void		init_pipe_traverse(t_ast_node *head,
+				t_pipe_traverse *info, t_minishell *minishell);
 
 #endif

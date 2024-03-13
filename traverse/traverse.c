@@ -53,11 +53,7 @@ int	pipe_traverse(t_ast_node *head, t_minishell *minishell)
 {
 	t_pipe_traverse	info;
 
-	info.current_pipe = -1;
-	info.num_pipe = get_num_pipe(head);
-	info.pipe_list = init_pipe_list(info.num_pipe);
-	dup2(minishell->stdin_fd, 0);
-	dup2(minishell->stdout_fd, 1);
+	init_pipe_traverse(head, &info, minishell);
 	while (++info.current_pipe < info.num_pipe)
 	{
 		pipe(info.pipe_list[info.current_pipe].pipe_fd);
@@ -80,7 +76,8 @@ int	pipe_traverse(t_ast_node *head, t_minishell *minishell)
 	return (minishell->exit_code);
 }
 
-void	traverse_main_shell(t_ast_node *head, t_minishell *minishell, int recur_mode)
+void	traverse_main_shell(t_ast_node *head,
+		t_minishell *minishell, int recur_mode)
 {
 	if (head->cmd_node)
 	{
@@ -94,24 +91,15 @@ void	traverse_main_shell(t_ast_node *head, t_minishell *minishell, int recur_mod
 		minishell->exit_code = recur_traverse(head, minishell, recur_mode);
 }
 
-void	print_ast_node(t_ast_node *head)
-{
-	ft_printf("flag: [%p]\n", head);
-	ft_printf("flag: [%d]\n", head->flag);
-	ft_printf("left: [%p]\n", head->left_node);
-	ft_printf("right: [%p]\n", head->right_node);
-	ft_printf("next_ast_node: [%p]\n", head->next_ast_node);
-	ft_printf("cmd_node: [%p]\n", head->cmd_node);
-	ft_printf("red: [%p]\n", head->red);
-	ft_printf("--------------------\n");
-}
-
 int	traverse(t_ast_node *head, t_minishell *minishell,
 		int check_pipe, int recur_mode)
 {
 	int	stop_flag;
 
 	stop_flag = FALSE;
+	if (!(minishell->flag & NOT_CHECK_RED))
+		stop_flag = process_redirection(head, minishell);
+	minishell->flag &= ~NOT_CHECK_RED;
 	if (check_pipe && head->next_ast_node)
 	{
 		minishell->exit_code = pipe_traverse(head, minishell);
@@ -119,15 +107,12 @@ int	traverse(t_ast_node *head, t_minishell *minishell,
 		reset_stdin_out(minishell);
 		return (minishell->exit_code);
 	}
-	if (head->flag & BRACKET_FLAG)
+	if (!stop_flag && (head->flag & BRACKET_FLAG))
 	{
 		minishell->exit_code = subshell_traverse(head, minishell);
 		reset_stdin_out(minishell);
 		return (minishell->exit_code);
 	}
-	if (!(minishell->flag & NOT_CHECK_RED))
-		stop_flag = process_redirection(head, minishell);
-	minishell->flag &= ~NOT_CHECK_RED;
 	if (stop_flag == FALSE)
 		traverse_main_shell(head, minishell, recur_mode);
 	reset_stdin_out(minishell);
