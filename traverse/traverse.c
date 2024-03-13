@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/13 11:50:32 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:54:23 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	traverse(t_ast_node *head, t_minishell *minishell,
 
 	// printf("%d\n", recur_mode);
 	stop_flag = FALSE;
-	print_ast_node(head);
+	// print_ast_node(head);
 	if (!(minishell->flag & NOT_CHECK_RED))
 		stop_flag = process_redirection(head, minishell);
 	minishell->flag &= ~NOT_CHECK_RED;
