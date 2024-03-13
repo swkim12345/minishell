@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 21:49:11 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/08 15:51:57 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/12 23:48:52 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_printf(const char *format_str, ...)
 				return (on_error(&dto, 0));
 		dto.format_idx++;
 	}
-	if (write(1, dto.print_str, dto.print_idx) == -1)
+	if (write(2, dto.print_str, dto.print_idx) == -1)
 		dto.print_idx = -1;
 	free(dto.print_str);
 	return (dto.print_idx);
