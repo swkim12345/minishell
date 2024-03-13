@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/13 16:05:33 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:19:32 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ int	traverse(t_ast_node *head, t_minishell *minishell,
 	int	stop_flag;
 
 	stop_flag = FALSE;
+	if (!(minishell->flag & NOT_CHECK_RED))
+		stop_flag = process_redirection(head, minishell);
+	minishell->flag &= ~NOT_CHECK_RED;
 	if (check_pipe && head->next_ast_node)
 	{
 		minishell->exit_code = pipe_traverse(head, minishell);
@@ -104,15 +107,12 @@ int	traverse(t_ast_node *head, t_minishell *minishell,
 		reset_stdin_out(minishell);
 		return (minishell->exit_code);
 	}
-	if (head->flag & BRACKET_FLAG)
+	if (!stop_flag && (head->flag & BRACKET_FLAG))
 	{
 		minishell->exit_code = subshell_traverse(head, minishell);
 		reset_stdin_out(minishell);
 		return (minishell->exit_code);
 	}
-	if (!(minishell->flag & NOT_CHECK_RED))
-		stop_flag = process_redirection(head, minishell);
-	minishell->flag &= ~NOT_CHECK_RED;
 	if (stop_flag == FALSE)
 		traverse_main_shell(head, minishell, recur_mode);
 	reset_stdin_out(minishell);

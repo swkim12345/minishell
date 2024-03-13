@@ -6,7 +6,7 @@
 #    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/13 15:18:38 by minsepar         ###   ########.fr        #
+#    Updated: 2024/03/13 16:09:02 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ PARSER_SRCS = 	parser/parser.c parser/set_mem.c parser/util.c parser/parser_redi
 
 LEXAR_SRCS =	lexar/lexar.c lexar/lexar_err.c lexar/lexar_eof.c lexar/lexar_redirect.c lexar/lexar_redirect_helper.c lexar/lexar_subshell.c 
 
-TRAVERSE_SRCS =	traverse/pipe_traverse.c traverse/redirection_util.c traverse/redirection.c traverse/traverse.c
+TRAVERSE_SRCS =	traverse/pipe_traverse.c traverse/redirection_util.c traverse/redirection.c \
+				traverse/traverse.c traverse/traverse_util.c
 
 SIGNAL_SRCS =	signal/signal.c
 
