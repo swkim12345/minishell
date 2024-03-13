@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/13 15:56:13 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:09:27 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 		if (ptr[index] == '\0')
 			break ;
 		index = lexar_token_check(node, minishell, index);
+		if (index == -1)
+			continue ;
 		if (index == INDEX_ERR)
 			return (FUNC_FAIL);
 		else
@@ -110,6 +112,5 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 				return (FUNC_FAIL);
 		}
 	}
-	index = -1;
 	return (lexar_ret(node, minishell, ptr, str_flag));
 }
