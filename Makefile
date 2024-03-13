@@ -6,11 +6,11 @@
 #    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/13 13:04:04 by sunghwki         ###   ########.fr        #
+#    Updated: 2024/03/13 14:48:19 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC =		clang
+CC =		cc
 
 CFLAGS =	-Wall -Werror -Wextra
 
@@ -92,6 +92,6 @@ fclean:
 
 re:
 	make fclean
-	make all
+	make bonus
 
 .PHONY: all bonus clean fclean re
