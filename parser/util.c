@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 20:33:29 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/13 16:55:24 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:59:21 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	syntax_err_message(char *msg, int end, int ret, t_minishell *minishell)
 {
-	
 	if (end != NOTDEFINED && end != -2 && ft_strlen(msg) >= (size_t)end)
 		msg[end] = '\0';
 	ft_putstr_fd(minishell->execute_name, STDERR_FILENO);
