@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:39:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/13 11:34:39 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:04:38 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int	split_node(int end, int new_start, t_ast_node *node, int new_node_flag)
 	ptr = ft_strdup(node->cmd_node->str[0]);
 	tmp = ft_substr(ptr, 0, end + 1);
 	find_split_node(node, new_node_flag, &old_node, &new_node);
-	free_cmd_node(&node->cmd_node);
-	// free_2d_str(node->cmd_node->str);
-	// node->cmd_node->str = NULL;
+	free_cmd_node(&node->cmd_node); //fix this one
+	//free_2d_str(node->cmd_node->str);
+	//node->cmd_node->str = NULL;
 	old_node->cmd_node->str = init_doub_char(&tmp, 1);
 	free(tmp);
 	tmp = ft_substr(ptr, new_start, ft_strlen(&ptr[new_start]));

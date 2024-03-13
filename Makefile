@@ -6,11 +6,11 @@
 #    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/13 12:12:50 by sunghwki         ###   ########.fr        #
+#    Updated: 2024/03/13 13:04:04 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC =		cc
+CC =		clang
 
 CFLAGS =	-Wall -Werror -Wextra
 
