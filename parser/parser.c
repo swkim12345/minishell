@@ -6,11 +6,14 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 17:42:17 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:59:03 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+
+
 
 t_ast_node	*parser(char *str, t_minishell *minishell)
 {
