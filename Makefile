@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
+#    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/13 13:04:04 by sunghwki         ###   ########.fr        #
+#    Updated: 2024/03/13 16:09:02 by minsepar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ PARSER_SRCS = 	parser/parser.c parser/set_mem.c parser/util.c parser/parser_redi
 
 LEXAR_SRCS =	lexar/lexar.c lexar/lexar_err.c lexar/lexar_eof.c lexar/lexar_redirect.c lexar/lexar_redirect_helper.c lexar/lexar_subshell.c 
 
-TRAVERSE_SRCS =	traverse/pipe_traverse.c traverse/redirection_util.c traverse/redirection.c traverse/traverse.c
+TRAVERSE_SRCS =	traverse/pipe_traverse.c traverse/redirection_util.c traverse/redirection.c \
+				traverse/traverse.c traverse/traverse_util.c
 
 SIGNAL_SRCS =	signal/signal.c
 
@@ -79,7 +80,7 @@ $(LIBFT):
 #$(NAME): $(LIBFT) $(SRCS_OBJS) $(PARSER_OBJS) $(BUILTIN_OBJS) $(TRAVERSE_OBJS) $(LEXAR_OBJS) $(ENVIRON_OBJS) $(INNER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
 #	$(CC) $(CFLAGS) $^ -o $(NAME) -lreadline
 $(NAME): $(LIBFT) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(TRAVERSE_SRCS) $(LEXAR_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS)
-	$(CC) $(CFLAGS) -g $^ -o $(NAME) -lreadline
+	$(CC) $(CFLAGS) -g $^ -o $(NAME) $(LIBFT) -lreadline
 
 clean:
 	rm -rf $(SRCS_OBJS) $(TRAVERSE_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(LEXAR_OBJS)  $(INNER_OBJS) $(PARSER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)

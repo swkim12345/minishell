@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:20:13 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/12 22:35:16 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:06:54 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,6 @@ void	process_pipe_child(t_minishell *minishell, t_pipe_traverse *info,
 	minishell->pipe_info = info;
 	info->ret = traverse(head, minishell, 0, 1);
 	exit(info->ret);
-}
-
-t_ast_node	*get_next_node_pipe(t_ast_node *head)
-{
-	t_ast_node	*cur;
-
-	printf("%p\n", head);
-	cur = head;
-	while (cur->next_ast_node)
-		cur = cur->next_ast_node;
-	return (cur);
 }
 
 int	get_num_pipe(t_ast_node *head)

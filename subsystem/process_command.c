@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:20:26 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/13 11:46:31 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:06:57 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	process_command(t_cmd_node *cmd_node, t_minishell *minishell)
 
 	(void)info;
 	cmd_node->cmd_name = cmd_node->str[0];
-	print_cmd_node(cmd_node);
 	ft_unsetenv(minishell->export, "_");
 	ft_setenv(minishell->env, "_", cmd_node->cmd_name);
 	if (is_builtin_fn(cmd_node))

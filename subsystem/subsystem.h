@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:39:54 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/07 16:48:48 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:34:38 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ int		check_file_valid(char *execute_path, t_cmd_node *cmd_node,
 
 /* process_extern_command2.c */
 void	process_extern_cmd_no_slash(t_cmd_node *cmd_node,
-			t_minishell *minishell);
+			t_minishell *minishell, char **envp);
 
 #endif
