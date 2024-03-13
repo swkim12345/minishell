@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:42:23 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/13 15:57:48 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:28:54 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ static int	pipe_recurv_parser(t_ast_node *head, int str_end,
 			int dup_str_start, t_minishell *minishell)
 {
 	char	*ptr;
+	int		index;
 
 	ptr = head->cmd_node->str[0];
 	if (str_end <= 0)
 	{
 		head->err_flag = TRUE;
-		syntax_err_message(ptr, dup_str_start, SYN_ERR, minishell);
+		index = skip_space(&ptr[str_end]);
+		syntax_err_message(&ptr[index], dup_str_start, SYN_ERR, minishell);
 		return (FUNC_FAIL);
 	}
 	if (split_node(str_end, dup_str_start, head, NEXTNODE
@@ -42,12 +44,15 @@ static int	split_setflag_parser(t_ast_node *head, int str_end,
 			int dup_str_start, t_minishell *minishell)
 {
 	char	*ptr;
+	int		index;
 
 	ptr = head->cmd_node->str[0];
+	index = 0;
 	if (str_end <= 0)
 	{
+		index = skip_space(&ptr[str_end]);
 		head->err_flag = TRUE;
-		syntax_err_message(ptr, dup_str_start, SYN_ERR, minishell);
+		syntax_err_message(&ptr[index], dup_str_start, SYN_ERR, minishell);
 		return (FUNC_FAIL);
 	}
 	if (ft_strncmp(&ptr[str_end + 1], "&&", ft_strlen("&&")) == 0)
