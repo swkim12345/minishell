@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:20:13 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/12 22:35:16 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:20:33 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	set_pipe_redirection(t_pipe_traverse *info, t_minishell *minishell)
 {
 	int	fd;
 
+	// ft_printf("pipe redireciton\n");
 	if (info->current_pipe != 0)
 	{
 		fd = info->pipe_list[info->current_pipe - 1].pipe_fd[0];
