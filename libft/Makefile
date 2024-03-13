@@ -17,7 +17,7 @@ CC = cc
 	$(CC) -c $(FLAGS) $< -o $@
 
 all: $(OBJS)
-	make -C ./libft bonus
+	make -C ./libft all bonus
 	ar rucs $(NAME) $(OBJS)
 
 $(LIBFT):

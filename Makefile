@@ -6,7 +6,7 @@
 #    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/13 14:48:19 by sunghwki         ###   ########.fr        #
+#    Updated: 2024/03/13 15:05:38 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,6 +92,6 @@ fclean:
 
 re:
 	make fclean
-	make bonus
+	make all
 
 .PHONY: all bonus clean fclean re
