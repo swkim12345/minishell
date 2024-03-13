@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/13 16:09:27 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:12:09 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 	index = -1;
 	str_flag = FALSE;
 	ptr = node->cmd_node->str[0];
-	index = -1;
 	while (ptr[++index])
 	{
 		index += skip_space(&ptr[index]);
