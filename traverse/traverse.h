@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   traverse.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 11:33:19 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/12 21:44:32 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:55:17 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ typedef struct s_pipe_traverse
 }	t_pipe_traverse;
 
 /* traverse.c */
-int			recur_traverse(t_ast_node *head, t_minishell *minishell, int recur_mode);
+int			recur_traverse(t_ast_node *head, t_minishell *minishell,
+				int recur_mode);
 int			subshell_traverse(t_ast_node *head, t_minishell *minishell);
 int			get_num_pipe(t_ast_node *head);
 int			pipe_traverse(t_ast_node *head, t_minishell *minishell);
@@ -39,7 +40,8 @@ int			set_read_fd(t_redirection *redirect_node, t_minishell *minishell,
 				t_ast_node *ast_node);
 int			set_write_fd(t_redirection *redirect_node, t_minishell *minishell);
 int			process_redirection(t_ast_node *ast_node, t_minishell *minishell);
-int			traverse(t_ast_node *head, t_minishell *minishell, int check_pipe, int recur_mode);
+int			traverse(t_ast_node *head, t_minishell *minishell,
+				int check_pipe, int recur_mode);
 
 /* pipe_traverse.c */
 int			wait_processes(pid_t last_pid, pid_t first_pid);

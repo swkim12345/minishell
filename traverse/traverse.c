@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   traverse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:25:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/13 14:18:29 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:54:58 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	recur_traverse(t_ast_node *head, t_minishell *minishell, int recur_mode)
 {
-	// ft_printf("recur: [%d]\n", recur_mode);
-	// ft_printf("flag: [%d]\n", head->flag);
 	if (!head)
 		return (TRUE);
 	if (recur_mode & 1)
@@ -76,7 +74,6 @@ int	pipe_traverse(t_ast_node *head, t_minishell *minishell)
 	}
 	close(info.pipe_list[info.current_pipe - 1].pipe_fd[0]);
 	minishell->exit_code = wait_processes(info.pid, info.first_pid);
-	// printf("pipe_traverse: [%p]\n", head->right_node);
 	if (head->right_node)
 		minishell->exit_code = recur_traverse(head, minishell, 2);
 	free(info.pipe_list);
@@ -87,13 +84,8 @@ void	traverse_main_shell(t_ast_node *head, t_minishell *minishell, int recur_mod
 {
 	if (head->cmd_node)
 	{
-		// ft_printf("head->cmd_node [%p]\n", head->cmd_node);
-		// ft_printf("recur_mode [%d]\n", recur_mode);
-		// ft_printf("head->cmd_node->str [%p]\n", head->cmd_node->str);
-		// ft_printf("head->cmd_node->str[0] [%p]\n", head->cmd_node->str[0]);
 		if ((recur_mode & 1) && head->cmd_node->str && head->cmd_node->str[0])
 		{
-			// ft_printf("here [%d]\n", recur_mode);
 			minishell->exit_code
 				= process_command(head->cmd_node, minishell);
 		}
@@ -119,9 +111,7 @@ int	traverse(t_ast_node *head, t_minishell *minishell,
 {
 	int	stop_flag;
 
-	// printf("%d\n", recur_mode);
 	stop_flag = FALSE;
-	// print_ast_node(head);
 	if (check_pipe && head->next_ast_node)
 	{
 		minishell->exit_code = pipe_traverse(head, minishell);

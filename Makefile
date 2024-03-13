@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+         #
+#    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/13 15:18:38 by minsepar         ###   ########.fr        #
+#    Updated: 2024/03/13 15:50:42 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC =		clang
+CC =		cc
 
 CFLAGS =	-Wall -Werror -Wextra
 

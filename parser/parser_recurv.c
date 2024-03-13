@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:42:23 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/13 13:04:19 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:57:48 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static int	pipe_recurv_parser(t_ast_node *head, int str_end,
 		syntax_err_message(ptr, dup_str_start, SYN_ERR, minishell);
 		return (FUNC_FAIL);
 	}
-	if (split_node(str_end, dup_str_start, head, NEXTNODE | LEFTNODE) == FUNC_FAIL)
+	if (split_node(str_end, dup_str_start, head, NEXTNODE
+			| LEFTNODE) == FUNC_FAIL)
 	{
 		head->err_flag = TRUE;
 		syntax_err_message("|", NOTDEFINED, SYN_ERR, minishell);
