@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 21:49:11 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/06 17:14:44 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:18:12 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_printf(const char *format_str, ...)
 				return (on_error(&dto, 0));
 		dto.format_idx++;
 	}
-	if (write(2, dto.print_str, dto.print_idx) == -1)
+	if (write(1, dto.print_str, dto.print_idx) == -1)
 		dto.print_idx = -1;
 	free(dto.print_str);
 	return (dto.print_idx);
