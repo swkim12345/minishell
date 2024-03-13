@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 16:21:27 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/13 13:03:46 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:48:44 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	red_tester(t_redirection *red)
 	if (!red)
 		return ;
 	printf("==============REDIRECTION START================\n");
-	printf("red->type: %d\n", red->index);
+	printf("red->index: %d\n", red->index);
 	printf("red->flag: %d\n", red->flag);
 	printf("red->str : %s\n", red->str);
 	printf("red->next: %p\n", red->next);
