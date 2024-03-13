@@ -6,13 +6,13 @@
 #    By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/05 16:02:57 by minsepar          #+#    #+#              #
-#    Updated: 2024/03/13 16:51:24 by sunghwki         ###   ########.fr        #
+#    Updated: 2024/03/13 16:53:37 by sunghwki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC =		cc
 
-CFLAGS =	-Wall -Werror -Wextra
+CFLAGS =	-Wall -Werror -Wextra -fsanitize=address
 
 NAME =		minishell
 
@@ -81,7 +81,7 @@ $(LIBFT):
 #	$(CC) $(CFLAGS) $^ -o $(NAME) $(LIBFT) -lreadline
 
 $(NAME): $(LIBFT) $(SRCS) $(PARSER_SRCS) $(BUILTIN_SRCS) $(TRAVERSE_SRCS) $(LEXAR_SRCS) $(ENVIRON_SRCS) $(INNER_SRCS) $(SIGNAL_SRCS) $(SUBSYSTEM_SRCS) $(UTIL_SRCS)
-	$(CC) $(CFLAGS) $^ -o $(NAME) $(LIBFT) -lreadline
+	$(CC) $(CFLAGS) -g $^ -o $(NAME) $(LIBFT) -lreadline
 
 clean:
 	rm -rf $(SRCS_OBJS) $(TRAVERSE_OBJS) $(BUILTIN_OBJS) $(ENVIRON_OBJS) $(LEXAR_OBJS)  $(INNER_OBJS) $(PARSER_OBJS) $(SIGNAL_OBJS) $(SUBSYSTEM_OBJS) $(UTIL_OBJS)
