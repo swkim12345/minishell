@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:32:15 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/07 20:10:14 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:24:59 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	read_heredoc_child_while(t_minishell *minishell,
 		free(line);
 		free_2d_str(tmp);
 	}
+	free(line);
 }
 
 static void	read_heredoc_child(t_minishell *minishell, t_tmp_file *tmp_file)
