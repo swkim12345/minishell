@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:46:13 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/13 13:55:12 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:52:53 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	traverse_tmp_file(t_ast_node *node, t_minishell *minishell)
 		{
 			if (red->flag == DB_LT_SIGN)
 			{
+				if (!red->str)
+					break ;
 				red->str = eof_parser(red->str);
 				node->index = minishell->tmp_file_counter + 1;
 				if (heredoc_open_fd(red, minishell) == FUNC_FAIL)

@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:22:56 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/13 13:42:11 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:12:09 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@ static int	lexar_ret(t_ast_node *node, t_minishell *minishell,
 
 	if (str_flag & BRACKET_FLAG)
 	{
-		node->left_node= init_ast_node(0);
+		node->left_node = init_ast_node(0);
 		node->left_node->cmd_node = node->cmd_node;
 		node->cmd_node = NULL;
 		tmp = recurv_parser(node->left_node, minishell);
-		//tmp = recurv_parser(node, minishell);
 		node->flag |= BRACKET_FLAG;
 		return (tmp);
 	}
@@ -91,56 +90,26 @@ int	lexar(t_ast_node *node, t_minishell *minishell)
 	char		*ptr;
 	int			index;
 	int			str_flag;
-	//int			tmp;
 
 	index = -1;
 	str_flag = FALSE;
 	ptr = node->cmd_node->str[0];
-	//while (ptr[++index])
-	//{
-	//	index += skip_space(&ptr[index]);
-	//	if (ptr[index] == '\0')
-	//		break ;
-	//	if (ptr[index] == '\"' || ptr[index] == '\'')
-	//	{
-	//		tmp = finder(&ptr[index + 1], ptr[index]);
-	//		if (tmp == NOTDEFINED)
-	//		{
-	//			node->err_flag = TRUE;
-	//			syntax_err_message(ptr, NOTDEFINED, FUNC_FAIL, minishell);
-	//			return (FUNC_FAIL);
-	//		}
-	//		index += tmp + 1;
-	//	}
-	//	else if (ptr[index] == '<' && ptr[index + 1] == ptr[index])
-	//	{
-	//		index = lexar_redirect(node, minishell, index);
-	//		if (index == INDEX_ERR)
-	//			return (FUNC_FAIL);
-	//	}
-	//}
-	index = -1;
 	while (ptr[++index])
 	{
 		index += skip_space(&ptr[index]);
 		if (ptr[index] == '\0')
 			break ;
 		index = lexar_token_check(node, minishell, index);
+		if (index == -1)
+			continue ;
 		if (index == INDEX_ERR)
 			return (FUNC_FAIL);
-		else // fix
+		else
 		{
 			index = lexar_bracket(node, minishell, index, &str_flag);
 			if (index == INDEX_ERR)
 				return (FUNC_FAIL);
 		}
 	}
-	index = -1;
-	//while (ptr[++index])
-	//{
-	//	index = lexar_bracket(node, minishell, index, &str_flag);
-	//	if (index == INDEX_ERR)
-	//		return (FUNC_FAIL);
-	//}
 	return (lexar_ret(node, minishell, ptr, str_flag));
 }
