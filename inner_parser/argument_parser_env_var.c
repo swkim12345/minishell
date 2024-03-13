@@ -6,7 +6,7 @@
 /*   By: minsepar <minsepar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 22:11:32 by minsepar          #+#    #+#             */
-/*   Updated: 2024/03/08 00:07:54 by minsepar         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:29:26 by minsepar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	parse_env_var_found(t_str_list *str_list, t_parse_str *parse_str,
 static int	is_env_delimiter(char c, int quote_flag)
 {
 	if (ft_isspace(c) || (quote_flag && c == '\"') || c == '$' || c == '\"'
-		|| c == '\'' || c == '/' || c == '|')
+		|| c == '\'' || c == '/' || c == '|' || c == ':')
 		return (TRUE);
 	return (FALSE);
 }

@@ -6,7 +6,7 @@
 /*   By: sunghwki <sunghwki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 20:16:35 by sunghwki          #+#    #+#             */
-/*   Updated: 2024/03/09 13:27:29 by sunghwki         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:43:50 by sunghwki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	lexar_redirect_next_token(t_ast_node *node,
 			continue ;
 		}
 		if (ft_isspace(ptr[index]) == TRUE || ptr[index] == '<'
-			|| ptr[index] == '>')
+			|| ptr[index] == '>' || ptr[index] == '(' || ptr[index] == ')') // fixed, side effect, add ( )
 			break ;
 		index++;
 	}
@@ -49,8 +49,8 @@ static int	lexar_redirect_ret(t_ast_node *node, t_minishell *minishell,
 	{
 		red->str = eof_parser(red->str);
 		node->index = minishell->tmp_file_counter + 1;
-		if (heredoc_open_fd(red, minishell) == FUNC_FAIL)
-			return (-2);
+		//if (heredoc_open_fd(red, minishell) == FUNC_FAIL) // fix required
+		//	return (-2);
 	}
 	if (red->flag == DB_LT_SIGN || red->flag == DB_GT_SIGN)
 		return (start - 3);
