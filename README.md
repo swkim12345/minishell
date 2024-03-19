@@ -1,12 +1,10 @@
 # Minishell
 
-### 42 seoul circle 03
-
 ### Description
 
 - Duplicate bash 3.2 version using C language.
 
-- Operate this token.
+- Operate in this token.
 
 ``` shell
 |  #pipe
@@ -18,7 +16,7 @@ $  #Shell environment
 ```
 
 
-- Duplicate builtin funcion 
+- Duplicate builtin function
 
 ``` shell
 echo
@@ -43,3 +41,8 @@ $ brew install libreadline7 #or new version readline
 $ make
 
 ```
+### Made by
+
+- sunghwki [sunghwki](https://github.com/swkim12345)
+
+- minsepar [Jacob P.](https://github.com/parkj12b)
